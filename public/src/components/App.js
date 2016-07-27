@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import {fetchPulse} from '../actions/actions';
 
 
  export default class App extends Component {
-  //All this does is show the carousel if there is not restaurant and airport name data.
   render() {
     return (
       <div >
 	  Hey Guys
+	  <button onClick = {this.onPulse.bind(this)}>Pulse it </button>
+	  {this.props.pulse} times
       </div>
     );
   }
+  onPulse(){
+  	this.props.fetchPulse( this.props.pulse + 1)
+  }
 }
+
+function mapDispatchToProps(dispatch) { 
+                return bindActionCreators({
+                  fetchPulse
+                }, dispatch)
+              }
+
+function mapStateToProps(state) { 
+                return {
+                  pulse: state.pulse
+                }
+              }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App) 
