@@ -7,7 +7,8 @@ module.exports = {
     },
     seeds: {
       directory: __dirname + '/db/seeds/test'
-    }
+    },
+    useNullAsDefault: true
   },
   development: {
     client: 'pg',
@@ -17,7 +18,8 @@ module.exports = {
     },
     seeds: {
       directory: __dirname + '/db/seeds/development'
-    }
+    },
+    useNullAsDefault: true
   },
   production: {
     client: 'pg',
@@ -27,6 +29,7 @@ module.exports = {
     },
     seeds: {
       directory: __dirname + '/db/seeds/production'
-    }
+    },
+    useNullAsDefault: true
   }
 };

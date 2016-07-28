@@ -22,11 +22,9 @@ exports.up = function(knex, Promise) {
       table.integer('created_by').notNullable().references('id').inTable('users');
       table.string('location').notNullable();
       table.dateTime('time');
-      table.time('duration');
+      table.integer('duration');
       table.boolean('privacy').notNullable();
-      table.integer('group_visibility').notNullable()
-        .references('id')
-        .inTable('groups');
+      table.integer('group_visibility').references('id').inTable('groups');
       table.timestamps();
     }),
     knex.schema.createTable('guests', function(table){
@@ -40,17 +38,16 @@ exports.up = function(knex, Promise) {
       table.integer('user_id').notNullable().references('id').inTable('users');
       table.integer('event_id').notNullable().references('id').inTable('events');
       table.string('text').notNullable();
+      table.timestamps();
     }),
   ]);
 };
 
 exports.down = function(knex, Promise) {
-  return Promise.all([
-    knex.schema.dropTable('users'),
-    knex.schema.dropTable('groups'),
-    knex.schema.dropTable('memberships'),
-    knex.schema.dropTable('events'),
-    knex.schema.dropTable('guests'),
-    knex.schema.dropTable('messages')
-  ]);
+    return knex.schema.dropTable('guests')
+      .dropTable('messages')
+      .dropTable('events')
+      .dropTable('memberships')
+      .dropTable('groups')
+      .dropTable('users');
 };
