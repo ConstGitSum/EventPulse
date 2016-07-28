@@ -4,7 +4,7 @@
   "description": "Makersquare Thesis Project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha -t 5000 test/**/*.js",
     "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/"
   },
   "author": "",
