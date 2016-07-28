@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.string('name').notNullable();
       table.string('email');
+      table.string('image');
     }),
     knex.schema.createTable('groups', function(table){
       table.increments();
