@@ -1,12 +1,25 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import {fetchPulse} from '../actions/actions';
-
+import {fetchPulse, fetchLogState} from '../actions/actions';
+import axios from 'axios'
 
 export default class App extends Component {
-  onPulse() {
+  
+  componentDidMount(){
+    axios.get('/loggedIn').then((logState)=>{
+      this.props.fetchLogState(logState.data)
+    })
+  }
+  onPulse(event) {
+    event.preventDefault();
     this.props.fetchPulse( this.props.pulse + 1);
+  }
+  logOut(event){
+    event.preventDefault();
+    axios.post('/logOut').then((logState) =>{
+      this.props.fetchLogState(logState.data)
+    })
   }
 
   render() {
@@ -15,6 +28,9 @@ export default class App extends Component {
         Hey Guys
         <button onClick = {this.onPulse.bind(this)}>Pulse it </button>
         {this.props.pulse} times
+        <div>
+        {this.props.logState ? <button className = "btn btn-danger" onClick = {this.logOut.bind(this)}> Log Out</button> : <a href = '/facebookLogin' className = "btn btn-primary" > facebook! < /a>}
+        </div>
       </div>
     );
   }
@@ -22,13 +38,14 @@ export default class App extends Component {
 
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({
-    fetchPulse
+    fetchPulse, fetchLogState
     }, dispatch);
 }
 
 function mapStateToProps(state) { 
   return {
-    pulse: state.pulse
+    pulse: state.pulse,
+    logState: state.logState
   };
 }
 
