@@ -7,7 +7,7 @@ import axios from 'axios'
 export default class App extends Component {
   
   componentDidMount(){
-    axios.get('/loggedIn').then((logState)=>{
+    axios.get('/api/auth/loggedIn').then((logState)=>{
       this.props.fetchLogState(logState.data)
     })
   }
@@ -18,7 +18,7 @@ export default class App extends Component {
   }
   logOut(event){
     event.preventDefault();
-    axios.post('/logOut').then((logState) =>{
+    axios.post('/api/auth/logOut').then((logState) =>{
       this.props.fetchLogState(logState.data)
     })
   }

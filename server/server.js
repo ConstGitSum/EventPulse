@@ -33,26 +33,7 @@ app.use(passport.session());
 
 
 
-
-
-
-
 app.use('/api', routes)
-
-app.get('/loggedIn',function(req,res){
-	if(req.isAuthenticated()){
-    res.send(true);
-  }
-  else{
-   res.send(false);
-  }
-})
-app.post('/logOut',function(req,res){
-  req.logout();     
-  req.session.destroy();    
-  res.send("false"); 
-})
-
 
 // Wild card route for client side routing.
 app.get('/*', (req, res) => {
