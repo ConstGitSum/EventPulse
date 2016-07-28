@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('../webpack.config.js');
-
+const routes = require('./routes/index');
 
 var app = express();
 
@@ -15,9 +15,13 @@ app.use(express.static(assetFolder));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 app.use(bodyParser.json());
 
+app.use('/api', routes)
+
 // Wild card route for client side routing.
-app.get('/*', function(req, res){
+app.get('/*', (req, res) => {
   res.sendFile( assetFolder + '/index.html' );
 })
 
 app.listen(3000);
+
+module.exports = app;
