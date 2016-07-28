@@ -3,7 +3,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 //var bcrypt = require('bcrypt-nodejs');
 var FACEBOOK_ID = '639261402906273'
 var FACEBOOK_SECRET = 'fdf4dc317a7332195fb5b2278b522e68'
-var FACEBOOK_CALLBACK_URL = 'http://localhost:3000/facebookLogin/Callback'
+var FACEBOOK_CALLBACK_URL = 'http://localhost:3000/api/passportFacebook/facebookLogin/Callback'
 var PROFILE_FIELDS = ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'photos','verified'] //This is what tells facebook what to return		
 
 

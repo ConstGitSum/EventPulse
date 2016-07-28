@@ -34,18 +34,11 @@ app.use(passport.session());
 
 
 
+
+
+
 app.use('/api', routes)
 
-
-
-app.get('/facebookLogin', passport.authenticate('facebook', {		
-	scope: ['user_friends','email']		
-}));
-
-app.get('/facebookLogin/Callback', passport.authenticate('facebook', {		
-	successRedirect: '/',			
-	failureRedirect: '/'						
-}))
 app.get('/loggedIn',function(req,res){
 	if(req.isAuthenticated()){
     res.send(true);

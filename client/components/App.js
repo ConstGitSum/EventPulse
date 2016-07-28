@@ -13,6 +13,7 @@ export default class App extends Component {
   }
   onPulse(event) {
     event.preventDefault();
+    console.log(this.props.logState)
     this.props.fetchPulse( this.props.pulse + 1);
   }
   logOut(event){
@@ -29,7 +30,7 @@ export default class App extends Component {
         <button onClick = {this.onPulse.bind(this)}>Pulse it </button>
         {this.props.pulse} times
         <div>
-        {this.props.logState ? <button className = "btn btn-danger" onClick = {this.logOut.bind(this)}> Log Out</button> : <a href = '/facebookLogin' className = "btn btn-primary" > facebook! < /a>}
+        {this.props.logState ? <button className = "btn btn-danger" onClick = {this.logOut.bind(this)}> Log Out</button> : <a href = '/api/passportFacebook/facebookLogin' className = "btn btn-primary" > facebook! < /a>}
         </div>
       </div>
     );
