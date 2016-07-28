@@ -15,7 +15,51 @@ app.use(express.static(assetFolder));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 app.use(bodyParser.json());
 
+
+var passport = require('passport');
+var session = require('express-session');
+
+require('./passport')(passport);
+
+
+app.use(session({
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
 app.use('/api', routes)
+
+
+
+app.get('/facebookLogin', passport.authenticate('facebook', {		
+	scope: ['user_friends','email']		
+}));
+
+app.get('/facebookLogin/Callback', passport.authenticate('facebook', {		
+	successRedirect: '/',			
+	failureRedirect: '/'						
+}))
+app.get('/loggedIn',function(req,res){
+	if(req.isAuthenticated()){
+    res.send(true);
+  }
+  else{
+   res.send(false);
+  }
+})
+app.post('/logOut',function(req,res){
+  req.logout();     
+  req.session.destroy();    
+  res.send("false"); 
+})
+
 
 // Wild card route for client side routing.
 app.get('/*', (req, res) => {
