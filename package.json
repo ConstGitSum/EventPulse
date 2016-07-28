@@ -4,8 +4,8 @@
   "description": "Makersquare Thesis Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/nodemon ./server/index.js --ignore client/"
+    "test": "mocha",
+    "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/"
   },
   "author": "",
   "license": "ISC",
@@ -26,5 +26,10 @@
     "socket.io": "^1.4.8",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^2.5.3"
   }
 }
