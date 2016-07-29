@@ -41,3 +41,18 @@ router.post('/', function(req, res, next) {
       next(err);
     });
 });
+
+// *** PUT - update event *** //
+router.put('/:id', function(req, res, next) {
+  Event.update(req.params.id, req.body)
+    .then((eventId) => {
+      return Event.getEventById(eventId[0]);
+    })
+    .then((event) => {
+      res.status(200).json(event[0]);
+    })
+    .catch((err) => {
+      console.error(err)
+      next(err);
+    });
+});

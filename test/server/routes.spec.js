@@ -116,4 +116,33 @@ describe('API Routes', () => {
     });
   });
 
+  describe('PUT /api/events/:id', function() {
+    it('should update an event', function(done) {
+      chai.request(server)
+        .put('/api/events/1')
+        .send({
+          location: '1100 Congress Ave, Austin, TX',
+          privacy: true
+        })
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('title');
+          res.body.title.should.equal('Pokemongodb party');
+          res.body.should.have.property('description');
+          res.body.description.should.equal('Catch pokemon and do some coding');
+          res.body.should.have.property('created_by');
+          res.body.created_by.should.equal(1);
+          res.body.should.have.property('location');
+          res.body.location.should.equal('1100 Congress Ave, Austin, TX');
+          res.body.should.have.property('time');
+          //res.body.time.should.equal('2016-08-30T08:00:00.000Z');
+          res.body.should.have.property('privacy');
+          res.body.privacy.should.equal(true);
+          done();
+        });
+    });
+  });
+
 });
