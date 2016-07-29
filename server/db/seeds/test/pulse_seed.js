@@ -9,21 +9,18 @@ exports.seed = function(knex, Promise) {
   ])
     .then(() => { // Inserts seed entries one by one in series
       return knex('users').insert({
-        id: 1,
         name: 'Alice',
         email: 'alice@gmail.com',
       });
     })
     .then(() => {
       return knex('users').insert({
-        id: 2,
         name: 'Bob',
         email: 'bob@gmail.com',
       });
     })
     .then(() => {
       return knex('groups').insert({
-        id: 1,
         name: 'ConstGitSum',
       });
     })
@@ -36,7 +33,6 @@ exports.seed = function(knex, Promise) {
     })
     .then(() => {
       return knex('events').insert({
-        id: 1,
         title: 'Pokemongodb party',
         description: 'Catch pokemon and do some coding',
         created_by: 1,

@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
       table.string('name').notNullable();
       table.string('email');
       table.string('image');
+      table.integer('facebook_id');
     }),
     knex.schema.createTable('groups', function(table){
       table.increments();
