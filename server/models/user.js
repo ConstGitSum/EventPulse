@@ -11,6 +11,6 @@ function getUserById(id) {
   return knex('users').where('id', id);
 }
 
-function create(event) {
-  return knex('events').insert(event).returning('id');
+function create(user) {
+  return knex('users').insert(user).returning('id');
 }

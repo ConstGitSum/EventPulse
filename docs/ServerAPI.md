@@ -17,7 +17,6 @@
     * max_guests (int optional)
     * privacy (bool)
     * group_visibility (int): id in group table
-
   * creates new event and returns that event object
 
 ##### PUT /api/events/:id
@@ -32,4 +31,13 @@
 
 ##### GET /api/users/:id
   * given a user id, returns array with single user
+
+##### POST /api/users
+  * request body should be user object with properties
+    * name (string)
+    * email (string)
+    * image (string)
+    * facebook_id (string)
+  * creates new user and returns that user object
+
 

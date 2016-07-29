@@ -53,5 +53,32 @@ describe('API User Routes', () => {
     });
   });
 
+  describe('POST /api/users', function() {
+    it('should add an user', function(done) {
+      chai.request(server)
+        .post('/api/users')
+        .send({
+          name: 'Carol',
+          email: 'carol@gmail.com',
+          image: 'https://imageurl',
+          facebook_id: '1239015739016431'
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Carol');
+          res.body.should.have.property('email');
+          res.body.email.should.equal('carol@gmail.com');
+          res.body.should.have.property('image');
+          res.body.image.should.equal('https://imageurl');
+          res.body.should.have.property('facebook_id');
+          res.body.facebook_id.should.equal('1239015739016431');
+          done();
+        });
+    });
+  });
+
 
 });

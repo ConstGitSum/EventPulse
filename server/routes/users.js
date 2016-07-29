@@ -18,9 +18,9 @@ router.get('/:id', function(req, res, next) {
 
 // *** POST new user *** //
 router.post('/', function(req, res, next) {
-  Event.create(req.body)
-    .then((eventId) => {
-      return Event.getEventById(eventId[0]);
+  User.create(req.body)
+    .then((userId) => {
+      return User.getUserById(userId[0]);
     })
     .then((event) => {
       res.status(201).json(event[0]);
