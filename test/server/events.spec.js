@@ -196,4 +196,25 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('GET /api/events/:id/guests', function() {
+    it('should return the guests for an event', function(done) {
+      chai.request(server)
+        .get('/api/events/1/guests')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('array');
+          res.body.length.should.equal(2);
+          res.body[1].should.have.property('name');
+          res.body[1].name.should.equal('Bob');
+          res.body[1].should.have.property('email');
+          res.body[1].email.should.equal('bob@gmail.com');
+          res.body[1].should.have.property('image');
+          res.body[1].image.should.equal('https://imageurl');
+          res.body[1].should.have.property('facebook_id');
+          res.body[1].facebook_id.should.equal('12104755554605552');
+          done();
+        });
+    });
+  });
 });

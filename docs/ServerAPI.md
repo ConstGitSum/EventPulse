@@ -6,6 +6,9 @@
 ##### GET /api/events/:id
   * given an event id, returns array with single event
 
+##### GET /api/events/:id/guests
+  * given an event id, returns array of user objects who are guests
+
 ##### POST /api/events
   * request body should be event object with properties
     * title (string)

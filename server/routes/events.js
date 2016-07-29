@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Event = require('../models/event');
+var User = require('../models/user');
 
 module.exports = router;
 
@@ -21,6 +22,17 @@ router.get('/:id', function(req, res, next) {
   Event.getEventById(req.params.id)
     .then((event) => {
       res.status(200).json(event);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// *** GET guests for event *** //
+router.get('/:id/guests', function(req, res, next) {
+  User.getGuests(req.params.id)
+    .then((guests) => {
+      res.status(200).json(guests);
     })
     .catch((err) => {
       next(err);
