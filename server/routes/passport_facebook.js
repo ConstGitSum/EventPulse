@@ -1,16 +1,14 @@
 var express = require('express');
-var router = express.Router();
-
 var passport = require('passport');
+var router = express.Router();
 
 module.exports = router;
 
-// *** GET all events *** //
 router.get('/facebookLogin', passport.authenticate('facebook', {		
-	scope: ['user_friends','email']		
+  scope: ['user_friends', 'email']		
 }));
 
 router.get('/facebookLogin/Callback', passport.authenticate('facebook', {		
-	successRedirect: '/',			
-	failureRedirect: '/'						
+  successRedirect: '/',			
+  failureRedirect: '/'						
 }))

@@ -8,8 +8,8 @@ export function fetchPulse(pulseCount){
   }
 }
 export function fetchLogState(logState){
-	return{
-		type: FETCH_LOGSTATE,
-		payload: logState
-	}
+  return{
+    type: FETCH_LOGSTATE,
+    payload: logState
+  }
 }

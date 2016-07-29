@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-// *** define routes for each model here in index *** //
+// *** decorate the express app with each route *** //
 router.use('/events', require('./events'));
 router.use('/passportFacebook',require('./passport_facebook'));
 router.use('/auth',require('./authentication'));
