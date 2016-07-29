@@ -66,10 +66,10 @@ describe('Log In Component', () => {
     expect(buttons[1].textContent).to.equal('Log Out');
   })
 
-  it('it logs out when you click Log Out',() => {
+  xit('it logs out when you click Log Out',() => {
     let logState = true;
-    const logOutState = ()
-    const component = renderIntoDocument(<App pulse={1} logState={true} fetchPulse={}/>)
+    const logOutState = (state) => logState = false;
+    const component = renderIntoDocument(<App pulse={1} logState={true} fetchPulse={logOutState}/>)
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     Simulate.click(buttons[0]);
     expect()
