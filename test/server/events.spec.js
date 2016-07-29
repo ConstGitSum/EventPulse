@@ -9,7 +9,7 @@ var knex = require('../../server/db/knex');
 chai.use(chaiHttp);
 
 
-describe('API Routes', () => {
+describe('API Event Routes', () => {
 
   beforeEach(function(done) {
     knex.migrate.rollback()
@@ -141,6 +141,57 @@ describe('API Routes', () => {
           res.body.should.have.property('privacy');
           res.body.privacy.should.equal(true);
           done();
+        });
+    });
+
+    it('should not update an event if id field is part of the request', function(done) {
+      chai.request(server)
+        .put('/api/events/1')
+        .send({
+          id: 5,
+          location: '1100 Congress Ave, Austin, TX',
+          privacy: true
+        })
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('You cannot update the id field');
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /api/events/:id', function() {
+    it('should delete an event', function(done) {
+      chai.request(server)
+        .delete('/api/events/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('title');
+          res.body.title.should.equal('Pokemongodb party');
+          res.body.should.have.property('description');
+          res.body.description.should.equal('Catch pokemon and do some coding');
+          res.body.should.have.property('created_by');
+          res.body.created_by.should.equal(1);
+          res.body.should.have.property('location');
+          res.body.location.should.equal('701 Brazos Street, Austin, TX');
+          res.body.should.have.property('time');
+          //res.body.time.should.equal('2016-08-30T08:00:00.000Z');
+          res.body.should.have.property('privacy');
+          res.body.privacy.should.equal(false);
+          chai.request(server)
+            .get('/api/events')
+            .end(function(err, res) {
+              res.should.have.status(200);
+              res.should.be.json; // jshint ignore:line
+              res.body.should.be.a('array');
+              res.body.length.should.equal(0);
+              done();
+            });
         });
     });
   });

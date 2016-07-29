@@ -6,7 +6,8 @@ module.exports = {
   getAll: getAll,
   getEventById: getEventById,
   create: create,
-  update: update
+  update: update,
+  deleteEvent: deleteEvent
 };
 
 function getAll() {
@@ -23,4 +24,13 @@ function create(event) {
 
 function update(id, event) {
   return knex('events').where('id', id).update(event).returning('id');
+}
+
+function deleteEvent(id) {
+  // delete event guests and messages first, then the event
+  return Promise.all([
+    knex('guests').where('event_id', id).del(),
+    knex('messages').where('event_id', id).del(),
+    knex('events').where({'id': id}).del()
+  ]);
 }
