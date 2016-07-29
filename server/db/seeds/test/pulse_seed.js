@@ -11,12 +11,16 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert({
         name: 'Alice',
         email: 'alice@gmail.com',
+        image: 'https://imageurl',
+        facebook_id: '12104755554605551',
       });
     })
     .then(() => {
       return knex('users').insert({
         name: 'Bob',
         email: 'bob@gmail.com',
+        image: 'https://imageurl',
+        facebook_id: '12104755554605552',
       });
     })
     .then(() => {
