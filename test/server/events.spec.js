@@ -39,7 +39,7 @@ describe('API Event Routes', () => {
           res.should.have.status(200);
           res.should.be.json; // jshint ignore:line
           res.body.should.be.a('array');
-          res.body.length.should.equal(1);
+          res.body.length.should.equal(2);
           res.body[0].should.have.property('title');
           res.body[0].title.should.equal('Pokemongodb party');
           res.body[0].should.have.property('description');
@@ -47,7 +47,7 @@ describe('API Event Routes', () => {
           res.body[0].should.have.property('created_by');
           res.body[0].created_by.should.equal(1);
           res.body[0].should.have.property('location');
-          res.body[0].location.should.equal('701 Brazos Street, Austin, TX');
+          res.body[0].location.should.equal('701 Brazos St, Austin, TX 78701');
           res.body[0].should.have.property('time');
           //res.body[0].time.should.equal('2016-08-30T08:00:00.000Z');
           res.body[0].should.have.property('privacy');
@@ -73,7 +73,7 @@ describe('API Event Routes', () => {
           res.body[0].should.have.property('created_by');
           res.body[0].created_by.should.equal(1);
           res.body[0].should.have.property('location');
-          res.body[0].location.should.equal('701 Brazos Street, Austin, TX');
+          res.body[0].location.should.equal('701 Brazos St, Austin, TX 78701');
           res.body[0].should.have.property('time');
           //res.body[0].time.should.equal('2016-08-30T08:00:00.000Z');
           res.body[0].should.have.property('privacy');
@@ -91,7 +91,7 @@ describe('API Event Routes', () => {
           title: 'Wrestle with Jad',
           description: 'Come get some',
           created_by: 2,
-          location: '115 E 6th St, Austin, TX',
+          location: '115 E 6th St, Austin, TX 78701',
           time: '2016-08-15T15:00:00.000',
           privacy: false
         })
@@ -106,7 +106,7 @@ describe('API Event Routes', () => {
           res.body.should.have.property('created_by');
           res.body.created_by.should.equal(2);
           res.body.should.have.property('location');
-          res.body.location.should.equal('115 E 6th St, Austin, TX');
+          res.body.location.should.equal('115 E 6th St, Austin, TX 78701');
           res.body.should.have.property('time');
           //res.body.time.should.equal('2016-08-30T08:00:00.000Z');
           res.body.should.have.property('privacy');
@@ -121,7 +121,7 @@ describe('API Event Routes', () => {
       chai.request(server)
         .put('/api/events/1')
         .send({
-          location: '1100 Congress Ave, Austin, TX',
+          location: '1100 Congress Ave, Austin, TX 78701',
           privacy: true
         })
         .end(function(err, res) {
@@ -135,7 +135,7 @@ describe('API Event Routes', () => {
           res.body.should.have.property('created_by');
           res.body.created_by.should.equal(1);
           res.body.should.have.property('location');
-          res.body.location.should.equal('1100 Congress Ave, Austin, TX');
+          res.body.location.should.equal('1100 Congress Ave, Austin, TX 78701');
           res.body.should.have.property('time');
           //res.body.time.should.equal('2016-08-30T08:00:00.000Z');
           res.body.should.have.property('privacy');
@@ -149,7 +149,7 @@ describe('API Event Routes', () => {
         .put('/api/events/1')
         .send({
           id: 5,
-          location: '1100 Congress Ave, Austin, TX',
+          location: '1100 Congress Ave, Austin, TX 78701',
           privacy: true
         })
         .end(function(err, res) {
@@ -178,7 +178,7 @@ describe('API Event Routes', () => {
           res.body.should.have.property('created_by');
           res.body.created_by.should.equal(1);
           res.body.should.have.property('location');
-          res.body.location.should.equal('701 Brazos Street, Austin, TX');
+          res.body.location.should.equal('701 Brazos St, Austin, TX 78701');
           res.body.should.have.property('time');
           //res.body.time.should.equal('2016-08-30T08:00:00.000Z');
           res.body.should.have.property('privacy');
@@ -189,7 +189,7 @@ describe('API Event Routes', () => {
               res.should.have.status(200);
               res.should.be.json; // jshint ignore:line
               res.body.should.be.a('array');
-              res.body.length.should.equal(0);
+              res.body.length.should.equal(1);
               done();
             });
         });

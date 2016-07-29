@@ -25,9 +25,15 @@ exports.up = function(knex, Promise) {
       table.string('location').notNullable();
       table.dateTime('time');
       table.integer('duration');
+      table.integer('max_guests');
       table.boolean('privacy').notNullable();
       table.integer('group_visibility').references('id').inTable('groups');
       table.timestamps();
+    }),
+    knex.schema.createTable('hidden_events', function(table){
+      table.increments();
+      table.integer('user_id').notNullable().references('id').inTable('users');
+      table.integer('event_id').notNullable().references('id').inTable('events');
     }),
     knex.schema.createTable('guests', function(table){
       table.increments();
@@ -47,6 +53,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
     return knex.schema.dropTable('guests')
+      .dropTable('hidden_events')
       .dropTable('messages')
       .dropTable('events')
       .dropTable('memberships')
