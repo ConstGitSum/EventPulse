@@ -4,7 +4,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 const FACEBOOK_ID = '639261402906273'
 const FACEBOOK_SECRET = 'fdf4dc317a7332195fb5b2278b522e68'
 const FACEBOOK_CALLBACK_URL = 'http://localhost:3000/api/passportFacebook/facebookLogin/Callback'
-const PROFILE_FIELDS = ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'photos','verified'] //This is what tells facebook what to return		
+const PROFILE_FIELDS = ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'photos','verified','friends'] //This is what tells facebook what to return		
 
 
 module.exports = function(passport) {
