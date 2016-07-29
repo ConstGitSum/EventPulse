@@ -4,7 +4,8 @@ var knex = require('../db/knex');
 
 module.exports = {
   getAll: getAll,
-  getEventById: getEventById
+  getEventById: getEventById,
+  create: create
 };
 
 function getAll() {
@@ -15,3 +16,6 @@ function getEventById(id) {
   return knex('events').where('id', id);
 }
 
+function create(event) {
+  return knex('events').insert(event).returning('id');
+}

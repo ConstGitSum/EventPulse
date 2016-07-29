@@ -12,16 +12,32 @@ router.get('/', function(req, res, next) {
       res.status(200).json(events);
     })
     .catch((err) => {
-      next(error);
+      next(err);
     });
 });
 
+// *** GET event by id *** //
 router.get('/:id', function(req, res, next) {
   Event.getEventById(req.params.id)
     .then((event) => {
       res.status(200).json(event);
     })
     .catch((err) => {
-      next(error);
+      next(err);
+    });
+});
+
+// *** POST new event *** //
+router.post('/', function(req, res, next) {
+  Event.create(req.body)
+    .then((eventId) => {
+      return Event.getEventById(eventId[0]);
+    })
+    .then((event) => {
+      res.status(201).json(event[0]);
+    })
+    .catch((err) => {
+      console.error(err)
+      next(err);
     });
 });

@@ -83,4 +83,37 @@ describe('API Routes', () => {
     });
   });
 
+  describe('POST /api/events', function() {
+    it('should add an event', function(done) {
+      chai.request(server)
+        .post('/api/events')
+        .send({
+          title: 'Wrestle with Jad',
+          description: 'Come get some',
+          created_by: 2,
+          location: '115 E 6th St, Austin, TX',
+          time: '2016-08-15T15:00:00.000',
+          privacy: false
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('title');
+          res.body.title.should.equal('Wrestle with Jad');
+          res.body.should.have.property('description');
+          res.body.description.should.equal('Come get some');
+          res.body.should.have.property('created_by');
+          res.body.created_by.should.equal(2);
+          res.body.should.have.property('location');
+          res.body.location.should.equal('115 E 6th St, Austin, TX');
+          res.body.should.have.property('time');
+          //res.body.time.should.equal('2016-08-30T08:00:00.000Z');
+          res.body.should.have.property('privacy');
+          res.body.privacy.should.equal(false);
+          done();
+        });
+    });
+  });
+
 });
