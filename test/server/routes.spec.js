@@ -4,11 +4,32 @@ var chai = require('chai');
 var should = chai.should();
 var chaiHttp = require('chai-http');
 var server = require('../../server/server');
+var knex = require('../../server/db/knex');
 
 chai.use(chaiHttp);
 
 
 describe('API Routes', () => {
+
+  beforeEach(function(done) {
+    knex.migrate.rollback()
+    .then(function() {
+      knex.migrate.latest()
+      .then(function() {
+        return knex.seed.run()
+        .then(function() {
+          done();
+        });
+      });
+    });
+  });
+
+  afterEach(function(done) {
+    knex.migrate.rollback()
+    .then(function() {
+      done();
+    });
+  });
 
   describe('GET /api/events', function() {
     it('should return all events', function(done) {
