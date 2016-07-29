@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Makersquare Thesis Project",
   "main": "index.js",
+  "babel": {
+  "presets": ["es2015", "react"]
+},
   "scripts": {
-    "test": "mocha -t 5000 test/**/*.js",
+    "test": "mocha --compilers js:babel-core/register --require ./test/client/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/"
   },
   "author": "",
@@ -24,6 +27,7 @@
     "passport-facebook": "^2.1.1",
     "pg": "^6.0.3",
     "react": "^15.2.1",
+    "react-addons-test-utils": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
@@ -34,6 +38,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "jsdom": "^9.4.1",
     "mocha": "^2.5.3"
   }
 }

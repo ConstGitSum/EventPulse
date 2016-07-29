@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import {fetchPulse, fetchLogState} from '../actions/actions';
 import axios from 'axios';
 
-export default class App extends Component {
+export class App extends Component {
   componentDidMount(){
     axios.get('/api/auth/loggedIn').then((logState) => {
       this.props.fetchLogState(logState.data)
