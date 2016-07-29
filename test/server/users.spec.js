@@ -42,6 +42,12 @@ describe('API User Routes', () => {
           res.body.length.should.equal(1);
           res.body[0].should.have.property('name');
           res.body[0].name.should.equal('Bob');
+          res.body[0].should.have.property('email');
+          res.body[0].email.should.equal('bob@gmail.com');
+          res.body[0].should.have.property('image');
+          res.body[0].image.should.equal('https://imageurl');
+          res.body[0].should.have.property('facebook_id');
+          res.body[0].facebook_id.should.equal('12104755554605552');
           done();
         });
     });
