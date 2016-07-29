@@ -28,3 +28,4 @@ function getGuests(id) {
       'users.facebook_id'
     );
 }
+
