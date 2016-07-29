@@ -11,12 +11,16 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert({
         name: 'Alice',
         email: 'alice@gmail.com',
+        image: 'https://imageurl',
+        facebook_id: '12104755554605551',
       });
     })
     .then(() => {
       return knex('users').insert({
         name: 'Bob',
         email: 'bob@gmail.com',
+        image: 'https://imageurl',
+        facebook_id: '12104755554605552',
       });
     })
     .then(() => {
@@ -36,8 +40,21 @@ exports.seed = function(knex, Promise) {
         title: 'Pokemongodb party',
         description: 'Catch pokemon and do some coding',
         created_by: 1,
-        location: '701 Brazos Street, Austin, TX',
+        location: '701 Brazos St, Austin, TX 78701',
         time: '2016-08-30T08:00:00.000',
+        duration: 10800,
+        privacy: false
+      });
+    })
+    .then(() => {
+      return knex('events').insert({
+        title: 'Pick-up basketball game',
+        description: 'A friendly game of basketball',
+        created_by: 2,
+        location: '2100 Alamo St, Austin, TX 78722',
+        time: '2016-08-30T10:00:00.000',
+        max_guests: 10,
+        duration: 3600,
         privacy: false
       });
     })
