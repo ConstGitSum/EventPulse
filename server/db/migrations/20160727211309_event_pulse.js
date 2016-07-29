@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
       table.string('name').notNullable();
       table.string('email');
       table.string('image');
+      table.string('facebook_id');
     }),
     knex.schema.createTable('groups', function(table){
       table.increments();
@@ -24,9 +25,15 @@ exports.up = function(knex, Promise) {
       table.string('location').notNullable();
       table.dateTime('time');
       table.integer('duration');
+      table.integer('max_guests');
       table.boolean('privacy').notNullable();
       table.integer('group_visibility').references('id').inTable('groups');
       table.timestamps();
+    }),
+    knex.schema.createTable('hidden_events', function(table){
+      table.increments();
+      table.integer('user_id').notNullable().references('id').inTable('users');
+      table.integer('event_id').notNullable().references('id').inTable('events');
     }),
     knex.schema.createTable('guests', function(table){
       table.increments();
@@ -45,10 +52,11 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('guests')
-      .dropTable('messages')
-      .dropTable('events')
-      .dropTable('memberships')
-      .dropTable('groups')
-      .dropTable('users');
+    return knex.schema.dropTableIfExists('guests')
+      .dropTableIfExists('hidden_events')
+      .dropTableIfExists('messages')
+      .dropTableIfExists('events')
+      .dropTableIfExists('memberships')
+      .dropTableIfExists('groups')
+      .dropTableIfExists('users');
 };

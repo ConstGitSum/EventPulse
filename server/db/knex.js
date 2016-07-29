@@ -3,8 +3,12 @@ var config = require('../knexfile.js')[environment];
 
 var knex = require('knex')(config);
 
-knex.migrate.latest([config]);
-knex.seed.run([config]);
+if (environment !== 'test') {
+  Promise.all([
+    knex.migrate.latest([config]),
+    knex.seed.run([config])
+  ]);
+}
 
 module.exports = knex;
 
