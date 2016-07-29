@@ -52,11 +52,11 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('guests')
-      .dropTable('hidden_events')
-      .dropTable('messages')
-      .dropTable('events')
-      .dropTable('memberships')
-      .dropTable('groups')
-      .dropTable('users');
+    return knex.schema.dropTableIfExists('guests')
+      .dropTableIfExists('hidden_events')
+      .dropTableIfExists('messages')
+      .dropTableIfExists('events')
+      .dropTableIfExists('memberships')
+      .dropTableIfExists('groups')
+      .dropTableIfExists('users');
 };
