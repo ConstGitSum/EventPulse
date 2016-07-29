@@ -42,5 +42,3 @@
     * image (string)
     * facebook_id (string)
   * creates new user and returns that user object
-
-
