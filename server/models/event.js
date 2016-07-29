@@ -2,10 +2,16 @@ var knex = require('../db/knex');
 
 // *** queries *** //
 
+module.exports = {
+  getAll: getAll,
+  getEventById: getEventById
+};
+
 function getAll() {
   return knex('events').select();
 }
 
-module.exports = {
-  getAll: getAll
-};
+function getEventById(id) {
+  return knex('events').where('id', id);
+}
+

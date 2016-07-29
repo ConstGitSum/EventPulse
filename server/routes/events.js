@@ -15,3 +15,13 @@ router.get('/', function(req, res, next) {
       next(error);
     });
 });
+
+router.get('/:id', function(req, res, next) {
+  Event.getEventById(req.params.id)
+    .then((event) => {
+      res.status(200).json(event);
+    })
+    .catch((err) => {
+      next(error);
+    });
+});
