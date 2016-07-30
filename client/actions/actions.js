@@ -3,7 +3,7 @@ import axios from 'axios';
 export const FETCH_PULSE = 'FETCH_PULSE';
 export const FETCH_LOGSTATE = 'FETCH_LOGSTATE';
 export const USER_LOGOUT = 'USER_LOGOUT';
-export const JOIN_EVENT = 'JOIN_EVENT'
+export const JOIN_EVENT = 'JOIN_EVENT';
 
 export function fetchPulse(pulseCount) {	
   return {	
@@ -36,6 +36,6 @@ export function joinEvent(eventId, userId) {
 
   return {
     type: JOIN_EVENT,
-    payload: request 
+    payload: request
   }
 }
