@@ -1,34 +1,26 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {fetchPulse, fetchLogState} from '../actions/actions';
-import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchPulse, fetchLogState, userLogOut } from '../actions/actions';
 
-export default class App extends Component {
-  componentDidMount(){
-    axios.get('/api/auth/loggedIn').then((logState) => {
-      this.props.fetchLogState(logState.data)
-    })
+export class App extends Component {
+  componentDidMount() {
+    this.props.fetchLogState()
   }
 
   onPulse(event) {
-    event.preventDefault();
-    console.log(this.props.logState);
     this.props.fetchPulse(this.props.pulse + 1);
   }
 
-  logOut(event){
-    event.preventDefault();
-    axios.post('/api/auth/logOut').then((logState) => {
-      this.props.fetchLogState(logState.data);
-    })
+  logOut(event) {
+    this.props.userLogOut();
   }
 
   render() {
     return (
       <div>
         Hey Guys
-        <button onClick = {this.onPulse.bind(this)}>Pulse it </button>
+        <button onClick={this.onPulse.bind(this)}>Pulse it</button>
         {this.props.pulse} times
         <div>
           {this.props.logState 
@@ -49,7 +41,11 @@ export default class App extends Component {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({fetchPulse, fetchLogState}, dispatch);
+  return bindActionCreators({ 
+    fetchPulse, 
+    fetchLogState,
+    userLogOut
+  }, dispatch);
 }
 
 function mapStateToProps(state) { 
