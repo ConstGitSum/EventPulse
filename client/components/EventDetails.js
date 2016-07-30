@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'react-redux'
 
-class EventDetails extends Component {
+export class EventDetails extends Component {
+  onEventJoin() {
+    this.props.joinEvent(this.props.currentEvent.eventId, this.props.currentUser.userId)
+  }
   render() {
     return (
       <div className="event-details">
@@ -10,6 +13,7 @@ class EventDetails extends Component {
 
         <div className="btn-group btn-primary" role="group">
           <button
+            onClick={this.onEventJoin}
             type="button" 
             className="btn btn-primary">Join</button>
           <button 
@@ -37,13 +41,14 @@ class EventDetails extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentEvent: state.currentEvent
+    currentEvent: state.currentEvent,
+    currentUser:  state.currentUser
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    joinEvent: joinEvent
+    joinEvent
   }, dispatch)
 
 }
