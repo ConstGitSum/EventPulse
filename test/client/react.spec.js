@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from 'react-addons-test-utils';
@@ -68,10 +69,10 @@ describe('Log In Component', () => {
 
   xit('it logs out when you click Log Out',() => {
     let logState = true;
-    const logOutState = (state) => logState = false;
+    const logOutState = (state) => logState = state;
     const component = renderIntoDocument(<App pulse={1} logState={true} fetchPulse={logOutState}/>)
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
-    Simulate.click(buttons[0]);
-    expect()
+    Simulate.click(buttons[1]);
+    expect(logState).to.equal(false);
   })
 })
