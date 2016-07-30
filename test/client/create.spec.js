@@ -9,38 +9,21 @@ var chai = require('chai');
 
 describe('Create', () => {
 
-  describe('Display labels', () => {
-    xit('should display labels', () => {
-      const seedData = { title: "TDD Test Title",
-                         description: "TDD Test Description",
-                         location: "TDD Test Location",
-                         time: "TDD Test Time"
-                       }
-      const component = renderIntoDocument(<Create event={ seedData } />)
-      const paragraph = scryRenderedDOMComponentsWithTag(component, 'label')
-      console.log('paragraph~~~~',paragraph)
-      expect(paragraph.length).to.equal(4)
-      expect(paragraph[0].textContent).to.equal('Title: TDD Test Title')
-      expect(paragraph[1].textContent).to.equal('Description: TDD Test Description')
-      expect(paragraph[2].textContent).to.equal('Location: TDD Test Location')
-      expect(paragraph[3].textContent).to.equal('Time: TDD Test Time')
-    })
-
-    describe('Display inputs', () => {
-    xit('should display inputs', () => {
-      const seedData = { title: "TDD Test Title",
-                         description: "TDD Test Description",
-                         location: "TDD Test Location",
-                         time: "TDD Test Time"
-                       }
-      const component = renderIntoDocument(<Create event={ seedData } />)
-      const paragraph = scryRenderedDOMComponentsWithTag(component, 'label')
-      console.log('paragraph~~~~',paragraph)
-      expect(paragraph.length).to.equal(4)
-      expect(paragraph[0].textContent).to.equal('Title: TDD Test Title')
-      expect(paragraph[1].textContent).to.equal('Description: TDD Test Description')
-      expect(paragraph[2].textContent).to.equal('Location: TDD Test Location')
-      expect(paragraph[3].textContent).to.equal('Time: TDD Test Time')
+  describe('Display Form Labels', () => {
+    it('should display labels', () => {
+      const component = renderIntoDocument(<Create />)
+      const label = scryRenderedDOMComponentsWithTag(component, 'label')
+      console.log('label~~~~',label)
+      expect(label.length).to.equal(9)
+      expect(label[0].textContent).to.equal('Event Title')
+      expect(label[1].textContent).to.equal('Description')
+      expect(label[2].textContent).to.equal('Location')
+      expect(label[3].textContent).to.equal('Date')
+      expect(label[4].textContent).to.equal('Start Time')
+      expect(label[5].textContent).to.equal('End Time')
+      expect(label[6].textContent).to.equal('Number of Guests')
+      expect(label[7].textContent).to.equal('Privacy')
+      expect(label[8].textContent).to.equal('Visibility')
     })
   })
 
