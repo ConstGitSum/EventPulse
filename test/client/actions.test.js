@@ -44,6 +44,7 @@ describe('Actions', () => {
       responseText: 'false'
     });
 
+    // Return the promise
     return store.dispatch(actions.userLogOut())
       .then(() => {
         const action = store.getActions()[0];
