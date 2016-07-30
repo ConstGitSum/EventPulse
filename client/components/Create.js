@@ -13,24 +13,36 @@ export class Create extends Component {
           <input type='text' className='form-control'/>
         </div>
         <div className='form-group'>
-          <label>Location</label>
-          <input type='text' className='form-control'/>
-        </div>
-        <div className='form-group'>
-          <label>Time</label>
-          <input type='text' className='form-control'/>
-        </div>
-        <div className='form-group'>
           <label>Description</label>
           <textarea className='form-control'/>
         </div>
         <div className='form-group'>
-          <label>Privacy</label>
+          <label>Location</label>
           <input type='text' className='form-control'/>
         </div>
         <div className='form-group'>
+          <label>Date</label>
+          <input type='date' className='form-control'/>
+        </div>
+        <div className='form-group'>
+          <label>Start Time</label>
+          <input type='time' className='form-control'/>
+        </div>
+        <div className='form-group'>
+          <label>End Time</label>
+          <input type='time' className='form-control'/>
+        </div>
+        <div className='form-group'>
+          <label>Number of Guests</label>
+          <input type='number' className='form-control'/>
+        </div>
+        <div className='form-group'>
+          <label>Privacy</label>
+          <input type='checkbox' className='form-control'/>
+        </div>
+        <div className='form-group'>
           <label>Visibility</label>
-          <input type='text' className='form-control'/>
+          <input type='checkbox' className='form-control'/>
         </div>
         <button type='submit' className='btn btn-primary'>submit</button>
       </form>
