@@ -4,9 +4,11 @@
   "description": "Makersquare Thesis Project",
   "main": "index.js",
   "babel": {
-  "presets": ["es2015", "react"]
-},
-
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
   "scripts": {
     "test": "mocha -t 5000 --compilers js:babel-core/register --require ./test/client/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/"
@@ -32,6 +34,7 @@
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
+    "redux-promise": "^0.5.3",
     "socket.io": "^1.4.8",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1"

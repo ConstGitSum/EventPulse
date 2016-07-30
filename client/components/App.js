@@ -1,31 +1,32 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {fetchPulse, fetchLogState} from '../actions/actions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchPulse, fetchLogState, userLogOut } from '../actions/actions';
 import axios from 'axios';
 
 export class App extends Component {
-  componentDidMount(){
-    axios.get('/api/auth/loggedIn').then((logState) => {
-      this.props.fetchLogState(logState.data)
-    })
+  componentDidMount() {
+    this.props.fetchLogState()
+    //axios.get('/api/auth/loggedIn').then((logState) => {
+    //  this.props.fetchLogState(logState.data)
+    //});
   }
 
   onPulse(event) {
     event.preventDefault();
-    console.log(this.props.logState);
+    //console.log(this.props.logState);
     this.props.fetchPulse(this.props.pulse + 1);
   }
 
-  logOut(event){
-
+  logOut(event) {
     event.preventDefault();
-    axios.post('/api/auth/logOut').then((logState) => {
-      console.log("good")
-      this.props.fetchLogState(logState.data);
-    }).catch(function(err){
-      console.log("err",err)
-    })
+    this.props.userLogOut();
+    //axios.post('/api/auth/logOut').then((logState) => {
+    //  console.log("good")
+    //  this.props.fetchLogState(logState.data);
+    //}).catch(function(err){
+    //  console.log("err",err)
+    //})
   }
 
   render() {
@@ -53,7 +54,11 @@ export class App extends Component {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({fetchPulse, fetchLogState}, dispatch);
+  return bindActionCreators({ 
+    fetchPulse, 
+    fetchLogState,
+    userLogOut
+  }, dispatch);
 }
 
 function mapStateToProps(state) { 
