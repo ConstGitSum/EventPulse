@@ -3,20 +3,21 @@ import ReactDOM from 'react-dom';
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
 import { expect } from 'chai';
 
-import EventDetails from '../../client/components/EventDetails'
+import { EventDetails } from '../../client/components/EventDetails'
 
 var chai = require('chai');
 
 describe('EventDetails', () => {
 
+  const seedData = { title: "TDD Test Title",
+                     description: "TDD Test Description",
+                     location: "TDD Test Location",
+                     time: "TDD Test Time"
+                   }
+  const component = renderIntoDocument(<EventDetails currentEvent={seedData} />)
+
   describe('Display data', () => {
     it('should display data', () => {
-      const seedData = { title: "TDD Test Title",
-                         description: "TDD Test Description",
-                         location: "TDD Test Location",
-                         time: "TDD Test Time"
-                       }
-      const component = renderIntoDocument(<EventDetails event={seedData} />)
       const paragraph = scryRenderedDOMComponentsWithTag(component, 'p')
       expect(paragraph.length).to.equal(4)
       expect(paragraph[0].textContent).to.equal('Title: TDD Test Title')
@@ -28,12 +29,6 @@ describe('EventDetails', () => {
 
   describe('Display Buttons', () => {
     it('should display a Join, Hide and Chat buttons', () => {
-      const seedData = { title: "TDD Test Title",
-                         description: "TDD Test Description",
-                         location: "TDD Test Location",
-                         time: "TDD Test Time"
-                       }
-      const component = renderIntoDocument(<EventDetails event={seedData} />)
       const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
       expect(buttons.length).to.equal(3);
       expect(buttons[0].textContent).to.equal('Join')
