@@ -7,7 +7,7 @@ import { expect } from 'chai';
 import axios from 'axios';
 
 import reducer from '../../client/reducers';
-import { App } from '../../client/components/App';
+import { Auth } from '../../client/components/Auth';
 
 
 var chai = require('chai');
@@ -53,7 +53,7 @@ describe('Authentication Component', () => {
     let logState = false;
     const fetchLogState = () => logState = false;
     const component = renderIntoDocument(
-      <App 
+      <Auth 
         pulse={1} 
         logState={logState}
         fetchLogState={fetchLogState} />
@@ -71,7 +71,7 @@ describe('Authentication Component', () => {
     let logState = true;
     const fetchLogState = () => logState = true;
     const component = renderIntoDocument(
-      <App 
+      <Auth 
         pulse={1} 
         logState={logState}
         fetchLogState={fetchLogState} />
@@ -87,7 +87,7 @@ describe('Authentication Component', () => {
   xit('it logs out when you click Log Out',() => {
     let logState = true;
     const logOutState = (state) => logState = state;
-    const component = renderIntoDocument(<App pulse={1} logState={true} fetchPulse={logOutState}/>)
+    const component = renderIntoDocument(<Auth pulse={1} logState={true} fetchPulse={logOutState}/>)
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     Simulate.click(buttons[1]);
     expect(logState).to.equal(false);

@@ -7,4 +7,3 @@ export default class EventDetails extends React.Component {
     );
   }
 }
-
