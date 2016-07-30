@@ -13,7 +13,7 @@ var routes = require('./routes/index');
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
 app.use(express.static(assetFolder));
-app.use(webpackDevMiddleware(webpack(webpackConfig)));
+app.use(webpackDevMiddleware(webpack(webpackConfig), { noInfo: true }));
 app.use(bodyParser.json());
 
 require('./passport')(passport);

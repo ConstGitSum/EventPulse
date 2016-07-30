@@ -2,38 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchPulse, fetchLogState, userLogOut } from '../actions/actions';
-import axios from 'axios';
 
 export class App extends Component {
   componentDidMount() {
     this.props.fetchLogState()
-    //axios.get('/api/auth/loggedIn').then((logState) => {
-    //  this.props.fetchLogState(logState.data)
-    //});
   }
 
   onPulse(event) {
-    event.preventDefault();
-    //console.log(this.props.logState);
     this.props.fetchPulse(this.props.pulse + 1);
   }
 
   logOut(event) {
-    event.preventDefault();
     this.props.userLogOut();
-    //axios.post('/api/auth/logOut').then((logState) => {
-    //  console.log("good")
-    //  this.props.fetchLogState(logState.data);
-    //}).catch(function(err){
-    //  console.log("err",err)
-    //})
   }
 
   render() {
     return (
       <div>
         Hey Guys
-        <button onClick = {this.onPulse.bind(this)}>Pulse it </button>
+        <button onClick={this.onPulse.bind(this)}>Pulse it</button>
         {this.props.pulse} times
         <div>
           {this.props.logState 

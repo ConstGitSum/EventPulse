@@ -1,18 +1,21 @@
 process.env.NODE_ENV = 'test';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from 'react-addons-test-utils';
-import reducer from '../../client/reducers'
+import { expect } from 'chai';
+import axios from 'axios';
 
-import {App} from '../../client/components/App'
+import reducer from '../../client/reducers';
+import { App } from '../../client/components/App';
 
-import {expect} from 'chai';
+
 var chai = require('chai');
 
-describe('reducers', () => {
+describe('Authentication Reducers', () => {
 
-  it("handles FETCH_PULSE", () => {
-    const initialState = {pulse:0, logState:false};
+  it('handles FETCH_PULSE', () => {
+    const initialState = { pulse: 0, logState: false };
     const action = {
       type: 'FETCH_PULSE',
       payload: 1
@@ -22,21 +25,21 @@ describe('reducers', () => {
     expect(nextState.logState).to.equal(false);
   })
 
-  it("handles FETCH_LOGSTATE", () => {
-    const initialState = {pulse:0, logState:false};
+  it('handles FETCH_LOGSTATE', () => {
+    const initialState = { pulse: 0, logState: false };
     const action = {
       type:'FETCH_LOGSTATE',
-      payload: true
+      payload: { data: true }
     }
     const nextState = reducer(initialState, action);
     expect(nextState.pulse).to.equal(0);
     expect(nextState.logState).to.equal(true);
   })
 
-  it("handles undefined state", () => {
+  it('handles undefined state', () => {
     const action = {
       type: 'FETCH_LOGSTATE',
-      payload: true
+      payload: { data: true }
     }
     const nextState = reducer(undefined, action);
     expect(nextState.pulse).to.equal(0);
@@ -44,26 +47,40 @@ describe('reducers', () => {
   })
 })
 
-describe('Log In Component', () => {
+describe('Authentication Component', () => {
 
   it('renders a button and a link when logged out', () => {
-    const component = renderIntoDocument(<App pulse={1} logState={false}/>)
+    let logState = false;
+    const fetchLogState = () => logState = false;
+    const component = renderIntoDocument(
+      <App 
+        pulse={1} 
+        logState={logState}
+        fetchLogState={fetchLogState} />
+    );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     const links = scryRenderedDOMComponentsWithTag(component, 'a');
     expect(buttons.length).to.equal(1);
     expect(links.length).to.equal(1);
-    expect(buttons[0].textContent).to.equal('Pulse it ');
+    expect(buttons[0].textContent).to.equal('Pulse it');
     expect(links[0].textContent).to.equal('facebook!');
 
   })
 
   it('renders 2 buttons when logged in',() => {
-    const component = renderIntoDocument(<App pulse={1} logState={true}/>)
+    let logState = true;
+    const fetchLogState = () => logState = true;
+    const component = renderIntoDocument(
+      <App 
+        pulse={1} 
+        logState={logState}
+        fetchLogState={fetchLogState} />
+    );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     const links = scryRenderedDOMComponentsWithTag(component, 'a');
     expect(buttons.length).to.equal(2);
     expect(links.length).to.equal(0);
-    expect(buttons[0].textContent).to.equal('Pulse it ');
+    expect(buttons[0].textContent).to.equal('Pulse it');
     expect(buttons[1].textContent).to.equal('Log Out');
   })
 
