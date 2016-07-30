@@ -13,6 +13,7 @@ router.get('/loggedIn', function(req, res) {
 })
 
 router.post('/logOut', function(req, res) {
+  console.log("logging out")
   req.logout();     
   req.session.destroy();    
   res.send(false); 

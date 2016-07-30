@@ -18,9 +18,13 @@ export class App extends Component {
   }
 
   logOut(event){
+
     event.preventDefault();
     axios.post('/api/auth/logOut').then((logState) => {
+      console.log("good")
       this.props.fetchLogState(logState.data);
+    }).catch(function(err){
+      console.log("err",err)
     })
   }
 

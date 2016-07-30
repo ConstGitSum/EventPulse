@@ -4,10 +4,11 @@ var config = require('../knexfile.js')[environment];
 var knex = require('knex')(config);
 
 if (environment !== 'test') {
-  Promise.all([
-    knex.migrate.latest([config]),
-    knex.seed.run([config])
-  ]);
+    knex.migrate.latest([config]).then(function(value){
+      console.log("value",value)
+      knex.seed.run([config])
+    })
+    
 }
 
 module.exports = knex;
