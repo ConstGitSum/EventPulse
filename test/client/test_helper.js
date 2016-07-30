@@ -1,4 +1,5 @@
 import jsdom from 'jsdom';
+
 process.env.NODE_ENV = 'test';
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
