@@ -44,7 +44,7 @@ export class Create extends Component {
           <label>Visibility</label>
           <input type='checkbox' className='form-control'/>
         </div>
-        <button type='submit' className='btn btn-primary'>submit</button>
+        <button type='Create Event' className='btn btn-primary'>submit</button>
       </form>
     );
   }
