@@ -9,8 +9,25 @@ var chai = require('chai');
 
 describe('Create', () => {
 
-  describe('Display form', () => {
-    xit('should display form', () => {
+  describe('Display labels', () => {
+    xit('should display labels', () => {
+      const seedData = { title: "TDD Test Title",
+                         description: "TDD Test Description",
+                         location: "TDD Test Location",
+                         time: "TDD Test Time"
+                       }
+      const component = renderIntoDocument(<Create event={ seedData } />)
+      const paragraph = scryRenderedDOMComponentsWithTag(component, 'label')
+      console.log('paragraph~~~~',paragraph)
+      expect(paragraph.length).to.equal(4)
+      expect(paragraph[0].textContent).to.equal('Title: TDD Test Title')
+      expect(paragraph[1].textContent).to.equal('Description: TDD Test Description')
+      expect(paragraph[2].textContent).to.equal('Location: TDD Test Location')
+      expect(paragraph[3].textContent).to.equal('Time: TDD Test Time')
+    })
+
+    describe('Display inputs', () => {
+    xit('should display inputs', () => {
       const seedData = { title: "TDD Test Title",
                          description: "TDD Test Description",
                          location: "TDD Test Location",
