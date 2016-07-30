@@ -5,14 +5,14 @@ export const FETCH_LOGSTATE = 'FETCH_LOGSTATE';
 export const USER_LOGOUT = 'USER_LOGOUT';
 
 
-export function fetchPulse(pulseCount){	
+export function fetchPulse(pulseCount) {	
   return {	
     type: FETCH_PULSE,
     payload : pulseCount
   }
 }
 
-export function fetchLogState(){
+export function fetchLogState() {
   const request = axios.get('/api/auth/loggedIn');
 
   return {
@@ -21,7 +21,7 @@ export function fetchLogState(){
   }
 }
 
-export function userLogOut(){
+export function userLogOut() {
   const request = axios.post('/api/auth/logOut');
 
   return {

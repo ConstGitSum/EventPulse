@@ -26,11 +26,12 @@
     "express": "^4.14.0",
     "express-session": "^1.14.0",
     "knex": "^0.11.9",
+    "moxios": "^0.3.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "pg": "^6.0.3",
-    "react": "^15.2.1",
-    "react-addons-test-utils": "^15.2.1",
+    "react": "^15.3.0",
+    "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
@@ -44,6 +45,7 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "jsdom": "^9.4.1",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "redux-mock-store": "^1.1.2"
   }
 }

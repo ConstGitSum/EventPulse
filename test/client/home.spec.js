@@ -7,12 +7,12 @@ import { expect } from 'chai';
 import axios from 'axios';
 
 import reducer from '../../client/reducers';
-import { Auth } from '../../client/components/Auth';
+import { Home } from '../../client/components/Home';
 
 
 var chai = require('chai');
 
-describe('Authentication Reducers', () => {
+describe('Home Auth Reducers', () => {
 
   it('handles FETCH_PULSE', () => {
     const initialState = { pulse: 0, logState: false };
@@ -47,13 +47,13 @@ describe('Authentication Reducers', () => {
   })
 })
 
-describe('Authentication Component', () => {
+describe('Home Auth Component', () => {
 
   it('renders a button and a link when logged out', () => {
     let logState = false;
     const fetchLogState = () => logState = false;
     const component = renderIntoDocument(
-      <Auth 
+      <Home 
         pulse={1} 
         logState={logState}
         fetchLogState={fetchLogState} />
@@ -71,12 +71,14 @@ describe('Authentication Component', () => {
     let logState = true;
     const fetchLogState = () => logState = true;
     const component = renderIntoDocument(
-      <Auth 
+      <Home 
         pulse={1} 
         logState={logState}
         fetchLogState={fetchLogState} />
     );
+    console.log(component)
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
+    console.log(buttons)
     const links = scryRenderedDOMComponentsWithTag(component, 'a');
     expect(buttons.length).to.equal(2);
     expect(links.length).to.equal(0);
@@ -87,7 +89,7 @@ describe('Authentication Component', () => {
   xit('it logs out when you click Log Out',() => {
     let logState = true;
     const logOutState = (state) => logState = state;
-    const component = renderIntoDocument(<Auth pulse={1} logState={true} fetchPulse={logOutState}/>)
+    const component = renderIntoDocument(<Home pulse={1} logState={true} fetchPulse={logOutState}/>)
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     Simulate.click(buttons[1]);
     expect(logState).to.equal(false);
