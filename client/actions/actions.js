@@ -69,9 +69,21 @@ export function hideEvent(eventId, userId) {
   }
 }
 
-export function createEvent(event){
+export function createEvent(props){
+  const request = axios.post('/api/events', {
+    title: props.title,
+    description: props.description,
+    created_by: 1,
+    location: props.location,
+    time: props.date,
+    duration: props.duration || 999999999,
+    max_guests: props.guests || 999999999,
+    privacy: props.privacy || false,
+    group_visibility: props.visibility
+  });
+
   return{
     type: CREATE_EVENT,
-    payload: event
+    payload: request
   }
 }

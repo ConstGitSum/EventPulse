@@ -29,28 +29,26 @@ describe('Create', () => {
   describe('Display Form inputs', () => {
     it('should display inputs', () => {
       const component = renderIntoDocument(<Create />)
-      const inputs = scryRenderedDOMComponentsWithTag(component, 'inputs')
-      expect(inputs.length).to.equal(9)
-      expect(inputs[0].textContent).to.equal('Event Title')
-      expect(inputs[1].textContent).to.equal('Description')
-      expect(inputs[2].textContent).to.equal('Location')
-      expect(inputs[3].textContent).to.equal('Date')
-      expect(inputs[4].textContent).to.equal('Start Time')
-      expect(inputs[5].textContent).to.equal('End Time')
-      expect(inputs[6].textContent).to.equal('Number of Guests')
-      expect(inputs[7].textContent).to.equal('Privacy')
-      expect(inputs[8].textContent).to.equal('Visibility')
+      const inputs = scryRenderedDOMComponentsWithTag(component, 'input')
+      const textarea = scryRenderedDOMComponentsWithTag(component, 'textarea')
+      expect(inputs.length).to.equal(8)
+      expect(textarea.length).to.equal(1)
+    })
+    xit('should change input value', () => {
+      const component = renderIntoDocument(<Create />)
+      const inputs = scryRenderedDOMComponentsWithTag(component, 'input')
+      console.log('inputs[0]~~~~~',inputs[0])
+      // const node = inputs[0];
+      // node.value='pokemon';
+      Simulate.change(inputs[0], { target: { value: 'pokemon' } });
+      Simulate.keyDown(inputs[0], {key: "Enter", keyCode: 13, which: 13});
+      expect(inputs[0].state.inputValue).toEqual('pokemon');
     })
   })
 
   describe('Display Button', () => {
     it('should display a Create Event button', () => {
-      const seedData = { title: "TDD Test Title",
-                         description: "TDD Test Description",
-                         location: "TDD Test Location",
-                         time: "TDD Test Time"
-                       }
-      const component = renderIntoDocument(<Create event={ seedData } />)
+      const component = renderIntoDocument(<Create />)
       const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
       expect(buttons.length).to.equal(1);
       expect(buttons[0].textContent).to.equal('Create Event')
