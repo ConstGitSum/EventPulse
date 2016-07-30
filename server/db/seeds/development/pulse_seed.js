@@ -32,11 +32,15 @@ exports.seed = function(knex, Promise) {
       });
     })
     .then(() => {
-      return knex('memberships').insert({
+      return knex('memberships').insert([{
         user1_id: 1,
-        user2_id: 2,
         group_id: 1,
-      });
+        rank: 'admin'
+      },{
+        user1_id: 2,
+        group_id: 1,
+        rank: 'member'
+      }]);
     })
     .then(() => {
       return knex('events').insert({
