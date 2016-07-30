@@ -1,39 +1,85 @@
+process.env.NODE_ENV = 'test';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
+import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from 'react-addons-test-utils';
 import { expect } from 'chai';
 
 import { EventDetails } from '../../client/components/EventDetails'
+import reducer_events from '../../client/reducers/reducer_events'
 
 var chai = require('chai');
 
 describe('EventDetails', () => {
+  const seedData = { 
+    eventsList: [{
+      id: 1,
+      title: "Pokemongodb party",
+      description: "Catch pokemon and do some coding",
+      location: "701 Brazos St, Austin, TX 78701",
+      time: "2016-08-30T13:00:00.000Z",
+      guests: [],
+    }],
+    currentUser: {
+      id: 1,
+    },
+    currentEvent: {
+      id: 1,
+      title: "Pokemongodb party",
+      description: "Catch pokemon and do some coding",
+      location: "701 Brazos St, Austin, TX 78701",
+      time: "2016-08-30T13:00:00.000Z",
+      guests: [],
+    }
+  } 
 
-  const seedData = { title: "TDD Test Title",
-                     description: "TDD Test Description",
-                     location: "TDD Test Location",
-                     time: "TDD Test Time"
-                   }
-  const component = renderIntoDocument(<EventDetails currentEvent={seedData} />)
+  const component = renderIntoDocument(
+    <EventDetails 
+      currentEvent={seedData.currentEvent} 
+      currentUser={seedData.currentUser} />
+  )
+
+  describe('Reducer - EventDetails', () => {
+    it('handles JOIN_EVENT', () => {
+      const initialState = seedData
+      const action = {
+        type: 'JOIN_EVENT',
+        payload: {
+          data: {
+            id: 1
+          }
+        }
+      }
+      const nextState = reducer_events(initialState, action)
+
+      expect(nextState.currentEvent.guests[0]).to.deep.equal({id: 1})
+    })
+
+  })
 
   describe('Display data', () => {
     it('should display data', () => {
       const paragraph = scryRenderedDOMComponentsWithTag(component, 'p')
       expect(paragraph.length).to.equal(4)
-      expect(paragraph[0].textContent).to.equal('Title: TDD Test Title')
-      expect(paragraph[1].textContent).to.equal('Description: TDD Test Description')
-      expect(paragraph[2].textContent).to.equal('Location: TDD Test Location')
-      expect(paragraph[3].textContent).to.equal('Time: TDD Test Time')
+      expect(paragraph[0].textContent).to.equal('Title: Pokemongodb party')
+      expect(paragraph[1].textContent).to.equal('Description: Catch pokemon and do some coding')
+      expect(paragraph[2].textContent).to.equal('Location: 701 Brazos St, Austin, TX 78701')
+      expect(paragraph[3].textContent).to.equal('Time: 2016-08-30T13:00:00.000Z')
     })
   })
 
-  describe('Display Buttons', () => {
+  describe('Buttons', () => {
+    const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
+
     it('should display a Join, Hide and Chat buttons', () => {
-      const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
       expect(buttons.length).to.equal(3);
       expect(buttons[0].textContent).to.equal('Join')
       expect(buttons[1].textContent).to.equal('Hide')
       expect(buttons[2].textContent).to.equal('Chat')
+    })
+
+    xit('should join the currentEvent when you click Join', () => {
+      Simulate.click(button[0])
     })
   })
 
