@@ -43,22 +43,35 @@ module.exports = function(passport) {
                })
             })
           })
-        }else{
-          console.log("already in database",profile) //Check to see if you have new friends since last time
-          console.log("the value",value)   
+        }else{  
           var yourFriends = profile._json.friends.data//grab friends
           var your_id = value[0].id;                  //grab your user id
-          console.log("friendssss",yourFriends)
-          User.getMemberships(your_id).then(function(value){
-            console.log("value",value)
-            User.getMemberList(value[0].group_id).then(function(value){
-              console.log("Everybody in group",value)
+          User.getFriendsListId(your_id).then(function(friendsListId){   //grab friends list ID from database
+            User.getMemberList(friendsListId[0].id).then(function(members){  //grab your friends list from database using the ID
+              if(members.length < yourFriends.length){                      // if your facebook friends list is > than what is in your database
+              var newFriends = yourFriends.filter(function(friend){         //filter out all friends in your facebook friends list that are already in database
+                var friendNotInDatabase = true;
+                for(var i = 0;i<members.length;i++){
+                  if(members[i].facebook_id===friend.id){
+                    friendNotInDatabase = false;
+                  }
+                }
+                return friendNotInDatabase
+              })
+              Promise.all(newFriends.map(function(friend){                //Take all the new friends and grab their user_id by using their facebook id
+                   return User.getUserByFacebookId(friend.id)
+                 })
+              ).then(function(friendArrayArray){                          //Take all the new friends and format them for database entry
+                var friendsValues = friendArrayArray[0].map(function(eachFriend){
+                  return {user1_id: eachFriend.id, group_id: friendsListId[0].id, rank: 'member'}
+                })
+                User.addMemberships(friendsValues).then(function(){       //Add them to the database
+                  console.log("bam wam!")
+                })
+              })
+            }
             })
-          })
-          //grab friends from memberships db
-          //check for any missing
-          //if missing, add them.       
-
+          })    
         }
       })
       done(null,token)

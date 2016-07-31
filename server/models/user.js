@@ -10,7 +10,8 @@ module.exports = {
   addGroup: addGroup,
   addMemberships: addMemberships,
   getMemberList: getMemberList,
-  getMemberships: getMemberships
+  getMemberships: getMemberships,
+  getFriendsListId: getFriendsListId
 };
 
 function getUserById(id) {
@@ -44,7 +45,8 @@ function addGroup(groupName='friends'){
 }
 
 function getMemberList(group_id){
-  return knex('memberships').where('group_id',group_id)
+  return knex('memberships').join('users','users.id','memberships.user1_id')
+  .where('group_id',group_id)
 }
 
 function addMemberships(user){
@@ -55,6 +57,14 @@ function addMemberships(user){
 function getMemberships(user_id){
   return knex('memberships')
   .join('groups','groups.id','memberships.group_id')
-  .where('user1_id', user_id)
+  .where('user1_id', user_id)  //maybe grab everything but friends
+}
 
+function getFriendsListId(user_id){
+return knex('memberships')
+.join('groups','groups.id','memberships.group_id')
+.where('groups.name','friends')
+.andWhere('memberships.user1_id',user_id)
+.andWhere('memberships.rank','owner')
+.select('groups.id')
 }
