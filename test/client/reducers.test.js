@@ -26,6 +26,17 @@ describe('Reducers', () => {
     expect(nextState.logState).to.equal(true);
   });
 
+  it('should handle USER_LOGOUT', () => {
+    const initialState = { pulse: 0, logState: true };
+    const action = {
+      type:'USER_LOGOUT',
+      payload: { data: false }
+    }
+    const nextState = reducer(initialState, action);
+    expect(nextState.pulse).to.equal(0);
+    expect(nextState.logState).to.equal(false);
+  });
+
   it('should handle undefined state', () => {
     const action = {
       type: 'FETCH_LOGSTATE',

@@ -4,15 +4,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from 'react-addons-test-utils';
+import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
 import { expect } from 'chai';
 import axios from 'axios';
 
 import { Home } from '../../client/components/Home';
 
-const mockStore = configureStore([])({});
 
 describe('Home Component', () => {
+  let mockStore;
+
+  beforeEach(() => {
+    mockStore = configureStore([])({});
+  });
 
   it('should render a facebook login link when logged out', () => {
     let logState = false;
@@ -31,7 +35,7 @@ describe('Home Component', () => {
     expect(links[0].textContent).to.equal('facebook!');
   })
 
-  it.only('should render a logout button when logged in',() => {
+  it('should render a logout button when logged in',() => {
     let logState = true;
     const fetchLogState = () => logState = true;
     const component = renderIntoDocument(
@@ -50,12 +54,4 @@ describe('Home Component', () => {
     expect(buttons[1].textContent).to.equal('Log Out');
   })
 
-  xit('it logs out when you click Log Out',() => {
-    let logState = true;
-    const logOutState = (state) => logState = state;
-    const component = renderIntoDocument(<Home pulse={1} logState={true} fetchPulse={logOutState}/>)
-    const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
-    Simulate.click(buttons[1]);
-    expect(logState).to.equal(false);
-  })
 })

@@ -8,10 +8,6 @@ export class EventList extends Component {
     this.props.fetchPulse(this.props.pulse + 1);
   }
 
-  logOut(event) {
-    this.props.userLogOut();
-  }
-
   render() {
     return (
       <div>
@@ -23,7 +19,7 @@ export class EventList extends Component {
 
         <button 
           className="btn btn-danger" 
-          onClick={this.logOut.bind(this)}> 
+          onClick={this.props.userLogOut}> 
           Log Out
         </button> 
       </div>
@@ -41,7 +37,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) { 
   return {
     pulse: state.pulse,
-    logState: state.logState
   };
 }
 

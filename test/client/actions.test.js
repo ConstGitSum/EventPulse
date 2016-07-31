@@ -40,14 +40,15 @@ describe('Actions', () => {
     const store = mockStore({});
     moxios.stubRequest('/api/auth/logOut', {
       status: 200,
-      responseText: false
+      // using 'false' instead of false to actually return responseText
+      responseText: 'false'
     });
 
-    // Return the promise
     return store.dispatch(actions.userLogOut())
       .then(() => {
         const action = store.getActions()[0];
         expect(action.type).to.equal('USER_LOGOUT');
+        expect(action.payload.data).to.equal(false);
         done();
       });
   });
