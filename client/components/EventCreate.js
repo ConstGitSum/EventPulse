@@ -1,19 +1,19 @@
 import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import {Field, reduxForm, SubmissionError} from 'redux-form';
 import {createEvent} from '../actions/actions';
 
 export class EventCreate extends React.Component {
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props
+    const { error, handleSubmit, pristine, reset, submitting } = this.props
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='container'>
+        <br/>
         <h3>Create New Event</h3>
         <Field name="title" type="text" component={renderField} placeholder="Event title"/>
         <Field name="description" type="text" component={renderField} placeholder="Description"/>
         <Field name="location" type="text" component={renderField} placeholder="Location"/>
         <Field name="date" type="datetime-local" component={renderField} placeholder="Date"/>
-        <label>Duration</label>
         <Field name="duration" type="number" component={renderField} placeholder="Duration"/>
         <Field name="guests" type="number" component={renderField} placeholder="Number of guests"/>
         <label>Privacy</label>
@@ -23,6 +23,10 @@ export class EventCreate extends React.Component {
         <div>
           <button type="submit" className='btn btn-primary' disabled={submitting}>Create Event</button>
           <button type="button" className='btn btn-primary' disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        </div>
+        <div>
+          {console.log(error)}
+          {error && <strong>{error}</strong>}
         </div>
       </form>
     );
@@ -34,25 +38,21 @@ const validate = values => {
   const errors = {}
   if (!values.title) {
     errors.title = 'Required'
-  } else if (values.title.length > 15) {
-    errors.title = 'Must be 15 characters or less'
+  } else if (values.title.length > 30) {
+    errors.title = 'Must be 30 characters or less'
   }
   if (!values.description) {
     errors.description = 'Required'
-  } else if (values.description.length > 205) {
-    errors.description = 'Must be 205 characters or less'
+  } else if (values.description.length > 300) {
+    errors.description = 'Must be 300 characters or less'
   }
-  if (!values.email) {
-    errors.email = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address'
+  if (!values.location) {
+    errors.location = 'Required'
+  } else if (values.description.length > 100) {
+    errors.description = 'Must be 100 characters or less'
   }
-  if (!values.age) {
-    errors.age = 'Required'
-  } else if (isNaN(Number(values.age))) {
-    errors.age = 'Must be a number'
-  } else if (Number(values.age) < 18) {
-    errors.age = 'Sorry, you must be at least 18 years old'
+  if (!values.date) {
+    errors.date = 'Required'
   }
   return errors
 }
@@ -71,5 +71,7 @@ const renderField = props => (
 export default reduxForm({
   form: 'createEventForm',  // a unique identifier for this form
   onSubmit: createEvent,
+  onSubmitSuccess: () => {console.log('success'); },
+  onSubmitFail: () => {},
   validate  
 })(EventCreate)
