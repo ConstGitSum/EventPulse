@@ -38,6 +38,7 @@ module.exports = function(passport) {
                    })
                    User.addMemberships(friendsValues).then(function(){
                     console.log("Boo YA")
+                    done(null,token)
                    })
                  })
                })
@@ -67,14 +68,16 @@ module.exports = function(passport) {
                 })
                 User.addMemberships(friendsValues).then(function(){       //Add them to the database
                   console.log("bam wam!")
+                   done(null,token)
                 })
               })
+            }else{
+              done(null,token)
             }
             })
           })    
         }
-      })
-      done(null,token)
+      })  
     });
   }));
 };
