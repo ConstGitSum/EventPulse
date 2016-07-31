@@ -8,7 +8,9 @@ module.exports = {
   create: create,
   getGuests: getGuests,
   addGroup: addGroup,
-  addMemberships: addMemberships
+  addMemberships: addMemberships,
+  getMemberList: getMemberList,
+  getMemberships: getMemberships
 };
 
 function getUserById(id) {
@@ -41,7 +43,18 @@ function addGroup(groupName='friends'){
   return knex('groups').insert({name: groupName}).returning('id');
 }
 
+function getMemberList(group_id){
+  return knex('memberships').where('group_id',group_id)
+}
+
 function addMemberships(user){
   console.log("user value",user)
   return knex('memberships').insert(user)
+}
+
+function getMemberships(user_id){
+  return knex('memberships')
+  .join('groups','groups.id','memberships.group_id')
+  .where('user1_id', user_id)
+
 }
