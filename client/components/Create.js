@@ -65,5 +65,6 @@ const Create = (props) => {
 
 export default reduxForm({
   form: 'createEventForm',  // a unique identifier for this form
+  onSubmit: createEvent,
   validate  
-}, null, {onSubmit: createEvent})(Create)
+})(Create)
