@@ -48,7 +48,9 @@ const Create = (props) => {
       <Field name="description" type="text" component={renderField} placeholder="Description"/>
       <Field name="location" type="text" component={renderField} placeholder="Location"/>
       <Field name="date" type="date" component={renderField} placeholder="Date"/>
+      <label>Time</label>
       <Field name="time" type="time" component={renderField} placeholder="Time"/>
+      <label>Duration</label>
       <Field name="duration" type="time" component={renderField} placeholder="Duration"/>
       <Field name="guests" type="number" component={renderField} placeholder="Number of guests"/>
       <label>Privacy</label>
