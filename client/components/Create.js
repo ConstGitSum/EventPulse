@@ -17,52 +17,53 @@ export class Create extends Component {
   render() {   
     const {
       fields:{title,description,location,date,startTime,endTime,guests,privacy,visibility},
-      handleSubmit
+        handleSubmit,
+        submitting
       } = this.props;
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={this.props.handleSubmit}>
         <h3>Create New Event</h3>
-        <div className={`form-group ${title.touched && title.invalid ? 'has-danger': ''}`}>
+        <div className={`form-group ${title.touched && title.invalid ? 'has-danger': null}`}>
           <label>Event Title</label>
-          <input type='text' placeholder='Event Title' className='form-control' {...title}/>
+          <input type='text' placeholder='Movie night' className='form-control' {...title.input}/>
           <div className='text-help'>
-            {title.touched ? title.error: ''}
+            {/*title.touched ? title.error: ''*/}
           </div>
         </div>
         <div className='form-group'>
           <label>Description</label>
-          <textarea className='form-control' {...description}/>
+          <textarea placeholder='Some description...' className='form-control' {...description.input}/>
         </div>
         <div className='form-group'>
           <label>Location</label>
-          <input type='text' className='form-control' {...location}/>
+          <input type='text' placeholder='701 Brazos Street, Austin, TX' className='form-control' {...location.input}/>
         </div>
         <div className='form-group'>
           <label>Date</label>
-          <input type='date' className='form-control' {...date}/>
+          <input type='date' className='form-control' {...date.input}/>
         </div>
         <div className='form-group'>
           <label>Start Time</label>
-          <input type='time' className='form-control' {...startTime}/>
+          <input type='time' className='form-control' {...startTime.input}/>
         </div>
         <div className='form-group'>
           <label>End Time</label>
-          <input type='time' className='form-control' {...endTime}/>
+          <input type='time' className='form-control' {...endTime.input}/>
         </div>
         <div className='form-group'>
           <label>Number of Guests</label>
-          <input type='number' className='form-control' {...guests}/>
+          <input type='number' className='form-control' {...guests.input}/>
         </div>
         <div className='form-group'>
           <label>Privacy</label>
-          <input type='checkbox' className='form-control' {...privacy}/>
+          <input type='checkbox' className='form-control' {...privacy.input}/>
         </div>
         <div className='form-group'>
           <label>Visibility</label>
-          <input type='checkbox' className='form-control' {...visibility}/>
+          <input type='checkbox' className='form-control' {...visibility.input}/>
         </div>
-        <button type='submit' className='btn btn-primary'>Create Event</button>
+        <button type='submit' disabled={submitting} className='btn btn-primary'> {submitting ? <i/> : <i/>} Create Event</button>
       </form>
     );
   }
@@ -81,12 +82,13 @@ function validate(values){
 
 Create.propTypes = {
   fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 }
 
 export default reduxForm({
   form: 'CreateEventForm',
   fields,
   validate
-})(Create);
+}, null, {onSubmit: createEvent})(Create);
 
