@@ -80,4 +80,74 @@ describe('API User Routes', () => {
     });
   });
 
+  describe('GET /api/users/getMemberships/:id', function(){
+    it('should get all memberships for a user', function(done) {
+      chai.request(server)
+      .get('/api/users/getMemberships/2')
+      .end(function(err, res) {
+        res.should.have.status(200);
+        res.should.be.json; 
+        res.body.should.be.a('array');
+        res.body.length.should.equal(1);
+        res.body[0].should.have.property('id');
+        res.body[0].id.should.equal(1);
+        res.body[0].should.have.property('user1_id');
+        res.body[0].user1_id.should.equal(2);
+        res.body[0].should.have.property('group_id');
+        res.body[0].group_id.should.equal(1);
+        res.body[0].should.have.property('rank');
+        res.body[0].rank.should.equal('member');
+        res.body[0].should.have.property('name');
+        res.body[0].name.should.equal('ConstGitSum')
+        done()
+      })
+    })
+  })
+
+  describe('GET /api/users/getMemberList/:group_id', function(){
+    it('should get all members in a group', function(done) {
+      chai.request(server)
+      .get('/api/users/getMemberList/1')
+      .end(function(err, res) {
+        res.should.have.status(200);
+        res.should.be.json; 
+        res.body.should.be.a('array');
+        res.body.length.should.equal(2);
+        res.body[0].should.have.property('id');
+        res.body[0].id.should.equal(1);
+        res.body[0].should.have.property('user1_id');
+        res.body[0].user1_id.should.equal(1);
+        res.body[0].should.have.property('group_id');
+        res.body[0].group_id.should.equal(1);
+        res.body[0].should.have.property('rank');
+        res.body[0].rank.should.equal('admin');
+        res.body[0].should.have.property('name');
+        res.body[0].name.should.equal('Alice')
+        res.body[0].should.have.property('email');
+        res.body[0].email.should.equal('alice@gmail.com');
+        res.body[0].should.have.property('image');
+        res.body[0].image.should.equal('https://imageurl');
+        res.body[0].should.have.property('facebook_id');
+        res.body[0].facebook_id.should.equal('12104755554605551');
+        res.body[1].should.have.property('id');
+        res.body[1].id.should.equal(2);
+        res.body[1].should.have.property('user1_id');
+        res.body[1].user1_id.should.equal(2);
+        res.body[1].should.have.property('group_id');
+        res.body[1].group_id.should.equal(1);
+        res.body[1].should.have.property('rank');
+        res.body[1].rank.should.equal('member');
+        res.body[1].should.have.property('name');
+        res.body[1].name.should.equal('Bob')
+        res.body[1].should.have.property('email');
+        res.body[1].email.should.equal('bob@gmail.com');
+        res.body[1].should.have.property('image');
+        res.body[1].image.should.equal('https://imageurl');
+        res.body[1].should.have.property('facebook_id');
+        res.body[1].facebook_id.should.equal('12104755554605552');
+        done()
+      })
+    })
+  })
+
 });
