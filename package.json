@@ -37,6 +37,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
     "redux": "^3.5.2",
+    "redux-mock-store": "^1.1.2",
     "redux-promise": "^0.5.3",
     "sinon": "^1.17.5",
     "socket.io": "^1.4.8",

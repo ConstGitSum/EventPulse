@@ -14,7 +14,7 @@ export default class Lists extends React.Component {
 
 	componentDidMount(){
 		axios.get('/api/events').then((eventData) => {
-			// console.log('~~eventData~~~', eventData.data);
+			console.log('~~eventData~~~', eventData.data);
 			this.setState({events: eventData.data})
     	})
 	}
