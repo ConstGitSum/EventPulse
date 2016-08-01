@@ -1,11 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { browserHistory } from 'react-router'
+
+import { joinEvent, hideEvent } from '../actions/actions'
 
 export class EventDetails extends Component {
+  /**
+   * Join the current event by the current user
+   * @return {undefined} 
+   */
   onEventJoin() {
     this.props.joinEvent(this.props.currentEvent.eventId, this.props.currentUser.userId)
   }
+
+  /**
+   * Hide the event from the current user
+   * @return {undefined}
+   */
+  onEventHide() {
+    this.props.hideEvent(this.props.currentEvent.eventId, this.props.currentUser.userId)
+    browserHistory.push('/eventList')
+  }
+
   render() {
     return (
       <div className="event-details">
@@ -17,6 +34,7 @@ export class EventDetails extends Component {
             type="button" 
             className="btn btn-primary">Join</button>
           <button 
+            onClick={this.onEventHide}
             type="button" 
             className="btn btn-danger">Hide</button>
         </div>
@@ -32,7 +50,6 @@ export class EventDetails extends Component {
           <p>Location: {this.props.currentEvent.location}</p>
           <p>Time: {this.props.currentEvent.time}</p>
         </div>
-
         <button className="btn btn-primary">Chat</button>
       </div>
     )
@@ -42,13 +59,14 @@ export class EventDetails extends Component {
 function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
-    currentUser:  state.currentUser
+    currentUser:  state.currentUser,
+    guestList:    state.guestList
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    joinEvent
+    joinEvent, hideEvent
   }, dispatch)
 
 }
