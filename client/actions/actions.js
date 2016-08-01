@@ -38,7 +38,7 @@ export function userLogOut() {
  * @return {Object}         Action
  */
 export function joinEvent(eventId, userId) {
-  const url = `/api/events/${eventId}/join/${userId}`
+  const url = `/api/events/${eventId}/guests`
   const body = {
     userId: userId,
     status: "accepted"
