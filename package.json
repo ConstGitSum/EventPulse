@@ -25,6 +25,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
+    "jsdom": "^9.4.1",
     "knex": "^0.11.9",
     "moxios": "^0.3.0",
     "passport": "^0.3.2",
@@ -37,6 +38,7 @@
     "react-router": "^2.6.1",
     "redux": "^3.5.2",
     "redux-promise": "^0.5.3",
+    "sinon": "^1.17.5",
     "socket.io": "^1.4.8",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1"
@@ -44,6 +46,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "enzyme": "^1.2.0",
     "jsdom": "^9.4.1",
     "mocha": "^2.5.3",
     "redux-mock-store": "^1.1.2"
