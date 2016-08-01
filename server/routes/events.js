@@ -4,6 +4,7 @@ var router = express.Router();
 var Event = require('../models/event');
 var User = require('../models/user');
 var Guest = require('../models/guest');
+var Hide = require('../models/hidden_event');
 
 module.exports = router;
 
@@ -11,6 +12,40 @@ module.exports = router;
 router.get('/', function(req, res, next) {
   Event.getAll()
     .then((events) => {
+      res.status(200).json(events);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// *** GET events based on a filter *** //
+router.get('/filter/:filter/:userId', function(req, res, next) {
+  let filter = req.params.filter;
+  let userId = req.params.userId;
+  let query;
+
+  switch (filter) {
+    case 'unhidden':
+      query = Event.getUnhidden(userId);
+      break;
+    case 'hidden':
+      query = Event.getHidden(userId);
+      break;
+    case 'created':
+      query = Event.getCreated(userId);
+      break;
+    case 'joined':
+      query = Event.getJoined(userId);
+      break;
+    case 'pending':
+      query = Event.getPending(userId);
+      break;
+    default:
+      query = Event.getAll();
+  }
+
+  query.then((events) => {
       res.status(200).json(events);
     })
     .catch((err) => {
@@ -169,6 +204,28 @@ router.delete('/:id', function(req, res, next) {
         .catch((err) => {
           next(err);
         });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// *** POST new hidden event *** //
+router.post('/:id/hide', function(req, res, next) {
+  Hide.hide(req.params.id, req.body.user_id)
+    .then((hidden) => {
+      res.status(201).json(hidden[0]);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// *** DELETE new hidden event *** //
+router.delete('/:id/hide', function(req, res, next) {
+  Hide.hide(req.params.id, req.body.user_id)
+    .then(() => {
+      res.status(200).json({ status: 'deleted' });
     })
     .catch((err) => {
       next(err);

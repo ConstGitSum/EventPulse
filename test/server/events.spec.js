@@ -31,6 +31,76 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('GET /api/events/filter/:filter/:userId', function() {
+    it('should return unhidden events for a user', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/unhidden/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return hidden events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/hidden/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pick-up basketball game');
+          done();
+        });
+    });
+
+    it('should return created events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/created/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return joined events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/joined/2')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return pending events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/pending/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(0);
+          done();
+        });
+    });
+  });
+
   describe('GET /api/events', function() {
     it('should return all events', function(done) {
       chai.request(server)
@@ -337,6 +407,51 @@ describe('API Event Routes', () => {
           res.body.should.have.property('error');
           res.body.error.should.equal('User is not a guest');
           done();
+        });
+    });
+  });
+
+  describe('POST /api/events/:id/hide', function() {
+    it('should hide an event', function(done) {
+      chai.request(server)
+        .post('/api/events/1/hide')
+        .send({
+          user_id: 1
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('user_id');
+          res.body.user_id.should.equal(1);
+          res.body.should.have.property('event_id');
+          res.body.event_id.should.equal(1);
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /api/events/:id/hide', function() {
+    it('should hide an event', function(done) {
+      chai.request(server)
+        .post('/api/events/1/hide')
+        .send({
+          user_id: 1
+        })
+        .end(function(err, res) {
+          chai.request(server)
+            .delete('/api/events/1/hide')
+            .send({
+              user_id: 1
+            })
+            .end(function(err, res) {
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('object');
+              res.body.should.have.property('status');
+              res.body.status.should.equal('deleted');
+              done();
+            });
         });
     });
   });

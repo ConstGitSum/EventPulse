@@ -3,6 +3,15 @@
 ##### GET /api/events
   * returns array of all events
 
+##### GET /api/events/filter/:filter/:userId
+  * returns array of all events for a user filtered on these options:
+    * 'unhidden'
+    * 'hidden'
+    * 'created'
+    * 'joined'
+    * 'pending'
+  * if filter is invalid, will default to get all events
+
 ##### GET /api/events/:id
   * given param event id, returns array with single event
 
@@ -46,6 +55,16 @@
 
 ##### DELETE /api/events/:id
   * given an event id, deletes event if exists and returns that deleted event object
+
+##### POST /api/events/:id/hide
+  * request body should have property user_id
+  * given param event id, creates a record in hidden_events for a user
+  * returns object with user_id and event_id
+
+##### DELETE /api/events/:id/hide
+  * request body should have property user_id
+  * given param event id, deletes the record in hidden_events for a user
+  * returns object with status 'deleted' if successful
 
 
 ## Users

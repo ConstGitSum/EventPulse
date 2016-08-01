@@ -59,6 +59,12 @@ exports.seed = function(knex, Promise) {
       });
     })
     .then(() => {
+      return knex('hidden_events').insert({
+        user_id: 1,
+        event_id: 2
+      });
+    })
+    .then(() => {
       return knex('guests').insert({
         user_id: 1,
         event_id: 1,
