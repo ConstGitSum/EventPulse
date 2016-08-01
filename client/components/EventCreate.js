@@ -42,6 +42,7 @@ export class EventCreate extends React.Component {
 
 const validate = values => {
   const errors = {}
+  
   if (!values.title) {
     errors.title = 'Required'
   } else if (values.title.length > 30) {
@@ -72,7 +73,6 @@ const renderField = props => (
     </div>
   </div>
 )
-
 
 export default reduxForm({
   form: 'createEventForm',  // a unique identifier for this form
