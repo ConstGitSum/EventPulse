@@ -18,6 +18,15 @@
       * 'accepted'
       * 'declined'
 
+##### PUT /api/events/:eventId/guests/:userId
+  * given param event id and user id, updates guest status
+  * returns guest object with properties user_id, event_id, and status
+  * request body should be object with property status
+
+##### DELETE /api/events/:eventId/guests/:userId
+  * given param event id and user id, deletes guest if exists
+  * returns user object of guest deleted
+
 ##### POST /api/events
   * creates new event and returns that event object
   * request body should be event object with properties

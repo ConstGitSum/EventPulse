@@ -71,6 +71,26 @@ router.post('/:id/guests', function(req, res, next) {
     });
 });
 
+// *** PUT - update guest status *** //
+router.put('/:eventId/guests/:userId', function(req, res, next) {
+  const userId = +req.params.userId;
+  const eventId = +req.params.eventId;
+
+  if (req.body.hasOwnProperty('id')) {
+    return res.status(422).json({
+      error: 'You cannot update the id field'
+    });
+  }
+
+  Guest.update(eventId, userId, req.body.status)
+    .then((guest) => {
+      res.status(200).json(guest[0]);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 // *** DELETE guest for event *** //
 router.delete('/:eventId/guests/:userId', function(req, res, next) {
   const userId = +req.params.userId;

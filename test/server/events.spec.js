@@ -260,6 +260,45 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('PUT /api/events/:eventId/guests/:userId', function() {
+    it('should update a guest status', function(done) {
+      chai.request(server)
+        .put('/api/events/1/guests/2')
+        .send({
+          status: 'declined'
+        })
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('user_id');
+          res.body.user_id.should.equal(2);
+          res.body.should.have.property('event_id');
+          res.body.event_id.should.equal(1);
+          res.body.should.have.property('status');
+          res.body.status.should.equal('declined');
+          done();
+        });
+    });
+
+    it('should not update a guest if id field is part of the request', function(done) {
+      chai.request(server)
+        .put('/api/events/1/guests/2')
+        .send({
+          id: 5,
+          status: 'declined'
+        })
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('You cannot update the id field');
+          done();
+        });
+    });
+  });
+
   describe('DELETE /api/events/:eventId/guests/:userId', function() {
     it('should delete a guest at an event', function(done) {
       chai.request(server)
