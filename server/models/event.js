@@ -74,7 +74,6 @@ function getEventById(id) {
 }
 
 function create(event) {
-  console.log('create event', event);
   return knex('events').insert(event).returning('id');
 }
 

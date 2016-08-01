@@ -160,7 +160,6 @@ router.delete('/:eventId/guests/:userId', function(req, res, next) {
 
 // *** POST new event *** //
 router.post('/', function(req, res, next) {
-  console.log('req body', req.body);
   Event.create(req.body)
     .then((eventId) => {
       return Event.getEventById(eventId[0]);

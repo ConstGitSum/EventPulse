@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchPulse, fetchLogState, userLogOut } from '../actions/actions';
 import axios from 'axios';
-//import Create from './Create';
 
 export class App extends Component {
   componentDidMount() {
