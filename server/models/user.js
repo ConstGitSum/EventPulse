@@ -19,7 +19,6 @@ function getUserById(id) {
 }
 
 function getUserByFacebookId(fId) {
-  console.log("facebook ID",fId)
   return knex('users').where('facebook_id',fId);
 }
 

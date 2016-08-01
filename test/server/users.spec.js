@@ -30,7 +30,7 @@ describe('API User Routes', () => {
     });
   });
 
-  xdescribe('GET /api/users/:id', function() {
+  describe('GET /api/users/:id', function() {
     it('should return a single user', function(done) {
       chai.request(server)
         .get('/api/users/2')
@@ -52,7 +52,7 @@ describe('API User Routes', () => {
     });
   });
 
-  xdescribe('POST /api/users', function() {
+  describe('POST /api/users', function() {
     it('should add an user', function(done) {
       chai.request(server)
         .post('/api/users')
@@ -79,7 +79,7 @@ describe('API User Routes', () => {
     });
   });
 
-  xdescribe('GET /api/users/getMemberships/:id', function(){
+  describe('GET /api/users/getMemberships/:id', function(){
     it('should get all memberships for a user', function(done) {
       chai.request(server)
       .get('/api/users/getMemberships/2')
@@ -103,7 +103,7 @@ describe('API User Routes', () => {
     })
   })
 
-  xdescribe('GET /api/users/getMemberList/:group_id', function(){
+  describe('GET /api/users/getMemberList/:group_id', function(){
     it('should get all members in a group', function(done) {
       chai.request(server)
       .get('/api/users/getMemberList/1')
@@ -149,7 +149,7 @@ describe('API User Routes', () => {
     })
   })
 
-  xdescribe('GET /api/users/getFriendsListId', function(){
+  describe('GET /api/users/getFriendsListId', function(){
     it('should get the ID of the friends list for a user', function(done){
       chai.request(server)
       .get('/api/users/getFriendsListId/1')
@@ -167,7 +167,7 @@ describe('API User Routes', () => {
     })
   })
 
-  xdescribe('POST /api/users/addGroup', function(){
+  describe('POST /api/users/addGroup', function(){
     it('should add a group to the database', function(done){
       chai.request(server)
         .post('/api/users/addGroup')
@@ -196,7 +196,7 @@ describe('API User Routes', () => {
     })
   })
                                                                    
-  xdescribe('POST /api/users/addMemberships', function(){
+  describe('POST /api/users/addMemberships', function(){
     it('should add a member to a group', function(done){
       chai.request(server)
         .post('/api/users/addMemberships')
@@ -210,7 +210,7 @@ describe('API User Routes', () => {
           res.should.be.json; // jshint ignore:line
           res.body.should.be.a('array');
           res.body[0].should.have.property('id');
-          res.body[0].id.should.equal(4);
+          res.body[0].id.should.equal(5);
           res.body[0].should.have.property('user1_id');
           res.body[0].user1_id.should.equal(2);
           res.body[0].should.have.property('group_id');
@@ -236,7 +236,7 @@ describe('API User Routes', () => {
           res.should.be.json; // jshint ignore:line
           res.body.should.be.a('array');
           res.body[0].should.have.property('id');
-          res.body[0].id.should.equal(4);
+          res.body[0].id.should.equal(5);
           res.body[0].should.have.property('user1_id');
           res.body[0].user1_id.should.equal(1);
           res.body[0].should.have.property('group_id');
@@ -244,7 +244,7 @@ describe('API User Routes', () => {
           res.body[0].should.have.property('rank');
           res.body[0].rank.should.equal('member');
           res.body[1].should.have.property('id');
-          res.body[1].id.should.equal(5);
+          res.body[1].id.should.equal(6);
           res.body[1].should.have.property('user1_id');
           res.body[1].user1_id.should.equal(2);
           res.body[1].should.have.property('group_id');
@@ -355,14 +355,14 @@ describe('API User Routes', () => {
       }
     }
   }
-    xit('should add a new facebook user with no friends :-(', function(done){
+    it('should add a new facebook user with no friends :-(', function(done){
       chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
         token: 2,
         profile: profile
       })
-      .end(function(err,res){
+      .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
         res.body[0].should.have.property('user_id');
@@ -374,14 +374,14 @@ describe('API User Routes', () => {
      
      
     })
-    xit('should add a new facebook user with a friend', function(done){
+    it('should add a new facebook user with a friend', function(done){
       chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
-        token:2,
+        token: 2,
         profile: profile2
       })
-      .end(function(err,res){
+      .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
         res.body[0].should.have.property('user_id')
@@ -404,10 +404,10 @@ describe('API User Routes', () => {
       chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
-        token:2,
+        token: 2,
         profile: profile3
       })
-      .end(function(err,res){
+      .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
         res.body[0].should.have.property('user_id')
@@ -436,10 +436,10 @@ describe('API User Routes', () => {
         chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
-        token:2,
+        token: 2,
         profile: profile4
       })
-      .end(function(err,res){
+      .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
         res.body[0].should.have.property('id')
@@ -455,10 +455,10 @@ describe('API User Routes', () => {
         chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
-        token:2,
+        token: 2,
         profile: profile5
       })
-      .end(function(err,res){
+      .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
         res.body[0].should.have.property('id')
@@ -483,10 +483,10 @@ describe('API User Routes', () => {
         chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
-        token:2,
+        token: 2,
         profile: profile6
       })
-      .end(function(err,res){
+      .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
         res.body[0].should.have.property('id')
@@ -519,10 +519,10 @@ describe('API User Routes', () => {
         chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
-        token:2,
+        token: 2,  
         profile: profile7
       })
-      .end(function(err,res){
+      .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
         res.body[0].should.have.property('id')
