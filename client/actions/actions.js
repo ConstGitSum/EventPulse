@@ -40,7 +40,7 @@ export function userLogOut() {
 export function joinEvent(eventId, userId) {
   const url = `/api/events/${eventId}/guests`;
   const body = {
-    userId: userId,
+    user_id: userId,
     status: "accepted"
   };
   const request = axios.post(url, body);
@@ -58,8 +58,8 @@ export function joinEvent(eventId, userId) {
  * @return {Object}        Action
  */
 export function hideEvent(eventId, userId) {
-  const url = `/api/events${eventId}/hide`;
-  const body = { userId: userId };
+  const url = `/api/events/${eventId}/hide`;
+  const body = { user_id: userId };
   const request = axios.post(url, body);
 
   return {
