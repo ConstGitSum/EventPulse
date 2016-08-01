@@ -30,7 +30,7 @@ describe('List component', () => {
   	});	
 
   	it('Correctly updates the state after axios call in `componentDidMount` was made', () => {
-    	axios.get('/api/events').then((eventData) => {
+		axios.get('/api/events').then((eventData) => {
 			this.setState({events: eventData.data})
     	})
 	    wrapper = mount(<List />);
