@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { browserHistory } from 'react-router'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 
-import { joinEvent, hideEvent } from '../actions/actions'
+import { joinEvent, hideEvent } from '../actions/actions';
 
 export class EventDetails extends Component {
   /**
@@ -11,7 +11,7 @@ export class EventDetails extends Component {
    * @return {undefined} 
    */
   onEventJoin() {
-    this.props.joinEvent(this.props.currentEvent.eventId, this.props.currentUser.userId)
+    this.props.joinEvent(this.props.currentEvent.eventId, this.props.currentUser.userId);
   }
 
   /**
@@ -19,8 +19,8 @@ export class EventDetails extends Component {
    * @return {undefined}
    */
   onEventHide() {
-    this.props.hideEvent(this.props.currentEvent.eventId, this.props.currentUser.userId)
-    browserHistory.push('/eventList')
+    this.props.hideEvent(this.props.currentEvent.eventId, this.props.currentUser.userId);
+    browserHistory.push('/eventList');
   }
 
   render() {
