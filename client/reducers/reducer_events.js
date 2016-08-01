@@ -1,4 +1,4 @@
-import { JOIN_EVENT, HIDE_EVENT } from '../actions/actions'
+import { JOIN_EVENT, HIDE_EVENT } from '../actions/actions';
 
 /**
  * Reducer to update state based on EventDetails' actions
@@ -17,16 +17,16 @@ export default function(state = {}, action) {
     case JOIN_EVENT:
       // action.payload is a promise that resolved with the new user object that was
       // returned after the server API call to join event
-      newState = Object.assign({}, state)
-      newState.currentEvent.guests = [...newState.currentEvent.guests, action.payload.data]
+      newState = Object.assign({}, state);
+      newState.currentEvent.guests = [...newState.currentEvent.guests, action.payload.data];
       return newState
     /**
      * Hide the current event
      * @type {Object}
      */
     case HIDE_EVENT:
-      newState = Object.assign({}, state)
-      newState.currentEvent = {}
+      newState = Object.assign({}, state);
+      newState.currentEvent = {};
       return newState
   }
 }
