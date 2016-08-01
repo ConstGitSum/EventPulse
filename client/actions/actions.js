@@ -38,12 +38,12 @@ export function userLogOut() {
  * @return {Object}         Action
  */
 export function joinEvent(eventId, userId) {
-  const url = `/api/events/${eventId}/guests`
+  const url = `/api/events/${eventId}/guests`;
   const body = {
     userId: userId,
     status: "accepted"
-  }
-  const request = axios.post(url, body)
+  };
+  const request = axios.post(url, body);
 
   return {
     type: JOIN_EVENT,
@@ -58,9 +58,9 @@ export function joinEvent(eventId, userId) {
  * @return {Object}        Action
  */
 export function hideEvent(eventId, userId) {
-  const url = `/api/events${eventId}/hide`
-  const body = { userId: userId }
-  const request = axios.post(url, body)
+  const url = `/api/events${eventId}/hide`;
+  const body = { userId: userId };
+  const request = axios.post(url, body);
 
   return {
     type: HIDE_EVENT,
