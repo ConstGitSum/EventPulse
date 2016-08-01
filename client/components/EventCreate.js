@@ -6,12 +6,10 @@ export class EventCreate extends React.Component {
 
   render() {
     const { error, handleSubmit, pristine, reset, submitting } = this.props;
-
     return (
       <div className='container'>
         <h3>Create New Event</h3>
-        <form onSubmit={handleSubmit}>
-          
+        <form onSubmit={handleSubmit}>         
           <Field name="title" type="text" component={renderField} placeholder="Event title" defaultValue="event title" />
           <Field name="description" type="text" component={renderField} placeholder="Description" defaultValue="event description"/>
           <Field name="location" type="text" component={renderField} placeholder="Location" defaultValue="event location"/>
@@ -39,12 +37,10 @@ export class EventCreate extends React.Component {
       </div>
     );
   }
-
 }
 
 const validate = values => {
   const errors = {}
-  
   if (!values.title) {
     errors.title = 'Required'
   } else if (values.title.length > 30) {

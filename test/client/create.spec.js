@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from 'react-addons-test-utils';
 import chai, { expect } from 'chai';
 import { shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
@@ -11,21 +10,16 @@ import {EventCreate} from '../../client/components/EventCreate';
 chai.use(chaiEnzyme());
 
 describe("EventCreate", () => {
-  let subject = null
-  let submitting, touched, error, resetForm, onSave, onSaveResponse
-  beforeEach(() => {
-    submitting = false
-    touched = false
-    error = null
-    // resetForm = sinon.spy()
-    // onSaveResponse = Promise.resolve()
-    // onSave = sinon.stub()
-    // onSave.returns(onSaveResponse)
-    // console.log('onSave~~',onSave);
+    let subject = null;
+    let submitting, touched, error;
+    beforeEach(() => {
+      submitting = false;
+      touched = false;
+      error = null;
   })
+
   const buildSubject = () => {
     const props = {
-      // onSave,
       submitting: submitting,
       fields: {
         title: {
@@ -37,6 +31,7 @@ describe("EventCreate", () => {
     }
     return shallow(<EventCreate {...props}/>)
   }
+
   context("Title and Form", () => {
     it("should display a title and a form", () => {
       subject = buildSubject().node.props.children;
@@ -45,9 +40,9 @@ describe("EventCreate", () => {
       expect(subject[1].type).to.equal('form');
     })
   }),
+
   context("All Fields", () => {
     subject = buildSubject().node.props.children;
-
     it("should display title, description, location, date, duration, guests", () => {
       let fields = [];
       subject[1].props.children.forEach(element => {
@@ -63,8 +58,6 @@ describe("EventCreate", () => {
 
     it("should display privacy and visibility", () => {
       let fields = [];
-      
-      // console.log('1~~~',subject[1].props.children[11].props.children)
       subject[1].props.children.forEach(element => {
         element.props.children? fields.push(element.props.children):null;
       })
@@ -83,5 +76,4 @@ describe("EventCreate", () => {
       expect(fields.indexOf('Clear Values') >= 0).to.equal(true);    
     })
   })
-  
 })
