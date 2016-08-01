@@ -145,9 +145,115 @@ describe('API User Routes', () => {
         res.body[1].image.should.equal('https://imageurl');
         res.body[1].should.have.property('facebook_id');
         res.body[1].facebook_id.should.equal('12104755554605552');
-        done()
+        done();
       })
     })
   })
 
+  describe('GET /api/users/getFriendsListId', function(){
+    it('should get the ID of the friends list for a user', function(done){
+      chai.request(server)
+      .get('/api/users/getFriendsListId/1')
+      .end(function(err,res){
+        res.should.have.status(200);
+        res.should.be.json; 
+        res.body.should.be.a('array');
+        res.body.length.should.equal(1);
+        res.body[0].should.have.property('id');
+        res.body[0].id.should.equal(2)
+         done();
+      })
+     
+     
+    })
+  })
+
+  describe('POST /api/users/addGroup', function(){
+    it('should add a group to the database', function(done){
+      chai.request(server)
+        .post('/api/users/addGroup')
+        .send({
+          groupName: 'Super Best Friends',
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('array');
+          res.body[0].should.equal(4)
+          done();
+      })
+    })
+    it('should not need a group name', function(done){
+      chai.request(server)
+        .post('/api/users/addGroup')
+        .send({})
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('array');
+          res.body[0].should.equal(4)
+          done();
+      })
+    })
+  })
+                                                                   
+  describe('POST /api/users/addMemberships', function(){
+    it('should add a member to a group', function(done){
+      chai.request(server)
+        .post('/api/users/addMemberships')
+        .send({
+          user1_id: 2,
+          group_id: 2,
+          rank: 'member'
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('array');
+          res.body[0].should.have.property('id');
+          res.body[0].id.should.equal(4);
+          res.body[0].should.have.property('user1_id');
+          res.body[0].user1_id.should.equal(2);
+          res.body[0].should.have.property('group_id');
+          res.body[0].group_id.should.equal(2);
+          res.body[0].should.have.property('rank');
+          res.body[0].rank.should.equal('member');
+          done();
+      })   
+    })
+    it('should add multiple members to a group', function(done){
+      chai.request(server)
+        .post('/api/users/addMemberships')
+        .send([{
+          user1_id: 1,
+          group_id: 3,
+          rank: 'member'
+        },{
+          user1_id: 2,
+          group_id: 3,
+          rank: 'member'}])
+        .end(function(err,res){
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('array');
+          res.body[0].should.have.property('id');
+          res.body[0].id.should.equal(4);
+          res.body[0].should.have.property('user1_id');
+          res.body[0].user1_id.should.equal(1);
+          res.body[0].should.have.property('group_id');
+          res.body[0].group_id.should.equal(3);
+          res.body[0].should.have.property('rank');
+          res.body[0].rank.should.equal('member');
+          res.body[1].should.have.property('id');
+          res.body[1].id.should.equal(5);
+          res.body[1].should.have.property('user1_id');
+          res.body[1].user1_id.should.equal(2);
+          res.body[1].should.have.property('group_id');
+          res.body[1].group_id.should.equal(3);
+          res.body[1].should.have.property('rank');
+          res.body[1].rank.should.equal('member');
+          done();
+        })
+    })
+  })
 });

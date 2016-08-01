@@ -60,7 +60,7 @@ router.get('/getMemberList/:group_id',function(req, res, next){
 })
 
 router.post('/addGroup',function(req, res, next){
-  User.addGroup(req.body)
+  User.addGroup(req.body.groupName)
     .then((group) => {
       res.status(201).json(group);
     })

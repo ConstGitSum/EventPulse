@@ -50,8 +50,7 @@ function getMemberList(group_id){
 }
 
 function addMemberships(user){
-  console.log("user value",user)
-  return knex('memberships').insert(user)
+  return knex('memberships').insert(user).returning(['id','user1_id','group_id','rank'])
 }
 
 function getMemberships(user_id){

@@ -29,6 +29,16 @@ exports.seed = function(knex, Promise) {
       });
     })
     .then(() => {
+      return knex('groups').insert({
+        name: 'friends'
+      });
+    })
+    .then(() => {
+      return knex('groups').insert({
+        name: 'joinMe'
+      })
+    })
+    .then(() => {
       return knex('memberships').insert([{
         user1_id: 1,
         group_id: 1,
@@ -37,6 +47,10 @@ exports.seed = function(knex, Promise) {
         user1_id: 2,
         group_id: 1,
         rank: 'member'
+      },{
+        user1_id: 1,
+        group_id: 2,
+        rank: 'owner'
       }]);
     })
     .then(() => {

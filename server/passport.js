@@ -24,7 +24,7 @@ module.exports = function(passport) {
   }, function(token, refreshToken, profile, done) {
     process.nextTick(function() {
       User.getUserByFacebookId(profile.id).then(function(value){
-        if(value.length==0){
+        if(value.length === 0){
           let user = {name: (profile.name.givenName + ' '+profile.name.familyName), email: profile.emails[0].value, image: profile.photos[0].value,facebook_id: profile.id} //name, email,image, facebook_id
           User.create(user).then(function(user_id){
             User.addGroup().then(function(group_id){
