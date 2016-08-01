@@ -4,12 +4,22 @@
   * returns array of all events
 
 ##### GET /api/events/:id
-  * given an event id, returns array with single event
+  * given param event id, returns array with single event
 
 ##### GET /api/events/:id/guests
-  * given an event id, returns array of user objects who are guests
+  * given param event id, returns array of user objects who are guests
+
+##### POST /api/events/:id/guests
+  * given param event id, creates new guest and returns that guest user object
+  * request body should be guest object with properties
+    * user_id (int)
+    * status (string)
+      * 'pending'
+      * 'accepted'
+      * 'declined'
 
 ##### POST /api/events
+  * creates new event and returns that event object
   * request body should be event object with properties
     * title (string)
     * description (string)
@@ -20,7 +30,6 @@
     * max_guests (int optional)
     * privacy (bool)
     * group_visibility (int): id in group table
-  * creates new event and returns that event object
 
 ##### PUT /api/events/:id
   * request body should be event object with properties above to update

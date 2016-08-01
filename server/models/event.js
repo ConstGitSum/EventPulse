@@ -1,7 +1,5 @@
 var knex = require('../db/knex');
 
-// *** queries *** //
-
 module.exports = {
   getAll: getAll,
   getEventById: getEventById,

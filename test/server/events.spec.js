@@ -217,4 +217,47 @@ describe('API Event Routes', () => {
         });
     });
   });
+
+  describe('POST /api/events/:id/guests', function() {
+    it('should create a new guest for an event', function(done) {
+      chai.request(server)
+        .post('/api/events/2/guests')
+        .send({
+          user_id: 1,
+          status: 'pending'
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Alice');
+          res.body.should.have.property('email');
+          res.body.email.should.equal('alice@gmail.com');
+          res.body.should.have.property('image');
+          res.body.image.should.equal('https://imageurl');
+          res.body.should.have.property('facebook_id');
+          res.body.facebook_id.should.equal('12104755554605551');
+          done();
+        });
+    });
+
+    it('should not create a new guest if user is already a guest', function(done) {
+      chai.request(server)
+        .post('/api/events/2/guests')
+        .send({
+          user_id: 2,
+          status: 'pending'
+        })
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('User is already a guest');
+          done();
+        });
+    });
+  });
+
 });
