@@ -40,7 +40,7 @@ describe('EventDetails', () => {
   )
 
   describe('Reducer - EventDetails', () => {
-    it('handles JOIN_EVENT', () => {
+    it('should handles JOIN_EVENT', () => {
       const initialState = seedData
       const action = {
         type: 'JOIN_EVENT',
@@ -53,6 +53,17 @@ describe('EventDetails', () => {
       const nextState = reducer_events(initialState, action)
 
       expect(nextState.currentEvent.guests[0]).to.deep.equal({id: 1})
+    })
+
+    it('should handle HIDE_EVENT', () => {
+      const initialState = seedData
+      const action = {
+        type: 'HIDE_EVENT',
+        payload: {}
+      }
+      const nextState = reducer_events(initialState, action)
+
+      expect(nextState.currentEvent).to.deep.equal({})
     })
 
   })
@@ -76,10 +87,6 @@ describe('EventDetails', () => {
       expect(buttons[0].textContent).to.equal('Join')
       expect(buttons[1].textContent).to.equal('Hide')
       expect(buttons[2].textContent).to.equal('Chat')
-    })
-
-    xit('should join the currentEvent when you click Join', () => {
-      Simulate.click(button[0])
     })
   })
 
