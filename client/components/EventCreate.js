@@ -6,35 +6,37 @@ export class EventCreate extends React.Component {
 
   render() {
     const { error, handleSubmit, pristine, reset, submitting } = this.props;
- 
+
     return (
-      <form onSubmit={handleSubmit} className='container'>
-        <br/>
+      <div className='container'>
         <h3>Create New Event</h3>
-        <Field name="title" type="text" component={renderField} placeholder="Event title" defaultValue="event title" />
-        <Field name="description" type="text" component={renderField} placeholder="Description" defaultValue="event description"/>
-        <Field name="location" type="text" component={renderField} placeholder="Location" defaultValue="event location"/>
-        <Field name="date" type="datetime-local" component={renderField} placeholder="Date" defaultValue="2016-08-30T08:00"/>
-        <Field name="duration" type="number" component={renderField} placeholder="Duration"/>
-        <Field name="guests" type="number" component={renderField} placeholder="Number of guests"/>
-        <br/>
-        <label>Privacy</label>
-        <div>
-          <label><Field name="privacy" component="input" type="radio" value="false"/> public</label>
+        <form onSubmit={handleSubmit}>
+          
+          <Field name="title" type="text" component={renderField} placeholder="Event title" defaultValue="event title" />
+          <Field name="description" type="text" component={renderField} placeholder="Description" defaultValue="event description"/>
+          <Field name="location" type="text" component={renderField} placeholder="Location" defaultValue="event location"/>
+          <Field name="date" type="datetime-local" component={renderField} placeholder="Date" defaultValue="2016-08-30T08:00"/>
+          <Field name="duration" type="number" component={renderField} placeholder="Duration"/>
+          <Field name="guests" type="number" component={renderField} placeholder="Number of guests"/>
           <br/>
-          <label><Field name="privacy" component="input" type="radio" value="true"/> private</label>
-        </div>
-        <label>Visibility</label>
-        <div>
-          <label><Field name="visibility" component="input" type="radio" value="1"/> group1</label>
-          <br/>
-          <label><Field name="visibility" component="input" type="radio" value="2"/> group2</label>
-        </div>
-        <div>
-          <button type="submit" className='btn btn-primary' disabled={submitting}>Create Event</button>
-          <button type="button" className='btn btn-primary' disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-        </div>
-      </form>
+          <label>Privacy</label>
+          <div>
+            <label><Field name="privacy" component="input" type="radio" value="false"/> public</label>
+            <br/>
+            <label><Field name="privacy" component="input" type="radio" value="true"/> private</label>
+          </div>
+          <label>Visibility</label>
+          <div>
+            <label><Field name="visibility" component="input" type="radio" value="1"/> group1</label>
+            <br/>
+            <label><Field name="visibility" component="input" type="radio" value="2"/> group2</label>
+          </div>
+          <div>
+            <button type="submit" className='btn btn-primary' disabled={submitting}>Create Event</button>
+            <button type="button" className='btn btn-primary' disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+          </div>
+        </form>
+      </div>
     );
   }
 
@@ -69,7 +71,7 @@ const renderField = props => (
     <label>{props.placeholder}</label>
     <div>
       <input {...props.input}/>
-      {props.touched && props.error && <span>{props.error}</span>}
+      {props.touched && props.error && <span className='help-block'>{props.error}</span>}
     </div>
   </div>
 )
@@ -77,7 +79,7 @@ const renderField = props => (
 export default reduxForm({
   form: 'createEventForm',  // a unique identifier for this form
   onSubmit: createEvent,
-  onSubmitSuccess: () => {console.log('success'); },
+  onSubmitSuccess: () => {console.log('success');},
   onSubmitFail: () => {throw new SubmissionError({_error: 'Login failed!' })},
   validate  
 })(EventCreate)

@@ -1,58 +1,87 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from 'react-addons-test-utils';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+import { shallow } from 'enzyme';
+import chaiEnzyme from 'chai-enzyme';
+import sinon from 'sinon';
 
 import {EventCreate} from '../../client/components/EventCreate';
 
-var chai = require('chai');
+chai.use(chaiEnzyme());
 
-describe('Create', () => {
+describe("EventCreate", () => {
+  let subject = null
+  let submitting, touched, error, resetForm, onSave, onSaveResponse
+  beforeEach(() => {
+    submitting = false
+    touched = false
+    error = null
+    // resetForm = sinon.spy()
+    // onSaveResponse = Promise.resolve()
+    // onSave = sinon.stub()
+    // onSave.returns(onSaveResponse)
+    // console.log('onSave~~',onSave);
+  })
+  const buildSubject = () => {
+    const props = {
+      // onSave,
+      submitting: submitting,
+      fields: {
+        title: {
+          value: '',
+          touched: touched,
+          error: error
+        }
+      }
+    }
+    return shallow(<EventCreate {...props}/>)
+  }
+  context("Title and Form", () => {
+    it("should display a title and a form", () => {
+      subject = buildSubject().node.props.children;
+      expect(subject).to.exist;
+      expect(subject[0].props.children).to.equal('Create New Event');
+      expect(subject[1].type).to.equal('form');
+    })
+  }),
+  context("All Fields", () => {
+    subject = buildSubject().node.props.children;
 
-  describe('Display Form Labels', () => {
-    xit('should display labels', () => {
-      const component = renderIntoDocument(<EventCreate />)
-      const Field = scryRenderedDOMComponentsWithTag(component, 'Field')
-      expect(Field.length).to.equal(9)
-      expect(Field[0].textContent).to.equal('Event Title')
-      expect(Field[1].textContent).to.equal('Description')
-      expect(Field[2].textContent).to.equal('Location')
-      expect(Field[3].textContent).to.equal('Date')
-      expect(Field[4].textContent).to.equal('Start Time')
-      expect(Field[5].textContent).to.equal('End Time')
-      expect(Field[6].textContent).to.equal('Number of Guests')
-      expect(Field[7].textContent).to.equal('Privacy')
-      expect(Field[8].textContent).to.equal('Visibility')
+    it("should display title, description, location, date, duration, guests", () => {
+      let fields = [];
+      subject[1].props.children.forEach(element => {
+        element.props.name? fields.push(element.props.name):null;        
+      })
+      expect(fields.indexOf('title') >= 0).to.equal(true);
+      expect(fields.indexOf('description') >= 0).to.equal(true);
+      expect(fields.indexOf('location') >= 0).to.equal(true);
+      expect(fields.indexOf('date') >= 0).to.equal(true);
+      expect(fields.indexOf('duration') >= 0).to.equal(true);
+      expect(fields.indexOf('guests') >= 0).to.equal(true);
+    }),
+
+    it("should display privacy and visibility", () => {
+      let fields = [];
+      
+      // console.log('1~~~',subject[1].props.children[11].props.children)
+      subject[1].props.children.forEach(element => {
+        element.props.children? fields.push(element.props.children):null;
+      })
+      expect(fields.indexOf('Privacy') >= 0).to.equal(true);
+      expect(fields.indexOf('Visibility') >= 0).to.equal(true);    
+    }),
+
+    it("should display Create Event button and Clear Values button", () => {
+      let fields = [];
+      let length = subject[1].props.children.length;
+      let buttons = subject[1].props.children[length-1].props.children;
+      buttons.forEach(element => {
+        element.props.children? fields.push(element.props.children):null;
+      })
+      expect(fields.indexOf('Create Event') >= 0).to.equal(true);
+      expect(fields.indexOf('Clear Values') >= 0).to.equal(true);    
     })
   })
-
-  describe('Display Form inputs', () => {
-    xit('should display inputs', () => {
-      const component = renderIntoDocument(<EventCreate />)
-      const inputs = scryRenderedDOMComponentsWithTag(component, 'input')
-      const textarea = scryRenderedDOMComponentsWithTag(component, 'textarea')
-      expect(inputs.length).to.equal(8)
-      expect(textarea.length).to.equal(1)
-    })
-    xit('should change input value', () => {
-      const component = renderIntoDocument(<EventCreate />)
-      const inputs = scryRenderedDOMComponentsWithTag(component, 'input')
-      console.log('inputs[0]~~~~~',inputs[0])
-      // const node = inputs[0];
-      // node.value='pokemon';
-      Simulate.change(inputs[0], { target: { value: 'pokemon' } });
-      Simulate.keyDown(inputs[0], {key: "Enter", keyCode: 13, which: 13});
-      expect(inputs[0].state.inputValue).toEqual('pokemon');
-    })
-  })
-
-  describe('Display Button', () => {
-    xit('should display a Create Event button', () => {
-      const component = renderIntoDocument(<EventCreate />)
-      const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
-      expect(buttons.length).to.equal(1);
-      expect(buttons[0].textContent).to.equal('Create Event')
-    })
-  })
-
+  
 })
