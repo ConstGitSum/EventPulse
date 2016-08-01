@@ -50,6 +50,12 @@
 ##### POST /api/events/:id/hide
   * request body should have property user_id
   * given param event id, creates a record in hidden_events for a user
+  * returns object with user_id and event_id
+
+##### DELETE /api/events/:id/hide
+  * request body should have property user_id
+  * given param event id, deletes the record in hidden_events for a user
+  * returns object with status 'deleted' if successful
 
 
 ## Users

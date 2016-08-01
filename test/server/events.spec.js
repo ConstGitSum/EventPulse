@@ -375,7 +375,11 @@ describe('API Event Routes', () => {
               user_id: 1
             })
             .end(function(err, res) {
-              console.log(res.body);
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('object');
+              res.body.should.have.property('status');
+              res.body.status.should.equal('deleted');
               done();
             });
         });

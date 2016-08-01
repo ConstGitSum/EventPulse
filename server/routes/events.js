@@ -190,8 +190,8 @@ router.post('/:id/hide', function(req, res, next) {
 // *** DELETE new hidden event *** //
 router.delete('/:id/hide', function(req, res, next) {
   Hide.hide(req.params.id, req.body.user_id)
-    .then((hidden) => {
-      res.status(200).json(hidden[0]);
+    .then(() => {
+      res.status(200).json({ status: 'deleted' });
     })
     .catch((err) => {
       next(err);
