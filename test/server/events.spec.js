@@ -260,4 +260,46 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('DELETE /api/events/:eventId/guests/:userId', function() {
+    it('should delete a guest at an event', function(done) {
+      chai.request(server)
+        .delete('/api/events/1/guests/2')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Bob');
+          res.body.should.have.property('email');
+          res.body.email.should.equal('bob@gmail.com');
+          res.body.should.have.property('image');
+          res.body.image.should.equal('https://imageurl');
+          res.body.should.have.property('facebook_id');
+          res.body.facebook_id.should.equal('12104755554605552');
+          chai.request(server)
+            .get('/api/events/1/guests')
+            .end(function(err, res) {
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('array');
+              res.body.length.should.equal(1);
+              done();
+            });
+        });
+    });
+
+    it('return error if user is not a guest', function(done) {
+      chai.request(server)
+        .delete('/api/events/2/guests/1')
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('User is not a guest');
+          done();
+        });
+    });
+  });
+
 });
