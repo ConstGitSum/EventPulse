@@ -1,18 +1,12 @@
 import { JOIN_EVENT, HIDE_EVENT } from '../actions/actions';
 
-const seed = {
-  title: "TDD Title",
-  description: "TDD Description",
-  location: "TDD Location",
-  time: "TDD Time"
-}
 /**
  * Reducer to update state based on EventDetails' actions
  * @param  {Object} state  Current store's state
  * @param  {Object} action 
  * @return {Object}        New state
  */
-export default function(state = seed, action) {
+export default function(state = {}, action) {
   let newState;
 
   switch (action.type) {
@@ -24,7 +18,7 @@ export default function(state = seed, action) {
       // action.payload is a promise that resolved with the new user object that was
       // returned after the server API call to join event
       newState = Object.assign({}, state);
-      newState.currentEvent.guests = [...newState.currentEvent.guests, action.payload.data];
+      newState.guests = [...newState.guests, action.payload.data];
       return newState
     /**
      * Hide the current event
@@ -32,7 +26,7 @@ export default function(state = seed, action) {
      */
     case HIDE_EVENT:
       newState = Object.assign({}, state);
-      newState.currentEvent = {};
+      newState = {};
       return newState
     default:
       return state;

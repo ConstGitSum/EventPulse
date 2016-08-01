@@ -39,34 +39,7 @@ describe('EventDetails', () => {
       currentUser={seedData.currentUser} />
   )
 
-  describe('Reducer - EventDetails', () => {
-    it('should handles JOIN_EVENT', () => {
-      const initialState = seedData
-      const action = {
-        type: 'JOIN_EVENT',
-        payload: {
-          data: {
-            id: 1
-          }
-        }
-      }
-      const nextState = reducer_eventDetails(initialState, action)
-
-      expect(nextState.currentEvent.guests[0]).to.deep.equal({id: 1})
-    })
-
-    it('should handle HIDE_EVENT', () => {
-      const initialState = seedData
-      const action = {
-        type: 'HIDE_EVENT',
-        payload: {}
-      }
-      const nextState = reducer_eventDetails(initialState, action)
-
-      expect(nextState.currentEvent).to.deep.equal({})
-    })
-
-  })
+  
 
   describe('Display data', () => {
     it('should display data', () => {
