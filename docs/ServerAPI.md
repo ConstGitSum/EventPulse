@@ -3,6 +3,15 @@
 ##### GET /api/events
   * returns array of all events
 
+##### GET /api/events/filter/:filter/:userId
+  * returns array of all events for a user filtered on these options:
+    * 'unhidden'
+    * 'hidden'
+    * 'created'
+    * 'joined'
+    * 'pending'
+  * if filter is invalid, will default to get all events
+
 ##### GET /api/events/:id
   * given param event id, returns array with single event
 
