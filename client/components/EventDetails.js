@@ -20,7 +20,7 @@ export class EventDetails extends Component {
    */
   onEventHide() {
     this.props.hideEvent(this.props.currentEvent.eventId, this.props.currentUser.userId);
-    browserHistory.push('/eventList');
+    browserHistory.push('/EventList');
   }
 
   render() {
