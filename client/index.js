@@ -10,6 +10,7 @@ import Home from './components/Home'
 import EventDetails from './components/EventDetails'
 import EventCreate from './components/EventCreate'
 
+
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 ReactDOM.render(
