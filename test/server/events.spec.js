@@ -31,6 +31,76 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('GET /api/events/filter/:filter/:userId', function() {
+    it('should return unhidden events for a user', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/unhidden/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return hidden events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/hidden/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pick-up basketball game');
+          done();
+        });
+    });
+
+    it('should return created events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/created/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return joined events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/joined/2')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return pending events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/pending/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(0);
+          done();
+        });
+    });
+  });
+
   describe('GET /api/events', function() {
     it('should return all events', function(done) {
       chai.request(server)
@@ -217,4 +287,173 @@ describe('API Event Routes', () => {
         });
     });
   });
+
+  describe('POST /api/events/:id/guests', function() {
+    it('should create a new guest for an event', function(done) {
+      chai.request(server)
+        .post('/api/events/2/guests')
+        .send({
+          user_id: 1,
+          status: 'pending'
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Alice');
+          res.body.should.have.property('email');
+          res.body.email.should.equal('alice@gmail.com');
+          res.body.should.have.property('image');
+          res.body.image.should.equal('https://imageurl');
+          res.body.should.have.property('facebook_id');
+          res.body.facebook_id.should.equal('12104755554605551');
+          done();
+        });
+    });
+
+    it('should not create a new guest if user is already a guest', function(done) {
+      chai.request(server)
+        .post('/api/events/2/guests')
+        .send({
+          user_id: 2,
+          status: 'pending'
+        })
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('User is already a guest');
+          done();
+        });
+    });
+  });
+
+  describe('PUT /api/events/:eventId/guests/:userId', function() {
+    it('should update a guest status', function(done) {
+      chai.request(server)
+        .put('/api/events/1/guests/2')
+        .send({
+          status: 'declined'
+        })
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('user_id');
+          res.body.user_id.should.equal(2);
+          res.body.should.have.property('event_id');
+          res.body.event_id.should.equal(1);
+          res.body.should.have.property('status');
+          res.body.status.should.equal('declined');
+          done();
+        });
+    });
+
+    it('should not update a guest if id field is part of the request', function(done) {
+      chai.request(server)
+        .put('/api/events/1/guests/2')
+        .send({
+          id: 5,
+          status: 'declined'
+        })
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('You cannot update the id field');
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /api/events/:eventId/guests/:userId', function() {
+    it('should delete a guest at an event', function(done) {
+      chai.request(server)
+        .delete('/api/events/1/guests/2')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Bob');
+          res.body.should.have.property('email');
+          res.body.email.should.equal('bob@gmail.com');
+          res.body.should.have.property('image');
+          res.body.image.should.equal('https://imageurl');
+          res.body.should.have.property('facebook_id');
+          res.body.facebook_id.should.equal('12104755554605552');
+          chai.request(server)
+            .get('/api/events/1/guests')
+            .end(function(err, res) {
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('array');
+              res.body.length.should.equal(1);
+              done();
+            });
+        });
+    });
+
+    it('return error if user is not a guest', function(done) {
+      chai.request(server)
+        .delete('/api/events/2/guests/1')
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('User is not a guest');
+          done();
+        });
+    });
+  });
+
+  describe('POST /api/events/:id/hide', function() {
+    it('should hide an event', function(done) {
+      chai.request(server)
+        .post('/api/events/1/hide')
+        .send({
+          user_id: 1
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('user_id');
+          res.body.user_id.should.equal(1);
+          res.body.should.have.property('event_id');
+          res.body.event_id.should.equal(1);
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /api/events/:id/hide', function() {
+    it('should hide an event', function(done) {
+      chai.request(server)
+        .post('/api/events/1/hide')
+        .send({
+          user_id: 1
+        })
+        .end(function(err, res) {
+          chai.request(server)
+            .delete('/api/events/1/hide')
+            .send({
+              user_id: 1
+            })
+            .end(function(err, res) {
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('object');
+              res.body.should.have.property('status');
+              res.body.status.should.equal('deleted');
+              done();
+            });
+        });
+    });
+  });
+
 });

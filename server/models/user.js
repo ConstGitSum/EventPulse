@@ -66,3 +66,4 @@ return knex('memberships')
 .andWhere('memberships.rank','owner')
 .select('groups.id')
 }
+
