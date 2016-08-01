@@ -53,17 +53,15 @@ describe('Actions', () => {
       });
   });
 
-  // TODO: Fix timeout issue
-  xit('should dispatch JOIN_EVENT action', (done) => {
+  it('should dispatch JOIN_EVENT action', (done) => {
     const store = mockStore({})
-    moxios.stubRequest('/api/events/1/guest', {
+    moxios.stubRequest('/api/events/1/guests', {
       status: 200,
       responseText: { id: 1 }
     });
 
     return store.dispatch(actions.joinEvent(1, 1))
       .then(() => {
-        console.log("hitB?")
         const action = store.getActions()[0];
         expect(action.type).to.equal('JOIN_EVENT');
         expect(action.payload.data).to.deep.equal({ id: 1 });
@@ -71,8 +69,7 @@ describe('Actions', () => {
       });
   });
 
-  // TODO: Fix timeout issue
-  xit('should dispatch HIDE_EVENT action', (done) => {
+  it('should dispatch HIDE_EVENT action', (done) => {
     const store = mockStore({})
     moxios.stubRequest('/api/events/1/hide', {
       status: 200,
@@ -83,7 +80,7 @@ describe('Actions', () => {
       .then(() => {
         const action = store.getActions()[0];
         expect(action.type).to.equal('HIDE_EVENT');
-        expect(action.payload.data).to.equal({});
+        expect(action.payload.data).to.deep.equal({});
         done()
     });
   })

@@ -6,7 +6,7 @@ import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from '
 import { expect } from 'chai';
 
 import { EventDetails } from '../../client/components/EventDetails'
-import reducer_events from '../../client/reducers/reducer_events'
+import reducer_eventDetails from '../../client/reducers/reducer_eventDetails'
 
 var chai = require('chai');
 
@@ -50,7 +50,7 @@ describe('EventDetails', () => {
           }
         }
       }
-      const nextState = reducer_events(initialState, action)
+      const nextState = reducer_eventDetails(initialState, action)
 
       expect(nextState.currentEvent.guests[0]).to.deep.equal({id: 1})
     })
@@ -61,7 +61,7 @@ describe('EventDetails', () => {
         type: 'HIDE_EVENT',
         payload: {}
       }
-      const nextState = reducer_events(initialState, action)
+      const nextState = reducer_eventDetails(initialState, action)
 
       expect(nextState.currentEvent).to.deep.equal({})
     })
