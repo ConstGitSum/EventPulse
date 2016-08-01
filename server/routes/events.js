@@ -19,6 +19,18 @@ router.get('/', function(req, res, next) {
     });
 });
 
+// *** GET events based on a filter *** //
+router.get('/filter/:filter/:userId', function(req, res, next) {
+  Event.getUnhidden(req.params.userId)
+    .then((events) => {
+      console.log(events)
+      res.status(200).json(events);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 // *** GET event by id *** //
 router.get('/:id', function(req, res, next) {
   Event.getEventById(req.params.id)

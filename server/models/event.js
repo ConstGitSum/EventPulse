@@ -2,6 +2,8 @@ var knex = require('../db/knex');
 
 module.exports = {
   getAll: getAll,
+  getUnhidden: getUnhidden,
+  getHidden: getHidden,
   getEventById: getEventById,
   create: create,
   update: update,
@@ -10,6 +12,29 @@ module.exports = {
 
 function getAll() {
   return knex('events').select();
+}
+
+function getUnhidden(userId) {
+  return knex.raw(
+    `SELECT events.id, events.* FROM events 
+    LEFT JOIN (
+      SELECT * FROM hidden_events
+      WHERE user_id = ${userId}
+    ) AS hidden
+    ON events.id = hidden.event_id
+    WHERE hidden.event_id IS NULL`)
+    .then(res => res.rows);
+}
+
+function getHidden(userId) {
+  return knex.raw(
+    `SELECT events.id, events.* FROM events 
+    LEFT JOIN (
+      SELECT * FROM hidden_events
+      WHERE user_id = ${userId}
+    ) AS hidden
+    ON events.id = hidden.event_id
+    WHERE hidden.event_id IS NOT NULL`)
 }
 
 function getEventById(id) {

@@ -31,6 +31,92 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('GET /api/events/filter/:filter/:userId', function() {
+    it.only('should return unhidden events for a user', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/unhidden/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return hidden events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/hidden')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(2);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return all events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/all')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(2);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return created events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/created')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(2);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return joined events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/joined')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(2);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+
+    it('should return pending events', function(done) {
+      chai.request(server)
+        .get('/api/events/filter/pending')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(2);
+          res.body[0].should.have.property('title');
+          res.body[0].title.should.equal('Pokemongodb party');
+          done();
+        });
+    });
+  });
+
   describe('GET /api/events', function() {
     it('should return all events', function(done) {
       chai.request(server)
