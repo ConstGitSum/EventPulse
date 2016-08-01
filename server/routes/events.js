@@ -4,6 +4,7 @@ var router = express.Router();
 var Event = require('../models/event');
 var User = require('../models/user');
 var Guest = require('../models/guest');
+var Hide = require('../models/hidden_event');
 
 module.exports = router;
 
@@ -169,6 +170,28 @@ router.delete('/:id', function(req, res, next) {
         .catch((err) => {
           next(err);
         });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// *** POST new hidden event *** //
+router.post('/:id/hide', function(req, res, next) {
+  Hide.hide(req.params.id, req.body.user_id)
+    .then((hidden) => {
+      res.status(201).json(hidden[0]);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// *** DELETE new hidden event *** //
+router.delete('/:id/hide', function(req, res, next) {
+  Hide.hide(req.params.id, req.body.user_id)
+    .then((hidden) => {
+      res.status(200).json(hidden[0]);
     })
     .catch((err) => {
       next(err);

@@ -341,4 +341,45 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('POST /api/events/:id/hide', function() {
+    it('should hide an event', function(done) {
+      chai.request(server)
+        .post('/api/events/1/hide')
+        .send({
+          user_id: 1
+        })
+        .end(function(err, res) {
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('user_id');
+          res.body.user_id.should.equal(1);
+          res.body.should.have.property('event_id');
+          res.body.event_id.should.equal(1);
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /api/events/:id/hide', function() {
+    it('should hide an event', function(done) {
+      chai.request(server)
+        .post('/api/events/1/hide')
+        .send({
+          user_id: 1
+        })
+        .end(function(err, res) {
+          chai.request(server)
+            .delete('/api/events/1/hide')
+            .send({
+              user_id: 1
+            })
+            .end(function(err, res) {
+              console.log(res.body);
+              done();
+            });
+        });
+    });
+  });
+
 });
