@@ -9,7 +9,7 @@ var knex = require('../../server/db/knex');
 chai.use(chaiHttp);
 
 
-describe('API Event Routes', () => {
+xdescribe('API Event Routes', () => {
 
   beforeEach(function(done) {
     knex.migrate.rollback()

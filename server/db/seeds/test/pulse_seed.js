@@ -24,6 +24,22 @@ exports.seed = function(knex, Promise) {
       });
     })
     .then(() => {
+      return knex('users').insert({
+        name: 'Carl',
+        email: 'Carl@gmail.com',
+        image: 'https://imageurl',
+        facebook_id: '12104755554605553'
+      })
+    })
+    .then(() => {
+      return knex('users').insert({
+        name: 'Jimbo',
+        email: 'Jimbo@gmail.com',
+        image: 'https://imageurl',
+        facebook_id: '12104755554605554'
+      })
+    })
+    .then(() => {
       return knex('groups').insert({
         name: 'ConstGitSum',
       });
@@ -51,6 +67,10 @@ exports.seed = function(knex, Promise) {
         user1_id: 1,
         group_id: 2,
         rank: 'owner'
+      },{
+        user1_id: 3,
+        group_id: 2,
+        rank: 'member'
       }]);
     })
     .then(() => {
