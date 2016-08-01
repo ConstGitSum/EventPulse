@@ -32,7 +32,7 @@ describe('API Event Routes', () => {
   });
 
   describe('GET /api/events/filter/:filter/:userId', function() {
-    it.only('should return unhidden events for a user', function(done) {
+    it('should return unhidden events for a user', function(done) {
       chai.request(server)
         .get('/api/events/filter/unhidden/1')
         .end(function(err, res) {
@@ -48,40 +48,26 @@ describe('API Event Routes', () => {
 
     it('should return hidden events', function(done) {
       chai.request(server)
-        .get('/api/events/filter/hidden')
+        .get('/api/events/filter/hidden/1')
         .end(function(err, res) {
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('array');
-          res.body.length.should.equal(2);
+          res.body.length.should.equal(1);
           res.body[0].should.have.property('title');
-          res.body[0].title.should.equal('Pokemongodb party');
-          done();
-        });
-    });
-
-    it('should return all events', function(done) {
-      chai.request(server)
-        .get('/api/events/filter/all')
-        .end(function(err, res) {
-          res.should.have.status(200);
-          res.should.be.json;
-          res.body.should.be.a('array');
-          res.body.length.should.equal(2);
-          res.body[0].should.have.property('title');
-          res.body[0].title.should.equal('Pokemongodb party');
+          res.body[0].title.should.equal('Pick-up basketball game');
           done();
         });
     });
 
     it('should return created events', function(done) {
       chai.request(server)
-        .get('/api/events/filter/created')
+        .get('/api/events/filter/created/1')
         .end(function(err, res) {
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('array');
-          res.body.length.should.equal(2);
+          res.body.length.should.equal(1);
           res.body[0].should.have.property('title');
           res.body[0].title.should.equal('Pokemongodb party');
           done();
@@ -90,12 +76,12 @@ describe('API Event Routes', () => {
 
     it('should return joined events', function(done) {
       chai.request(server)
-        .get('/api/events/filter/joined')
+        .get('/api/events/filter/joined/2')
         .end(function(err, res) {
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('array');
-          res.body.length.should.equal(2);
+          res.body.length.should.equal(1);
           res.body[0].should.have.property('title');
           res.body[0].title.should.equal('Pokemongodb party');
           done();
@@ -104,14 +90,12 @@ describe('API Event Routes', () => {
 
     it('should return pending events', function(done) {
       chai.request(server)
-        .get('/api/events/filter/pending')
+        .get('/api/events/filter/pending/1')
         .end(function(err, res) {
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('array');
-          res.body.length.should.equal(2);
-          res.body[0].should.have.property('title');
-          res.body[0].title.should.equal('Pokemongodb party');
+          res.body.length.should.equal(0);
           done();
         });
     });
