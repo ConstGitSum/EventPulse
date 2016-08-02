@@ -8,7 +8,6 @@ import { userLogOut, fetchEventList, setCurrentEvent } from '../actions/actions'
 export class EventList extends React.Component {
   componentDidMount() {
    this.props.fetchEventList();
-   console.log(this.props.currentUser)
   }
   
   handleCreate() {

@@ -6,13 +6,12 @@ import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from '
 import { expect } from 'chai';
 
 import { EventDetails } from '../../client/components/EventDetails'
-import reducer_eventDetails from '../../client/reducers/reducer_eventDetails'
 
 var chai = require('chai');
 
 describe('EventDetails Component', () => {
   const seedData = { 
-    eventsList: [{
+    eventList: [{
       id: 1,
       title: "Pokemongodb party",
       description: "Catch pokemon and do some coding",

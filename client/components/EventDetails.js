@@ -24,7 +24,6 @@ export class EventDetails extends Component {
   }
 
   render() {
-    console.log(this.props.currentEvent)
     return (
       <div className="event-details">
         <h1>Pulse</h1>
@@ -61,7 +60,6 @@ function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
-    guestList:    state.guestList
   }
 }
 
