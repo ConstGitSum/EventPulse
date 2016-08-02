@@ -14,11 +14,11 @@ import EventCreate from './components/EventCreate'
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 ReactDOM.render(
-	<Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={createStoreWithMiddleware(reducers)}>
     <Router history={browserHistory}>
       <Route path="/" component={Home} />
       <Route path="/create" component={EventCreate} />
       <Route path="/:eventId" component={EventDetails} />
     </Router>
-	</Provider>
+  </Provider>
   ,document.getElementById('root'));
