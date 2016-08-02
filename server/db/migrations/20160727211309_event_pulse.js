@@ -13,9 +13,9 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('memberships', function(table){
       table.increments();
-      table.integer('user1_id').notNullable().references('id').inTable('users');
-      table.integer('user2_id').notNullable().references('id').inTable('users');
+      table.integer('user_id').notNullable().references('id').inTable('users');
       table.integer('group_id').notNullable().references('id').inTable('groups');
+      table.string('rank')
     }),
     knex.schema.createTable('events', function(table){
       table.increments();

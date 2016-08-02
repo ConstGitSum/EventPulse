@@ -3,8 +3,8 @@ var knex = require('../db/knex');
 // *** queries *** //
 
 module.exports = {
-  hide: hide,
-  unhide: unhide
+  hide,
+  unhide
 };
 
 function hide(eventId, userId) {

@@ -1,32 +1,33 @@
-//var LocalStrategy = require('passport-local').Strategy; 
 var FacebookStrategy = require('passport-facebook').Strategy;
-//var bcrypt = require('bcrypt-nodejs');
 const FACEBOOK_ID = '639261402906273'
 const FACEBOOK_SECRET = 'fdf4dc317a7332195fb5b2278b522e68'
 const FACEBOOK_CALLBACK_URL = 'http://localhost:3000/api/passportFacebook/facebookLogin/Callback'
-const PROFILE_FIELDS = ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'photos','verified','friends'] //This is what tells facebook what to return		
-
+const PROFILE_FIELDS = ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'picture.type(large)', 'verified', 'friends'] //This is what tells facebook what to return		
+var User = require('./models/user');
+var PassportHelper = require('./passport_helper')
 
 module.exports = function(passport) {
-  passport.serializeUser(function(user, done) { 
-    console.log("SU", user,done)
-    done(null, user); 
+
+  passport.serializeUser(function(user, done) {
+    done(null, user);
   });
 
-  passport.deserializeUser(function(id, done) { 
-    console.log("DU")
-    done(null,id)
+  passport.deserializeUser(function(id, done) {
+    done(null, id)
   });
 
-  passport.use(new FacebookStrategy({		
+  passport.use(new FacebookStrategy({
     clientID: FACEBOOK_ID,
-    clientSecret: FACEBOOK_SECRET,		
+    clientSecret: FACEBOOK_SECRET,
     callbackURL: FACEBOOK_CALLBACK_URL,
     profileFields: PROFILE_FIELDS
   }, function(token, refreshToken, profile, done) {
     process.nextTick(function() {
-      console.log("profile",profile,token)
-      done(null,token)
+      PassportHelper.passport_helper(token,profile)
+        .then((value) => {
+          done(null,token)
+        });
     });
   }));
+
 };
