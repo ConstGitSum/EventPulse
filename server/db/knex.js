@@ -5,8 +5,7 @@ var knex = require('knex')(config);
 
 if (environment !== 'test') {
     knex.migrate.latest([config]).then(function(value){
-      console.log("value",value)
-      //knex.seed.run([config])
+      knex.seed.run([config])
     })
     
 }

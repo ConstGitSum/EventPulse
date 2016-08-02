@@ -90,8 +90,8 @@ describe('API User Routes', () => {
         res.body.length.should.equal(1);
         res.body[0].should.have.property('id');
         res.body[0].id.should.equal(1);
-        res.body[0].should.have.property('user1_id');
-        res.body[0].user1_id.should.equal(2);
+        res.body[0].should.have.property('user_id');
+        res.body[0].user_id.should.equal(2);
         res.body[0].should.have.property('group_id');
         res.body[0].group_id.should.equal(1);
         res.body[0].should.have.property('rank');
@@ -114,8 +114,8 @@ describe('API User Routes', () => {
         res.body.length.should.equal(2);
         res.body[0].should.have.property('id');
         res.body[0].id.should.equal(1);
-        res.body[0].should.have.property('user1_id');
-        res.body[0].user1_id.should.equal(1);
+        res.body[0].should.have.property('user_id');
+        res.body[0].user_id.should.equal(1);
         res.body[0].should.have.property('group_id');
         res.body[0].group_id.should.equal(1);
         res.body[0].should.have.property('rank');
@@ -130,8 +130,8 @@ describe('API User Routes', () => {
         res.body[0].facebook_id.should.equal('12104755554605551');
         res.body[1].should.have.property('id');
         res.body[1].id.should.equal(2);
-        res.body[1].should.have.property('user1_id');
-        res.body[1].user1_id.should.equal(2);
+        res.body[1].should.have.property('user_id');
+        res.body[1].user_id.should.equal(2);
         res.body[1].should.have.property('group_id');
         res.body[1].group_id.should.equal(1);
         res.body[1].should.have.property('rank');
@@ -201,7 +201,7 @@ describe('API User Routes', () => {
       chai.request(server)
         .post('/api/users/addMemberships')
         .send({
-          user1_id: 2,
+          user_id: 2,
           group_id: 2,
           rank: 'member'
         })
@@ -211,8 +211,8 @@ describe('API User Routes', () => {
           res.body.should.be.a('array');
           res.body[0].should.have.property('id');
           res.body[0].id.should.equal(5);
-          res.body[0].should.have.property('user1_id');
-          res.body[0].user1_id.should.equal(2);
+          res.body[0].should.have.property('user_id');
+          res.body[0].user_id.should.equal(2);
           res.body[0].should.have.property('group_id');
           res.body[0].group_id.should.equal(2);
           res.body[0].should.have.property('rank');
@@ -224,11 +224,11 @@ describe('API User Routes', () => {
       chai.request(server)
         .post('/api/users/addMemberships')
         .send([{
-          user1_id: 1,
+          user_id: 1,
           group_id: 3,
           rank: 'member'
         },{
-          user1_id: 2,
+          user_id: 2,
           group_id: 3,
           rank: 'member'}])
         .end(function(err,res){
@@ -237,16 +237,16 @@ describe('API User Routes', () => {
           res.body.should.be.a('array');
           res.body[0].should.have.property('id');
           res.body[0].id.should.equal(5);
-          res.body[0].should.have.property('user1_id');
-          res.body[0].user1_id.should.equal(1);
+          res.body[0].should.have.property('user_id');
+          res.body[0].user_id.should.equal(1);
           res.body[0].should.have.property('group_id');
           res.body[0].group_id.should.equal(3);
           res.body[0].should.have.property('rank');
           res.body[0].rank.should.equal('member');
           res.body[1].should.have.property('id');
           res.body[1].id.should.equal(6);
-          res.body[1].should.have.property('user1_id');
-          res.body[1].user1_id.should.equal(2);
+          res.body[1].should.have.property('user_id');
+          res.body[1].user_id.should.equal(2);
           res.body[1].should.have.property('group_id');
           res.body[1].group_id.should.equal(3);
           res.body[1].should.have.property('rank');
@@ -255,107 +255,109 @@ describe('API User Routes', () => {
         })
     })
   })
- describe('Passport helper function works', function(){
-  var profile = {
-    name: {
-      givenName: 'Jad',
-      familyName: 'Carson'
-    },
-    emails: [{value: 'jad@jad.com'}],
-    photos: [{value: 'www.superCoolImage.com'}],
-    id: '1234',
-    _json:{
-      friends:{
-        data: []
-      }
-    }
-  }
-  var profile2 = {
-    name: {
-      givenName: 'bat',
-      familyName: 'man'
-    },
-    emails: [{value: 'jad@jad.com'}],
-    photos: [{value: 'www.superCoolImage.com'}],
-    id: '1234',
-    _json:{
-      friends:{
-        data: [{name:'Alice',id:'12104755554605551'}]
-      }
-    }
-  }
-  var profile3 = {
-    name: {
-      givenName: 'cat',
-      familyName: 'man'
-    },
-    emails: [{value: 'jad@jad.com'}],
-    photos: [{value: 'www.superCoolImage.com'}],
-    id: '1234',
-    _json:{
-      friends:{
-        data: [{name:'Alice',id:'12104755554605551'},{name:'Bob', id:'12104755554605552'}]
-      }
-    }
-  }
-  var profile4 = {
-    name: {
-      givenName: 'Alice',
-      familyName: ''
-    },
-    emails: [{value: 'jad@jad.com'}],
-    photos: [{value: 'www.superCoolImage.com'}],
-    id: '12104755554605551',
-    _json:{
-      friends:{
-        data: [{name:'Carl', id:'12104755554605553'}]
-      }
-    }
-  }
-  var profile5 = {
-    name: {
-      givenName: 'Alice',
-      familyName: ''
-    },
-    emails: [{value: 'jad@jad.com'}],
-    photos: [{value: 'www.superCoolImage.com'}],
-    id: '12104755554605551',
-    _json:{
-      friends:{
-        data: [{name:'Bob', id:'12104755554605552'}]
-      }
-    }
-  }
-  var profile6 = {
-    name: {
-      givenName: 'Alice',
-      familyName: ''
-    },
-    emails: [{value: 'jad@jad.com'}],
-    photos: [{value: 'www.superCoolImage.com'}],
-    id: '12104755554605551',
-    _json:{
-      friends:{
-        data: [{name:'Bob', id:'12104755554605552'},{name: 'Jimbo', id: '12104755554605554'}]
-      }
-    }
-  }
 
-  var profile7 = {
-    name: {
-      givenName: 'Bob',
-      familyName: ''
-    },
-    emails: [{value: 'jad@jad.com'}],
-    photos: [{value: 'www.superCoolImage.com'}],
-    id: '12104755554605552',
-    _json:{
-      friends:{
-        data: []
+  describe('Passport helper function works', function() {
+    var profile = {
+      name: {
+        givenName: 'Jad',
+        familyName: 'Carson'
+      },
+      emails: [{value: 'jad@jad.com'}],
+      photos: [{value: 'www.superCoolImage.com'}],
+      id: '1234',
+      _json:{
+        friends:{
+          data: []
+        }
       }
     }
-  }
-    it('should add a new facebook user with no friends :-(', function(done){
+    var profile2 = {
+      name: {
+        givenName: 'bat',
+        familyName: 'man'
+      },
+      emails: [{value: 'jad@jad.com'}],
+      photos: [{value: 'www.superCoolImage.com'}],
+      id: '1234',
+      _json:{
+        friends:{
+          data: [{name:'Alice',id:'12104755554605551'}]
+        }
+      }
+    }
+    var profile3 = {
+      name: {
+        givenName: 'cat',
+        familyName: 'man'
+      },
+      emails: [{value: 'jad@jad.com'}],
+      photos: [{value: 'www.superCoolImage.com'}],
+      id: '1234',
+      _json:{
+        friends:{
+          data: [{name:'Alice',id:'12104755554605551'},{name:'Bob', id:'12104755554605552'}]
+        }
+      }
+    }
+    var profile4 = {
+      name: {
+        givenName: 'Alice',
+        familyName: ''
+      },
+      emails: [{value: 'jad@jad.com'}],
+      photos: [{value: 'www.superCoolImage.com'}],
+      id: '12104755554605551',
+      _json:{
+        friends:{
+          data: [{name:'Carl', id:'12104755554605553'}]
+        }
+      }
+    }
+    var profile5 = {
+      name: {
+        givenName: 'Alice',
+        familyName: ''
+      },
+      emails: [{value: 'jad@jad.com'}],
+      photos: [{value: 'www.superCoolImage.com'}],
+      id: '12104755554605551',
+      _json:{
+        friends:{
+          data: [{name:'Bob', id:'12104755554605552'}]
+        }
+      }
+    }
+    var profile6 = {
+      name: {
+        givenName: 'Alice',
+        familyName: ''
+      },
+      emails: [{value: 'jad@jad.com'}],
+      photos: [{value: 'www.superCoolImage.com'}],
+      id: '12104755554605551',
+      _json:{
+        friends:{
+          data: [{name:'Bob', id:'12104755554605552'},{name: 'Jimbo', id: '12104755554605554'}]
+        }
+      }
+    }
+
+    var profile7 = {
+      name: {
+        givenName: 'Bob',
+        familyName: ''
+      },
+      emails: [{value: 'jad@jad.com'}],
+      photos: [{value: 'www.superCoolImage.com'}],
+      id: '12104755554605552',
+      _json:{
+        friends:{
+          data: []
+        }
+      }
+    }
+
+    it('should add a new facebook user with no friends :-(', function(done) {
       chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
@@ -371,10 +373,9 @@ describe('API User Routes', () => {
         res.body[0].group_id.should.equal(4);
         done();
       })
-     
-     
     })
-    it('should add a new facebook user with a friend', function(done){
+
+    it('should add a new facebook user with a friend', function(done) {
       chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
@@ -390,8 +391,8 @@ describe('API User Routes', () => {
         res.body[0].group_id.should.equal(4);
         res.body[1].should.have.property('id')
         res.body[1].id.should.equal(6);
-        res.body[1].should.have.property('user1_id');
-        res.body[1].user1_id.should.equal(1);
+        res.body[1].should.have.property('user_id');
+        res.body[1].user_id.should.equal(1);
         res.body[1].should.have.property('group_id')
         res.body[1].group_id.should.equal(4);
         res.body[1].should.have.property('rank');
@@ -400,7 +401,7 @@ describe('API User Routes', () => {
       })
     })
      
-      it('should add a new facebook user with multiple friends', function(done){
+    it('should add a new facebook user with multiple friends', function(done) {
       chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
@@ -416,15 +417,15 @@ describe('API User Routes', () => {
         res.body[0].group_id.should.equal(4);
         res.body[1].should.have.property('id')
         res.body[1].id.should.equal(6);
-        res.body[1].should.have.property('user1_id');
-        res.body[1].user1_id.should.equal(1);
+        res.body[1].should.have.property('user_id');
+        res.body[1].user_id.should.equal(1);
         res.body[1].should.have.property('group_id')
         res.body[1].group_id.should.equal(4);
         res.body[1].should.have.property('rank');
         res.body[1].rank.should.equal('member');
         res.body[2].id.should.equal(7);
-        res.body[2].should.have.property('user1_id');
-        res.body[2].user1_id.should.equal(2);
+        res.body[2].should.have.property('user_id');
+        res.body[2].user_id.should.equal(2);
         res.body[2].should.have.property('group_id')
         res.body[2].group_id.should.equal(4);
         res.body[2].should.have.property('rank');
@@ -432,8 +433,9 @@ describe('API User Routes', () => {
         done();
       })
     })
-      it('should log in a previous user who hasn\'t added any friends since last time', function(done){
-        chai.request(server)
+
+    it('should log in a previous user who hasn\'t added any friends since last time', function(done) {
+      chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
         token: 2,
@@ -450,9 +452,10 @@ describe('API User Routes', () => {
         res.body[0].facebook_id.should.equal('12104755554605551');
         done();
       })
-      })
-      it('should log in a previous user who has added a friend since last time', function(done){
-        chai.request(server)
+    })
+
+    it('should log in a previous user who has added a friend since last time', function(done) {
+      chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
         token: 2,
@@ -469,18 +472,18 @@ describe('API User Routes', () => {
         res.body[0].facebook_id.should.equal('12104755554605551');
         res.body[1].should.have.property('id')
         res.body[1].id.should.equal(5);
-        res.body[1].should.have.property('user1_id')
-        res.body[1].user1_id.should.equal(2)
+        res.body[1].should.have.property('user_id')
+        res.body[1].user_id.should.equal(2)
         res.body[1].should.have.property('group_id');
         res.body[1].group_id.should.equal(2);
         res.body[1].should.have.property('rank');
         res.body[1].rank.should.equal('member')
         done();
       })
-      })
+    })
 
-      it('should log in a previous user who has added multiple friends since last time', function(done){
-        chai.request(server)
+    it('should log in a previous user who has added multiple friends since last time', function(done) {
+      chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
         token: 2,
@@ -497,26 +500,26 @@ describe('API User Routes', () => {
         res.body[0].facebook_id.should.equal('12104755554605551');
         res.body[1].should.have.property('id')
         res.body[1].id.should.equal(5);
-        res.body[1].should.have.property('user1_id')
-        res.body[1].user1_id.should.equal(2)
+        res.body[1].should.have.property('user_id')
+        res.body[1].user_id.should.equal(2)
         res.body[1].should.have.property('group_id');
         res.body[1].group_id.should.equal(2);
         res.body[1].should.have.property('rank');
         res.body[1].rank.should.equal('member')
         res.body[2].should.have.property('id')
         res.body[2].id.should.equal(6);
-        res.body[2].should.have.property('user1_id')
-        res.body[2].user1_id.should.equal(4)
+        res.body[2].should.have.property('user_id')
+        res.body[2].user_id.should.equal(4)
         res.body[2].should.have.property('group_id');
         res.body[2].group_id.should.equal(2);
         res.body[2].should.have.property('rank');
         res.body[2].rank.should.equal('member')
         done();
       })
-      })
+    })
 
-      it('should log in a previous user who has no friends', function(done){
-        chai.request(server)
+    it('should log in a previous user who has no friends', function(done) {
+      chai.request(server)
       .post('/api/passportFacebook/testPassport')
       .send({
         token: 2,  
@@ -533,6 +536,7 @@ describe('API User Routes', () => {
         res.body[0].facebook_id.should.equal('12104755554605552');
         done();
       })
-      })
+    })
   })
+
 });

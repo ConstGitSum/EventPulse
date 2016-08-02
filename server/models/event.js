@@ -1,16 +1,16 @@
 var knex = require('../db/knex');
 
 module.exports = {
-  getAll: getAll,
-  getUnhidden: getUnhidden,
-  getHidden: getHidden,
-  getCreated: getCreated,
-  getJoined: getJoined,
-  getPending: getPending,
-  getEventById: getEventById,
-  create: create,
-  update: update,
-  deleteEvent: deleteEvent
+  getAll,
+  getUnhidden,
+  getHidden,
+  getCreated,
+  getJoined,
+  getPending,
+  getEventById,
+  create,
+  update,
+  deleteEvent
 };
 
 function getAll() {

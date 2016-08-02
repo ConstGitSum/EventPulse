@@ -1,10 +1,10 @@
 var knex = require('../db/knex');
 
 module.exports = {
-  getGuests: getGuests,
-  create: create,
-  update: update,
-  deleteGuest: deleteGuest
+  getGuests,
+  create,
+  update,
+  deleteGuest
 };
 
 function getGuests(id) {
