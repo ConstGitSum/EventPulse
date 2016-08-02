@@ -9,7 +9,7 @@ import reducers from './reducers';
 import Home from './components/Home'
 import EventDetails from './components/EventDetails'
 import EventCreate from './components/EventCreate'
-import List from './components/List'
+import EventList from './components/EventList'
 
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
@@ -19,7 +19,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Home} />
       <Route path="/create" component={EventCreate} />
-      <Route path="/list" component={List} />
+      <Route path="/eventList" component={EventList} />
       <Route path="/:eventId" component={EventDetails} />
     </Router>
   </Provider>
