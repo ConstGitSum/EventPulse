@@ -87,3 +87,22 @@ export function leaveEvent(eventId, userId) {
     payload: request
   }
 }
+
+export function createEvent(newEvent){
+  const request = axios.post('/api/events', {
+    title: newEvent.title,
+    description: newEvent.description,
+    created_by: 1,
+    location: newEvent.location,
+    time: newEvent.date,
+    duration: newEvent.duration || 999999999,
+    max_guests: newEvent.guests || 999999999,
+    privacy: newEvent.privacy || false,
+    group_visibility: newEvent.visibility
+  });
+
+  return{
+    type: CREATE_EVENT,
+    payload: request
+  }
+}
