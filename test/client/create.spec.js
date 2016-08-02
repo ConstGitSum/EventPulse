@@ -4,18 +4,17 @@ import chai, { expect } from 'chai';
 import { shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
-
 import {EventCreate} from '../../client/components/EventCreate';
 
 chai.use(chaiEnzyme());
 
 describe("EventCreate", () => {
-    let subject = null;
-    let submitting, touched, error;
-    beforeEach(() => {
-      submitting = false;
-      touched = false;
-      error = null;
+  let subject = null;
+  let submitting, touched, error;
+  beforeEach(() => {
+    submitting = false;
+    touched = false;
+    error = null;
   })
 
   const buildSubject = () => {
@@ -32,9 +31,10 @@ describe("EventCreate", () => {
     return shallow(<EventCreate {...props}/>)
   }
 
+  subject = buildSubject().node.props.children;
+
   context("Title and Form", () => {
-    it("should display a title and a form", () => {
-      subject = buildSubject().node.props.children;
+    it("should display a title and a form", () => {     
       expect(subject).to.exist;
       expect(subject[0].props.children).to.equal('Create New Event');
       expect(subject[1].type).to.equal('form');
@@ -42,7 +42,6 @@ describe("EventCreate", () => {
   }),
 
   context("All Fields", () => {
-    subject = buildSubject().node.props.children;
     it("should display title, description, location, date, duration, guests", () => {
       let fields = [];
       subject[1].props.children.forEach(element => {
