@@ -8,7 +8,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import axios from 'axios'; 
 import { shallow, describeWithDOM,mount,spyLifecycle} from 'enzyme';  
-import EventList from '../../client/components/EventList';
+import { EventList } from '../../client/components/EventList';
 
 let wrapper; 
 
