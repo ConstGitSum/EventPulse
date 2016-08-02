@@ -19,15 +19,13 @@ export default function(state = {}, action) {
       // returned after the server API call to join event
       newState = Object.assign({}, state);
       newState.guests = [...newState.guests, action.payload.data];
-      return newState
+      return newState;
     /**
      * Hide the current event
      * @type {Object}
      */
     case HIDE_EVENT:
-      newState = Object.assign({}, state);
-      newState = {};
-      return newState
+      return {};
     default:
       return state;
   }

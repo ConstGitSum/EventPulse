@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import reducer from '../../client/reducers';
 
-describe.only('Reducers', () => {
+describe('Reducers', () => {
 
   it('should handle FETCH_PULSE', () => {
     const initialState = { pulse: 0, logState: false };
@@ -48,25 +48,25 @@ describe.only('Reducers', () => {
   });
 
   it('should handles JOIN_EVENT', () => {
-    const initialState = { guests: [{ id: 1}] }
+    const initialState = { currentEvent: {
+      id: 1, guests: [{ user_id: 1, event_id: 1}] }
+    };
     const action = {
       type: 'JOIN_EVENT',
-      payload: {
-        data: {
-          id: 1
-        }
-      }
+      payload: { data: { user_id: 2, event_id: 1 } }
     }
-    const nextState = reducer(initialState, action)
+    const nextState = reducer(initialState, action);
 
-    expect(nextState.currentEvent.guests[0]).to.deep.equal({id: 1})
+    expect(nextState.currentEvent.guests[1]).to.deep.equal({ user_id: 2, event_id: 1 })
   })
 
   it('should handle HIDE_EVENT', () => {
-    const initialState = {}
+    const initialState = { currentEvent: {
+      id: 1, guests: [{ user_id: 1, event_id: 1}] }
+    };
     const action = {
       type: 'HIDE_EVENT',
-      payload: {}
+      payload: { status: 'deleted' }
     }
     const nextState = reducer(initialState, action)
 

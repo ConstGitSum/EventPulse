@@ -10,7 +10,7 @@ import reducer_eventDetails from '../../client/reducers/reducer_eventDetails'
 
 var chai = require('chai');
 
-describe('EventDetails', () => {
+describe('EventDetails Component', () => {
   const seedData = { 
     eventsList: [{
       id: 1,
@@ -38,8 +38,6 @@ describe('EventDetails', () => {
       currentEvent={seedData.currentEvent} 
       currentUser={seedData.currentUser} />
   )
-
-  
 
   describe('Display data', () => {
     it('should display data', () => {
