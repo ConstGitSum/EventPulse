@@ -1,6 +1,6 @@
 import React from 'react';
-import {Field, reduxForm, SubmissionError} from 'redux-form';
-import {createEvent} from '../actions/actions';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { createEvent } from '../actions/actions';
 
 export class EventCreate extends React.Component {
 
@@ -26,8 +26,6 @@ export class EventCreate extends React.Component {
           <label>Visibility</label>
           <div>
             <label><Field name="visibility" component="input" type="radio" value="1"/> group1</label>
-            <br/>
-            <label><Field name="visibility" component="input" type="radio" value="2"/> group2</label>
           </div>
           <div>
             <button type="submit" className='btn btn-primary' disabled={submitting}>Create Event</button>
@@ -53,7 +51,7 @@ const validate = values => {
   }
   if (!values.location) {
     errors.location = 'Required'
-  } else if (values.description.length > 100) {
+  } else if (values.location.length > 100) {
     errors.description = 'Must be 100 characters or less'
   }
   if (!values.date) {
