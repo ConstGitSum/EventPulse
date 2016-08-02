@@ -1,43 +1,64 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchPulse, userLogOut } from '../actions/actions';
+import axios from 'axios';
 
-export class EventList extends Component {
-  onPulse(event) {
-    this.props.fetchPulse(this.props.pulse + 1);
+import { userLogOut } from '../actions/actions';
+
+export class EventList extends React.Component {
+  constructor(props){
+    super(props); 
+    this.state = {
+      events: [],
+      txt: ''
+    }
   }
 
-  render() {
-    return (
-      <div>
-        Hey Guys
-        <button onClick={this.onPulse.bind(this)}>
-          Pulse it
-        </button>
-        {this.props.pulse} times
+  componentDidMount(){
+    axios.get('/api/events').then((eventData) => {
+      console.log('~~eventData~~~', eventData.data);
+      this.setState({events: eventData.data})
+      })
+  }
+  
+  handleCreate(){
+    this.setState({txt: '~~~Need a router~~~'});
+  }
 
+  render(){
+    return (
+      <div className='event-items'>
+        <h5>Events Happening!</h5>
+          {this.state.events.map((event, index) => {
+            return ( 
+            <ul key={index} className="events">
+              <li>{"What's happening? " + event.title}</li>
+              <li>{"Where? " + event.location}</li>
+              <li>{"What are we goin to do? "+ event.description}</li>
+            </ul>
+            )
+          })}
+        <button 
+          className='create-event'
+          onClick={this.handleCreate.bind(this)}>
+          Create
+        </button>
         <button 
           className="btn btn-danger" 
           onClick={this.props.userLogOut}> 
           Log Out
-        </button> 
+        </button>         
+        <span>{this.state.txt}</span>
       </div>
-    );
+    )
   }
 }
 
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
-    fetchPulse, 
     userLogOut
   }, dispatch);
 }
 
-function mapStateToProps(state) { 
-  return {
-    pulse: state.pulse,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventList);
+export default connect(null, mapDispatchToProps)(EventList);
