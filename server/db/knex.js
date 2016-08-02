@@ -9,7 +9,7 @@ if (environment !== 'test') {
       knex.seed.run([config]);
     })
   })
-  
+
 }
 
 module.exports = knex;
