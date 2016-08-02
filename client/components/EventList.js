@@ -22,8 +22,8 @@ export class EventList extends React.Component {
 
   render(){
     return (
-      <div className='event-items'>
-        <h5>Events Happening!</h5>
+      <div className="event-list">
+        <h5>Explore</h5>
           {this.props.eventList.map((event, index) => {
             return ( 
             <ul key={index} className="events">
