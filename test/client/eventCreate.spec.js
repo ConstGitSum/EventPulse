@@ -4,11 +4,12 @@ import chai, { expect } from 'chai';
 import { shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
+
 import { EventCreate } from '../../client/components/EventCreate';
 
 chai.use(chaiEnzyme());
 
-describe("EventCreate", () => {
+describe("EventCreate Component", () => {
   let subject = null;
   let submitting, touched, error;
   beforeEach(() => {

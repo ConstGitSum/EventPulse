@@ -69,7 +69,7 @@ export function hideEvent(eventId, userId) {
   }
 }
 
-export function createEvent(props){
+export function createEvent(props) {
   const request = axios.post('/api/events', {
     title: props.title,
     description: props.description,
