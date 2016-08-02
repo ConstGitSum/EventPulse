@@ -1,43 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchPulse, userLogOut } from '../actions/actions';
+import React, {Component} from 'react';
+// import {connect} from 'react-redux';
+// import {createStore} from 'redux'; 
+import axios from 'axios';
 
-export class EventList extends Component {
-  onPulse(event) {
-    this.props.fetchPulse(this.props.pulse + 1);
+export default class EventList extends React.Component {
+  constructor(props){
+    super(props); 
+    this.state = {
+      events: [],
+      txt: ''
+    }
   }
 
-  render() {
+  componentDidMount(){
+    axios.get('/api/events').then((eventData) => {
+      console.log('~~eventData~~~', eventData.data);
+      this.setState({events: eventData.data})
+      })
+  }
+  
+  handleCreate(){
+    this.setState({txt: '~~~Need a router~~~'});
+  }
+
+  render(){
     return (
-      <div>
-        Hey Guys
-        <button onClick={this.onPulse.bind(this)}>
-          Pulse it
-        </button>
-        {this.props.pulse} times
-
-        <button 
-          className="btn btn-danger" 
-          onClick={this.props.userLogOut}> 
-          Log Out
-        </button> 
+      <div className='event_items'>
+        <h5>Events Happening!</h5>
+          {this.state.events.map((event, index) => {
+            return ( 
+            <ul key={index} className="events">
+              <li>{"What's happening? " + event.title}</li>
+              <li>{"Where? " + event.location}</li>
+              <li>{"What are we goin to do? "+ event.description}</li>
+            </ul>
+            )
+          })}
+        <button onClick={this.handleCreate.bind(this)} className='create_event'>Create</button>
+        <span>{this.state.txt}</span>
       </div>
-    );
+    )
   }
 }
 
-function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ 
-    fetchPulse, 
-    userLogOut
-  }, dispatch);
-}
-
-function mapStateToProps(state) { 
-  return {
-    pulse: state.pulse,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventList);

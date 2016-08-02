@@ -8,32 +8,32 @@ import chai from 'chai';
 import sinon from 'sinon';
 import axios from 'axios'; 
 import { shallow, describeWithDOM,mount,spyLifecycle} from 'enzyme';  
-import List from '../../client/components/List';
+import EventList from '../../client/components/EventList';
 
 let wrapper; 
 
 describe('List component', () => {
   it('renders as a <div>', () => {
-    wrapper = shallow(<List />);
+    wrapper = shallow(<EventList />);
     expect(wrapper.type()).to.eql('div');
   });
 
   it('Renders the root `div` with the right class', () => {
-      wrapper = shallow(<List />);
+      wrapper = shallow(<EventList />);
       expect(wrapper.find('.event_items')).to.have.length(1);
     });
 
   it('Calls componentDidMount lifecycle method', () => {
-      sinon.spy(List.prototype, 'componentDidMount');
-      wrapper = mount(<List />);
-      expect(List.prototype.componentDidMount.calledOnce).to.equal(true);
+      sinon.spy(EventList.prototype, 'componentDidMount');
+      wrapper = mount(<EventList />);
+      expect(EventList.prototype.componentDidMount.calledOnce).to.equal(true);
     }); 
 
     it('Correctly updates the state after axios call in `componentDidMount` was made', () => {
     axios.get('/api/events').then((eventData) => {
       this.setState({events: eventData.data})
       })
-      wrapper = mount(<List />);
+      wrapper = mount(<EventList />);
       setTimeout(function() {
         expect(wrapper.state().events).to.be.instanceof(Array);
         expect(wrapper.state().events.length).to.equal(1);
