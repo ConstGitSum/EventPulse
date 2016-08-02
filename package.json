@@ -33,14 +33,12 @@
     "passport-facebook": "^2.1.1",
     "pg": "^6.0.3",
     "react": "^15.3.0",
-    "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
     "redux": "^3.5.2",
-    "redux-mock-store": "^1.1.2",
+    "redux-form": "^6.0.0-rc.3",
     "redux-promise": "^0.5.3",
-    "sinon": "^1.17.5",
     "skin-deep": "^0.16.0",
     "socket.io": "^1.4.8",
     "webpack": "^1.13.1",
@@ -49,11 +47,12 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
-    "enzyme": "^1.2.0",
     "enzyme": "^2.4.1",
+    "chai-enzyme": "^0.5.0",
     "jsdom": "^9.4.1",
     "mocha": "^2.5.3",
-    "redux-mock-store": "^1.1.2",
-    "sinon": "^1.17.5"
+    "sinon": "^1.17.5",
+    "react-addons-test-utils": "^15.3.0",
+    "redux-mock-store": "^1.1.2"
   }
 }

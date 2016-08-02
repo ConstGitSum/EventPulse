@@ -5,6 +5,7 @@ export const FETCH_LOGSTATE = 'FETCH_LOGSTATE';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
+export const CREATE_EVENT = 'CREATE_EVENT';
 
 export function fetchPulse(pulseCount) {	
   return {	
@@ -64,6 +65,25 @@ export function hideEvent(eventId, userId) {
 
   return {
     type: HIDE_EVENT,
+    payload: request
+  }
+}
+
+export function createEvent(props) {
+  const request = axios.post('/api/events', {
+    title: props.title,
+    description: props.description,
+    created_by: 1,
+    location: props.location,
+    time: props.date,
+    duration: props.duration || 999999999,
+    max_guests: props.guests || 999999999,
+    privacy: props.privacy || false,
+    group_visibility: props.visibility
+  });
+
+  return{
+    type: CREATE_EVENT,
     payload: request
   }
 }
