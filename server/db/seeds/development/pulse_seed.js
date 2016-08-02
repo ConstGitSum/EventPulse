@@ -9,7 +9,7 @@ exports.seed = function(knex, Promise) {
   ])
     .then(() => { // Inserts seed entries one by one in series
       return knex('users').insert({
-        id: 1,
+        //id: 1,
         name: 'Alice',
         email: 'alice@gmail.com',
         image: 'https://imageurl',
@@ -18,7 +18,7 @@ exports.seed = function(knex, Promise) {
     })
     .then(() => {
       return knex('users').insert({
-        id: 2,
+        //id: 2,
         name: 'Bob',
         email: 'bob@gmail.com',
         image: 'https://imageurl',
@@ -27,7 +27,7 @@ exports.seed = function(knex, Promise) {
     })
     .then(() => {
       return knex('groups').insert({
-        id: 1,
+        //id: 1,
         name: 'ConstGitSum',
       });
     })
@@ -44,7 +44,7 @@ exports.seed = function(knex, Promise) {
     })
     .then(() => {
       return knex('events').insert({
-        id: 1,
+        //id: 1,
         title: 'Pokemongodb party',
         description: 'Catch pokemon and do some coding',
         created_by: 1,
@@ -56,7 +56,7 @@ exports.seed = function(knex, Promise) {
     })
     .then(() => {
       return knex('events').insert({
-        id: 2,
+        //id: 2,
         title: 'Pick-up basketball game',
         description: 'A friendly game of basketball',
         created_by: 2,
