@@ -50,7 +50,7 @@ describe('Home Component', () => {
     const links = scryRenderedDOMComponentsWithTag(component, 'a');
     expect(buttons.length).to.equal(2);
     expect(links.length).to.equal(0);
-    expect(buttons[0].textContent).to.equal('Pulse it');
+    expect(buttons[0].textContent).to.equal('Create');
     expect(buttons[1].textContent).to.equal('Log Out');
   })
 
