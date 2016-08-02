@@ -60,7 +60,6 @@ function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
-    guestList:    state.guestList
   }
 }
 

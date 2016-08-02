@@ -1,41 +1,40 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import axios from 'axios';
 
-import { userLogOut } from '../actions/actions';
+import { userLogOut, fetchEventList, setCurrentEvent } from '../actions/actions';
 
 export class EventList extends React.Component {
-  constructor(props){
-    super(props); 
-    this.state = {
-      events: [],
-      txt: ''
-    }
-  }
-
-  componentDidMount(){
-    axios.get('/api/events').then((eventData) => {
-      console.log('~~eventData~~~', eventData.data);
-      this.setState({events: eventData.data})
-      })
+  componentDidMount() {
+   this.props.fetchEventList();
   }
   
-  handleCreate(){
-    this.setState({txt: '~~~Need a router~~~'});
+  handleCreate() {
+  }
+
+  viewEventDetails(event) {
+    // set currentEvent in store to current list item
+    // redirect to eventDetails
+    this.props.setCurrentEvent(event);
+    browserHistory.push(`/${event.id}`);
   }
 
   render(){
     return (
       <div className='event-items'>
         <h5>Events Happening!</h5>
-          {this.state.events.map((event, index) => {
+          {this.props.eventList.map((event, index) => {
             return ( 
             <ul key={index} className="events">
               <li>{"What's happening? " + event.title}</li>
               <li>{"Where? " + event.location}</li>
               <li>{"What are we goin to do? "+ event.description}</li>
+              <li>
+                <button onClick={this.viewEventDetails.bind(this, event)}>
+                  View Event Details
+                </button>
+              </li>
             </ul>
             )
           })}
@@ -49,16 +48,24 @@ export class EventList extends React.Component {
           onClick={this.props.userLogOut}> 
           Log Out
         </button>         
-        <span>{this.state.txt}</span>
       </div>
     )
   }
 }
 
+function mapStateToProps(state) {
+  return { 
+    currentUser: state.currentUser,
+    eventList: state.eventList 
+  };
+}
+
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
+    setCurrentEvent,
+    fetchEventList,
     userLogOut
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(EventList);
+export default connect(mapStateToProps, mapDispatchToProps)(EventList);

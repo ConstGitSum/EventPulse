@@ -5,7 +5,8 @@ module.exports = router;
 
 router.get('/loggedIn', function(req, res) {
   if(req.isAuthenticated()){
-    res.send(true);
+    const userId = req.user[0].user_id;
+    res.status(200).send({ id: userId });
   }
   else{
     res.send(false);
@@ -13,7 +14,6 @@ router.get('/loggedIn', function(req, res) {
 })
 
 router.post('/logOut', function(req, res) {
-  console.log("logging out")
   req.logout();     
   req.session.destroy();    
   res.send(false); 

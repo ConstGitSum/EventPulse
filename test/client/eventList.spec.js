@@ -6,15 +6,46 @@ import sd from 'skin-deep';
 import { expect } from 'chai';
 import chai from 'chai';
 import sinon from 'sinon';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import axios from 'axios'; 
-import { shallow, describeWithDOM,mount,spyLifecycle} from 'enzyme';  
-import { EventList } from '../../client/components/EventList';
+import { shallow, describeWithDOM, mount, spyLifecycle } from 'enzyme';  
+import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
 
-let wrapper; 
+import EventList from '../../client/components/EventList';
 
-describe('EventList Component', () => {
+xdescribe('EventList Component', () => {
+  const initialState = { 
+    eventList: [{
+      id: 1,
+      title: "Pokemongodb party",
+      description: "Catch pokemon and do some coding",
+      location: "701 Brazos St, Austin, TX 78701",
+      time: "2016-08-30T13:00:00.000Z",
+      guests: [],
+    }],
+    currentUser: {
+      id: 1,
+    },
+    currentEvent: {
+      id: 1,
+      title: "Pokemongodb party",
+      description: "Catch pokemon and do some coding",
+      location: "701 Brazos St, Austin, TX 78701",
+      time: "2016-08-30T13:00:00.000Z",
+      guests: [],
+    }
+  } 
+  const mockStore = configureStore([])(initialState);
+  let wrapper; 
+
   it('renders as a <div>', () => {
-    wrapper = shallow(<EventList />);
+    const component = renderIntoDocument(
+      <Provider store={mockStore}>
+        <EventList />
+      </Provider>
+    );
+
     expect(wrapper.type()).to.eql('div');
   });
 

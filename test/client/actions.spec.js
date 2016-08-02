@@ -19,19 +19,21 @@ describe('Actions', () => {
     moxios.uninstall();
   });
 
-  it('should dispatch FETCH_LOGSTATE action', (done) => {
+  it('should dispatch FETCH_CURRENT_USER action', (done) => {
     const store = mockStore({});
     moxios.stubRequest('/api/auth/loggedIn', {
       status: 200,
-      responseText: true
+      responseText: { id: 3 }
     });
 
     // Return the promise
-    return store.dispatch(actions.fetchLogState())
+    return store.dispatch(actions.fetchCurrentUser())
       .then(() => {
         const action = store.getActions()[0];
-        expect(action.type).to.equal('FETCH_LOGSTATE');
-        expect(action.payload.data).to.equal(true);
+        expect(action.type).to.equal('FETCH_CURRENT_USER');
+        expect(action.payload.data).to.be.a('object');
+        expect(action.payload.data).to.have.property('id');
+        expect(action.payload.data.id).to.be.a('number');
         done();
       });
   });
