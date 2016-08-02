@@ -13,7 +13,7 @@ module.exports = function(passport) {
   });
 
   passport.deserializeUser(function(id, done) {
-    done(null, id)
+    done(null, id);
   });
 
   passport.use(new FacebookStrategy({
@@ -23,9 +23,9 @@ module.exports = function(passport) {
     profileFields: PROFILE_FIELDS
   }, function(token, refreshToken, profile, done) {
     process.nextTick(function() {
-      PassportHelper.passport_helper(token,profile)
+      PassportHelper.passport_helper(token, profile)
         .then((value) => {
-          done(null,token)
+          done(null, value);
         });
     });
   }));

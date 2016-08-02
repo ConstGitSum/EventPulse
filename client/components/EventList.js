@@ -7,7 +7,8 @@ import { userLogOut, fetchEventList, setCurrentEvent } from '../actions/actions'
 
 export class EventList extends React.Component {
   componentDidMount() {
-    this.props.fetchEventList();
+   this.props.fetchEventList();
+   console.log(this.props.currentUser)
   }
   
   handleCreate() {
@@ -54,7 +55,10 @@ export class EventList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { eventList: state.eventList };
+  return { 
+    currentUser: state.currentUser,
+    eventList: state.eventList 
+  };
 }
 
 function mapDispatchToProps(dispatch) { 

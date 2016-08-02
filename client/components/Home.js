@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchLogState } from '../actions/actions';
+import { fetchCurrentUser } from '../actions/actions';
 
 import EventList from './EventList';
 import Auth from './Auth';
 
 export class Home extends Component {
   componentWillMount() {
-    this.props.fetchLogState()
+    this.props.fetchCurrentUser()
   }
 
   render() {
     return (
       <div>
-        {this.props.logState 
+        {this.props.currentUser 
          ? <EventList /> 
          : <Auth />} 
       </div>
@@ -23,11 +23,11 @@ export class Home extends Component {
 }
 
 function mapStateToProps(state) { 
-  return { logState: state.logState };
+  return { currentUser: state.currentUser };
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ fetchLogState }, dispatch);
+  return bindActionCreators({ fetchCurrentUser }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
