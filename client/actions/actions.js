@@ -1,17 +1,15 @@
 import axios from 'axios';
 
-export const FETCH_PULSE = 'FETCH_PULSE';
 export const FETCH_LOGSTATE = 'FETCH_LOGSTATE';
+export const FETCH_EVENTS_ALL = 'FETCH_EVENTS_ALL';
+export const FETCH_EVENTS_UNHIDDEN = 'FETCH_EVENTS_UNHIDDEN';
+export const FETCH_EVENTS_HIDDEN = 'FETCH_EVENTS_HIDDEN';
+export const FETCH_EVENTS_CREATED = 'FETCH_EVENTS_CREATED';
+export const FETCH_EVENTS_JOINED = 'FETCH_EVENTS_JOINED';
+export const FETCH_EVENTS_PENDING = 'FETCH_EVENTS_PENDING';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
-
-export function fetchPulse(pulseCount) {	
-  return {	
-    type: FETCH_PULSE,
-    payload : pulseCount
-  }
-}
 
 export function fetchLogState() {
   const request = axios.get('/api/auth/loggedIn');
@@ -27,6 +25,15 @@ export function userLogOut() {
 
   return {
     type: USER_LOGOUT,
+    payload: request
+  }
+}
+
+export function fetchEventList(filter) {
+  const request = axios.get('/api/events');
+
+  return {
+    type: FETCH_EVENTS_ALL,
     payload: request
   }
 }
