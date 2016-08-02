@@ -14,32 +14,39 @@ export class EventList extends React.Component {
   }
 
   viewEventDetails(event) {
-    // set currentEvent in store to current list item
     // redirect to eventDetails
-    this.props.setCurrentEvent(event);
     browserHistory.push(`/${event.id}`);
   }
 
-  render(){
+  render() {
     return (
-      <div className="event-list">
-        <h5>Explore</h5>
+      <div className="explore">
+        <h1>Explore</h1>
+          <ul className="event-list list-group">
           {this.props.eventList.map((event, index) => {
             return ( 
-            <ul key={index} className="events">
-              <li>{"What's happening? " + event.title}</li>
-              <li>{"Where? " + event.location}</li>
-              <li>{"What are we goin to do? "+ event.description}</li>
-              <li>
-                <button onClick={this.viewEventDetails.bind(this, event)}>
-                  View Event Details
-                </button>
+              <li 
+                key={index} 
+                className="list-group-item" 
+                onClick={this.props.setCurrentEvent.bind(null, event)}>
+                <h3>{event.title}</h3>
+                  {this.props.currentEvent && event.id === this.props.currentEvent.id
+                  ? <div className="event-info">
+                      <h4>{event.location}</h4>
+                      <p>{event.description}</p>
+                      <button 
+                        className="btn btn-secondary"
+                        onClick={this.viewEventDetails.bind(this, event)}>
+                        View Event Details
+                      </button>
+                    </div>
+                  : null}
               </li>
-            </ul>
             )
           })}
+          </ul>
         <button 
-          className='create-event'
+          className="create-event btn btn-primary"
           onClick={this.handleCreate.bind(this)}>
           Create
         </button>
@@ -55,6 +62,7 @@ export class EventList extends React.Component {
 
 function mapStateToProps(state) {
   return { 
+    currentEvent: state.currentEvent,
     currentUser: state.currentUser,
     eventList: state.eventList 
   };

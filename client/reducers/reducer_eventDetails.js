@@ -1,4 +1,4 @@
-import { JOIN_EVENT, HIDE_EVENT, SET_CURRENTEVENT } from '../actions/actions';
+import { JOIN_EVENT, HIDE_EVENT, SET_CURRENT_EVENT } from '../actions/actions';
 
 /**
  * Reducer to update state based on EventDetails' actions
@@ -10,7 +10,7 @@ export default function(state = {}, action) {
   let newState;
 
   switch (action.type) {
-    case SET_CURRENTEVENT:
+    case SET_CURRENT_EVENT:
       return action.payload;
     /**
      * Join the current event
