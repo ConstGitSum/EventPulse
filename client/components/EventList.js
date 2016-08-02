@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { userLogOut, fetchEventList } from '../actions/actions';
+import { userLogOut, fetchEventList, setCurrentEvent } from '../actions/actions';
 
 export class EventList extends React.Component {
   componentDidMount() {
@@ -11,6 +11,13 @@ export class EventList extends React.Component {
   }
   
   handleCreate() {
+  }
+
+  viewEventDetails(event) {
+    // set currentEvent in store to current list item
+    // redirect to eventDetails
+    this.props.setCurrentEvent(event);
+    browserHistory.push(`/${event.id}`);
   }
 
   render(){
@@ -23,6 +30,11 @@ export class EventList extends React.Component {
               <li>{"What's happening? " + event.title}</li>
               <li>{"Where? " + event.location}</li>
               <li>{"What are we goin to do? "+ event.description}</li>
+              <li>
+                <button onClick={this.viewEventDetails.bind(this, event)}>
+                  View Event Details
+                </button>
+              </li>
             </ul>
             )
           })}
@@ -47,6 +59,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
+    setCurrentEvent,
     fetchEventList,
     userLogOut
   }, dispatch);

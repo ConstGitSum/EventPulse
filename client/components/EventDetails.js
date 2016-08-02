@@ -24,6 +24,7 @@ export class EventDetails extends Component {
   }
 
   render() {
+    console.log(this.props.currentEvent)
     return (
       <div className="event-details">
         <h1>Pulse</h1>

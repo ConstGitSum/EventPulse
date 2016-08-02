@@ -7,6 +7,7 @@ export const FETCH_EVENTS_HIDDEN = 'FETCH_EVENTS_HIDDEN';
 export const FETCH_EVENTS_CREATED = 'FETCH_EVENTS_CREATED';
 export const FETCH_EVENTS_JOINED = 'FETCH_EVENTS_JOINED';
 export const FETCH_EVENTS_PENDING = 'FETCH_EVENTS_PENDING';
+export const SET_CURRENTEVENT = 'SET_CURRENTEVENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
@@ -35,6 +36,13 @@ export function fetchEventList(filter) {
   return {
     type: FETCH_EVENTS_ALL,
     payload: request
+  }
+}
+
+export function setCurrentEvent(event) {
+  return {
+    type: SET_CURRENTEVENT,
+    payload: event
   }
 }
 
