@@ -41,7 +41,7 @@ export function fetchEventList(filter) {
 
 export function setCurrentEvent(event) {
   return {
-    type: SET_CURRENTEVENT,
+    type: SET_CURRENT_EVENT,
     payload: event
   }
 }
