@@ -35,9 +35,12 @@ function newUser(user, profile) {
       : Promise.all(profile._json.friends.data
           .map(friend => User.getUserByFacebookId(friend.id))
         )
-        .then(friendArray =>  
+        .then(friendArray =>  {
         // take all friends and format them for database entry
-          User.addMemberships(buildMembershipList(friendArray, groupId, 'member'))
+        if(friendArray[0][0]) {  //Just in case a user has our app but isn't in our database
+          return User.addMemberships(buildMembershipList(friendArray, groupId, 'member'))
+         }
+        }
         )
         // return your info plus new members of friends
         .then(friends => [{ user_id: userId, group_id: groupId}].concat(friends)) 
@@ -74,8 +77,11 @@ function existingUser(user, profile) {
       ? user
       : Promise.all(newFriends.map(friend => User.getUserByFacebookId(friend.id)))
         // Take all the new friends and format them for database entry
-        .then(friendArray =>  
-          User.addMemberships(buildMembershipList(friendArray, friendsListId, 'member'))
+        .then(friendArray => {
+          if(friendArray[0][0]){ //Just in case a user has our app but isn't in our database
+            return User.addMemberships(buildMembershipList(friendArray, friendsListId, 'member'))
+          }
+        }
         )
         // new friends added
         .then(memberships => user.concat(memberships)); 
