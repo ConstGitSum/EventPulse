@@ -11,22 +11,39 @@ export class EventCreate extends Component {
       title: "", 
       description: "", 
       location: "", 
-      date: "", 
+      time: "", 
       duration: "", 
-      guests: "", 
+      max_guests: "", 
       privacy: true, 
-      visibility: ""
+      group_visibility: ""
     }  
   }
 
   onKeyPress(event){
-    console.log(event.target,"HEHHEH",event.target.value)
+    //console.log(event.target,"HEHHEH",event.target.value)
     this.setState({[event.target.name]:event.target.value})
   }
 
   onSubmit(event){
     event.preventDefault();
-    this.props.createEvent(this.props.currentEvent.eventId, this.props.currentUser.userId);
+    console.log('1~~~~',this.state)
+    console.log('2~~~~~',this.props.newEvent)
+    console.log('3~~~~',this.props.createEvent)
+    //this.props.createEvent(this.props.newEvent);
+    this.props.createEvent(this.state)
+  }
+
+  onClearValues(event){
+    this.setState({
+      title: "", 
+      description: "", 
+      location: "", 
+      time: "", 
+      duration: "", 
+      max_guests: "", 
+      privacy: true, 
+      group_visibility: ""
+    })
   }
 
   render(){
@@ -44,28 +61,28 @@ export class EventCreate extends Component {
               <input type = "text" name="location" type="text" placeholder="Location" value = {this.state.location} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="date" type="datetime-local" placeholder="Date" value = {this.state.date} onChange = {this.onKeyPress.bind(this)}/>
+              <input type = "text" name="time" type="datetime-local" placeholder="Date" value = {this.state.time} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
               <input type = "text" name="duration" type="number" placeholder="Duration" value = {this.state.duration} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="guests" type="number" placeholder="Number of guests" value = {this.state.guests} onChange = {this.onKeyPress.bind(this)}/>
+              <input type = "text" name="max_guests" type="number" placeholder="Number of max guests" value = {this.state.max_guests} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <br/>
             <label>Privacy</label>
             <div>
-              <label><input name="privacy" component="input" type="radio" value="false"/> public</label>
+              <label><input name="privacy" type="radio" value="false"/> public</label>
               <br/>
-              <label><input name="privacy" component="input" type="radio" value="true"/> private</label>
+              <label><input name="privacy" type="radio" value="true"/> private</label>
             </div>
             <label>Visibility</label>
             <div>
-              <label><input name="visibility" component="input" type="radio" value="1"/> group1</label>
+              <label><input name="group_visibility" type="radio" value="1"/> group1</label>
             </div>
             <div>
-              <button type="submit" className='btn btn-primary' onSubmit = {this.onSubmit.bind(this)}> submit </button>
-              <button type="button" className='btn btn-primary' >Clear Values</button>
+              <button type="submit" className='btn btn-primary' onClick = {this.onSubmit.bind(this)}> Submit </button>
+              <button type="button" className='btn btn-primary' onClick = {this.onClearValues.bind(this)}> Clear Values </button>
             </div>
           </form>
       </div>
@@ -77,13 +94,13 @@ export class EventCreate extends Component {
 
 function mapStateToProps(state) {
   return {
-    
+    newEvent: state.eventCreate,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    EventCreate}, dispatch)
+    createEvent}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventCreate);
