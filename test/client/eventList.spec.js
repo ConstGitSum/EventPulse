@@ -12,7 +12,7 @@ import EventList from '../../client/components/EventList';
 
 let wrapper; 
 
-describe('List component', () => {
+describe('EventList Component', () => {
   it('renders as a <div>', () => {
     wrapper = shallow(<EventList />);
     expect(wrapper.type()).to.eql('div');
@@ -20,7 +20,7 @@ describe('List component', () => {
 
   it('Renders the root `div` with the right class', () => {
       wrapper = shallow(<EventList />);
-      expect(wrapper.find('.event_items')).to.have.length(1);
+      expect(wrapper.find('.event-items')).to.have.length(1);
     });
 
   it('Calls componentDidMount lifecycle method', () => {

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-// import {connect} from 'react-redux';
-// import {createStore} from 'redux'; 
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import axios from 'axios';
 
-export default class EventList extends React.Component {
+import { userLogOut } from '../actions/actions';
+
+export class EventList extends React.Component {
   constructor(props){
     super(props); 
     this.state = {
@@ -25,7 +28,7 @@ export default class EventList extends React.Component {
 
   render(){
     return (
-      <div className='event_items'>
+      <div className='event-items'>
         <h5>Events Happening!</h5>
           {this.state.events.map((event, index) => {
             return ( 
@@ -36,10 +39,26 @@ export default class EventList extends React.Component {
             </ul>
             )
           })}
-        <button onClick={this.handleCreate.bind(this)} className='create_event'>Create</button>
+        <button 
+          className='create-event'
+          onClick={this.handleCreate.bind(this)}>
+          Create
+        </button>
+        <button 
+          className="btn btn-danger" 
+          onClick={this.props.userLogOut}> 
+          Log Out
+        </button>         
         <span>{this.state.txt}</span>
       </div>
     )
   }
 }
 
+function mapDispatchToProps(dispatch) { 
+  return bindActionCreators({ 
+    userLogOut
+  }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(EventList);
