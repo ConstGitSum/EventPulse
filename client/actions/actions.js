@@ -31,7 +31,13 @@ export function userLogOut() {
 }
 
 export function fetchEventList(filter) {
-  const request = axios.get('/api/events');
+  const request = axios.get('/api/events')
+    .then(events => 
+      Promise.all(events.data.map(event => 
+        axios.get(`/api/events/${event.id}/guests`)
+          .then(guests => Object.assign(event, { guests: guests.data }))
+      ))
+    );
 
   return {
     type: FETCH_EVENTS_ALL,

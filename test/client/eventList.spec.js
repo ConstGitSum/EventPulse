@@ -10,66 +10,54 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import axios from 'axios'; 
 import { shallow, describeWithDOM, mount, spyLifecycle } from 'enzyme';  
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
+import { renderIntoDocument, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils';
 
 import EventList from '../../client/components/EventList';
 
-xdescribe('EventList Component', () => {
+describe('EventList Component', () => {
   const initialState = { 
-    eventList: [{
-      id: 1,
-      title: "Pokemongodb party",
-      description: "Catch pokemon and do some coding",
-      location: "701 Brazos St, Austin, TX 78701",
-      time: "2016-08-30T13:00:00.000Z",
-      guests: [],
-    }],
-    currentUser: {
-      id: 1,
-    },
-    currentEvent: {
-      id: 1,
-      title: "Pokemongodb party",
-      description: "Catch pokemon and do some coding",
-      location: "701 Brazos St, Austin, TX 78701",
-      time: "2016-08-30T13:00:00.000Z",
-      guests: [],
-    }
+    eventList: [],
+    currentUser: { id: 1 },
+    currentEvent: {}
   } 
   const mockStore = configureStore([])(initialState);
-  let wrapper; 
 
-  it('renders as a <div>', () => {
+  it('should render a div with class event-list', () => {
     const component = renderIntoDocument(
       <Provider store={mockStore}>
         <EventList />
       </Provider>
     );
 
-    expect(wrapper.type()).to.eql('div');
+    const list = scryRenderedDOMComponentsWithClass(component, 'event-list');
+    expect(list.length).to.equal(1);
   });
 
-  it('Renders the root `div` with the right class', () => {
-      wrapper = shallow(<EventList />);
-      expect(wrapper.find('.event-items')).to.have.length(1);
-    });
 
-  it('Calls componentDidMount lifecycle method', () => {
-      sinon.spy(EventList.prototype, 'componentDidMount');
-      wrapper = mount(<EventList />);
-      expect(EventList.prototype.componentDidMount.calledOnce).to.equal(true);
-    }); 
+  it('should call componentDidMount lifecycle method', () => {
+    sinon.spy(EventList.prototype, 'componentDidMount');
 
-    it('Correctly updates the state after axios call in `componentDidMount` was made', () => {
-    axios.get('/api/events').then((eventData) => {
-      this.setState({events: eventData.data})
-      })
-      wrapper = mount(<EventList />);
-      setTimeout(function() {
-        expect(wrapper.state().events).to.be.instanceof(Array);
-        expect(wrapper.state().events.length).to.equal(1);
-        expect(wrapper.state().events[0].title).to.equal('Pokemongodb party');
-        expect(wrapper.state().events[0].location).to.equal('701 Brazos St, Austin, TX 78701');
-      }, 0);
+    const component = renderIntoDocument(
+      <Provider store={mockStore}>
+        <EventList />
+      </Provider>
+    );
+
+    expect(EventList.prototype.componentDidMount.calledOnce).to.equal(true);
+  }); 
+
+  xit('should update the state after axios call in `componentDidMount`', (done) => {
+    const component = renderIntoDocument(
+      <Provider store={mockStore}>
+        <EventList />
+      </Provider>
+    );
+
+    console.log(mockStore.getState().events)
+    expect(mockStore.getState().eventList).to.be.instanceof(Array);
+    expect(mockStore.getState().eventList.length).to.equal(1);
+    expect(mockStore.getState().eventList[0].title).to.equal('Pokemongodb party');
+    done();
   });
+
 });
