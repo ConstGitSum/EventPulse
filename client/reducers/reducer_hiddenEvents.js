@@ -1,6 +1,4 @@
-import {
-  HIDE_EVENT
-} from '../actions/actions'
+import { HIDE_EVENT } from '../actions/actions'
 
 export default function(state = [], action) {
   switch (action.type) {
