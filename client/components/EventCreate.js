@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createEvent } from '../actions/actions';
+import { createEvent, setCurrentEvent } from '../actions/actions';
 
 export class EventCreate extends Component {
 
@@ -31,6 +32,17 @@ export class EventCreate extends Component {
     console.log('3~~~~',this.props.createEvent)
     //this.props.createEvent(this.props.newEvent);
     this.props.createEvent(this.state)
+      .then(resp => {
+        console.log('the resp is~~~~~' , resp.payload.data);
+        return this.props.setCurrentEvent(resp.payload.data);
+        //console.log('4~~~~~',this.props.newEvent.data)
+
+      })
+      .then(() => {
+        console.log("HELLO",this.props.newEvent)
+        browserHistory.push(`/${this.props.newEvent.data.id}`);
+      })
+
   }
 
   onClearValues(event){
@@ -100,7 +112,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createEvent}, dispatch)
+    createEvent, setCurrentEvent}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventCreate);
