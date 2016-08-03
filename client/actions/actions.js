@@ -142,6 +142,7 @@ export function updateTime() {
 }
 
 export function createEvent(formData, currentUser) {
+  console.log('address in actions is ~~',formData.location)
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
@@ -149,10 +150,12 @@ export function createEvent(formData, currentUser) {
     location: formData.location,
     time: parseTime(formData.hour, formData.minute, formData.ampm),
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
+    
     max_guests: formData.max_guests || 999999999,
     privacy: formData.privacy || false,
     group_visibility: formData.group_visibility || null
   })
+  console.log('request in actions is ~~',request)
 
   return {
     type: CREATE_EVENT,
