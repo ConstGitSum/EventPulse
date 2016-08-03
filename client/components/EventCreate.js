@@ -16,7 +16,8 @@ export class EventCreate extends Component {
       duration: "", 
       max_guests: "", 
       privacy: true, 
-      group_visibility: ""
+      group_visibility: "",
+      currentUser: this.props.currentUser.id
     }  
   }
 
@@ -168,6 +169,7 @@ export class EventCreate extends Component {
 function mapStateToProps(state) {
   return {
     newEvent: state.eventCreate,
+    currentUser: state.currentUser
   }
 }
 
