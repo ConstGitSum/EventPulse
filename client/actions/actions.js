@@ -12,6 +12,7 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
 export const LEAVE_EVENT = 'LEAVE_EVENT';
+export const CREATE_EVENT = 'CREATE_EVENT';
 
 export function fetchCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -84,6 +85,25 @@ export function leaveEvent(eventId, userId) {
 
   return {
     type: LEAVE_EVENT,
+    payload: request
+  }
+}
+
+export function createEvent(newEvent){
+  const request = axios.post('/api/events', {
+    title: newEvent.title,
+    description: newEvent.description,
+    created_by: 1,
+    location: newEvent.location,
+    time: newEvent.time,
+    duration: newEvent.duration || 999999999,
+    max_guests: newEvent.max_guests || 999999999,
+    privacy: newEvent.privacy || false,
+    group_visibility: newEvent.group_visibility
+  });
+
+  return{
+    type: CREATE_EVENT,
     payload: request
   }
 }
