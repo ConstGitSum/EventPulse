@@ -3,40 +3,73 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
-import { joinEvent, hideEvent } from '../actions/actions';
+import { joinEvent, leaveEvent, hideEvent } from '../actions/actions';
 
 export class EventDetails extends Component {
+  componentDidMount() {
+    console.log("currentUser: ", this.props.currentUser.id)
+  }
   /**
-   * Join the current event by the current user
+   * Current user will join the current event
    * @return {undefined} 
    */
-  onEventJoin() {
-    this.props.joinEvent(this.props.currentEvent.eventId, this.props.currentUser.userId);
+  onClickJoin() {
+    console.log(this.props)
+    this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id);
   }
 
   /**
-   * Hide the event from the current user
+   * Current user will leave the current event if they have joined
    * @return {undefined}
    */
-  onEventHide() {
-    this.props.hideEvent(this.props.currentEvent.eventId, this.props.currentUser.userId);
+  onClickLeave() {
+    this.props.leaveEvent(this.props.currentEvent.id, this.props.currentUser.id)
+  }
+
+  /**
+   * Current event will be hidden from the current user
+   * @return {undefined}
+   */
+  onClickHide() {
+    this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id);
     browserHistory.push('/EventList');
   }
 
+  /**
+   * Return the user to the previous page
+   * @return {undefined} 
+   */
+  onClickBack() {
+    browserHistory.push('/')
+  }
+
   render() {
+    {console.log("details: ", this.props)}
     return (
       <div className="event-details">
         <h1>Pulse</h1>
 
         <div className="btn-group btn-primary" role="group">
-          <button
-            onClick={this.onEventJoin}
-            type="button" 
-            className="btn btn-primary">Join</button>
-          <button 
-            onClick={this.onEventHide}
-            type="button" 
-            className="btn btn-danger">Hide</button>
+          {this.props.currentEvent.guests.some(guest => {
+            guest.id === this.props.currentUser.id
+          })
+            ?
+            <div>
+              <button
+                onClick={this.onClickJoin.bind(this)}
+                type="button" 
+                className="btn btn-primary">Join</button>
+              <button 
+                onClick={this.onClickHide.bind(this)}
+                type="button" 
+                className="btn btn-default">Hide</button>
+            </div>
+            :
+            <button
+              onClick={this.onClickLeave.bind(this)}
+              type="button"
+              className="btn btn-danger">Leave</button>
+          }
         </div>
 
         <div>
@@ -50,7 +83,14 @@ export class EventDetails extends Component {
           <p>Location: {this.props.currentEvent.location}</p>
           <p>Time: {this.props.currentEvent.time}</p>
         </div>
-        <button className="btn btn-primary">Chat</button>
+
+        <div className="btn-group btn-primary" role="group">
+          <button className="btn btn-primary">Chat</button>
+          <button 
+            onClick={this.onClickBack.bind(this)}
+            type="button"
+            className="btn btn-danger">Back</button>
+        </div>
       </div>
     )
   }
@@ -65,7 +105,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    joinEvent, hideEvent
+    joinEvent, leaveEvent, hideEvent
   }, dispatch)
 
 }

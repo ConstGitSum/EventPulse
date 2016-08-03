@@ -8,6 +8,7 @@ import EventListFilter from './EventListFilter';
 
 export class EventList extends React.Component {
   componentDidMount() {
+    console.log("state:", this.props)
     this.props.fetchEventList();
   }
 
