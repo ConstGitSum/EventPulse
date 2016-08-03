@@ -54,21 +54,21 @@ describe('Home Component', () => {
     expect(links[0].textContent).to.equal('facebook!');
   })
 
-  it('should render a logout button when logged in',() => {
-    let currentUser = { id: 3 };
-    const fetchCurrentUser = () => currentUser = { id: 3 };
-    const component = renderIntoDocument(
-      <Provider store={mockStore}>
-        <Home 
-          currentUser={currentUser}
-          fetchCurrentUser={fetchCurrentUser} />
-      </Provider>
-    );
-    const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
-    const links = scryRenderedDOMComponentsWithTag(component, 'a');
-    expect(buttons.length).to.equal(4);
-    expect(links.length).to.equal(8);
-    expect(buttons[3].textContent).to.equal('Log Out');
-  })
+  //it('should render a logout button when logged in',() => {
+  //  let currentUser = { id: 3 };
+  //  const fetchCurrentUser = () => currentUser = { id: 3 };
+  //  const component = renderIntoDocument(
+  //    <Provider store={mockStore}>
+  //      <Home 
+  //        currentUser={currentUser}
+  //        fetchCurrentUser={fetchCurrentUser} />
+  //    </Provider>
+  //  );
+  //  const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
+  //  const links = scryRenderedDOMComponentsWithTag(component, 'a');
+  //  expect(buttons.length).to.equal(4);
+  //  expect(links.length).to.equal(8);
+  //  expect(buttons[3].textContent).to.equal('Log Out');
+  //})
 
 })
