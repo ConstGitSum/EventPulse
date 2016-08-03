@@ -6,7 +6,7 @@ import { createEvent, setCurrentEvent } from '../actions/actions';
 
 export class EventCreate extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       title: "", 
@@ -16,36 +16,35 @@ export class EventCreate extends Component {
       duration: "", 
       max_guests: "", 
       privacy: true, 
-      group_visibility: ""
+      group_visibility: 1
     }  
   }
 
-  onKeyPress(event){
-    //console.log(event.target,"HEHHEH",event.target.value)
+  onKeyPress(event) {
     this.setState({[event.target.name]:event.target.value})
   }
 
-  onSubmit(event){
-    event.preventDefault();
-    console.log('1~~~~',this.state)
-    console.log('2~~~~~',this.props.newEvent)
-    console.log('3~~~~',this.props.createEvent)
-    //this.props.createEvent(this.props.newEvent);
-    this.props.createEvent(this.state)
-      .then(resp => {
-        console.log('the resp is~~~~~' , resp.payload.data);
-        return this.props.setCurrentEvent(resp.payload.data);
-        //console.log('4~~~~~',this.props.newEvent.data)
-
-      })
-      .then(() => {
-        console.log("HELLO",this.props.newEvent)
-        browserHistory.push(`/${this.props.newEvent.data.id}`);
-      })
-
+  onPrivacyChange(event) {
+    console.log('VALUE',event.target.value)
+    this.setState({privacy:event.target.value})
   }
 
-  onClearValues(event){
+  onVisibilityChange(event) {
+    this.setState({visibility: Number(event.target.value)})
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.createEvent(this.state)
+      .then(resp => {
+        return this.props.setCurrentEvent(resp.payload.data);
+      })
+      .then(() => {
+        browserHistory.push(`/${this.props.newEvent.data.id}`);
+      })
+  }
+
+  onClearValues(event) {
     this.setState({
       title: "", 
       description: "", 
@@ -58,7 +57,7 @@ export class EventCreate extends Component {
     })
   }
 
-  render(){
+  render() {
     return(
       <div className='container'>
           <h3>Create New Event</h3>
@@ -84,13 +83,13 @@ export class EventCreate extends Component {
             <br/>
             <label>Privacy</label>
             <div>
-              <label><input name="privacy" type="radio" value="false"/> public</label>
+              <label><input name="privacy" type="radio" value="false" checked = {this.state.privacy === 'false'} onChange = {this.onPrivacyChange.bind(this)}/> public</label>
               <br/>
-              <label><input name="privacy" type="radio" value="true"/> private</label>
+              <label><input name="privacy" type="radio" value="true" checked = {this.state.privacy === 'true'} onChange = {this.onPrivacyChange.bind(this)}/> private</label>
             </div>
             <label>Visibility</label>
             <div>
-              <label><input name="group_visibility" type="radio" value="1"/> group1</label>
+              <label><input name="group_visibility" type="radio" value={1} checked = {this.state.group_visibility === 1} onChange = {this.onVisibilityChange.bind(this)}/> group1</label>
             </div>
             <div>
               <button type="submit" className='btn btn-primary' onClick = {this.onSubmit.bind(this)}> Submit </button>
@@ -98,8 +97,6 @@ export class EventCreate extends Component {
             </div>
           </form>
       </div>
-
-
       )
   }  
 }
