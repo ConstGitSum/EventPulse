@@ -38,7 +38,7 @@ export class EventList extends React.Component {
         <h1>Explore</h1>
           <EventListFilter />
           <ul className="event-list list-group">
-            {this.props.eventList.map((event, index) =>
+            {this.props.eventListFiltered.map((event, index) =>
               this.renderEventListItem(event, index))}
           </ul>
 
@@ -62,7 +62,7 @@ function mapStateToProps(state) {
   return { 
     currentEvent: state.currentEvent,
     currentUser: state.currentUser,
-    eventList: state.eventList 
+    eventListFiltered: state.eventListFiltered 
   };
 }
 
