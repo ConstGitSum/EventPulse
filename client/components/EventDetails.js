@@ -45,25 +45,24 @@ export class EventDetails extends Component {
         <h1>Pulse</h1>
 
         <div>
+          {/* check if current user is already a guest or is the creator*/}
           {this.props.currentEvent.guests.some(guest => 
-            guest.id === this.props.currentUser.id || this.props.currentEvent.created_by === this.props.currentUser.id
-          )
+            guest.id === this.props.currentUser.id || 
+            this.props.currentEvent.created_by === this.props.currentUser.id)
             ? <button
-              onClick={this.onClickLeave.bind(this)}
-              type="button"
-              className="btn btn-danger">Leave</button>
-
+                onClick={this.onClickLeave.bind(this)}
+                type="button"
+                className="btn btn-danger">Leave</button>
             : <div>
-              <button
-                onClick={this.onClickJoin.bind(this)}
-                type="button" 
-                className="btn btn-primary">Join</button>
-              <button 
-                onClick={this.onClickHide.bind(this)}
-                type="button" 
-                className="btn btn-default">Hide</button>
-            </div>
-          }
+                <button
+                  onClick={this.onClickJoin.bind(this)}
+                  type="button" 
+                  className="btn btn-primary">Join</button>
+                <button 
+                  onClick={this.onClickHide.bind(this)}
+                  type="button" 
+                  className="btn btn-default">Hide</button>
+              </div>}
         </div>
 
         <div>
@@ -99,7 +98,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    joinEvent, leaveEvent, hideEvent
+    joinEvent, 
+    leaveEvent, 
+    hideEvent
   }, dispatch)
 
 }

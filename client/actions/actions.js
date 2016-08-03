@@ -11,7 +11,7 @@ export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
-export const LEAVE_EVENT = 'LEAVE_EVENT'
+export const LEAVE_EVENT = 'LEAVE_EVENT';
 
 export function fetchCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -53,12 +53,6 @@ export function setCurrentEvent(event) {
   }
 }
 
-/**
- * Action to join the current event
- * @param  {Number} eventId Current event's id
- * @param  {Number} userId  Current user's id
- * @return {Object}         Action
- */
 export function joinEvent(eventId, userId) {
   const url = `/api/events/${eventId}/guests`;
   const body = {
@@ -73,12 +67,6 @@ export function joinEvent(eventId, userId) {
   }
 }
 
-/**
- * Action to hide the current event
- * @param  {Number} eventId Current event's id
- * @param  {Number} userId  Current user's id
- * @return {Object}        Action
- */
 export function hideEvent(eventId, userId) {
   const url = `/api/events/${eventId}/hide`;
   const body = { user_id: userId };
@@ -91,8 +79,8 @@ export function hideEvent(eventId, userId) {
 }
 
 export function leaveEvent(eventId, userId) {
-  const url = `/api/events/${eventId}/guests/${userId}`
-  const request = axios.delete(url)
+  const url = `/api/events/${eventId}/guests/${userId}`;
+  const request = axios.delete(url);
 
   return {
     type: LEAVE_EVENT,

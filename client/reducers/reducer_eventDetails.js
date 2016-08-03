@@ -1,4 +1,9 @@
-import { JOIN_EVENT, HIDE_EVENT, SET_CURRENT_EVENT, LEAVE_EVENT } from '../actions/actions';
+import { 
+  JOIN_EVENT, 
+  HIDE_EVENT, 
+  SET_CURRENT_EVENT, 
+  LEAVE_EVENT 
+} from '../actions/actions';
 
 /**
  * Reducer to update state based on EventDetails' actions
@@ -12,9 +17,10 @@ export default function(state = {}, action) {
   switch (action.type) {
     case LEAVE_EVENT:
       newState = Object.assign({}, state)
-      newState.guests = newState.guests.filter((guest) => guest.id !== action.payload.data.id)
+      newState.guests = newState.guests
+        .filter((guest) => guest.id !== action.payload.data.id);
 
-      return newState
+      return newState;
 
     case SET_CURRENT_EVENT:
       return action.payload;
@@ -34,6 +40,7 @@ export default function(state = {}, action) {
      */
     case HIDE_EVENT:
       return {};
+
     default:
       return state;
   }
