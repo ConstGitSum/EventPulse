@@ -9,7 +9,6 @@ import Auth from './Auth';
 export class Home extends Component {
   componentWillMount() {
     this.props.fetchCurrentUser()
-    console.log("State: ", this.props.currentUser)
   }
 
   render() {

@@ -6,15 +6,11 @@ import { browserHistory } from 'react-router';
 import { joinEvent, leaveEvent, hideEvent } from '../actions/actions';
 
 export class EventDetails extends Component {
-  componentDidMount() {
-    console.log("currentUser: ", this.props.currentUser.id)
-  }
   /**
    * Current user will join the current event
    * @return {undefined} 
    */
   onClickJoin() {
-    console.log(this.props)
     this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id);
   }
 
@@ -44,14 +40,13 @@ export class EventDetails extends Component {
   }
 
   render() {
-    {console.log("details: ", this.props)}
     return (
       <div className="event-details">
         <h1>Pulse</h1>
 
         <div>
           {this.props.currentEvent.guests.some(guest => 
-            guest.id === this.props.currentUser.id
+            guest.id === this.props.currentUser.id || this.props.currentEvent.created_by === this.props.currentUser.id
           )
             ? <button
               onClick={this.onClickLeave.bind(this)}
