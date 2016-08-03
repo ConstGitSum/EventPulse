@@ -40,7 +40,6 @@ export class EventCreate extends Component {
         return this.props.setCurrentEvent(this.props.newEvent);
       })
       .then(() => {
-        console.log(this.props.newEvent)
         browserHistory.push(`/${this.props.newEvent.id}`);
       })
   }

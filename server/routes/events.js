@@ -162,11 +162,9 @@ router.delete('/:eventId/guests/:userId', function(req, res, next) {
 router.post('/', function(req, res, next) {
   Event.create(req.body)
     .then((eventId) => {
-      console.log('eventId',eventId)
       return Event.getEventById(eventId[0].id);
     })
     .then((event) => {
-      //console.log("EVENT",event)
       return Guest.getGuests(event[0].id).then((guest) => {
         event[0].guests = guest
         res.status(201).json(event[0]);

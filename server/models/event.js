@@ -74,11 +74,9 @@ function getEventById(id) {
 }
 
 function create(event) {
-  return knex('events').insert(event).returning(['id','created_by']).then((event) =>{
-    console.log("evennnn",event)
-    return Guest.create({user_id: event[0].created_by, event_id: event[0].id, status: 'accepted'}).then(function(value){
-      console.log("event",event,"value",value)
-      return event
+  return knex('events').insert(event).returning(['id','created_by']).then((newEvent) =>{
+    return Guest.create({user_id: newEvent[0].created_by, event_id: newEvent[0].id, status: 'accepted'}).then(function(value){
+      return newEvent
     })
   })
   //return knex('events').insert(event).returning('id');
