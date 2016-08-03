@@ -16,7 +16,7 @@ import EventList from '../../client/components/EventList';
 
 describe('EventList Component', () => {
   const initialState = { 
-    eventList: [],
+    eventListFiltered: [],
     currentUser: { id: 1 },
     currentEvent: {}
   } 

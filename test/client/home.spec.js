@@ -13,7 +13,7 @@ import { Home } from '../../client/components/Home';
 describe('Home Component', () => {
   let mockStore;
   const initialState = { 
-    eventList: [{
+    eventListFiltered: [{
       id: 1,
       title: "Pokemongodb party",
       description: "Catch pokemon and do some coding",
