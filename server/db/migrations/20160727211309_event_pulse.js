@@ -23,6 +23,8 @@ exports.up = function(knex, Promise) {
       table.string('description').notNullable();
       table.integer('created_by').notNullable().references('id').inTable('users');
       table.string('location').notNullable();
+      table.decimal('latitude', 10, 7);
+      table.decimal('longitude', 10, 7);
       table.dateTime('time');
       table.integer('duration');
       table.integer('max_guests');

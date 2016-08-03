@@ -1,21 +1,17 @@
 import React from 'react';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default class EventListFilter extends React.Component {
   render() {
     return (
-<div className="dropup">
-  <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropup
-    <span className="caret"></span>
-  </button>
-  <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" className="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
+      <DropdownButton title={'Filter Events'} key={1} id={`dropdown-basic-${1}`}>
+        <MenuItem eventKey="1">All</MenuItem>
+        <MenuItem eventKey="2" active>Not Hidden</MenuItem>
+        <MenuItem eventKey="3">Hidden</MenuItem>
+        <MenuItem eventKey="4">Created</MenuItem>
+        <MenuItem eventKey="5">Joined</MenuItem>
+        <MenuItem eventKey="6">Pending</MenuItem>
+      </DropdownButton>
     );
   }
 }
