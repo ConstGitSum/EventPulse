@@ -40,6 +40,7 @@ export class EventDetails extends Component {
   }
 
   render() {
+    const creator = this.props.currentEvent.guests.find(guest => guest.id === this.props.currentEvent.created_by).name
     return (
       <div className="event-details">
         <h1>Pulse</h1>
@@ -71,6 +72,7 @@ export class EventDetails extends Component {
         </div>
 
         <div>
+          <p>Creator: {creator}</p>
           <p>Title: {this.props.currentEvent.title}</p>
           <p>Description: {this.props.currentEvent.description}</p>
           <p>Location: {this.props.currentEvent.location}</p>
