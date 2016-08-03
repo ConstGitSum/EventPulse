@@ -33,7 +33,7 @@ function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
     eventList: state.eventList,
-    hiddenEvents: []
+    hiddenEvents: state.hiddenEvents
   };
 }
 
