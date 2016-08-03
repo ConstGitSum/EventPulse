@@ -1,5 +1,5 @@
 var knex = require('../db/knex');
-
+var Guest = require('./guest')
 module.exports = {
   getAll,
   getUnhidden,
@@ -74,7 +74,14 @@ function getEventById(id) {
 }
 
 function create(event) {
-  return knex('events').insert(event).returning('id');
+  return knex('events').insert(event).returning(['id','created_by']).then((event) =>{
+    console.log("evennnn",event)
+    return Guest.create({user_id: event[0].created_by, event_id: event[0].id, status: 'accepted'}).then(function(value){
+      console.log("event",event,"value",value)
+      return event
+    })
+  })
+  //return knex('events').insert(event).returning('id');
 }
 
 function update(id, event) {
