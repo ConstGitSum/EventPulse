@@ -61,39 +61,103 @@ export class EventCreate extends Component {
     return(
       <div className="container">
           <h3>Create New Event</h3>
-          <form role = "form">
+          <form role="form">
             <div className="form-group">       
-              <input type = "text" name="title" placeholder="Event title" value = {this.state.title} onChange = {this.onKeyPress.bind(this)}/>
+              <input 
+                type="text" 
+                name="title" 
+                placeholder="Event title" 
+                value={this.state.title} 
+                onChange={this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="description" placeholder="Description" value = {this.state.description} onChange = {this.onKeyPress.bind(this)}/>
+              <input 
+                type="text" 
+                name="description" 
+                placeholder="Description" 
+                value={this.state.description} 
+                onChange={this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="location" placeholder="Location" value = {this.state.location} onChange = {this.onKeyPress.bind(this)}/>
+              <input 
+                type="text" 
+                name="location" 
+                placeholder="Location" 
+                value={this.state.location} 
+                onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input name="time" type="datetime-local" placeholder="Date" value = {this.state.time} onChange = {this.onKeyPress.bind(this)}/>
+              <input 
+                name="time" 
+                type="datetime-local" 
+                placeholder="Date" 
+                value={this.state.time} 
+                onChange={this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input name="duration" type="number" placeholder="Duration" value = {this.state.duration} onChange = {this.onKeyPress.bind(this)}/>
+              <input 
+                name="duration" 
+                type="number" 
+                placeholder="Duration" 
+                value={this.state.duration} 
+                onChange={this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input name="max_guests" type="number" placeholder="Number of max guests" value = {this.state.max_guests} onChange = {this.onKeyPress.bind(this)}/>
+              <input 
+                name="max_guests" 
+                type="number" 
+                placeholder="Number of max guests" 
+                value={this.state.max_guests} 
+                onChange={this.onKeyPress.bind(this)}/>
             </div>
             <br/>
             <label>Privacy</label>
             <div>
-              <label><input name="privacy" type="radio" value="false" checked = {this.state.privacy === 'false'} onChange = {this.onPrivacyChange.bind(this)}/> public</label>
+              <label>
+                <input 
+                  name="privacy" 
+                  type="radio" 
+                  value="false" 
+                  checked={this.state.privacy === 'false'} 
+                  onChange={this.onPrivacyChange.bind(this)}/> 
+                public
+              </label>
               <br/>
-              <label><input name="privacy" type="radio" value="true" checked = {this.state.privacy === 'true'} onChange = {this.onPrivacyChange.bind(this)}/> private</label>
+              <label>
+                <input 
+                  name="privacy" 
+                  type="radio" 
+                  value="true" 
+                  checked={this.state.privacy === 'true'} 
+                  onChange={this.onPrivacyChange.bind(this)}/> 
+                  private
+              </label>
             </div>
             <label>Visibility</label>
             <div>
-              <label><input name="group_visibility" type="radio" value="1" checked = {this.state.group_visibility === "1"} onChange = {this.onVisibilityChange.bind(this)}/> group1</label>
+              <label>
+                <input 
+                  name="group_visibility" 
+                  type="radio" 
+                  value="1" 
+                  checked={this.state.group_visibility === "1"} 
+                  onChange={this.onVisibilityChange.bind(this)}/> 
+                  group1
+                </label>
             </div>
             <div>
-              <button type="submit" className='btn btn-primary' onClick = {this.onSubmit.bind(this)}> Submit </button>
-              <button type="button" className='btn btn-primary' onClick = {this.onClearValues.bind(this)}> Clear Values </button>
+              <button 
+                type="submit" 
+                className='btn btn-primary' 
+                onClick={this.onSubmit.bind(this)}> 
+                Submit 
+              </button>
+              <button 
+                type="button" 
+                className='btn btn-primary' 
+                onClick={this.onClearValues.bind(this)}> 
+                Clear Values 
+              </button>
             </div>
           </form>
       </div>
