@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { createEvent, setCurrentEvent } from '../actions/actions';
-import { getCoords } from './helpers';
+import { getCoords } from '../utils/helpers';
 
 export class EventCreate extends Component {
 
