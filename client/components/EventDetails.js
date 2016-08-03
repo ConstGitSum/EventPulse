@@ -49,12 +49,16 @@ export class EventDetails extends Component {
       <div className="event-details">
         <h1>Pulse</h1>
 
-        <div className="btn-group btn-primary" role="group">
-          {this.props.currentEvent.guests.some(guest => {
+        <div>
+          {this.props.currentEvent.guests.some(guest => 
             guest.id === this.props.currentUser.id
-          })
-            ?
-            <div>
+          )
+            ? <button
+              onClick={this.onClickLeave.bind(this)}
+              type="button"
+              className="btn btn-danger">Leave</button>
+
+            : <div>
               <button
                 onClick={this.onClickJoin.bind(this)}
                 type="button" 
@@ -64,11 +68,6 @@ export class EventDetails extends Component {
                 type="button" 
                 className="btn btn-default">Hide</button>
             </div>
-            :
-            <button
-              onClick={this.onClickLeave.bind(this)}
-              type="button"
-              className="btn btn-danger">Leave</button>
           }
         </div>
 
@@ -84,7 +83,7 @@ export class EventDetails extends Component {
           <p>Time: {this.props.currentEvent.time}</p>
         </div>
 
-        <div className="btn-group btn-primary" role="group">
+        <div>
           <button className="btn btn-primary">Chat</button>
           <button 
             onClick={this.onClickBack.bind(this)}
