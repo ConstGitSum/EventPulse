@@ -67,11 +67,15 @@ exports.seed = function(knex, Promise) {
       });
     })
     .then(() => {
-      return knex('guests').insert({
+      return knex('guests').insert([{
         user_id: 1,
         event_id: 1,
         status: 'accepted'
-      });
+      }, {
+        user_id: 2,
+        event_id: 2,
+        status: 'accepted'
+      }]);
     })
     .then(() => {
       return knex('messages').insert({
