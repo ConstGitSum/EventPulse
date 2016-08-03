@@ -93,7 +93,7 @@ export function createEvent(newEvent){
   const request = axios.post('/api/events', {
     title: newEvent.title,
     description: newEvent.description,
-    created_by: 1,
+    created_by: newEvent.currentUser,
     location: newEvent.location,
     time: newEvent.time,
     duration: newEvent.duration || 999999999,
