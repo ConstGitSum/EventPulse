@@ -56,7 +56,7 @@ describe('Reducers', () => {
     expect(nextState.currentEvent.guests[1]).to.deep.equal({ user_id: 2, event_id: 1 })
   })
 
-  it('should handle HIDE_EVENT', () => {
+  xit('should handle HIDE_EVENT', () => {
     const initialState = { currentEvent: {
       id: 1, guests: [{ user_id: 1, event_id: 1}] }
     };
