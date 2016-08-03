@@ -66,11 +66,9 @@ describe('Home Component', () => {
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     const links = scryRenderedDOMComponentsWithTag(component, 'a');
-    expect(buttons.length).to.equal(3);
-    expect(links.length).to.equal(2);
-    expect(buttons[0].textContent).to.equal('View Event Details');
-    expect(buttons[1].textContent).to.equal('Create');
-    expect(buttons[2].textContent).to.equal('Log Out');
+    expect(buttons.length).to.equal(4);
+    expect(links.length).to.equal(6);
+    expect(buttons[3].textContent).to.equal('Log Out');
   })
 
 })

@@ -53,10 +53,11 @@ describe('EventDetails Component', () => {
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
 
     it('should display a Join, Hide and Chat buttons', () => {
-      expect(buttons.length).to.equal(3);
+      expect(buttons.length).to.equal(4);
       expect(buttons[0].textContent).to.equal('Join')
       expect(buttons[1].textContent).to.equal('Hide')
       expect(buttons[2].textContent).to.equal('Chat')
+      expect(buttons[3].textContent).to.equal('Back')
     })
   })
 
