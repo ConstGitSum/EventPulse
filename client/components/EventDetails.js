@@ -73,7 +73,7 @@ export class EventDetails extends Component {
         </div>
 
         <div>
-          <p>Creator: {creator.name}</p>
+          <p>Creator: {creator ? creator.name :  'no longer in event'}</p>
           <p>Title: {this.props.currentEvent.title}</p>
           <p>Description: {this.props.currentEvent.description}</p>
           <p>Location: {this.props.currentEvent.location}</p>
