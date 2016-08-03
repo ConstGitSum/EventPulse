@@ -16,8 +16,8 @@ export class Create extends Component {
       time: "", 
       duration: "", 
       max_guests: "", 
-      privacy: true, 
-      group_visibility: "",
+      privacy: "false", 
+      group_visibility: "1",
       currentUser: this.props.currentUser.id
     }  
   }
@@ -32,6 +32,10 @@ export class Create extends Component {
 
   onVisibilityChange(event) {
     this.setState({group_visibility: event.target.value})
+  }
+
+  validate(event) {
+
   }
 
   onSubmit(event) {
@@ -56,8 +60,8 @@ export class Create extends Component {
       time: "", 
       duration: "", 
       max_guests: "", 
-      privacy: true, 
-      group_visibility: ""
+      privacy: "false", 
+      group_visibility: "1"
     })
   }
 
@@ -138,7 +142,7 @@ export class Create extends Component {
                     name="privacy" 
                     type="radio" 
                     value="false" 
-                    checked={this.state.privacy === 'false'} 
+                    checked={this.state.privacy === "false"} 
                     onChange={this.onPrivacyChange.bind(this)}/> 
                   <span>public</span>
                 </label>
@@ -148,7 +152,7 @@ export class Create extends Component {
                     name="privacy" 
                     type="radio" 
                     value="true" 
-                    checked={this.state.privacy === 'true'} 
+                    checked={this.state.privacy === "true"} 
                     onChange={this.onPrivacyChange.bind(this)}/> 
                     <span>private</span>
                 </label>
