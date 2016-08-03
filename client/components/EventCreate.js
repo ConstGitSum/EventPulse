@@ -16,7 +16,7 @@ export class EventCreate extends Component {
       duration: "", 
       max_guests: "", 
       privacy: true, 
-      group_visibility: 1
+      group_visibility: ""
     }  
   }
 
@@ -25,22 +25,22 @@ export class EventCreate extends Component {
   }
 
   onPrivacyChange(event) {
-    console.log('VALUE',event.target.value)
     this.setState({privacy:event.target.value})
   }
 
   onVisibilityChange(event) {
-    this.setState({visibility: Number(event.target.value)})
+    this.setState({group_visibility: event.target.value})
   }
 
   onSubmit(event) {
     event.preventDefault();
     this.props.createEvent(this.state)
       .then(resp => {
-        return this.props.setCurrentEvent(resp.payload.data);
+        return this.props.setCurrentEvent(this.props.newEvent);
       })
       .then(() => {
-        browserHistory.push(`/${this.props.newEvent.data.id}`);
+        console.log(this.props.newEvent)
+        browserHistory.push(`/${this.props.newEvent.id}`);
       })
   }
 
@@ -59,26 +59,26 @@ export class EventCreate extends Component {
 
   render() {
     return(
-      <div className='container'>
+      <div className="container">
           <h3>Create New Event</h3>
-          <form role = 'form'>
+          <form role = "form">
             <div className="form-group">       
-              <input type = "text" name="title" type="text"  placeholder="Event title" value = {this.state.title} onChange = {this.onKeyPress.bind(this)}/>
+              <input type = "text" name="title" placeholder="Event title" value = {this.state.title} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="description" type="text" placeholder="Description" value = {this.state.description} onChange = {this.onKeyPress.bind(this)}/>
+              <input type = "text" name="description" placeholder="Description" value = {this.state.description} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="location" type="text" placeholder="Location" value = {this.state.location} onChange = {this.onKeyPress.bind(this)}/>
+              <input type = "text" name="location" placeholder="Location" value = {this.state.location} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="time" type="datetime-local" placeholder="Date" value = {this.state.time} onChange = {this.onKeyPress.bind(this)}/>
+              <input name="time" type="datetime-local" placeholder="Date" value = {this.state.time} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="duration" type="number" placeholder="Duration" value = {this.state.duration} onChange = {this.onKeyPress.bind(this)}/>
+              <input name="duration" type="number" placeholder="Duration" value = {this.state.duration} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group">
-              <input type = "text" name="max_guests" type="number" placeholder="Number of max guests" value = {this.state.max_guests} onChange = {this.onKeyPress.bind(this)}/>
+              <input name="max_guests" type="number" placeholder="Number of max guests" value = {this.state.max_guests} onChange = {this.onKeyPress.bind(this)}/>
             </div>
             <br/>
             <label>Privacy</label>
@@ -89,7 +89,7 @@ export class EventCreate extends Component {
             </div>
             <label>Visibility</label>
             <div>
-              <label><input name="group_visibility" type="radio" value={1} checked = {this.state.group_visibility === 1} onChange = {this.onVisibilityChange.bind(this)}/> group1</label>
+              <label><input name="group_visibility" type="radio" value="1" checked = {this.state.group_visibility === "1"} onChange = {this.onVisibilityChange.bind(this)}/> group1</label>
             </div>
             <div>
               <button type="submit" className='btn btn-primary' onClick = {this.onSubmit.bind(this)}> Submit </button>
@@ -97,7 +97,7 @@ export class EventCreate extends Component {
             </div>
           </form>
       </div>
-      )
+    )
   }  
 }
 

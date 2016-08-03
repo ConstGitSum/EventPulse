@@ -97,9 +97,9 @@ export function createEvent(newEvent){
     location: newEvent.location,
     time: newEvent.time,
     duration: newEvent.duration || 999999999,
-    max_guests: newEvent.guests || 999999999,
+    max_guests: newEvent.max_guests || 999999999,
     privacy: newEvent.privacy || false,
-    group_visibility: newEvent.visibility
+    group_visibility: newEvent.group_visibility
   });
 
   return{
