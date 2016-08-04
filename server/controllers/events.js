@@ -135,7 +135,7 @@ router.post('/', function(req, res, next) {
         })
     )
     .catch((err) => {
-      res.status(422).json({ error: 'Unable to get coordinates' });
+      next(err);
     });
 });
 

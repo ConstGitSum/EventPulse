@@ -127,11 +127,7 @@ describe('API Event Routes', () => {
           privacy: false
         })
         .end(function(err, res) {
-          res.should.have.status(422);
-          res.should.be.json;
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal('Unable to get coordinates');
+          err.should.have.status(500);
           done();
         });
     });
