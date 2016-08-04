@@ -1,12 +1,8 @@
 import axios from 'axios';
 
 export const FETCH_CURRENT_USER = 'FETCH_CURRENT_USER';
-export const FETCH_EVENTS_ALL = 'FETCH_EVENTS_ALL';
-export const FETCH_EVENTS_UNHIDDEN = 'FETCH_EVENTS_UNHIDDEN';
-export const FETCH_EVENTS_HIDDEN = 'FETCH_EVENTS_HIDDEN';
-export const FETCH_EVENTS_CREATED = 'FETCH_EVENTS_CREATED';
-export const FETCH_EVENTS_JOINED = 'FETCH_EVENTS_JOINED';
-export const FETCH_EVENTS_PENDING = 'FETCH_EVENTS_PENDING';
+export const FETCH_EVENTS = 'FETCH_EVENTS';
+export const FILTER_EVENTS = 'FILTER_EVENTS';
 export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const JOIN_EVENT = 'JOIN_EVENT';
@@ -32,7 +28,7 @@ export function userLogOut() {
   }
 }
 
-export function fetchEventList(filter) {
+export function fetchEventList() {
   const request = axios.get('/api/events')
     .then(events => 
       Promise.all(events.data.map(event => 
@@ -42,8 +38,28 @@ export function fetchEventList(filter) {
     );
 
   return {
-    type: FETCH_EVENTS_ALL,
+    type: FETCH_EVENTS,
     payload: request
+  }
+}
+
+export function filterEventList(eventList, filter, userId, hiddenEvents) {
+  const payload = 
+    filter === 'unhidden' ?
+      eventList.filter(e => !hiddenEvents.includes(e.id)) :
+    filter === 'hidden' ?
+      eventList.filter(e => hiddenEvents.includes(e.id)) :
+    filter === 'created' ?
+      eventList.filter(e => e.created_by === userId) :
+    filter === 'joined' ?
+      eventList.filter(e => e.guests.some(guest => guest.id === userId && guest.status === 'accepted')) :
+    filter === 'pending' ?
+      eventList.filter(e => e.guests.some(guest => guest.id === userId && guest.status === 'pending')) :
+    eventList;
+
+  return {
+    type: FILTER_EVENTS,
+    payload: payload
   }
 }
 

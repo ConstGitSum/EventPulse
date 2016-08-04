@@ -16,7 +16,8 @@ function getGuests(id) {
       'users.name', 
       'users.email', 
       'users.image', 
-      'users.facebook_id'
+      'users.facebook_id',
+      'guests.status'
     );
 }
 

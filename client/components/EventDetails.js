@@ -27,8 +27,8 @@ export class EventDetails extends Component {
    * @return {undefined}
    */
   onClickHide() {
-    this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id);
-    browserHistory.push('/EventList');
+    this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id)
+    browserHistory.push('/');
   }
 
   /**

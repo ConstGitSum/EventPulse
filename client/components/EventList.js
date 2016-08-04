@@ -3,12 +3,25 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { userLogOut, fetchEventList, setCurrentEvent } from '../actions/actions';
+import { 
+  userLogOut, 
+  fetchEventList, 
+  setCurrentEvent, 
+  filterEventList 
+} from '../actions/actions';
 import EventListFilter from './EventListFilter';
 
 export class EventList extends React.Component {
   componentDidMount() {
-    this.props.fetchEventList();
+    this.props.fetchEventList()
+      .then(() => {
+        this.props.filterEventList(
+          this.props.eventList,
+          'unhidden',
+          this.props.currentUser.id,
+          this.props.hiddenEvents
+        )
+      });
   }
 
   renderEventListItem(event, index) {
@@ -38,7 +51,7 @@ export class EventList extends React.Component {
         <h1>Explore</h1>
           <EventListFilter />
           <ul className="event-list list-group">
-            {this.props.eventList.map((event, index) =>
+            {this.props.eventListFiltered.map((event, index) =>
               this.renderEventListItem(event, index))}
           </ul>
 
@@ -62,7 +75,9 @@ function mapStateToProps(state) {
   return { 
     currentEvent: state.currentEvent,
     currentUser: state.currentUser,
-    eventList: state.eventList 
+    eventList: state.eventList,
+    eventListFiltered: state.eventListFiltered,
+    hiddenEvents: state.hiddenEvents
   };
 }
 
@@ -70,6 +85,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ 
     setCurrentEvent,
     fetchEventList,
+    filterEventList,
     userLogOut
   }, dispatch);
 }
