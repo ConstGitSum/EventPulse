@@ -39,8 +39,13 @@ app.get('/*', (req, res) => {
 })
 
 io.on('connection', socket => {
-  socket.on('message', body => {
-    socket.broadcast.emit('message',{
+  socket.emit('message', {
+    body:'you good',
+    from:'1234'
+  })
+  socket.on('message', (body, from )=> {
+    console.log('body',body, from)
+    socket.emit('message',{
       body,
       from: socket.id.slice(8)
     })

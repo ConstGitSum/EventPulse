@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import io from 'socket.io-client'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class ChatWindow extends React.Component {
+
+export class ChatWindow extends React.Component {
   constructor(props){
     super(props)
     this.state = {messages:[], comment:''}
@@ -14,29 +17,44 @@ export default class ChatWindow extends React.Component {
       })  
   }
 
+  handleChange(event){
+    this.setState({comment: event.target.value})
+  }
   handleSubmit(event){
-    this.setState({comment: this.state.comment.concat(event.key)})
-    if(event.keyCode === 13 ){
+    event.preventDefault();
+    console.log("HEY")
       const message  = {
         body: this.state.comment,
-        from: 'Me'
+        from: this.props.currentUser.id // user ID  Might want currentUser to have name as well
       }
-      this.setState({messages: [message, ...this.state.messages]})
-      this.socket.emit('message', this.state.comment)
+      this.setState({messages: [message, ...this.state.messages ]})
+      this.socket.emit('message', message)
       this.setState({comment:''})
-    }
+      console.log(this.state.messages)
   }
 
   render(){
     const messages = this.state.messages.map((message, index) => {
-      return <li key = {index}><b>Me:</b> {message.body}</li>
+      console.log("message",message)
+      return <li key = {index}><b>{message.from}</b> {message.body}</li>
     })
+    console.log("MESS",messages)
     return(
       <div>
       <h1> Hello </h1>
-      <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onKeyUp ={this.handleSubmit.bind(this)}></input>
+      <form onSubmit = {this.handleSubmit.bind(this)}>
+      <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
+      </form>
       {messages}
       </div>
       )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(ChatWindow);
