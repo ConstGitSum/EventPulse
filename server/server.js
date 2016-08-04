@@ -12,6 +12,10 @@ var app = express();
 var routes = require('./routes/index');
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
+var socketIo = require('socket.io')
+var server = http.createServer(app)
+var io = socketIo(server)
+
 app.use(express.static(assetFolder));
 app.use(webpackDevMiddleware(webpack(webpackConfig), { noInfo: true }));
 app.use(bodyParser.json());
@@ -34,6 +38,15 @@ app.get('/*', (req, res) => {
   res.sendFile( assetFolder + '/index.html' );
 })
 
-app.listen(3000);
+io.on('connection', socket => {
+  socket.on('message', body => {
+    socket.emit('message',{
+      body,
+      from: socket.id.slice(8)
+    })
+  })
+})
+
+server.listen(3000);
 
 module.exports = app;

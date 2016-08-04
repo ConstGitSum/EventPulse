@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-
+import ChatWindow from './Chat'
 import { joinEvent, leaveEvent, hideEvent } from '../actions/actions';
 
 export class EventDetails extends Component {
@@ -87,6 +87,7 @@ export class EventDetails extends Component {
             type="button"
             className="btn btn-danger">Back</button>
         </div>
+        <ChatWindow/>
       </div>
     )
   }
