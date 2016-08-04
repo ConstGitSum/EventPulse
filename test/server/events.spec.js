@@ -358,6 +358,26 @@ describe('API Event Routes', () => {
     });
   });
 
+  describe('GET /api/events/hide/:user_id', function() {
+    it('should return an array of hidden event/s for the user', function(done) {
+      chai.request(server)
+        .get('/api/events/hide/1')
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].should.have.property('id')
+          res.body[0].id.should.equal(1)
+          res.body[0].should.have.property('user_id');
+          res.body[0].user_id.should.equal(1);
+          res.body[0].should.have.property('event_id');
+          res.body[0].event_id.should.equal(2);
+          done();
+        });
+    });
+  });
+
   describe('POST /api/events/:id/hide', function() {
     it('should hide an event', function(done) {
       chai.request(server)

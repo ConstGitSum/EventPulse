@@ -5,7 +5,7 @@ module.exports = router;
 
 router.get('/loggedIn', function(req, res) {
   if(req.isAuthenticated()){
-    const userId = req.user[0].user_id;
+    const userId = req.user[0].id;
     res.status(200).send({ id: userId });
   }
   else{

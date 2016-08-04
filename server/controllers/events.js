@@ -153,6 +153,16 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+// *** GET hidden events for user *** //
+router.get('/hide/:user_id', function(req, res, next) {
+  Hide.getHiddenEvents(req.params.user_id)
+    .then((hiddenEvents) => {
+      res.status(200).json(hiddenEvents)
+    })
+    .catch((err) => {
+      next(err);
+    })
+})
 // *** POST new hidden event *** //
 router.post('/:id/hide', function(req, res, next) {
   Hide.hide(req.params.id, req.body.user_id)
