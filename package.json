@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "test": "mocha -t 5000 --compilers js:babel-core/register --require ./test/client/test_helper.js \"test/**/*@(.js|.jsx)\" --reporter=nyan",
+    "test": "mocha -t 5000 --compilers js:babel-core/register --require ./test/client/test_helper.js \"test/**/*@(.js|.jsx)\" --reporter=mochawesome",
     "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/"
   },
   "author": "",
