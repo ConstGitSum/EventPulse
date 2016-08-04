@@ -1,10 +1,12 @@
 var express = require('express');
+var axios = require('axios');
 var router = express.Router();
 
 var Event = require('../models/event');
 var User = require('../models/user');
 var Guest = require('../models/guest');
 var Hide = require('../models/hidden_event');
+var utils = require('../utils/utils');
 
 module.exports = router;
 
@@ -12,40 +14,6 @@ module.exports = router;
 router.get('/', function(req, res, next) {
   Event.getAll()
     .then((events) => {
-      res.status(200).json(events);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-// *** GET events based on a filter *** //
-router.get('/filter/:filter/:userId', function(req, res, next) {
-  let filter = req.params.filter;
-  let userId = req.params.userId;
-  let query;
-
-  switch (filter) {
-    case 'unhidden':
-      query = Event.getUnhidden(userId);
-      break;
-    case 'hidden':
-      query = Event.getHidden(userId);
-      break;
-    case 'created':
-      query = Event.getCreated(userId);
-      break;
-    case 'joined':
-      query = Event.getJoined(userId);
-      break;
-    case 'pending':
-      query = Event.getPending(userId);
-      break;
-    default:
-      query = Event.getAll();
-  }
-
-  query.then((events) => {
       res.status(200).json(events);
     })
     .catch((err) => {
@@ -160,19 +128,19 @@ router.delete('/:eventId/guests/:userId', function(req, res, next) {
 
 // *** POST new event *** //
 router.post('/', function(req, res, next) {
-  Event.create(req.body)
-    .then((eventId) => {
-      return Event.getEventById(eventId[0].id);
-    })
-    .then((event) => {
-      return Guest.getGuests(event[0].id).then((guest) => {
-        event[0].guests = guest
-        res.status(201).json(event[0]);
-      })
-      
-    })
+  // geocode entered address and send 422 if invalid
+  utils.getCoords(req.body)
+    .then(newEvent => Event.create(newEvent))
+    .then(eventId => Event.getEventById(eventId[0].id))
+    .then(event => 
+      Guest.getGuests(event[0].id)
+        .then(guests => {
+          event[0].guests = guests;
+          res.status(201).json(event[0]);
+        })
+    )
     .catch((err) => {
-      next(err);
+      res.status(422).json({ error: 'Unable to get coordinates' });
     });
 });
 

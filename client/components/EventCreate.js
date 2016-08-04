@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { createEvent, setCurrentEvent } from '../actions/actions';
-import { getCoords } from './helpers';
 
 export class EventCreate extends Component {
 
@@ -37,18 +36,10 @@ export class EventCreate extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    getCoords(this.state.location)
-      .then(res => 
-        Object.assign(this.state, {
-          location: res.formatted_address,
-          latitude: res.geometry.location.lat,
-          longitude: res.geometry.location.lng
-        })
-      )
-      .then(eventBody => this.props.createEvent(eventBody))
+    this.props.createEvent(this.state)
       .then(res => {
-        console.log(this.props.newEvent)
-        return this.props.setCurrentEvent(this.props.newEvent)
+        if (res.error) throw new Error('Unable to create event');
+        return this.props.setCurrentEvent(this.props.newEvent);
       })
       .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
       .catch(err => {

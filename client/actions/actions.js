@@ -111,8 +111,6 @@ export function createEvent(newEvent) {
     description: newEvent.description,
     created_by: newEvent.currentUser,
     location: newEvent.location,
-    latitude: newEvent.latitude,
-    longitude: newEvent.longitude,
     time: newEvent.time,
     duration: newEvent.duration || 999999999,
     max_guests: newEvent.max_guests || 999999999,

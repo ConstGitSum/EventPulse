@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "test": "mocha --reporter=landing",
+    "test": "mocha --reporter=nyan",
     "setup": "node setup.js",
     "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/",
     "cover": "./node_modules/.bin/babel-node ./node_modules/istanbul/lib/cli cover _mocha -- --bail --recursive"

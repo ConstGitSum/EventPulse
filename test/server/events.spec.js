@@ -106,11 +106,32 @@ describe('API Event Routes', () => {
           res.body.should.have.property('created_by');
           res.body.created_by.should.equal(2);
           res.body.should.have.property('location');
-          res.body.location.should.equal('115 E 6th St, Austin, TX 78701');
+          res.body.location.should.equal('115 E 6th St, Austin, TX 78701, USA');
           res.body.should.have.property('time');
           //res.body.time.should.equal('2016-08-30T08:00:00.000Z');
           res.body.should.have.property('privacy');
           res.body.privacy.should.equal(false);
+          done();
+        });
+    });
+
+    it('should not create an event if the location is invalid', function(done) {
+      chai.request(server)
+        .post('/api/events')
+        .send({
+          title: 'Wrestle with Jad',
+          description: 'Come get some',
+          created_by: 2,
+          location: 'zxcv',
+          time: '2016-08-15T15:00:00.000',
+          privacy: false
+        })
+        .end(function(err, res) {
+          res.should.have.status(422);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('Unable to get coordinates');
           done();
         });
     });
