@@ -4,20 +4,10 @@ import reducer from '../../client/reducers';
 
 describe('Reducers', () => {
 
-  it('should handle FETCH_PULSE', () => {
+  it('should handle GET_CURRENT_USER', () => {
     const initialState = { currentUser: false };
     const action = {
-      type: 'FETCH_PULSE',
-      payload: 1
-    }
-    const nextState = reducer(initialState, action);
-    expect(nextState.currentUser).to.equal(false);
-  });
-
-  it('should handle FETCH_CURRENTUSER', () => {
-    const initialState = { currentUser: false };
-    const action = {
-      type:'FETCH_CURRENT_USER',
+      type:'GET_CURRENT_USER',
       payload: { data: true }
     }
     const nextState = reducer(initialState, action);
@@ -36,7 +26,7 @@ describe('Reducers', () => {
 
   it('should handle undefined state', () => {
     const action = {
-      type: 'FETCH_CURRENT_USER',
+      type: 'GET_CURRENT_USER',
       payload: { data: true }
     }
     const nextState = reducer(undefined, action);

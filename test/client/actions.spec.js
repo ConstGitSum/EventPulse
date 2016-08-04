@@ -19,7 +19,7 @@ describe('Actions', () => {
     moxios.uninstall();
   });
 
-  it('should dispatch FETCH_CURRENT_USER action', (done) => {
+  it('should dispatch GET_CURRENT_USER action', (done) => {
     const store = mockStore({});
     moxios.stubRequest('/api/auth/loggedIn', {
       status: 200,
@@ -27,10 +27,10 @@ describe('Actions', () => {
     });
 
     // Return the promise
-    return store.dispatch(actions.fetchCurrentUser())
+    return store.dispatch(actions.getCurrentUser())
       .then(() => {
         const action = store.getActions()[0];
-        expect(action.type).to.equal('FETCH_CURRENT_USER');
+        expect(action.type).to.equal('GET_CURRENT_USER');
         expect(action.payload.data).to.be.a('object');
         expect(action.payload.data).to.have.property('id');
         expect(action.payload.data.id).to.be.a('number');
