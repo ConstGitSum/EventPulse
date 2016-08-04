@@ -9,6 +9,7 @@ export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
 export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const CREATE_EVENT = 'CREATE_EVENT';
+export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
 
 export function fetchCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -120,6 +121,15 @@ export function createEvent(newEvent) {
 
   return {
     type: CREATE_EVENT,
+    payload: request
+  }
+}
+
+export function getHiddenEvents(user_id) {
+  const request = axios.get(`/api/events/hide/${user_id}`)
+
+  return {
+    type: GET_HIDDEN_EVENTS,
     payload: request
   }
 }
