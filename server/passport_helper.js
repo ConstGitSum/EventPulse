@@ -30,7 +30,7 @@ function newUser(user, profile) {
     .then(() => 
       profile._json.friends.data.length === 0
       // return user info if no friends
-      ? [{ user_id: userId, group_id: groupId }]
+      ? [{ id: userId, group_id: groupId }]
       // else grab the friends from database
       : Promise.all(profile._json.friends.data
           .map(friend => User.getUserByFacebookId(friend.id))
@@ -43,7 +43,7 @@ function newUser(user, profile) {
         }
         )
         // return your info plus new members of friends
-        .then(friends => [{ user_id: userId, group_id: groupId}].concat(friends)) 
+        .then(friends => [{ id: userId, group_id: groupId}].concat(friends))
     );
 }
 
