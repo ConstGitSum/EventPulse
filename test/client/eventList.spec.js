@@ -24,7 +24,7 @@ describe('EventList Component', () => {
   } 
   const mockStore = configureStore([])(initialState);
 
-  //it('should render a div with class event-list', () => {
+  //it.only('should render a div with class event-list', () => {
   //  const component = renderIntoDocument(
   //    <Provider store={mockStore}>
   //      <EventList />

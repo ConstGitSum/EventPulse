@@ -10,8 +10,9 @@
     ]
   },
   "scripts": {
-    "test": "mocha -t 5000 --compilers js:babel-core/register --require ./test/client/test_helper.js \"test/**/*@(.js|.jsx)\" --reporter=nyan",
-    "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/"
+    "test": "mocha --reporter=landing",
+    "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/",
+    "cover": "./node_modules/.bin/babel-node ./node_modules/istanbul/lib/cli cover _mocha -- --bail --recursive"
   },
   "author": "",
   "license": "ISC",
@@ -45,6 +46,8 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "enzyme": "^2.4.1",
+    "isparta": "^4.0.0",
+    "istanbul": "^1.1.0-alpha.1",
     "jsdom": "^9.4.1",
     "mocha": "^2.5.3",
     "moxios": "^0.3.0",
