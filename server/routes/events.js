@@ -235,3 +235,8 @@ router.delete('/:id/hide', function(req, res, next) {
       next(err);
     });
 });
+
+router.post('/:id/chat', function(req,res,next) {
+  console.log(req.body)
+  //Event.addChatMessage(req.body)
+})

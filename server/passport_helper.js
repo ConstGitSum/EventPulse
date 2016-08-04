@@ -43,7 +43,7 @@ function newUser(user, profile) {
         }
         )
         // return your info plus new members of friends
-        .then(friends => [{ user_id: userId, group_id: groupId}].concat(friends)) 
+        .then(friends => [{ id: userId, group_id: groupId}].concat(friends)) 
     );
 }
 

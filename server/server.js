@@ -40,7 +40,7 @@ app.get('/*', (req, res) => {
 
 io.on('connection', socket => {
   socket.on('message', body => {
-    socket.emit('message',{
+    socket.broadcast.emit('message',{
       body,
       from: socket.id.slice(8)
     })

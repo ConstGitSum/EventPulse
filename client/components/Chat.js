@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 export default class ChatWindow extends React.Component {
   constructor(props){
     super(props)
-    this.state = {messages:[]}
+    this.state = {messages:[], comment:''}
   }
   componentDidMount() {
       this.socket = io('/')
@@ -15,15 +15,15 @@ export default class ChatWindow extends React.Component {
   }
 
   handleSubmit(event){
-    const body = event.target.value
-    if(event.keyCode === 13 && body){
+    this.setState({comment: this.state.comment.concat(event.key)})
+    if(event.keyCode === 13 ){
       const message  = {
-        body,
+        body: this.state.comment,
         from: 'Me'
       }
       this.setState({messages: [message, ...this.state.messages]})
-      this.socket.emit('message', body)
-      event.target.value = ''
+      this.socket.emit('message', this.state.comment)
+      this.setState({comment:''})
     }
   }
 
@@ -34,7 +34,7 @@ export default class ChatWindow extends React.Component {
     return(
       <div>
       <h1> Hello </h1>
-      <input type = 'text' placeholder = 'Enter a message' onKeyUp ={this.handleSubmit.bind(this)}></input>
+      <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onKeyUp ={this.handleSubmit.bind(this)}></input>
       {messages}
       </div>
       )

@@ -9,10 +9,12 @@ var PassportHelper = require('./passport_helper')
 module.exports = function(passport) {
 
   passport.serializeUser(function(user, done) {
+    console.log('user',user)
     done(null, user);
   });
 
   passport.deserializeUser(function(id, done) {
+    console.log('id',id)
     done(null, id);
   });
 
