@@ -22,10 +22,10 @@ export class ChatWindow extends React.Component {
   }
   handleSubmit(event){
     event.preventDefault();
-    console.log("HEY")
+    console.log("HEY",this.props.currentUser)
       const message  = {
         body: this.state.comment,
-        from: this.props.currentUser.id // user ID  Might want currentUser to have name as well
+        from: this.props.currentUser.name // user ID  Might want currentUser to have name as well
       }
       this.setState({messages: [message, ...this.state.messages ]})
       this.socket.emit('message', message)

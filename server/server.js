@@ -43,13 +43,8 @@ app.get('/*', (req, res) => {
 })
 
 io.on('connection', socket => {
-  socket.emit('message', {
-    body:'you good',
-    from:'1234'
-  })
   socket.on('message', (body, from )=> {
-    console.log('body',body, from)
-    socket.emit('message',{
+    socket.broadcast.emit('message',{
       body: body.body,
       from: body.from
     })
