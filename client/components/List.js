@@ -5,14 +5,14 @@ import { bindActionCreators } from 'redux';
 
 import { 
   userLogOut, 
-  fetchEventList, 
+  getEventList, 
   setCurrentEvent, 
   filterEventList,
   getHiddenEvents
 } from '../actions/actions';
 import EventListFilter from './EventListFilter';
 
-export class EventList extends React.Component {
+export class List extends React.Component {
   componentDidMount() {
     this.props.getHiddenEvents(this.props.currentUser.id)
     this.props.fetchEventList()
@@ -86,11 +86,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
     setCurrentEvent,
-    fetchEventList,
+    getEventList,
     filterEventList,
     userLogOut,
     getHiddenEvents
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventList);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

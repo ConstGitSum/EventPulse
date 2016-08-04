@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const FETCH_CURRENT_USER = 'FETCH_CURRENT_USER';
-export const FETCH_EVENTS = 'FETCH_EVENTS';
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
+export const GET_EVENTS = 'GET_EVENTS';
 export const FILTER_EVENTS = 'FILTER_EVENTS';
 export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
@@ -12,11 +12,11 @@ export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const CREATE_EVENT = 'CREATE_EVENT';
 export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
 
-export function fetchCurrentUser() {
+export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
 
   return {
-    type: FETCH_CURRENT_USER,
+    type: GET_CURRENT_USER,
     payload: request
   }
 }
@@ -30,7 +30,7 @@ export function userLogOut() {
   }
 }
 
-export function fetchEventList() {
+export function getEventList() {
   const request = axios.get('/api/events')
     .then(events => 
       Promise.all(events.data.map(event => 
@@ -40,7 +40,7 @@ export function fetchEventList() {
     );
 
   return {
-    type: FETCH_EVENTS,
+    type: GET_EVENTS,
     payload: request
   }
 }

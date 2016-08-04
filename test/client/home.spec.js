@@ -1,74 +1,38 @@
-process.env.NODE_ENV = 'test';
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
 import { expect } from 'chai';
+import { shallow } from 'enzyme';
+import sinon from 'sinon';
 
 import { Home } from '../../client/components/Home';
 
+function setup(logged) {
+  const props = {
+    currentUser: logged,
+    getCurrentUser: sinon.spy()
+  }
+
+  const enzymeWrapper = shallow(
+      <Home {...props} /> 
+  );
+
+  return {
+    props,
+    enzymeWrapper
+  };
+}
 
 describe('Home Component', () => {
-  let mockStore;
-  const initialState = { 
-    eventListFiltered: [{
-      id: 1,
-      title: "Pokemongodb party",
-      description: "Catch pokemon and do some coding",
-      location: "701 Brazos St, Austin, TX 78701",
-      time: "2016-08-30T13:00:00.000Z",
-      guests: [],
-    }],
-    currentUser: {
-      id: 1,
-    },
-    currentEvent: {
-      id: 1,
-      title: "Pokemongodb party",
-      description: "Catch pokemon and do some coding",
-      location: "701 Brazos St, Austin, TX 78701",
-      time: "2016-08-30T13:00:00.000Z",
-      guests: [],
-    }
-  } 
-
-  beforeEach(() => {
-    mockStore = configureStore([])(initialState);
-  });
-
-  it('should render a facebook login link when logged out', () => {
-    let currentUser = false;
-    const fetchCurrentUser = () => currentUser = false;
-    const component = renderIntoDocument(
-      <Provider store={mockStore}>
-        <Home 
-          currentUser={currentUser}
-          fetchCurrentUser={fetchCurrentUser} />
-      </Provider>
-    );
-    const links = scryRenderedDOMComponentsWithTag(component, 'a');
-
-    expect(links.length).to.equal(1);
-    expect(links[0].textContent).to.equal('facebook!');
+  it('should render Auth when not logged in', () => {
+    const { enzymeWrapper, props } = setup(false)
+    expect(props.getCurrentUser.calledOnce).to.equal(true);
+    expect(enzymeWrapper.find('Connect(Auth)').length).to.equal(1);
+    expect(enzymeWrapper.find('Connect(List)').length).to.equal(0);
   })
 
-  //it('should render a logout button when logged in',() => {
-  //  let currentUser = { id: 3 };
-  //  const fetchCurrentUser = () => currentUser = { id: 3 };
-  //  const component = renderIntoDocument(
-  //    <Provider store={mockStore}>
-  //      <Home 
-  //        currentUser={currentUser}
-  //        fetchCurrentUser={fetchCurrentUser} />
-  //    </Provider>
-  //  );
-  //  const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
-  //  const links = scryRenderedDOMComponentsWithTag(component, 'a');
-  //  expect(buttons.length).to.equal(4);
-  //  expect(links.length).to.equal(8);
-  //  expect(buttons[3].textContent).to.equal('Log Out');
-  //})
-
+  it('should render List when logged in', () => {
+    const { enzymeWrapper, props } = setup({ id: 1 })
+    expect(props.getCurrentUser.calledOnce).to.equal(true);
+    expect(enzymeWrapper.find('Connect(Auth)').length).to.equal(0);
+    expect(enzymeWrapper.find('Connect(List)').length).to.equal(1);
+  })
 })

@@ -12,7 +12,7 @@ import axios from 'axios';
 import { shallow, describeWithDOM, mount, spyLifecycle } from 'enzyme';  
 import { renderIntoDocument, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils';
 
-import EventList from '../../client/components/EventList';
+import List from '../../client/components/List';
 
 describe('EventList Component', () => {
   const initialState = { 
