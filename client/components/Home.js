@@ -14,7 +14,7 @@ export class Home extends Component {
   render() {
     return (
       <div>
-        {this.props.currentUser 
+        {this.props.currentUser
          ? <EventList /> 
          : <Auth />} 
       </div>
