@@ -46,8 +46,8 @@ io.on('connection', socket => {
   socket.on('message', (body, from )=> {
     console.log('body',body, from)
     socket.emit('message',{
-      body,
-      from: socket.id.slice(8)
+      body: body.body,
+      from: body.from
     })
   })
 })
