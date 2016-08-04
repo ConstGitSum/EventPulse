@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 export function getCoords(addressInput) {
-  const API_KEY = 'AIzaSyDubdBUU3eWsOMIh3QYSBOjjekh5XyB-Sc'
+  console.log(process.env.GEOAPI_KEY)
+  console.log(process.env.FACEBOOK_SECRET)
+  const API_KEY = process.env.GEOAPI_KEY;
   const ROOT_URL = `https://maps.googleapis.com/maps/api/geocode/json?key=${API_KEY}`;
   const address = addressInput.replace(/ /g, '+').replace(/;/g, '+');
   const url = `${ROOT_URL}&address=${address}`;
