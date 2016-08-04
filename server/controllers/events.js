@@ -157,7 +157,7 @@ router.delete('/:id', function(req, res, next) {
 router.get('/hide/:user_id', function(req, res, next) {
   Hide.getHiddenEvents(req.params.user_id)
     .then((hiddenEvents) => {
-      res.status(201).json(hiddenEvents)
+      res.status(200).json(hiddenEvents)
     })
     .catch((err) => {
       next(err);
