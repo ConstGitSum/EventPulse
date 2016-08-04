@@ -7,6 +7,7 @@ var User = require('../models/user');
 var Guest = require('../models/guest');
 var Hide = require('../models/hidden_event');
 var utils = require('../utils/utils');
+var checkUpdateId = require('../middlewares/index').checkUpdateId;
 
 module.exports = router;
 
@@ -75,15 +76,9 @@ router.post('/:id/guests', function(req, res, next) {
 });
 
 // *** PUT - update guest status *** //
-router.put('/:eventId/guests/:userId', function(req, res, next) {
+router.put('/:eventId/guests/:userId', checkUpdateId, function(req, res, next) {
   const userId = +req.params.userId;
   const eventId = +req.params.eventId;
-
-  if (req.body.hasOwnProperty('id')) {
-    return res.status(422).json({
-      error: 'You cannot update the id field'
-    });
-  }
 
   Guest.update(eventId, userId, req.body.status)
     .then((guest) => {
@@ -145,13 +140,7 @@ router.post('/', function(req, res, next) {
 });
 
 // *** PUT - update event *** //
-router.put('/:id', function(req, res, next) {
-  if (req.body.hasOwnProperty('id')) {
-    return res.status(422).json({
-      error: 'You cannot update the id field'
-    });
-  }
-
+router.put('/:id', checkUpdateId, function(req, res, next) {
   Event.update(req.params.id, req.body)
     .then((eventId) => {
       return Event.getEventById(eventId[0]);
