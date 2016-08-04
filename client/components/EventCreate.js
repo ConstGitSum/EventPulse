@@ -14,6 +14,9 @@ export class EventCreate extends Component {
       description: "", 
       location: "", 
       time: "", 
+      hour:"",
+      minute:"",
+      ampm:"",
       duration: "", 
       max_guests: "", 
       privacy: "false", 
@@ -71,24 +74,31 @@ export class EventCreate extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.createEvent(this.state)
-      .then(res => {
-        if (res.error) throw new Error('Unable to create event');
-        return this.props.setCurrentEvent(this.props.newEvent);
-      })
-      .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
-      .catch(err => {
-        // clear form and display error?
-        console.log(err);
-      });
-    }
+    this.clearAllErrors();
+    this.validate(this.state);
+    this.isAllValid() ? 
+      this.props.createEvent(this.state)
+        .then(res => {
+          if (res.error) throw new Error('Unable to create event');
+          return this.props.setCurrentEvent(this.props.newEvent);
+        })
+        .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
+        .catch(err => {
+          // clear form and display error?
+          console.log(err);
+        }): null;
+  }
+
 
   onClearValues(event) {
     this.setState({
       title: "", 
       description: "", 
       location: "", 
-      time: "", 
+      time: "",
+      hour:"",
+      minute:"",
+      ampm:"", 
       duration: "", 
       max_guests: "", 
       privacy: "false", 
@@ -101,15 +111,36 @@ export class EventCreate extends Component {
     })
   }
 
+  clearAllErrors() {
+    this.setState({
+      error_title: "",
+      error_description: "",
+      error_location: "",
+      error_time: true,
+      error_duration: true
+    })
+  }
+
+  setCurrentTime() {
+    const d = new Date();
+    const hour = d.getHours();
+    const minute =  d.getMinutes();
+    this.setState({hour: hour.toString()});
+    this.setState({minute: minute.toString()})
+    console.log('hour:', hour, ' minute: ',minute)
+    console.log('state: ', this.state)
+  }
+
   render() {
     return(
       <div className="container">
           <br/>
           <h3 className="row">Create New Event</h3>
+          <p>* required</p>
           <br/>
           <form role="form">
             <div className="form-group row">  
-              <label className="col-xs-4">Title</label>     
+              <label className="col-xs-4">Title*</label>     
               <input 
                 className="col-xs-8"
                 type="text" 
@@ -120,7 +151,7 @@ export class EventCreate extends Component {
                 {this.state.error_title.length === 0 ? null : <div className="text-danger"> {this.state.error_title}</div>}
             </div>
             <div className="form-group row">
-              <label className="col-xs-4">Description</label>
+              <label className="col-xs-4">Description*</label>
               <input 
                 className="col-xs-8"
                 type="text" 
@@ -131,7 +162,7 @@ export class EventCreate extends Component {
                 {this.state.error_description.length === 0 ? null : <div className="text-danger"> {this.state.error_description}</div>}
             </div>
             <div className="form-group row">
-              <label className="col-xs-4">Location</label>
+              <label className="col-xs-4">Location*</label>
               <input 
                 className="col-xs-8"
                 type="text" 
@@ -142,7 +173,7 @@ export class EventCreate extends Component {
                 {this.state.error_location.length === 0 ? null : <div className="text-danger"> {this.state.error_location}</div>}
             </div>
             <div className="form-group row">
-              <label className="col-xs-4">Time</label>
+              <label className="col-xs-4">Time*</label>
               <div className="col-xs-2">
                 <select name="hour"  
                   className="form-control"               
@@ -165,7 +196,7 @@ export class EventCreate extends Component {
               <div className="col-xs-2">
                 <select name="minute" 
                   className="form-control"   
-                  value={this.state.hour} 
+                  value={this.state.minute} 
                   onChange={this.onKeyPress.bind(this)}>
                   <option value="00">00</option>
                   <option value="15">15</option>
@@ -181,6 +212,15 @@ export class EventCreate extends Component {
                   <option value="am">am</option>
                   <option value="pm">pm</option>
                 </select>
+              </div>
+              <div className="col-xs-8">
+                <input 
+                  type="checkbox" 
+                  className="" 
+                  role="button"
+                  onClick={this.setCurrentTime.bind(this)}/> 
+                  <span> Event happening now? </span>
+               
               </div>
             </div>
 
@@ -189,7 +229,7 @@ export class EventCreate extends Component {
               <div className="col-xs-2">
                 <select name="hour"  
                   className="form-control"               
-                  value={this.state.hour} 
+                  value={this.state.duration_hour} 
                   onChange={this.onKeyPress.bind(this)}>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -208,7 +248,7 @@ export class EventCreate extends Component {
               <div className="col-xs-2">
                 <select name="minute" 
                   className="form-control"   
-                  value={this.state.hour} 
+                  value={this.state.duration_minute} 
                   onChange={this.onKeyPress.bind(this)}>
                   <option value="00">00</option>
                   <option value="15">15</option>
@@ -216,25 +256,6 @@ export class EventCreate extends Component {
                   <option value="45">45</option>
                 </select>
               </div>
-              <div className="col-xs-2">
-                <select name="ampm"
-                  className="form-control"
-                  value={this.state.ampm} 
-                  onChange={this.onKeyPress.bind(this)}>
-                  <option value="am">am</option>
-                  <option value="pm">pm</option>
-                </select>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label className="col-xs-4 ">Duration</label>
-              <input 
-                className="col-xs-8"
-                name="duration" 
-                type="number" 
-                placeholder="Duration" 
-                value={this.state.duration} 
-                onChange={this.onKeyPress.bind(this)}/>
             </div>
             <div className="form-group row">
               <label className="col-xs-4">Guests</label>
