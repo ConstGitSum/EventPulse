@@ -46,26 +46,6 @@ label {
     text-align: center;
 }
 
-
-
-/*
- * -- PURE FORM STYLES --
- * Style the form inputs and labels
- */
-.pure-form label {
-    margin: 1em 0 0;
-    font-weight: bold;
-    font-size: 100%;
-}
-
-.pure-form input[type] {
-    border: 2px solid #ddd;
-    box-shadow: none;
-    font-size: 100%;
-    width: 100%;
-    margin-bottom: 1em;
-}
-
 /*
  * -- PURE BUTTON STYLES --
  * I want my pure-button elements to look a little different
@@ -74,6 +54,7 @@ label {
     color: white;
     padding: 0.5em 2em;
     border-radius: 5px;
+    box-shadow: 0 8px 16px 0;
 }
 
 a.pure-button-primary {
@@ -81,53 +62,75 @@ a.pure-button-primary {
     color: #000;
     border-radius: 5px;
     font-size: 100%;
-    box-shadow: 0 8px 16px 0;
 }
-
-
-/*
- * -- MENU STYLES --
- * I want to customize how my .pure-menu looks at the top of the page
- */
-
-.home-menu {
-    padding: 0.5em;
-    text-align: center;
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-}
-.home-menu {
-    background: #2d3e50;
-}
-.pure-menu.pure-menu-fixed {
-    /* Fixed menus normally have a border at the bottom. */
-    border-bottom: none;
-    /* I need a higher z-index here because of the scroll-over effect. */
-    z-index: 4;
-}
-
-.home-menu .pure-menu-heading {
-    color: white;
-    font-weight: 400;
-    font-size: 120%;
-}
-
-.home-menu .pure-menu-selected a {
-    color: white;
-}
-
-.home-menu a {
-    color: #6FBEF3;
-}
-.home-menu li a:hover,
-.home-menu li a:focus {
-    background: none;
-    border: none;
-    color: #AECFE5;
-}
-
 
 /*
  * -- AUTH STYLES --
+ */
+
+.pure-g {
+    background: #434141;
+    z-index: 1;
+    overflow: hidden;
+    /* The following styles are required for the "scroll-over" effect */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed !important;
+
+}
+
+.pure-u-1 {
+    width: 80%;
+    height: 50%;
+    margin-bottom: auto;
+    position: absolute;
+    top: 100px; left: 0; bottom: 0; right: 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* This is the main heading that appears on the page */
+.auth-head {
+    font-size: 100px;
+    font-weight: bold;
+    color: white;
+    font-weight: 500;
+    border-radius: 5px;
+    line-height: 1em;
+}
+
+/*
+ * -- EVENTLIST STYLES --
+ */
+.explore {
+    height: 44em;
+    background-color: black;
+}
+
+h1#explore {
+    color: #c5d0db; 
+    margin-top: auto; 
+}
+
+.create-event pure-button-primary {
+
+}
+
+logout btn-danger pure-button-primary {
+
+}
+
+li.list-group-item {
+    color: #c5d0db;
+    background-color: black;
+}
+
+
+
+/*
+ * -- EVENTCREATE STYLES --
  */
 
 .pure-g {
@@ -158,13 +161,10 @@ a.pure-button-primary {
     font-size: 100px;
     font-weight: bold;
     color: white;
-    /*border: 3px solid white;*/
-    /*padding: 1em 1.6em;*/
     font-weight: 500;
     border-radius: 5px;
     line-height: 1em;
 }
-
 
 /*
  * -- EVENTDETAILS STYLES --
@@ -248,7 +248,7 @@ a.pure-button-primary {
     }
 
     .auth-head {
-        font-size: 250%;
+        font-size: 500%;
     }
 
 
@@ -267,6 +267,6 @@ a.pure-button-primary {
 @media (min-width:980px) {
     /* We increase the header font size even more */
     .auth-head {
-        font-size: 300%;
+        font-size: 600%;
     }
 }

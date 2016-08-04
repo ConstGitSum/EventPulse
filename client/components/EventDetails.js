@@ -137,7 +137,6 @@ export class EventDetails extends React.Component {
     const currentAttending = this.props.currentEvent.guests.length;
 
     return (
-<<<<<<< 7383fdaf465320f7b0cf68aa848dc4d65a8ee60c
       <div>
         <i
           onClick={this.onClickBack.bind(this)}
