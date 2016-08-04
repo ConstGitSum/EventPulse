@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import io from 'socket.io-client'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import axios from 'axios'
 
 export class ChatWindow extends React.Component {
   constructor(props){
@@ -12,6 +12,13 @@ export class ChatWindow extends React.Component {
   }
   componentDidMount() {
       this.socket = io('/')
+      
+      axios.get(`/api/events/${this.props.event.id}/chat`)
+          .then((messages) => {
+            console.log('events', ...messages.data)
+            this.setState({messages: [ ...messages.data]})
+          })
+      
       this.socket.on('message', message =>{
         this.setState({messages: [message, ...this.state.messages]})
       })  
@@ -22,10 +29,12 @@ export class ChatWindow extends React.Component {
   }
   handleSubmit(event){
     event.preventDefault();
-    console.log("HEY",this.props.currentUser)
+    console.log("HEY",this.props.event)
       const message  = {
-        body: this.state.comment,
-        from: this.props.currentUser.name // user ID  Might want currentUser to have name as well
+        text: this.state.comment,
+        name: this.props.currentUser.name, // user ID  Might want currentUser to have name as well
+        user_id: this.props.currentUser.id,
+        event:this.props.event.id
       }
       this.setState({messages: [message, ...this.state.messages ]})
       this.socket.emit('message', message)
@@ -35,10 +44,8 @@ export class ChatWindow extends React.Component {
 
   render(){
     const messages = this.state.messages.map((message, index) => {
-      console.log("message",message)
-      return <li key = {index}><b>{message.from}</b> {message.body}</li>
+      return <li key = {index}><b>{message.name}</b> {message.text}</li>
     })
-    console.log("MESS",messages)
     return(
       <div>
       <h1> Hello </h1>

@@ -19,6 +19,7 @@ var io = socketIo(server)
 
 require('dotenv').load();
 
+var Event = require('./models/event');
 
 app.use(express.static(assetFolder));
 app.use(webpackDevMiddleware(webpack(webpackConfig), { noInfo: true }));
@@ -43,11 +44,14 @@ app.get('/*', (req, res) => {
 })
 
 io.on('connection', socket => {
-  socket.on('message', (body, from )=> {
+  socket.on('message', (body)=> {
     socket.broadcast.emit('message',{
-      body: body.body,
-      from: body.from
+      body: body.text,
+      name: body.name
     })
+    Event.addChatMessage(body.user_id, body.event, body.text).then(() =>
+      console.log('hello')
+    ) //id, eventid, message
   })
 })
 

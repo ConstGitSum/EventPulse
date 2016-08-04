@@ -87,7 +87,7 @@ export class EventDetails extends Component {
             type="button"
             className="btn btn-danger">Back</button>
         </div>
-        <ChatWindow/>
+        <ChatWindow event = {this.props.currentEvent}/>
       </div>
     )
   }
