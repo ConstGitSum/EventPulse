@@ -1,19 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
+var utils = require('../utils/utils');
 var User = require('../models/user');
 
 module.exports = router;
 
 // *** GET user by id *** //
 router.get('/:id', function(req, res, next) {
-  User.getUserById(req.params.id)
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(User.getUserById, req.params.id, req, res, next);
 });
 
 // *** POST new user *** //
@@ -31,51 +26,21 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/getMemberships/:id', function(req, res, next) {
-  User.getMemberships(req.params.id)
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(User.getMemberships, req.params.id, req, res, next);
 });
 
 router.get('/getFriendsListId/:id', function(req, res, next) {
-  User.getFriendsListId(req.params.id)
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      next(err);
-    }); 
+  utils.queryHandler(User.getFriendsListId, req.params.id, req, res, next);
 });
 
 router.get('/getMemberList/:group_id',function(req, res, next) {
-  User.getMemberList(req.params.group_id)
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(User.getMemberList, req.params.group_id, req, res, next);
 });
 
 router.post('/addGroup',function(req, res, next) {
-  User.addGroup(req.body.groupName)
-    .then((group) => {
-      res.status(201).json(group);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(User.addGroup, req.body.groupName, req, res, next);
 });
 
 router.post('/addMemberships', function(req, res, next) {
-  User.addMemberships(req.body)
-  .then((group) => {
-    res.status(201).json(group);
-  })
-  .catch((err) => {
-    next(err);
-  });
+  utils.queryHandler(User.addMemberships, req.body, req, res, next);
 });

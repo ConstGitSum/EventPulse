@@ -13,35 +13,17 @@ module.exports = router;
 
 // *** GET all events *** //
 router.get('/', function(req, res, next) {
-  Event.getAll()
-    .then((events) => {
-      res.status(200).json(events);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(Event.getAll, null, req, res, next);
 });
 
 // *** GET event by id *** //
 router.get('/:id', function(req, res, next) {
-  Event.getEventById(req.params.id)
-    .then((event) => {
-      res.status(200).json(event);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(Event.getEventById, req.params.id, req, res, next);
 });
 
 // *** GET guests for event *** //
 router.get('/:id/guests', function(req, res, next) {
-  Guest.getGuests(req.params.id)
-    .then((guests) => {
-      res.status(200).json(guests);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(Guest.getGuests, req.params.id, req, res, next);
 });
 
 // *** POST guest for event *** //

@@ -1,7 +1,8 @@
 var axios = require('axios');
 
 module.exports = {
-  getCoords
+  getCoords,
+  queryHandler
 };
 
 // param event details
@@ -27,4 +28,12 @@ function getCoords(event) {
       longitude: res.geometry.location.lng
     })
   )
+}
+
+function queryHandler(query, param, req, res, next) {
+  const status = req.method === 'POST' ? 201 : 200;
+
+  query(param)
+  .then(resp => { res.status(status).json(resp) })
+  .catch(err => { next(err) });
 }
