@@ -13,7 +13,7 @@
     "test": "mocha --reporter=nyan",
     "setup": "node setup.js",
     "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/",
-    "cover": "./node_modules/.bin/babel-node ./node_modules/istanbul/lib/cli cover _mocha -- --bail --recursive"
+    "cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha -- --bail --recursive"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +29,6 @@
     "express": "^4.14.0",
     "express-session": "^1.14.0",
     "fs": "0.0.2",
-    "istanbul": "^1.1.0-alpha.1",
     "knex": "^0.11.9",
     "nodemon": "^1.10.0",
     "passport": "^0.3.2",
