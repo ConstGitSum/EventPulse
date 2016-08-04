@@ -5,6 +5,5 @@ export default function(state = [], action) {
     case HIDE_EVENT:
       return [...state, action.payload.data.event_id]; 
     default: 
-      return state;
   }
 }
