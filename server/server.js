@@ -9,8 +9,10 @@ var passport = require('passport');
 var session = require('express-session');
 var app = express();
 
-var routes = require('./routes/index');
+var routes = require('./controllers/index');
 var assetFolder = path.join(__dirname, '..', 'client','public');
+
+require('dotenv').load();
 
 app.use(express.static(assetFolder));
 app.use(webpackDevMiddleware(webpack(webpackConfig), { noInfo: true }));

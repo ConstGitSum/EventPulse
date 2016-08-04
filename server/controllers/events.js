@@ -1,78 +1,29 @@
 var express = require('express');
+var axios = require('axios');
 var router = express.Router();
 
 var Event = require('../models/event');
 var User = require('../models/user');
 var Guest = require('../models/guest');
 var Hide = require('../models/hidden_event');
+var utils = require('../utils/utils');
+var checkUpdateId = require('../middlewares/index').checkUpdateId;
 
 module.exports = router;
 
 // *** GET all events *** //
 router.get('/', function(req, res, next) {
-  Event.getAll()
-    .then((events) => {
-      res.status(200).json(events);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-// *** GET events based on a filter *** //
-router.get('/filter/:filter/:userId', function(req, res, next) {
-  let filter = req.params.filter;
-  let userId = req.params.userId;
-  let query;
-
-  switch (filter) {
-    case 'unhidden':
-      query = Event.getUnhidden(userId);
-      break;
-    case 'hidden':
-      query = Event.getHidden(userId);
-      break;
-    case 'created':
-      query = Event.getCreated(userId);
-      break;
-    case 'joined':
-      query = Event.getJoined(userId);
-      break;
-    case 'pending':
-      query = Event.getPending(userId);
-      break;
-    default:
-      query = Event.getAll();
-  }
-
-  query.then((events) => {
-      res.status(200).json(events);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(Event.getAll, null, req, res, next);
 });
 
 // *** GET event by id *** //
 router.get('/:id', function(req, res, next) {
-  Event.getEventById(req.params.id)
-    .then((event) => {
-      res.status(200).json(event);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(Event.getEventById, req.params.id, req, res, next);
 });
 
 // *** GET guests for event *** //
 router.get('/:id/guests', function(req, res, next) {
-  Guest.getGuests(req.params.id)
-    .then((guests) => {
-      res.status(200).json(guests);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  utils.queryHandler(Guest.getGuests, req.params.id, req, res, next);
 });
 
 // *** POST guest for event *** //
@@ -107,15 +58,9 @@ router.post('/:id/guests', function(req, res, next) {
 });
 
 // *** PUT - update guest status *** //
-router.put('/:eventId/guests/:userId', function(req, res, next) {
+router.put('/:eventId/guests/:userId', checkUpdateId, function(req, res, next) {
   const userId = +req.params.userId;
   const eventId = +req.params.eventId;
-
-  if (req.body.hasOwnProperty('id')) {
-    return res.status(422).json({
-      error: 'You cannot update the id field'
-    });
-  }
 
   Guest.update(eventId, userId, req.body.status)
     .then((guest) => {
@@ -160,30 +105,24 @@ router.delete('/:eventId/guests/:userId', function(req, res, next) {
 
 // *** POST new event *** //
 router.post('/', function(req, res, next) {
-  Event.create(req.body)
-    .then((eventId) => {
-      return Event.getEventById(eventId[0].id);
-    })
-    .then((event) => {
-      return Guest.getGuests(event[0].id).then((guest) => {
-        event[0].guests = guest
-        res.status(201).json(event[0]);
-      })
-      
-    })
+  // geocode entered address and send 422 if invalid
+  utils.getCoords(req.body)
+    .then(newEvent => Event.create(newEvent))
+    .then(eventId => Event.getEventById(eventId[0].id))
+    .then(event => 
+      Guest.getGuests(event[0].id)
+        .then(guests => {
+          event[0].guests = guests;
+          res.status(201).json(event[0]);
+        })
+    )
     .catch((err) => {
       next(err);
     });
 });
 
 // *** PUT - update event *** //
-router.put('/:id', function(req, res, next) {
-  if (req.body.hasOwnProperty('id')) {
-    return res.status(422).json({
-      error: 'You cannot update the id field'
-    });
-  }
-
+router.put('/:id', checkUpdateId, function(req, res, next) {
   Event.update(req.params.id, req.body)
     .then((eventId) => {
       return Event.getEventById(eventId[0]);

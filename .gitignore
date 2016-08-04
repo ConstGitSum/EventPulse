@@ -1,8 +1,10 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+.env
 azure.err
 iisnode.yml
+coverage
 node_modules
 
 # Icon must ends with two \r.
