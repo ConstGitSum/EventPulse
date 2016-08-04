@@ -44,6 +44,7 @@ export class EventCreate extends Component {
       .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
       .catch(err => {
         // clear form and display error?
+        console.log(err)
       });
   }
 
