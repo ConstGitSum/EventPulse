@@ -4,6 +4,7 @@
 azure.err
 iisnode.yml
 node_modules
+mochawesome-reports
 
 # Icon must ends with two \r.
 Icon
