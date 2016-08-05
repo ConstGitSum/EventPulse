@@ -40,7 +40,7 @@ describe('hiddenEvents Actions', () => {
 
   it('should dispatch HIDE_EVENT action', (done) => {
     moxios.stubRequest('/api/events/1/hide', {
-      status: 200,
+      status: 201,
       responseText: { user_id: 1, event_id: 1 }
     })
 
@@ -48,7 +48,24 @@ describe('hiddenEvents Actions', () => {
       .then(() => {
         const action = store.getActions()[0];
         expect(action.type).to.equal('HIDE_EVENT');
+        expect(action.payload.data).to.be.a('object');
         expect(action.payload.data).to.have.property('user_id');
+        expect(action.payload.data).to.have.property('event_id');
+        done()
+    });
+  });
+
+  it('should dispatch UNHIDE_EVENT action', (done) => {
+    moxios.stubRequest('/api/events/1/hide/1', {
+      status: 200,
+      responseText: { event_id: 1 }
+    })
+
+    return store.dispatch(actions.unhideEvent(1, 1))
+      .then(() => {
+        const action = store.getActions()[0];
+        expect(action.type).to.equal('UNHIDE_EVENT');
+        expect(action.payload.data).to.be.a('object');
         expect(action.payload.data).to.have.property('event_id');
         done()
     });

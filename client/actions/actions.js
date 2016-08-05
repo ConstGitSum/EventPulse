@@ -105,8 +105,7 @@ export function unhideEvent(eventId, userId) {
 
   return {
     type: UNHIDE_EVENT,
-    payload: request,
-    eventId: eventId
+    payload: request
   }
 }
 

@@ -29,6 +29,16 @@ describe('hiddenEvents Reducer', () => {
     expect(nextState).to.deep.equal([1, 2]);
   });
 
+  it('should handle UNHIDE_EVENT', () => {
+    const initialState = [1, 2];
+    const action = {
+      type: 'UNHIDE_EVENT',
+      payload: { data: { event_id: 2 } }
+    }
+    const nextState = reducer(initialState, action);
+    expect(nextState).to.deep.equal([1]);
+  });
+
   it('should have an initial state', () => {
     const action = {
       type: 'TEST',

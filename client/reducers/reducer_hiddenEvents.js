@@ -9,8 +9,7 @@ export default function(state = [], action) {
       return [...state, action.payload.data.event_id]; 
     }
     case UNHIDE_EVENT: {
-      return state.filter((event_id) => {
-        event_id === action.eventId});
+      return state.filter(id => id !== action.payload.data.event_id);
     }
     default: {
       return state;
