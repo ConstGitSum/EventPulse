@@ -134,6 +134,7 @@ button#event-filter-dropdown{
 }
 
 ul.dropdown-menu {
+    background-color: #bfbbbb;
     margin-top: -2em; 
     left: 16em;
 }
