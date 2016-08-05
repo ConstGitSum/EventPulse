@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
+
 import ChatWindow from './Chat'
-import { joinEvent, leaveEvent, hideEvent } from '../actions/actions';
+
+import { 
+  joinEvent,
+  leaveEvent, 
+  hideEvent, 
+  unhideEvent 
+} from '../actions/actions';
+
 
 export class EventDetails extends Component {
   /**
@@ -11,7 +19,9 @@ export class EventDetails extends Component {
    * @return {undefined} 
    */
   onClickJoin() {
-    this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id);
+    this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id)
+      .then()
+      .catch(err => console.log('ERROR - onClickJoin:', err))
   }
 
   /**
@@ -20,6 +30,8 @@ export class EventDetails extends Component {
    */
   onClickLeave() {
     this.props.leaveEvent(this.props.currentEvent.id, this.props.currentUser.id)
+      .then()
+      .catch(err => console.log('ERROR - onClickLeave:', err))
   }
 
   /**
@@ -28,7 +40,16 @@ export class EventDetails extends Component {
    */
   onClickHide() {
     this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id)
-    browserHistory.push('/');
+    .then(() => browserHistory.push('/'))
+    .catch(err => console.log('ERROR - onClickHide:', err))
+  }
+
+  /**
+   * Current event will be unhidden for the current user
+   * @return {undefined}
+   */
+  onClickUnhide() {
+    this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
   }
 
   /**
@@ -40,12 +61,13 @@ export class EventDetails extends Component {
   }
 
   render() {
-    const creator = this.props.currentEvent.guests.find(guest => guest.id === this.props.currentEvent.created_by);
+    {/* Check to see if the event was created by the current user */}
+    const creator = this.props.currentEvent.guests.find(guest => {
+      return guest.id === this.props.currentEvent.created_by});
 
     return (
       <div className="event-details">
         <h1>Pulse</h1>
-
         <div>
           {/* check if current user is already a guest or is the creator*/}
           {this.props.currentEvent.guests.some(guest => 
@@ -53,18 +75,29 @@ export class EventDetails extends Component {
             this.props.currentEvent.created_by === this.props.currentUser.id)
             ? <button
                 onClick={this.onClickLeave.bind(this)}
-                type="button"
+                type='button'
                 className="btn btn-danger">Leave</button>
             : <div>
-                <button
-                  onClick={this.onClickJoin.bind(this)}
-                  type="button" 
-                  className="btn btn-primary">Join</button>
-                <button 
-                  onClick={this.onClickHide.bind(this)}
-                  type="button" 
-                  className="btn btn-default">Hide</button>
-              </div>}
+            {/* Check to see if current user has hidden the event */}
+                {this.props.hiddenEvents
+                  .indexOf(this.props.currentEvent.id) !== -1
+                  ? <button
+                      onClick={this.onClickUnhide.bind(this)}
+                      type='button'
+                      className='btn btn-primary'>Unhide</button>
+                  : <div>
+                      <button
+                        onClick={this.onClickJoin.bind(this)}
+                        type='button' 
+                        className="btn btn-primary">Join</button>
+                      <button 
+                        onClick={this.onClickHide.bind(this)}
+                        type="button" 
+                        className="btn btn-default">Hide</button>
+                    </div>
+                }
+              </div>
+          }
         </div>
 
         <div>
@@ -87,6 +120,8 @@ export class EventDetails extends Component {
             type="button"
             className="btn btn-danger">Back</button>
         </div>
+        
+    <ChatWindow event = {this.props.currentEvent}/>
            </div>
     )
   }
@@ -96,6 +131,7 @@ function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
+    hiddenEvents: state.hiddenEvents
   }
 }
 
@@ -103,7 +139,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     joinEvent, 
     leaveEvent, 
-    hideEvent
+    hideEvent,
+    unhideEvent
   }, dispatch)
 
 }

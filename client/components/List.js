@@ -5,29 +5,29 @@ import { bindActionCreators } from 'redux';
 
 import { 
   userLogOut, 
-  fetchEventList, 
+  getList, 
   setCurrentEvent, 
-  filterEventList 
+  getHiddenEvents,
+  filterList 
 } from '../actions/actions';
-import EventListFilter from './EventListFilter';
+import ListFilter from './ListFilter';
 
-export class EventList extends React.Component {
+export class List extends React.Component {
   componentDidMount() {
-    this.props.fetchEventList()
-      .then(() => {
-        this.props.filterEventList(
-          this.props.eventList,
-          'unhidden',
-          this.props.currentUser.id,
-          this.props.hiddenEvents
-        )
-      });
+    this.props.getHiddenEvents(this.props.currentUser.id)
+    .then(() => this.props.getList())
+    .then(() => this.props.filterList(
+      this.props.list,
+      'unhidden',
+      this.props.currentUser.id,
+      this.props.hiddenEvents
+    ));
   }
 
-  renderEventListItem(event, index) {
+  renderListItem(event, index) {
     return <li 
       key={index} 
-      className="list-group-item" 
+      className="event-item list-group-item" 
       onClick={this.props.setCurrentEvent.bind(null, event)}>
       <h3>{event.title}</h3>
         {/* Show additional info if clicked */}
@@ -36,7 +36,7 @@ export class EventList extends React.Component {
             <h4>{event.location}</h4>
             <p>{event.description}</p>
             <Link to={`/${event.id}`}>
-              <button className="btn btn-secondary">
+              <button className="view-details btn btn-secondary">
                 View Event Details
               </button>
             </Link>
@@ -49,10 +49,10 @@ export class EventList extends React.Component {
     return (
       <div className="explore">
         <h1>Explore</h1>
-          <EventListFilter />
+          <ListFilter />
           <ul className="event-list list-group">
-            {this.props.eventListFiltered.map((event, index) =>
-              this.renderEventListItem(event, index))}
+            {this.props.listFiltered.map((event, index) =>
+              this.renderListItem(event, index))}
           </ul>
 
         <Link to="/create">
@@ -62,7 +62,7 @@ export class EventList extends React.Component {
         </Link>
 
         <button 
-          className="btn btn-danger" 
+          className="logout btn btn-danger" 
           onClick={this.props.userLogOut}> 
           Log Out
         </button>         
@@ -75,8 +75,8 @@ function mapStateToProps(state) {
   return { 
     currentEvent: state.currentEvent,
     currentUser: state.currentUser,
-    eventList: state.eventList,
-    eventListFiltered: state.eventListFiltered,
+    list: state.list,
+    listFiltered: state.listFiltered,
     hiddenEvents: state.hiddenEvents
   };
 }
@@ -84,10 +84,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
     setCurrentEvent,
-    fetchEventList,
-    filterEventList,
+    getHiddenEvents,
+    getList,
+    filterList,
     userLogOut
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventList);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

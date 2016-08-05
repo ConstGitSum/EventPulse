@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchCurrentUser } from '../actions/actions';
+import { getCurrentUser } from '../actions/actions';
 
-import EventList from './EventList';
+import List from './List';
 import Auth from './Auth';
 
 export class Home extends Component {
   componentWillMount() {
-    this.props.fetchCurrentUser()
+    this.props.getCurrentUser()
   }
 
   render() {
     return (
       <div>
         {this.props.currentUser 
-         ? <EventList /> 
+         ? <List /> 
          : <Auth />} 
       </div>
     );
@@ -27,7 +27,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ fetchCurrentUser }, dispatch);
+  return bindActionCreators({ getCurrentUser }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

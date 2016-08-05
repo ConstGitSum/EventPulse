@@ -44,6 +44,9 @@ app.get('/*', (req, res) => {
 })
 
 io.on('connection', socket => {
+  console.log("connected",socket.id)
+  //var clients = io.sockets.clients();
+  //console.log('clients',clients)
   socket.on('message', (body)=> {
     socket.emit('message',{
       text: body.text,

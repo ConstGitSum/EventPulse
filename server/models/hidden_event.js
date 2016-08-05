@@ -3,9 +3,15 @@ var knex = require('../db/knex');
 // *** queries *** //
 
 module.exports = {
+  getHiddenEvents,
   hide,
   unhide
 };
+
+function getHiddenEvents(userId) {
+  return knex('hidden_events')
+    .where('user_id', userId)
+}
 
 function hide(eventId, userId) {
   return knex('hidden_events')

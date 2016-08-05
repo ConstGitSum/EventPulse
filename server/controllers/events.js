@@ -153,6 +153,16 @@ router.delete('/:id', function(req, res, next) {
     });
 });
 
+// *** GET hidden events for user *** //
+router.get('/hide/:user_id', function(req, res, next) {
+  Hide.getHiddenEvents(req.params.user_id)
+    .then((hiddenEvents) => {
+      res.status(200).json(hiddenEvents)
+    })
+    .catch((err) => {
+      next(err);
+    })
+})
 // *** POST new hidden event *** //
 router.post('/:id/hide', function(req, res, next) {
   Hide.hide(req.params.id, req.body.user_id)
@@ -165,10 +175,10 @@ router.post('/:id/hide', function(req, res, next) {
 });
 
 // *** DELETE new hidden event *** //
-router.delete('/:id/hide', function(req, res, next) {
-  Hide.hide(req.params.id, req.body.user_id)
+router.delete('/:id/hide/:user_id', function(req, res, next) {
+  Hide.unhide(req.params.id, req.params.user_id)
     .then(() => {
-      res.status(200).json({ status: 'deleted' });
+      res.status(200).json({ event_id: +req.params.id });
     })
     .catch((err) => {
       next(err);
@@ -178,6 +188,6 @@ router.delete('/:id/hide', function(req, res, next) {
 router.get('/:event_id/chat', function(req,res,next){
   Event.getChatMessages(req.params.event_id).then((messages) => {
     console.log("MESSAGES",messages)
-    res.status(200).json(messages)
+    res.status(200).json(messages.reverse())
   })
 })

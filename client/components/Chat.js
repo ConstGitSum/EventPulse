@@ -57,7 +57,7 @@ export class ChatWindow extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
   }
 }
 

@@ -56,14 +56,16 @@
 ##### DELETE /api/events/:id
   * given an event id, deletes event if exists and returns that deleted event object
 
+##### GET /api/events/hide/:user_id
+  * given a user_id, returns array with hidden event ids
+
 ##### POST /api/events/:id/hide
   * request body should have property user_id
   * given param event id, creates a record in hidden_events for a user
   * returns object with user_id and event_id
 
-##### DELETE /api/events/:id/hide
-  * request body should have property user_id
-  * given param event id, deletes the record in hidden_events for a user
+##### DELETE /api/events/:id/hide/:user_id
+  * given param event id and user id, deletes the record in hidden_events for a user
   * returns object with status 'deleted' if successful
 
 

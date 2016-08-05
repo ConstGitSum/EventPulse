@@ -3,9 +3,9 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { filterEventList } from '../actions/actions';
+import { filterList } from '../actions/actions';
 
-export class EventListFilter extends React.Component {
+export class ListFilter extends React.Component {
   render() {
     const filters = ['all', 'unhidden', 'hidden', 'created', 'joined', 'pending'];
 
@@ -14,9 +14,9 @@ export class EventListFilter extends React.Component {
         {filters.map((filter, index) => 
           <MenuItem 
             key={index} 
-            onClick={this.props.filterEventList.bind(
+            onClick={this.props.filterList.bind(
               null, 
-              this.props.eventList, 
+              this.props.list, 
               filter, 
               this.props.currentUser.id,
               this.props.hiddenEvents
@@ -32,15 +32,15 @@ export class EventListFilter extends React.Component {
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
-    eventList: state.eventList,
+    list: state.list,
     hiddenEvents: state.hiddenEvents
   };
 }
 
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
-    filterEventList
+    filterList
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventListFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(ListFilter);
