@@ -14,7 +14,7 @@ var options ={
   'force new connection': true
 };
 
-describe.only('EventDetails Component', () => {
+xdescribe('EventDetails Component', () => {
   const seedData = { 
     currentUser: {
       id: 1,

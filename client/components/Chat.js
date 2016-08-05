@@ -30,7 +30,7 @@ export class ChatWindow extends React.Component {
     event.preventDefault();
       const message  = {
         text: this.state.comment,
-        name: this.props.currentUser.name, // user ID  Might want currentUser to have name as well
+        name: this.props.currentUser.name, 
         user_id: this.props.currentUser.id,
         event:this.props.event.id,
         image: this.props.currentUser.image
