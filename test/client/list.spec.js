@@ -1,65 +1,70 @@
-process.env.NODE_ENV = 'test';
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-import sd from 'skin-deep';
 import { expect } from 'chai';
-import chai from 'chai';
+import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import axios from 'axios'; 
-import { shallow, describeWithDOM, mount, spyLifecycle } from 'enzyme';  
-import { renderIntoDocument, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils';
 
-import List from '../../client/components/List';
+import { List } from '../../client/components/List';
 
-describe('EventList Component', () => {
-  const initialState = { 
-    eventList: [],
-    eventListFiltered: [],
-    hiddenEvents: [],
-    currentUser: { id: 1 },
-    currentEvent: {}
-  } 
-  const mockStore = configureStore([])(initialState);
+describe('List Component', () => {
+  function setup() {
+    const props = {
+      list: [{ id: 1 }, { id: 2 }],
+      listFiltered: [{ id: 1}],
+      hiddenEvents: [2],
+      currentUser: { id: 1 },
+      currentEvent: { id: 1 },
+      getHiddenEvents: sinon.spy(),
+      getList: sinon.spy(),
+      filterList: sinon.spy(),
+      userLogOut: sinon.spy(),
+      setCurrentEvent: sinon.spy()
+    }
 
-  //it.only('should render a div with class event-list', () => {
-  //  const component = renderIntoDocument(
-  //    <Provider store={mockStore}>
-  //      <EventList />
-  //    </Provider>
-  //  );
+    const enzymeWrapper = shallow(<List {...props} />);
 
-  //  const list = scryRenderedDOMComponentsWithClass(component, 'event-list');
-  //  expect(list.length).to.equal(1);
-  //});
+    return {
+      props,
+      enzymeWrapper
+    };
+  }
 
+  const { enzymeWrapper, props } = setup();
 
-  //it('should call componentDidMount lifecycle method', () => {
-  //  sinon.spy(EventList.prototype, 'componentDidMount');
+  describe('Display list', () => {
+    it('should render correctly', () => {
+      expect(enzymeWrapper.find('.event-list')).to.be.ok;
+      expect(enzymeWrapper.find('.event-item')).to.be.ok;
+      expect(enzymeWrapper.find('Connect(ListFilter)')).to.be.ok;
+    });
+  });
 
-  //  const component = renderIntoDocument(
-  //    <Provider store={mockStore}>
-  //      <EventList />
-  //    </Provider>
-  //  );
+  describe('Buttons', () => {
+    it('should render buttons correctly', () => {
+      const buttons = enzymeWrapper.find('button');  
+      expect(buttons).to.have.length(3);
+      expect(buttons.at(0).text()).to.equal('View Event Details');
+      expect(buttons.at(1).text()).to.equal('Create');
+      expect(buttons.at(2).text()).to.equal('Log Out');
+    });
 
-  //  expect(EventList.prototype.componentDidMount.calledOnce).to.equal(true);
-  //}); 
+    it('should render links correctly', () => {
+      const links = enzymeWrapper.find('Link');
+      expect(links).to.have.length(2);
+      expect(links.at(0).node.props.to).to.equal('/1');
+      expect(links.at(1).node.props.to).to.equal('/create');
+    });
 
-  //xit('should update the state after axios call in `componentDidMount`', (done) => {
-  //  const component = renderIntoDocument(
-  //    <Provider store={mockStore}>
-  //      <EventList />
-  //    </Provider>
-  //  );
+    it('should call setCurrentEvent when clicking an event list item', () => {
+      expect(props.setCurrentEvent.calledOnce).to.equal(false);
+      enzymeWrapper.find('.event-item').simulate('click');
+      expect(props.setCurrentEvent.calledOnce).to.equal(true);
+    });
 
-  //  console.log(mockStore.getState().events)
-  //  expect(mockStore.getState().eventList).to.be.instanceof(Array);
-  //  expect(mockStore.getState().eventList.length).to.equal(1);
-  //  expect(mockStore.getState().eventList[0].title).to.equal('Pokemongodb party');
-  //  done();
-  //});
-
+    it('should call userLogOut when clicking the Log Out button', () => {
+      expect(props.userLogOut.calledOnce).to.equal(false);
+      enzymeWrapper.find('.logout').simulate('click');
+      expect(props.userLogOut.calledOnce).to.equal(true);
+    });
+  });
+  
 });

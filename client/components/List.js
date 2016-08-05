@@ -16,20 +16,18 @@ export class List extends React.Component {
   componentDidMount() {
     this.props.getHiddenEvents(this.props.currentUser.id)
     .then(() => this.props.getList())
-    .then(() => {
-      this.props.filterList(
-        this.props.list,
-        'unhidden',
-        this.props.currentUser.id,
-        this.props.hiddenEvents
-      )
-    });
+    .then(() => this.props.filterList(
+      this.props.list,
+      'unhidden',
+      this.props.currentUser.id,
+      this.props.hiddenEvents
+    ));
   }
 
   renderListItem(event, index) {
     return <li 
       key={index} 
-      className="list-group-item" 
+      className="event-item list-group-item" 
       onClick={this.props.setCurrentEvent.bind(null, event)}>
       <h3>{event.title}</h3>
         {/* Show additional info if clicked */}
@@ -38,7 +36,7 @@ export class List extends React.Component {
             <h4>{event.location}</h4>
             <p>{event.description}</p>
             <Link to={`/${event.id}`}>
-              <button className="btn btn-secondary">
+              <button className="view-details btn btn-secondary">
                 View Event Details
               </button>
             </Link>
@@ -64,7 +62,7 @@ export class List extends React.Component {
         </Link>
 
         <button 
-          className="btn btn-danger" 
+          className="logout btn btn-danger" 
           onClick={this.props.userLogOut}> 
           Log Out
         </button>         
