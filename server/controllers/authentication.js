@@ -10,7 +10,7 @@ router.get('/loggedIn', function(req, res) {
     const image = req.user[0].image
     res.status(200).send({ id: userId, name: userName, image: image });
   }
-  else{
+ else{
     res.send(false);
   }
 })
