@@ -16,7 +16,9 @@ export class EventDetails extends Component {
    * @return {undefined} 
    */
   onClickJoin() {
-    this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id);
+    this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id)
+      .then()
+      .catch(err => console.log('ERROR - onClickJoin:', err))
   }
 
   /**
@@ -25,6 +27,8 @@ export class EventDetails extends Component {
    */
   onClickLeave() {
     this.props.leaveEvent(this.props.currentEvent.id, this.props.currentUser.id)
+      .then()
+      .catch(err => console.log('ERROR - onClickLeave:', err))
   }
 
   /**
@@ -33,12 +37,15 @@ export class EventDetails extends Component {
    */
   onClickHide() {
     this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id)
-    browserHistory.push('/');
+    .then(() => browserHistory.push('/'))
+    .catch(err => console.log('ERROR - onClickHide:', err))
   }
 
+  /**
+   * Current event will be unhidden for the current user
+   * @return {undefined}
+   */
   onClickUnhide() {
-    console.log("onClickUnhide event: ", this.props.currentEvent.id)
-    console.log("onClickUnhide user : ", this.props.currentUser.id)
     this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
   }
 
@@ -51,13 +58,13 @@ export class EventDetails extends Component {
   }
 
   render() {
+    {/* Check to see if the event was created by the current user */}
     const creator = this.props.currentEvent.guests.find(guest => {
-      guest.id === this.props.currentEvent.created_by});
+      return guest.id === this.props.currentEvent.created_by});
 
     return (
       <div className="event-details">
         <h1>Pulse</h1>
-
         <div>
           {/* check if current user is already a guest or is the creator*/}
           {this.props.currentEvent.guests.some(guest => 
@@ -68,20 +75,23 @@ export class EventDetails extends Component {
                 type='button'
                 className="btn btn-danger">Leave</button>
             : <div>
-                <button
-                  onClick={this.onClickJoin.bind(this)}
-                  type='button' 
-                  className="btn btn-primary">Join</button>
+            {/* Check to see if current user has hidden the event */}
                 {this.props.hiddenEvents
                   .indexOf(this.props.currentEvent.id) !== -1
                   ? <button
                       onClick={this.onClickUnhide.bind(this)}
                       type='button'
                       className='btn btn-primary'>Unhide</button>
-                  : <button 
-                      onClick={this.onClickHide.bind(this)}
-                      type="button" 
-                      className="btn btn-default">Hide</button>
+                  : <div>
+                      <button
+                        onClick={this.onClickJoin.bind(this)}
+                        type='button' 
+                        className="btn btn-primary">Join</button>
+                      <button 
+                        onClick={this.onClickHide.bind(this)}
+                        type="button" 
+                        className="btn btn-default">Hide</button>
+                    </div>
                 }
               </div>
           }
@@ -113,7 +123,6 @@ export class EventDetails extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("state:", state)
   return {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
