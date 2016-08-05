@@ -15,15 +15,15 @@ import ListFilter from './ListFilter';
 export class List extends React.Component {
   componentDidMount() {
     this.props.getHiddenEvents(this.props.currentUser.id)
-    this.props.getList()
-      .then(() => {
-        this.props.filterList(
-          this.props.list,
-          'unhidden',
-          this.props.currentUser.id,
-          this.props.hiddenEvents
-        )
-      });
+    .then(() => this.props.getList())
+    .then(() => {
+      this.props.filterList(
+        this.props.list,
+        'unhidden',
+        this.props.currentUser.id,
+        this.props.hiddenEvents
+      )
+    });
   }
 
   renderListItem(event, index) {
