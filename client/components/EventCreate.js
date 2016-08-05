@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { createEvent, setCurrentEvent } from '../actions/actions';
+import { createEvent, setCurrentEvent, validateEventForm, updateEventField } from '../actions/actions';
 
 export class EventCreate extends Component {
 
@@ -64,6 +64,8 @@ export class EventCreate extends Component {
     this.setState({group_visibility: event.target.value})
   }
 
+
+
   parseTime(callback){
     console.log('4~~~', this.state.hour, " ", this.state.minute, " ", this.state.ampm)
     // if(this.state.ampm === 'pm'){
@@ -74,16 +76,13 @@ export class EventCreate extends Component {
     let year = d.getFullYear();
     let month = d.getMonth() + 1;
     let day = d.getDate();
-    console.log('month!!', month)
     if(month < 10) { month =  "0" + month}
     if(day < 10) { day = '0' + day}
 
-    console.log('0000000~~~~',this.state)
-    console.log('hour', Number(this.state.hour));
     const timeString = `${year}-${month}-${day}T${Number(this.state.hour) + ((this.state.ampm === 'pm') ? 12 : 0)}:${this.state.minute}:00.000`;
-    console.log('66666~~', timeString);
+    // console.log('66666~~', timeString);
     this.setState({time: timeString}, () => {
-      console.log('updated state: ', this.state.time);
+      // console.log('updated state: ', this.state.time);
       callback();
     });
 
@@ -108,22 +107,22 @@ export class EventCreate extends Component {
   }
 
   validate(event) {
-    console.log('event.title.length:',event.title.length)
-    if (event.title.length === 0) {
-      this.setState({error_title: 'Title cannot be empty'})
-    } else if (event.title.length > 30 ) {
-      this.setState({error_title:'Title has to be less than 30 characters'})
-    }
+    //console.log('event.title.length:',event.title.length)
+    // if (event.title.length === 0) {
+    //   this.setState({error_title: 'Title cannot be empty'})
+    // } else if (event.title.length > 30 ) {
+    //   this.setState({error_title:'Title has to be less than 30 characters'})
+    // }
 
-    if (event.description.length === 0) {
-      this.setState({error_description: 'Description cannot be empty'})
-    } else if (event.description.length > 30 ) {
-      this.setState({error_description:'Description has to be less than 30 characters'})
-    }
+    // if (event.description.length === 0) {
+    //   this.setState({error_description: 'Description cannot be empty'})
+    // } else if (event.description.length > 30 ) {
+    //   this.setState({error_description:'Description has to be less than 30 characters'})
+    // }
 
-    if (event.location.length === 0) {
-      this.setState({error_location: 'Location cannot be empty'})
-    }
+    // if (event.location.length === 0) {
+    //   this.setState({error_location: 'Location cannot be empty'})
+    // }
 
 
     
@@ -142,6 +141,17 @@ export class EventCreate extends Component {
         this.state.error_duration){
       return true;
     }
+  }
+
+  onSubmitRedux(event) {
+    event.preventDefault();
+    console.log('3~~~~',this.props.eventFormData)
+    this.props.validateEventForm(this.props.eventFormData);
+  }
+
+  onFieldChangeRedux(event) {
+    //console.log('field changed');
+    this.props.updateEventField(event.target.name, event.target.value);
   }
 
   onSubmit(event) {
@@ -203,6 +213,8 @@ export class EventCreate extends Component {
   }
 
   render() {
+
+    const { validationErrors, eventFormData } = this.props;
     return(
       <div className="container">
           <br/>
@@ -217,9 +229,9 @@ export class EventCreate extends Component {
                 type="text" 
                 name="title" 
                 placeholder="Event title" 
-                value={this.state.title} 
-                onChange={this.onKeyPress.bind(this)}/>
-                {this.state.error_title.length === 0 ? null : <div className="text-danger"> {this.state.error_title}</div>}
+                value={eventFormData.title}
+                onChange={this.onFieldChangeRedux.bind(this)}/>
+                {validationErrors.title ? <div className="text-danger"> {validationErrors.title} </div> : null}
             </div>
             <div className="form-group row">
               <label className="col-xs-4">Description*</label>
@@ -228,9 +240,9 @@ export class EventCreate extends Component {
                 type="text" 
                 name="description" 
                 placeholder="Description" 
-                value={this.state.description} 
-                onChange={this.onKeyPress.bind(this)}/>
-                {this.state.error_description.length === 0 ? null : <div className="text-danger"> {this.state.error_description}</div>}
+                value={eventFormData.description}
+                onChange={this.onFieldChangeRedux.bind(this)}/>
+                {validationErrors.description ? <div className="text-danger"> {validationErrors.description} </div> : null}
             </div>
             <div className="form-group row">
               <label className="col-xs-4">Location*</label>
@@ -239,17 +251,17 @@ export class EventCreate extends Component {
                 type="text" 
                 name="location" 
                 placeholder="Location" 
-                value={this.state.location} 
-                onChange = {this.onKeyPress.bind(this)}/>
-                {this.state.error_location.length === 0 ? null : <div className="text-danger"> {this.state.error_location}</div>}
+                value={eventFormData.location}
+                onChange={this.onFieldChangeRedux.bind(this)}/>
+                {validationErrors.location ? <div className="text-danger"> {validationErrors.location} </div> : null}
             </div>
             <div className="form-group row">
               <label className="col-xs-4">Time*</label>
               <div className="col-xs-2">
                 <select name="hour"  
                   className="form-control"               
-                  value={this.state.hour} 
-                  onChange={this.onHourChange.bind(this)}>
+                  value={eventFormData.hour}
+                  onChange={this.onFieldChangeRedux.bind(this)}>
                   <option value="">  </option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -268,8 +280,8 @@ export class EventCreate extends Component {
               <div className="col-xs-2">
                 <select name="minute" 
                   className="form-control"   
-                  value={this.state.minute} 
-                  onChange={this.onMinuteChange.bind(this)}>
+                  value={eventFormData.minute}
+                  onChange={this.onFieldChangeRedux.bind(this)}>
                   <option value=""> </option>
                   <option value="00">00</option>
                   <option value="15">15</option>
@@ -280,8 +292,8 @@ export class EventCreate extends Component {
               <div className="col-xs-2">
                 <select name="ampm"
                   className="form-control"
-                  value={this.state.ampm} 
-                  onChange={this.onAmpmChange.bind(this)}>
+                  value={eventFormData.ampm}
+                  onChange={this.onFieldChangeRedux.bind(this)}>
                   <option value=""></option>
                   <option value="am">am</option>
                   <option value="pm">pm</option>
@@ -301,7 +313,10 @@ export class EventCreate extends Component {
                                 <span> Event happening now? </span>
                              
                             </div>*/}
-              {this.state.time}
+        
+              {validationErrors.hour ? <div className="text-danger"> {validationErrors.hour} </div> : null}
+              {validationErrors.minute ? <div className="text-danger"> {validationErrors.minute} </div> : null}
+              {validationErrors.ampm ? <div className="text-danger"> {validationErrors.ampm} </div> : null}
             </div>
 
             <div className="form-group row">
@@ -393,7 +408,7 @@ export class EventCreate extends Component {
                 type="submit" 
                 className='btn btn-primary' 
                 role="button"
-                onClick={this.onSubmit.bind(this)}> 
+                onClick={this.onSubmitRedux.bind(this)}> 
                 Submit 
               </button>
               <button 
@@ -413,13 +428,15 @@ export class EventCreate extends Component {
 function mapStateToProps(state) {
   return {
     newEvent: state.eventCreate,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    validationErrors: state.eventCreate.validationErrors,
+    eventFormData: state.eventCreate.eventFormData
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createEvent, setCurrentEvent}, dispatch)
+    createEvent, setCurrentEvent, validateEventForm, updateEventField}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventCreate);

@@ -163,9 +163,24 @@ export function updateEventField(fieldKey, fieldValue) {
 }
 
 export function clearFormValues() {
-  //console.log('validateEventForm in actions', formData);
-  //console.log('2~~formdata')
   return {
     type: CLEAR_FORM_VALUES
+  }
+}
+
+export function validateEventForm(formData) {
+  console.log('validateEventForm in actions', formData);
+
+  return {
+    type: VALIDATE_EVENT_FORM,
+    payload: { formData }
+  }
+}
+
+export function updateEventField(fieldKey, fieldValue) {
+  //console.log('updateEventField in actions', fieldKey, ' ', fieldValue);
+  return {
+    type: UPDATE_EVENT_FIELD,
+    payload: { fieldKey, fieldValue }
   }
 }
