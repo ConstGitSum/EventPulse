@@ -71,8 +71,7 @@ export class EventDetails extends Component {
         <div>
           {/* check if current user is already a guest or is the creator*/}
           {this.props.currentEvent.guests.some(guest => 
-            guest.id === this.props.currentUser.id || 
-            this.props.currentEvent.created_by === this.props.currentUser.id)
+            guest.id === this.props.currentUser.id)
             ? <button
                 onClick={this.onClickLeave.bind(this)}
                 type='button'
