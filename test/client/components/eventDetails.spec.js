@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate } from 'react-addons-test-utils';
 import { expect } from 'chai';
 
-import { EventDetails } from '../../client/components/EventDetails'
+import { EventDetails } from '../../../client/components/EventDetails'
 
 var chai = require('chai');
 

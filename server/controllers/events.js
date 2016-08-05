@@ -178,7 +178,7 @@ router.post('/:id/hide', function(req, res, next) {
 router.delete('/:id/hide/:user_id', function(req, res, next) {
   Hide.unhide(req.params.id, req.params.user_id)
     .then(() => {
-      res.status(200).json({ status: 'deleted' });
+      res.status(200).json({ event_id: +req.params.id });
     })
     .catch((err) => {
       next(err);

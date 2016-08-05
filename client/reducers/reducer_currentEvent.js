@@ -1,4 +1,5 @@
 import { 
+  CREATE_EVENT, 
   JOIN_EVENT, 
   HIDE_EVENT, 
   SET_CURRENT_EVENT, 
@@ -22,13 +23,12 @@ export default function(state = {}, action) {
 
       return newState;
     }
+    case CREATE_EVENT: {
+      return action.payload.data;
+    }
     case SET_CURRENT_EVENT: {
       return action.payload;
     }
-    /**
-     * Join the current event
-     * @type {Object}
-     */
     case JOIN_EVENT: {
       // action.payload is a promise that resolved with the new user object that was
       // returned after the server API call to join event

@@ -3,9 +3,9 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { createEvent, setCurrentEvent } from '../actions/actions';
+import { create, setCurrentEvent } from '../actions/actions';
 
-export class EventCreate extends Component {
+export class Create extends Component {
 
   constructor(props) {
     super(props);
@@ -36,7 +36,7 @@ export class EventCreate extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.createEvent(this.state)
+    this.props.create(this.state)
       .then(res => {
         if (res.error) throw new Error('Unable to create event');
         return this.props.setCurrentEvent(this.props.newEvent);
@@ -193,14 +193,16 @@ export class EventCreate extends Component {
 
 function mapStateToProps(state) {
   return {
-    newEvent: state.eventCreate,
+    newEvent: state.create,
     currentUser: state.currentUser
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createEvent, setCurrentEvent}, dispatch)
+    create, 
+    setCurrentEvent
+  }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(Create);
