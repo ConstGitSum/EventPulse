@@ -5,20 +5,20 @@ import { bindActionCreators } from 'redux';
 
 import { 
   userLogOut, 
-  getEventList, 
+  getList, 
   setCurrentEvent, 
-  filterEventList,
-  getHiddenEvents
+  getHiddenEvents,
+  filterList 
 } from '../actions/actions';
-import EventListFilter from './EventListFilter';
+import ListFilter from './ListFilter';
 
 export class List extends React.Component {
   componentDidMount() {
     this.props.getHiddenEvents(this.props.currentUser.id)
-    this.props.fetchEventList()
+    this.props.getList()
       .then(() => {
-        this.props.filterEventList(
-          this.props.eventList,
+        this.props.filterList(
+          this.props.list,
           'unhidden',
           this.props.currentUser.id,
           this.props.hiddenEvents
@@ -26,7 +26,7 @@ export class List extends React.Component {
       });
   }
 
-  renderEventListItem(event, index) {
+  renderListItem(event, index) {
     return <li 
       key={index} 
       className="list-group-item" 
@@ -51,10 +51,10 @@ export class List extends React.Component {
     return (
       <div className="explore">
         <h1>Explore</h1>
-          <EventListFilter />
+          <ListFilter />
           <ul className="event-list list-group">
-            {this.props.eventListFiltered.map((event, index) =>
-              this.renderEventListItem(event, index))}
+            {this.props.listFiltered.map((event, index) =>
+              this.renderListItem(event, index))}
           </ul>
 
         <Link to="/create">
@@ -77,8 +77,8 @@ function mapStateToProps(state) {
   return { 
     currentEvent: state.currentEvent,
     currentUser: state.currentUser,
-    eventList: state.eventList,
-    eventListFiltered: state.eventListFiltered,
+    list: state.list,
+    listFiltered: state.listFiltered,
     hiddenEvents: state.hiddenEvents
   };
 }
@@ -86,10 +86,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
     setCurrentEvent,
-    getEventList,
-    filterEventList,
-    userLogOut,
-    getHiddenEvents
+    getHiddenEvents,
+    getList,
+    filterList,
+    userLogOut
   }, dispatch);
 }
 

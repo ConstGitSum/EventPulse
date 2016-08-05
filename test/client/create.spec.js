@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
 import { expect } from 'chai';
 
-import { EventCreate } from '../../client/components/EventCreate';
+import { Create } from '../../client/components/Create';
 
 var chai = require('chai');
 
@@ -11,7 +11,7 @@ describe("EventCreate Component", () => {
 
   describe('Display form', () => {
     it('should display title, description, location, time, duration, guests', () => {
-      const component = renderIntoDocument(<EventCreate currentUser={{id:1}}/>)
+      const component = renderIntoDocument(<Create currentUser={{id:1}}/>)
       const labels = scryRenderedDOMComponentsWithTag(component, 'label')
       expect(labels[0].textContent).to.equal('Title')
       expect(labels[1].textContent).to.equal('Description')
@@ -22,7 +22,7 @@ describe("EventCreate Component", () => {
     })
 
     it('should display privacy and visibility', () => {
-      const component = renderIntoDocument(<EventCreate currentUser={{id:1}}/>)
+      const component = renderIntoDocument(<Create currentUser={{id:1}}/>)
       const labels = scryRenderedDOMComponentsWithTag(component, 'label')
       expect(labels[6].textContent).to.equal('Privacy')
       expect(labels[9].textContent).to.equal('Visibility')
@@ -31,7 +31,7 @@ describe("EventCreate Component", () => {
 
   describe('Display Button', () => {
     it('should display Submit and Clear Values buttons', () => {
-      const component = renderIntoDocument(<EventCreate currentUser={{id:1}}/>)
+      const component = renderIntoDocument(<Create currentUser={{id:1}}/>)
       const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
       expect(buttons.length).to.equal(2);
       expect(buttons[0].textContent).to.equal('Submit')

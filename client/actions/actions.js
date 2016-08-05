@@ -30,7 +30,7 @@ export function userLogOut() {
   }
 }
 
-export function getEventList() {
+export function getList() {
   const request = axios.get('/api/events')
     .then(events => 
       Promise.all(events.data.map(event => 
@@ -45,7 +45,7 @@ export function getEventList() {
   }
 }
 
-export function filterEventList(eventList, filter, userId, hiddenEvents) {
+export function filterList(eventList, filter, userId, hiddenEvents) {
   const payload = 
     filter === 'unhidden' ?
       eventList.filter(e => !hiddenEvents.includes(e.id)) :
@@ -120,7 +120,7 @@ export function leaveEvent(eventId, userId) {
   }
 }
 
-export function createEvent(newEvent) {
+export function create(newEvent) {
   const request = axios.post('/api/events', {
     title: newEvent.title,
     description: newEvent.description,
