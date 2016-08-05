@@ -3,6 +3,7 @@ process.env.NODE_ENV = 'test';
 var chai = require('chai');
 var should = chai.should();
 var chaiHttp = require('chai-http');
+
 var server = require('../../server/server');
 var knex = require('../../server/db/knex');
 
@@ -398,25 +399,27 @@ describe('API Event Routes', () => {
     });
   });
 
-  describe('DELETE /api/events/:id/hide', function() {
-    it('should hide an event', function(done) {
+  xdescribe('DELETE /api/events/:id/hide/:user_id', function() {
+    it('should unhide an event for the user', function(done) {
       chai.request(server)
-        .post('/api/events/1/hide')
-        .send({
-          user_id: 1
-        })
+        .delete('/api/events/1/hide/1')
         .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.status.should.equal('deleted');
           chai.request(server)
-            .delete('/api/events/1/hide')
-            .send({
-              user_id: 1
-            })
-            .end(function(err, res) {
-              res.should.have.status(200);
-              res.should.be.json;
-              res.body.should.be.a('object');
-              res.body.should.have.property('status');
-              res.body.status.should.equal('deleted');
+            .get('/api/events/hide/1')
+            .end(function(err, resp) {
+              console.log("after del:", resp.body[0])
+              resp.should.have.status(200);
+              resp.should.be.json;
+              resp.body[0].should.be.a('object');
+              resp.body[0].should.not.have.property('user_id');
+              resp.body[0].user_id.should.equal('undefined');
+              resp.body[0].should.not.have.property('event_id');
+              resp.body[0].event_id.should.equal('undefined');
               done();
             });
         });
