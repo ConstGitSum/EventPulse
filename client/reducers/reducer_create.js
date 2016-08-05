@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { CREATE_EVENT, VALIDATE_EVENT_FORM, UPDATE_EVENT_FIELD, CLEAR_FORM_VALUES, UPDATE_TIME } from '../actions/actions';
-import { getDefaultState, isTimeWithinRange, isTimeInTheFuture, getEventTime, get24Hour, validateTitle, validateDescription, validateLocation, validateHour, validateMinute, validateAmpm, validateField, validateTimeRange, validateForm  } from '../utils/form';
+import { getDefaultState, isTimeWithinRange, isTimeInTheFuture, getEventTime, get24Hour, validateTitle, validateDescription, validateLocation, validateHour, validateMinute, validateAmpm, validateField, validateTimeRange, validateForm } from '../utils/form';
 
 export default function(state = getDefaultState(), action) {
   switch (action.type) {
