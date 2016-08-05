@@ -385,8 +385,8 @@ describe('API User Routes', () => {
       .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
-        res.body[0].should.have.property('user_id')
-        res.body[0].user_id.should.equal(5);
+        res.body[0].should.have.property('id')
+        res.body[0].id.should.equal(5);
         res.body[0].should.have.property('group_id');
         res.body[0].group_id.should.equal(4);
         res.body[1].should.have.property('id')
@@ -411,8 +411,8 @@ describe('API User Routes', () => {
       .end(function(err, res) {
         res.should.have.status(201);
         res.body.should.be.a('array');
-        res.body[0].should.have.property('user_id')
-        res.body[0].user_id.should.equal(5);
+        res.body[0].should.have.property('id')
+        res.body[0].id.should.equal(5);
         res.body[0].should.have.property('group_id');
         res.body[0].group_id.should.equal(4);
         res.body[1].should.have.property('id')
