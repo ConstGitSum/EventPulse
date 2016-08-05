@@ -1,7 +1,6 @@
 import { GET_HIDDEN_EVENTS, HIDE_EVENT, UNHIDE_EVENT } from '../actions/actions';
 
 export default function(state = [], action) {
-  console.log("state: ", state)
   switch (action.type) {
     case GET_HIDDEN_EVENTS: {
       let hiddenEvents = []
