@@ -14,9 +14,9 @@ export class EventCreate extends Component {
       description: "", 
       location: "", 
       time: "", 
-      hour:"",
-      minute:"",
-      ampm:"",
+      hour:"1",
+      minute:"00",
+      ampm:"pm",
       duration: "", 
       max_guests: "", 
       privacy: "false", 
@@ -34,12 +34,53 @@ export class EventCreate extends Component {
     this.setState({[event.target.name]:event.target.value})
   }
 
+  onHourChange(event) {
+    this.setState({hour: event.target.value})
+  }
+
+  onMinuteChange(event) {
+    this.setState({minute: event.target.value})
+  }
+
+  onAmpmChange(event) {
+    this.setState({ampm: event.target.value})
+  }
+
   onPrivacyChange(event) {
     this.setState({privacy:event.target.value})
   }
 
   onVisibilityChange(event) {
     this.setState({group_visibility: event.target.value})
+  }
+
+  parseTime(){
+    console.log('4~~~', this.state.hour, " ", this.state.minute, " ", this.state.ampm)
+    if(this.state.ampm === 'pm'){
+      this.setState({hour: Number(this.state.hour) + 12})
+    }
+
+    const d = new Date();
+    let year = d.getFullYear();
+    let month = d.getMonth() - 1;
+    let day = d.getDate();
+    console.log('month!!', month)
+    if(month < 10) { month =  "0" + month}
+    if(day < 10) { day = '0' + day}
+
+    console.log('66666~~',`${year}-${month}-${day}T${this.state.hour}:${this.state.minute}:00.000}`)
+    this.setState({time: `${year}-${month}-${day}T${this.state.hour}:${this.state.minute}:00.000`})
+    console.log('6~~~~',this.state.time)
+  }
+
+  setCurrentTime() {
+    const d = new Date();
+    const hour = d.getHours();
+    const minute =  d.getMinutes();
+    this.setState({hour: hour.toString()});
+    this.setState({minute: minute.toString()})
+    console.log('hour:', hour, ' minute: ',minute)
+    console.log('state: ', this.state)
   }
 
   validate(event) {
@@ -65,21 +106,35 @@ export class EventCreate extends Component {
   }
 
   isAllValid(){
-    const items = this.state.isValidMessage;
-    for (let key in items) {
-      if (items[key].length > 0) return false;
+    // const items = this.state.isValidMessage;
+    // for (let key in items) {
+    //   if (items[key].length > 0) return false;
+    // }
+    // return true;
+    if (this.state.error_title === "",
+        this.state.error_description === "",
+        this.state.error_location === "",
+        this.state.error_time === "",
+        this.state.error_duration){
+      return true;
     }
-    return true;
   }
 
   onSubmit(event) {
+    const self = this;
     event.preventDefault();
+    this.parseTime();
     this.clearAllErrors();
     this.validate(this.state);
     this.isAllValid() ? 
       this.props.createEvent(this.state)
         .then(res => {
-          if (res.error) throw new Error('Unable to create event');
+          console.log('res.error~~',res.error)
+          if (res.error) {
+            self.setState({error_location: 'Location invalid'});
+            console.log('error!!!',self.state.location)
+            throw new Error('Unable to create event');
+          }; 
           return this.props.setCurrentEvent(this.props.newEvent);
         })
         .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
@@ -121,15 +176,6 @@ export class EventCreate extends Component {
     })
   }
 
-  setCurrentTime() {
-    const d = new Date();
-    const hour = d.getHours();
-    const minute =  d.getMinutes();
-    this.setState({hour: hour.toString()});
-    this.setState({minute: minute.toString()})
-    console.log('hour:', hour, ' minute: ',minute)
-    console.log('state: ', this.state)
-  }
 
   render() {
     return(
@@ -178,7 +224,7 @@ export class EventCreate extends Component {
                 <select name="hour"  
                   className="form-control"               
                   value={this.state.hour} 
-                  onChange={this.onKeyPress.bind(this)}>
+                  onChange={this.onHourChange.bind(this)}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -197,7 +243,7 @@ export class EventCreate extends Component {
                 <select name="minute" 
                   className="form-control"   
                   value={this.state.minute} 
-                  onChange={this.onKeyPress.bind(this)}>
+                  onChange={this.onMinuteChange.bind(this)}>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
@@ -208,7 +254,7 @@ export class EventCreate extends Component {
                 <select name="ampm"
                   className="form-control"
                   value={this.state.ampm} 
-                  onChange={this.onKeyPress.bind(this)}>
+                  onChange={this.onAmpmChange.bind(this)}>
                   <option value="am">am</option>
                   <option value="pm">pm</option>
                 </select>
