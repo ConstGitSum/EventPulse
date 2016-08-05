@@ -55,10 +55,10 @@ export function filterEventList(eventList, filter, userId, hiddenEvents) {
       eventList.filter(e => e.created_by === userId) :
     filter === 'joined' ?
       eventList.filter(e => e.guests.some(guest => {
-        guest.id === userId && guest.status === 'accepted')}) :
+        guest.id === userId && guest.status === 'accepted'})) :
     filter === 'pending' ?
       eventList.filter(e => e.guests.some(guest => {
-        guest.id === userId && guest.status === 'pending')}) :
+        guest.id === userId && guest.status === 'pending'})) :
     eventList;
 
   return {
@@ -100,13 +100,16 @@ export function hideEvent(eventId, userId) {
 }
 
 export function unhideEvent(eventId, userId) {
+  console.log("unhideEvent e: ", eventId)
+  console.log("unhideEvent u: ", userId)
   const url = `/api/events/${eventId}/hide`
   const body = { user_id: userId };
   const request = axios.delete(url, body);
 
   return {
     type: UNHIDE_EVENT,
-    payload: request
+    payload: request,
+    eventId: eventId
   }
 }
 
