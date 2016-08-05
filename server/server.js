@@ -13,7 +13,7 @@ var routes = require('./controllers/index');
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
 
-var socketIo = require('socket.io')
+var socketIo = require('socket.io')   //This is the stuff I added up here for socket IO
 var server = http.createServer(app)
 var io = socketIo(server)
 
@@ -49,9 +49,8 @@ io.on('connection', socket => {
       body: body.text,
       name: body.name
     })
-    Event.addChatMessage(body.user_id, body.event, body.text).then(() =>
-      console.log('hello')
-    ) //id, eventid, message
+
+    Event.addChatMessage(body.user_id, body.event, body.text);
   })
 })
 

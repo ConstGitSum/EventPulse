@@ -175,10 +175,6 @@ router.delete('/:id/hide', function(req, res, next) {
     });
 });
 
-router.post('/:id/chat', function(req,res,next) {
-  console.log(req.body)
-  //Event.addChatMessage(req.body)
-})
 router.get('/:event_id/chat', function(req,res,next){
   Event.getChatMessages(req.params.event_id).then((messages) => {
     console.log("MESSAGES",messages)

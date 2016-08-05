@@ -42,9 +42,15 @@ function deleteEvent(id) {
 }
 
 function addChatMessage(id,event_id,message) {
-  return knex('messages').insert({user_id: id, event_id: event_id, text: message})
+  return knex('messages')
+    .insert({user_id: id, event_id: event_id, text: message})
+    .return();
 }
 
 function getChatMessages(event_id) {
-  return knex('messages').join('users','messages.user_id','users.id').where('messages.event_id', event_id).select().returning(['users.name','messages.text']);
+  return knex('messages')
+    .join('users','messages.user_id','users.id')
+    .where('messages.event_id', event_id)
+    .select()
+    .returning(['users.name','messages.text']);
 }
