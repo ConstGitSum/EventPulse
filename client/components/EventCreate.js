@@ -14,10 +14,12 @@ export class EventCreate extends Component {
       description: "", 
       location: "", 
       time: "", 
-      hour:"1",
-      minute:"00",
-      ampm:"pm",
+      hour:"",
+      minute:"",
+      ampm:"",
       duration: "", 
+      duration_hour: "",
+      duration_minute: "",
       max_guests: "", 
       privacy: "false", 
       group_visibility: "1",
@@ -46,6 +48,14 @@ export class EventCreate extends Component {
     this.setState({ampm: event.target.value})
   }
 
+  onDurationHourChange(event) {
+    this.setState({duration_hour: event.target.value})
+  }
+
+  onDurationMinuteChange(event) {
+    this.setState({duration_minute: event.target.value})
+  }
+
   onPrivacyChange(event) {
     this.setState({privacy:event.target.value})
   }
@@ -54,23 +64,37 @@ export class EventCreate extends Component {
     this.setState({group_visibility: event.target.value})
   }
 
-  parseTime(){
+  parseTime(callback){
     console.log('4~~~', this.state.hour, " ", this.state.minute, " ", this.state.ampm)
-    if(this.state.ampm === 'pm'){
-      this.setState({hour: Number(this.state.hour) + 12})
-    }
+    // if(this.state.ampm === 'pm'){
+    //   this.setState({hour: Number(this.state.hour) + 12})
+    // }
 
     const d = new Date();
     let year = d.getFullYear();
-    let month = d.getMonth() - 1;
+    let month = d.getMonth() + 1;
     let day = d.getDate();
     console.log('month!!', month)
     if(month < 10) { month =  "0" + month}
     if(day < 10) { day = '0' + day}
 
-    console.log('66666~~',`${year}-${month}-${day}T${this.state.hour}:${this.state.minute}:00.000}`)
-    this.setState({time: `${year}-${month}-${day}T${this.state.hour}:${this.state.minute}:00.000`})
-    console.log('6~~~~',this.state.time)
+    console.log('0000000~~~~',this.state)
+    console.log('hour', Number(this.state.hour));
+    const timeString = `${year}-${month}-${day}T${Number(this.state.hour) + ((this.state.ampm === 'pm') ? 12 : 0)}:${this.state.minute}:00.000`;
+    console.log('66666~~', timeString);
+    this.setState({time: timeString}, () => {
+      console.log('updated state: ', this.state.time);
+      callback();
+    });
+
+    // if(this.state.ampm === 'pm'){
+    //   this.setState({time: `${year}-${month}-${day}T${Number(this.state.hour) + 12}:${this.state.minute}:00.000`})      
+    // } else {
+    //   this.setState({time: `${year}-${month}-${day}T${this.state.hour}:${this.state.minute}:00.000`})  
+    // }
+    // console.log('777777~~',`${year}-${month}-${day}T${Number(this.state.hour) + 12}:${this.state.minute}:00.000`)
+    console.log('888888~~~~',this.state.time)
+    console.log('9999999~~~~',this.state)
   }
 
   setCurrentTime() {
@@ -123,25 +147,27 @@ export class EventCreate extends Component {
   onSubmit(event) {
     const self = this;
     event.preventDefault();
-    this.parseTime();
-    this.clearAllErrors();
-    this.validate(this.state);
-    this.isAllValid() ? 
-      this.props.createEvent(this.state)
-        .then(res => {
-          console.log('res.error~~',res.error)
-          if (res.error) {
-            self.setState({error_location: 'Location invalid'});
-            console.log('error!!!',self.state.location)
-            throw new Error('Unable to create event');
-          }; 
-          return this.props.setCurrentEvent(this.props.newEvent);
-        })
-        .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
-        .catch(err => {
-          // clear form and display error?
-          console.log(err);
-        }): null;
+    this.parseTime(() => {
+      console.log('6~~~~',this.state.time)
+      this.clearAllErrors();
+      this.validate(this.state);
+      this.isAllValid() ? 
+        this.props.createEvent(this.state)
+          .then(res => {
+            console.log('res.error~~',res.error)
+            if (res.error) {
+              self.setState({error_location: 'Location invalid'});
+              console.log('error!!!',self.state.location)
+              throw new Error('Unable to create event');
+            }; 
+            return this.props.setCurrentEvent(this.props.newEvent);
+          })
+          .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
+          .catch(err => {
+            // clear form and display error?
+            console.log(err);
+          }): null;
+    });
   }
 
 
@@ -175,7 +201,6 @@ export class EventCreate extends Component {
       error_duration: true
     })
   }
-
 
   render() {
     return(
@@ -225,6 +250,7 @@ export class EventCreate extends Component {
                   className="form-control"               
                   value={this.state.hour} 
                   onChange={this.onHourChange.bind(this)}>
+                  <option value="">  </option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -244,6 +270,7 @@ export class EventCreate extends Component {
                   className="form-control"   
                   value={this.state.minute} 
                   onChange={this.onMinuteChange.bind(this)}>
+                  <option value=""> </option>
                   <option value="00">00</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
@@ -255,19 +282,26 @@ export class EventCreate extends Component {
                   className="form-control"
                   value={this.state.ampm} 
                   onChange={this.onAmpmChange.bind(this)}>
+                  <option value=""></option>
                   <option value="am">am</option>
                   <option value="pm">pm</option>
                 </select>
               </div>
-              <div className="col-xs-8">
-                <input 
-                  type="checkbox" 
-                  className="" 
-                  role="button"
-                  onClick={this.setCurrentTime.bind(this)}/> 
-                  <span> Event happening now? </span>
-               
+              <div className="row">
+                <div className="col-xs-4"></div>
+                <div className="col-xs-2 text-info"> hour </div>
+                <div className="col-xs-2 text-info"> minute </div>
               </div>
+              {/*<div className="col-xs-8">
+                              <input 
+                                type="checkbox" 
+                                className="" 
+                                role="button"
+                                onClick={this.setCurrentTime.bind(this)}/> 
+                                <span> Event happening now? </span>
+                             
+                            </div>*/}
+              {this.state.time}
             </div>
 
             <div className="form-group row">
