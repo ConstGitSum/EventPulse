@@ -7,6 +7,7 @@ export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
+export const UNHIDE_EVENT = 'UNHIDE_EVENT';
 export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const CREATE_EVENT = 'CREATE_EVENT';
 export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
@@ -53,9 +54,11 @@ export function filterEventList(eventList, filter, userId, hiddenEvents) {
     filter === 'created' ?
       eventList.filter(e => e.created_by === userId) :
     filter === 'joined' ?
-      eventList.filter(e => e.guests.some(guest => guest.id === userId && guest.status === 'accepted')) :
+      eventList.filter(e => e.guests.some(guest => 
+        guest.id === userId && guest.status === 'accepted')) :
     filter === 'pending' ?
-      eventList.filter(e => e.guests.some(guest => guest.id === userId && guest.status === 'pending')) :
+      eventList.filter(e => e.guests.some(guest => 
+        guest.id === userId && guest.status === 'pending')) :
     eventList;
 
   return {
@@ -93,6 +96,17 @@ export function hideEvent(eventId, userId) {
   return {
     type: HIDE_EVENT,
     payload: request
+  }
+}
+
+export function unhideEvent(eventId, userId) {
+  const url = `/api/events/${eventId}/hide/${userId}`
+  const request = axios.delete(url)
+
+  return {
+    type: UNHIDE_EVENT,
+    payload: request,
+    eventId: eventId
   }
 }
 

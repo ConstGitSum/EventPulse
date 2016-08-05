@@ -175,8 +175,8 @@ router.post('/:id/hide', function(req, res, next) {
 });
 
 // *** DELETE new hidden event *** //
-router.delete('/:id/hide', function(req, res, next) {
-  Hide.hide(req.params.id, req.body.user_id)
+router.delete('/:id/hide/:user_id', function(req, res, next) {
+  Hide.unhide(req.params.id, req.params.user_id)
     .then(() => {
       res.status(200).json({ status: 'deleted' });
     })
