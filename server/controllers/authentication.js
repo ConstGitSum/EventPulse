@@ -7,7 +7,8 @@ router.get('/loggedIn', function(req, res) {
   if(req.isAuthenticated()){
     const userId = req.user[0].id;
     const userName = req.user[0].name
-    res.status(200).send({ id: userId, name: userName });
+    const image = req.user[0].image
+    res.status(200).send({ id: userId, name: userName, image: image });
   }
   else{
     res.send(false);

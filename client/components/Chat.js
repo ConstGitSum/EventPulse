@@ -12,7 +12,6 @@ export class ChatWindow extends React.Component {
   }
   componentDidMount() {
       this.socket = io('/')
-
       this.socket.on('message', message => {
         this.setState({messages: [message, ...this.state.messages]})
       })
@@ -33,7 +32,8 @@ export class ChatWindow extends React.Component {
         text: this.state.comment,
         name: this.props.currentUser.name, // user ID  Might want currentUser to have name as well
         user_id: this.props.currentUser.id,
-        event:this.props.event.id
+        event:this.props.event.id,
+        image: this.props.currentUser.image
       }
       this.socket.emit('message', message)
       this.setState({comment:''})
@@ -41,7 +41,7 @@ export class ChatWindow extends React.Component {
 
   render(){
     const messages = this.state.messages.map((message, index) => {
-      return <li key = {index}><b>{message.name}</b> {message.text}</li>
+      return <li key = {index}><img src = {message.image} /><b>{message.name}</b> {message.text}</li>
     })
     return(
       <div>

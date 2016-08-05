@@ -14,13 +14,14 @@ function passport_helper(token, profile) {
 }
 
 function newUser(user, profile) {
-  let userId, groupId, userName;
+  let userId, groupId, userName, image;
   // create the user in the database
   return User.create(buildNewUser(profile))
     // add a new friends group
     .then((user_id) => {
       userId = user_id[0].id;
       userName = user_id[0].name;
+      image = user_id[0].image
       return User.addGroup();
     }) 
     // add the user to the new friends group as the owner
@@ -44,7 +45,7 @@ function newUser(user, profile) {
         }
         )
         // return your info plus new members of friends
-        .then(friends => [{ id: userId, group_id: groupId, name: userName}].concat(friends)) 
+        .then(friends => [{ id: userId, group_id: groupId, name: userName, image: image}].concat(friends)) 
     );
 }
 

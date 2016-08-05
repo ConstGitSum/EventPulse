@@ -15,6 +15,7 @@ router.get('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   User.create(req.body)
     .then((userId) => {
+      console.log('USER',userId)
       return User.getUserById(userId[0]);
     })
     .then((event) => {

@@ -52,5 +52,5 @@ function getChatMessages(event_id) {
     .join('users','messages.user_id','users.id')
     .where('messages.event_id', event_id)
     .select()
-    .returning(['users.name','messages.text']);
+    .returning(['users.name','messages.text', 'users.image']);
 }

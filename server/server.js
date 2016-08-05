@@ -47,7 +47,8 @@ io.on('connection', socket => {
   socket.on('message', (body)=> {
     socket.emit('message',{
       text: body.text,
-      name: body.name
+      name: body.name,
+      image: body.image
     })
 
     Event.addChatMessage(body.user_id, body.event, body.text);
