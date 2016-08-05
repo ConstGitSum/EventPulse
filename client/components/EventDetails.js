@@ -37,6 +37,8 @@ export class EventDetails extends Component {
   }
 
   onClickUnhide() {
+    console.log("onClickUnhide event: ", this.props.currentEvent.id)
+    console.log("onClickUnhide user : ", this.props.currentUser.id)
     this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
   }
 
@@ -51,8 +53,6 @@ export class EventDetails extends Component {
   render() {
     const creator = this.props.currentEvent.guests.find(guest => {
       guest.id === this.props.currentEvent.created_by});
-    const alreadyHidden = this.props.hiddenEvents
-      .includes(this.props.currentEvent.id)
 
     return (
       <div className="event-details">
@@ -72,9 +72,10 @@ export class EventDetails extends Component {
                   onClick={this.onClickJoin.bind(this)}
                   type='button' 
                   className="btn btn-primary">Join</button>
-                {alreadyHidden 
+                {this.props.hiddenEvents
+                  .indexOf(this.props.currentEvent.id) !== -1
                   ? <button
-                      onclick={this.onClickUnhide.bind(this)}
+                      onClick={this.onClickUnhide.bind(this)}
                       type='button'
                       className='btn btn-primary'>Unhide</button>
                   : <button 
