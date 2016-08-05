@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
-import { joinEvent, leaveEvent, hideEvent } from '../actions/actions';
+import { 
+  joinEvent,
+  leaveEvent, 
+  hideEvent, 
+  unhideEvent 
+} from '../actions/actions';
 
 export class EventDetails extends Component {
   /**
@@ -31,6 +36,10 @@ export class EventDetails extends Component {
     browserHistory.push('/');
   }
 
+  onClickUnhide() {
+    this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
+  }
+
   /**
    * Return the user to the previous page
    * @return {undefined} 
@@ -40,7 +49,10 @@ export class EventDetails extends Component {
   }
 
   render() {
-    const creator = this.props.currentEvent.guests.find(guest => guest.id === this.props.currentEvent.created_by);
+    const creator = this.props.currentEvent.guests.find(guest => {
+      guest.id === this.props.currentEvent.created_by});
+    const alreadyHidden = this.props.hiddenEvents
+      .includes(this.props.currentEvent.id)
 
     return (
       <div className="event-details">
@@ -53,18 +65,25 @@ export class EventDetails extends Component {
             this.props.currentEvent.created_by === this.props.currentUser.id)
             ? <button
                 onClick={this.onClickLeave.bind(this)}
-                type="button"
+                type='button'
                 className="btn btn-danger">Leave</button>
             : <div>
                 <button
                   onClick={this.onClickJoin.bind(this)}
-                  type="button" 
+                  type='button' 
                   className="btn btn-primary">Join</button>
-                <button 
-                  onClick={this.onClickHide.bind(this)}
-                  type="button" 
-                  className="btn btn-default">Hide</button>
-              </div>}
+                {alreadyHidden 
+                  ? <button
+                      onclick={this.onClickUnhide.bind(this)}
+                      type='button'
+                      className='btn btn-primary'>Unhide</button>
+                  : <button 
+                      onClick={this.onClickHide.bind(this)}
+                      type="button" 
+                      className="btn btn-default">Hide</button>
+                }
+              </div>
+          }
         </div>
 
         <div>
@@ -93,9 +112,11 @@ export class EventDetails extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log("state:", state)
   return {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
+    hiddenEvents: state.hiddenEvents
   }
 }
 
@@ -103,7 +124,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     joinEvent, 
     leaveEvent, 
-    hideEvent
+    hideEvent,
+    unhideEvent
   }, dispatch)
 
 }
