@@ -12,16 +12,16 @@ export class ChatWindow extends React.Component {
   }
   componentDidMount() {
       this.socket = io('/')
-      
+
+      this.socket.on('message', message => {
+        this.setState({messages: [message, ...this.state.messages]})
+      })
+
       axios.get(`/api/events/${this.props.event.id}/chat`)
           .then((messages) => {
-            console.log('events', ...messages.data)
             this.setState({messages: [ ...messages.data]})
           })
       
-      this.socket.on('message', message =>{
-        this.setState({messages: [message, ...this.state.messages]})
-      })  
   }
 
   handleChange(event){
@@ -29,17 +29,14 @@ export class ChatWindow extends React.Component {
   }
   handleSubmit(event){
     event.preventDefault();
-    console.log("HEY",this.props.event)
       const message  = {
         text: this.state.comment,
         name: this.props.currentUser.name, // user ID  Might want currentUser to have name as well
         user_id: this.props.currentUser.id,
         event:this.props.event.id
       }
-      this.setState({messages: [message, ...this.state.messages ]})
       this.socket.emit('message', message)
       this.setState({comment:''})
-      console.log(this.state.messages)
   }
 
   render(){

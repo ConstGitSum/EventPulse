@@ -45,8 +45,8 @@ app.get('/*', (req, res) => {
 
 io.on('connection', socket => {
   socket.on('message', (body)=> {
-    socket.broadcast.emit('message',{
-      body: body.text,
+    socket.emit('message',{
+      text: body.text,
       name: body.name
     })
 
