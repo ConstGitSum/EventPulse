@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { Home } from '../../client/components/Home';
+import { Home } from '../../../client/components/Home';
 
 function setup(logged) {
   const props = {

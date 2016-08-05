@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils';
 import { expect } from 'chai';
 
-import { Create } from '../../client/components/Create';
+import { Create } from '../../../client/components/Create';
 
 var chai = require('chai');
 

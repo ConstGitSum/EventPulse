@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 
-import { List } from '../../client/components/List';
+import { List } from '../../../client/components/List';
 
 describe('List Component', () => {
   function setup() {
