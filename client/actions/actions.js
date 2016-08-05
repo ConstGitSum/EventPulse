@@ -54,11 +54,11 @@ export function filterEventList(eventList, filter, userId, hiddenEvents) {
     filter === 'created' ?
       eventList.filter(e => e.created_by === userId) :
     filter === 'joined' ?
-      eventList.filter(e => e.guests.some(guest => {
-        guest.id === userId && guest.status === 'accepted'})) :
+      eventList.filter(e => e.guests.some(guest => 
+        guest.id === userId && guest.status === 'accepted')) :
     filter === 'pending' ?
-      eventList.filter(e => e.guests.some(guest => {
-        guest.id === userId && guest.status === 'pending'})) :
+      eventList.filter(e => e.guests.some(guest => 
+        guest.id === userId && guest.status === 'pending')) :
     eventList;
 
   return {
