@@ -33,9 +33,9 @@ export class List extends React.Component {
       <h3>{event.title}</h3>
         {/* Show additional info if clicked */}
         {this.props.currentEvent && event.id === this.props.currentEvent.id
-        ? <div className="event-info">
-            <h4>{event.location}</h4>
-            <p>{event.description}</p>
+        ? <div id="event-info">
+            <h4 id="event_location">{event.location}</h4>
+            <p id="event_description">{event.description}</p>
             <Link to={`/${event.id}`}>
               <button className="view-details btn btn-secondary">
                 View Event Details
