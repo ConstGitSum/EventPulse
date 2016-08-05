@@ -100,11 +100,8 @@ export function hideEvent(eventId, userId) {
 }
 
 export function unhideEvent(eventId, userId) {
-  console.log("unhideEvent e: ", eventId)
-  console.log("unhideEvent u: ", userId)
-  const url = `/api/events/${eventId}/hide`
-  const body = { user_id: userId };
-  const request = axios.delete(url, body);
+  const url = `/api/events/${eventId}/hide/${userId}`
+  const request = axios.delete(url)
 
   return {
     type: UNHIDE_EVENT,
