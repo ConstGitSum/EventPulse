@@ -184,3 +184,10 @@ router.delete('/:id/hide/:user_id', function(req, res, next) {
       next(err);
     });
 });
+
+router.get('/:event_id/chat', function(req,res,next){
+  Event.getChatMessages(req.params.event_id).then((messages) => {
+    console.log("MESSAGES",messages)
+    res.status(200).json(messages.reverse())
+  })
+})

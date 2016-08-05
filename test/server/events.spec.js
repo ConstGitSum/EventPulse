@@ -9,7 +9,6 @@ var knex = require('../../server/db/knex');
 
 chai.use(chaiHttp);
 
-
 describe('API Event Routes', () => {
 
   beforeEach(function(done) {
@@ -359,7 +358,7 @@ describe('API Event Routes', () => {
     });
   });
 
-  describe('GET /api/events/hide/:user_id', function() {
+  xdescribe('GET /api/events/hide/:user_id', function() {
     it('should return an array of hidden event/s for the user', function(done) {
       chai.request(server)
         .get('/api/events/hide/1')
@@ -421,5 +420,6 @@ describe('API Event Routes', () => {
         });
     });
   });
+
 
 });
