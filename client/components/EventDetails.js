@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
+import Sidebar from './Sidebar';
 import { 
   joinEvent,
   leaveEvent, 
@@ -10,7 +11,13 @@ import {
   unhideEvent 
 } from '../actions/actions';
 
-export class EventDetails extends Component {
+export class EventDetails extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      sidebarToggle: false
+    }
+  }
   /**
    * Current user will join the current event
    * @return {undefined} 
@@ -57,6 +64,14 @@ export class EventDetails extends Component {
     browserHistory.push('/')
   }
 
+  showHideSidebar() {
+    if (this.state.sidebarToggle) {
+      this.setState({ sidebarToggle: false });
+    } else {
+      this.setState({ sidebarToggle: true });
+    };
+  }
+
   render() {
     {/* Check to see if the event was created by the current user */}
     const creator = this.props.currentEvent.guests.find(guest => {
@@ -64,36 +79,37 @@ export class EventDetails extends Component {
 
     return (
       <div className="event-details">
-        <h1>Pulse</h1>
+      <Sidebar />
+          <span>Pulse</span>
         <div>
-          {/* check if current user is already a guest or is the creator*/}
-          {this.props.currentEvent.guests.some(guest => 
-            guest.id === this.props.currentUser.id)
-            ? <button
-                onClick={this.onClickLeave.bind(this)}
-                type='button'
-                className="btn btn-danger">Leave</button>
-            : <div>
-            {/* Check to see if current user has hidden the event */}
-                {this.props.hiddenEvents
-                  .indexOf(this.props.currentEvent.id) !== -1
-                  ? <button
-                      onClick={this.onClickUnhide.bind(this)}
-                      type='button'
-                      className='btn btn-primary'>Unhide</button>
-                  : <div>
-                      <button
-                        onClick={this.onClickJoin.bind(this)}
-                        type='button' 
-                        className="btn btn-primary">Join</button>
-                      <button 
-                        onClick={this.onClickHide.bind(this)}
-                        type="button" 
-                        className="btn btn-default">Hide</button>
-                    </div>
-                }
-              </div>
-          }
+        {/* check if current user is already a guest
+              True : Display Leave button
+              False: Check if event has been hidden*/}
+        {this.props.currentEvent.guests.some(guest => 
+          guest.id === this.props.currentUser.id)
+        ? <button
+            onClick={this.onClickLeave.bind(this)}
+            type='button'
+            className="btn btn-danger">Leave</button>
+        /* check if current event has been hidden
+              True : Display Unhide button
+              False: Display Join and Hide buttons */    
+        : this.props.hiddenEvents.indexOf(this.props.currentEvent.id) !== -1
+          ? <button
+              onClick={this.onClickUnhide.bind(this)}
+              type='button'
+              className='btn btn-primary'>Unhide</button>
+          : <div>
+              <button
+                onClick={this.onClickJoin.bind(this)}
+                type='button' 
+                className="btn btn-primary">Join</button>
+              <button 
+                onClick={this.onClickHide.bind(this)}
+                type="button" 
+                className="btn btn-default">Hide</button>
+            </div>
+        }      
         </div>
 
         <div>
