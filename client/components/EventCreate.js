@@ -3,22 +3,12 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { createEvent, setCurrentEvent, validateEventForm, updateEventField } from '../actions/actions';
+import { createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues } from '../actions/actions';
 
 export class EventCreate extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      privacy: "false", 
-      group_visibility: "1",
-      currentUser: this.props.currentUser.id,
-      error_title: "",
-      error_description: "",
-      error_location: "",
-      error_time: true,
-      error_duration: true
-    }  
   }
 
 
@@ -42,9 +32,6 @@ export class EventCreate extends Component {
 
   parseTime(callback){
     console.log('4~~~', this.state.hour, " ", this.state.minute, " ", this.state.ampm)
-    // if(this.state.ampm === 'pm'){
-    //   this.setState({hour: Number(this.state.hour) + 12})
-    // }
 
     const d = new Date();
     let year = d.getFullYear();
@@ -54,20 +41,9 @@ export class EventCreate extends Component {
     if(day < 10) { day = '0' + day}
 
     const timeString = `${year}-${month}-${day}T${Number(this.state.hour) + ((this.state.ampm === 'pm') ? 12 : 0)}:${this.state.minute}:00.000`;
-    // console.log('66666~~', timeString);
     this.setState({time: timeString}, () => {
-      // console.log('updated state: ', this.state.time);
       callback();
     });
-
-    // if(this.state.ampm === 'pm'){
-    //   this.setState({time: `${year}-${month}-${day}T${Number(this.state.hour) + 12}:${this.state.minute}:00.000`})      
-    // } else {
-    //   this.setState({time: `${year}-${month}-${day}T${this.state.hour}:${this.state.minute}:00.000`})  
-    // }
-    // console.log('777777~~',`${year}-${month}-${day}T${Number(this.state.hour) + 12}:${this.state.minute}:00.000`)
-    console.log('888888~~~~',this.state.time)
-    console.log('9999999~~~~',this.state)
   }
 
   setCurrentTime() {
@@ -81,32 +57,11 @@ export class EventCreate extends Component {
   }
 
   validate(event) {
-    //console.log('event.title.length:',event.title.length)
-    // if (event.title.length === 0) {
-    //   this.setState({error_title: 'Title cannot be empty'})
-    // } else if (event.title.length > 30 ) {
-    //   this.setState({error_title:'Title has to be less than 30 characters'})
-    // }
-
-    // if (event.description.length === 0) {
-    //   this.setState({error_description: 'Description cannot be empty'})
-    // } else if (event.description.length > 30 ) {
-    //   this.setState({error_description:'Description has to be less than 30 characters'})
-    // }
-
-    // if (event.location.length === 0) {
-    //   this.setState({error_location: 'Location cannot be empty'})
-    // }
     
   }
 
 
   isAllValid(){
-    // const items = this.state.isValidMessage;
-    // for (let key in items) {
-    //   if (items[key].length > 0) return false;
-    // }
-    // return true;
     if (this.state.error_title === "",
         this.state.error_description === "",
         this.state.error_location === "",
@@ -126,14 +81,12 @@ export class EventCreate extends Component {
     //console.log('field changed');
     this.props.updateEventField(event.target.name, event.target.value);
   }
+
   // action creator 
   onSubmit(event) {
     const self = this;
     event.preventDefault();
-    this.parseTime(() => {
-      console.log('6~~~~',this.state.time)
-      this.clearAllErrors();
-      
+    this.parseTime(() => {      
       this.isAllValid() ? 
         this.props.createEvent(this.state)
           .then(res => {
@@ -155,24 +108,9 @@ export class EventCreate extends Component {
 
   //clear value action creator
   onClearValues(event) {
-    this.setState({
-      title: "", 
-      description: "", 
-      location: "", 
-      time: "",
-      hour:"",
-      minute:"",
-      ampm:"", 
-      duration: "", 
-      max_guests: "", 
-      privacy: "false", 
-      group_visibility: "1",
-      error_title: "",
-      error_description: "",
-      error_location: "",
-      error_time: true,
-      error_duration: true
-    })
+    console.log('ready to clear : ',this.props.eventFormData )
+
+    this.props.clearFormValues();
   }
 
   clearAllErrors() {
@@ -416,7 +354,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createEvent, setCurrentEvent, validateEventForm, updateEventField}, dispatch)
+    createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventCreate);
