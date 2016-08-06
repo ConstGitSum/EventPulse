@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
+
+import { Button } from 'react-bootstrap';
+
+import { hideEvent, unhideEvent } from '../actions/actions';
 
 let Menu = require('react-burger-menu').slide
 
@@ -29,7 +33,7 @@ let styles = {
     fontSize: '1.15em'
   },
   bmMorphShape: {
-    fill: '#373a47'
+    fill: '#373a47',
   },
   bmItemList: {
     color: '#b8b7ad',
@@ -41,17 +45,88 @@ let styles = {
 }
 
 
-export default class Sidebar extends React.Component {
+export class Sidebar extends React.Component {
+  getItems() {
+    let items;
+
+    /**
+     * Check to see if the current event is in hidden event
+     *   True (-1) : Add Hide button to the items array
+     *   False     : Add Unhide button to the items array
+     * @param  {Number} this.props.hiddenEvents
+     *         .indexOf(this.props.currentEvent.id)
+     */
+    if (this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1) {
+      let hideBtnTemp = [
+        <Button key="hide" className="sidebar-button"
+          onClick={this.onClickHide.bind(this)}
+          bsStyle="primary" bsSize="large" block>
+          Hide
+        </Button>
+      ]
+      items = [...hideBtnTemp]
+    } else {
+      let unhideBtnTemp = [
+        <Button key="unhide" className="sidebar-button"
+          onClick={this.onClickUnhide.bind(this)}
+          bsStyle="primary" bsSize="large" block>
+          Unhide
+        </Button>
+      ]
+      items = [...unhideBtnTemp]
+    }
+
+    items = [...items,
+      [
+        <Button key="edit1" className="sidebar-button"
+          bsStyle="primary" bsSize="large" block>
+          Edit
+        </Button>,
+        <Button key="edit2" className="sidebar-button"
+          bsStyle="primary" bsSize="large" block>
+          Edit
+        </Button>
+      ]
+    ]
+
+    return items
+  }
+
+  onClickHide() {
+    this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id)
+      .then(() => browserHistory.push('/'))
+      .catch(err => console.log('ERROR - onClickHide:', err))
+  }
+
+  /**
+   * Current event will be unhidden for the current user
+   * @return {undefined}
+   */
+  onClickUnhide() {
+    this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
+  }
+
   render() {
+    const items = this.getItems();
+
     return (
-      <Menu right styles={ styles}>
-        <span>Power</span>
-        <span>User</span>
-        <span>Things</span>
-        <span>And</span>
-        <span>Stuff</span>
-        <span>Edit</span>
+      <Menu right styles={ styles }>
+        {items}
       </Menu>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    currentEvent: state.currentEvent,
+    currentUser:  state.currentUser,
+    hiddenEvents: state.hiddenEvents
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ hideEvent, unhideEvent }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
