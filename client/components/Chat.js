@@ -12,15 +12,22 @@ export class ChatWindow extends React.Component {
   }
   componentDidMount() {
       this.socket = io('/')
+      var room = 'event'+this.props.event.id;
+      this.socket.on('connect', () => {
+        this.socket.emit('room',room)
+      });
       this.socket.on('message', message => {
         this.setState({messages: [message, ...this.state.messages]})
       })
-
       axios.get(`/api/events/${this.props.event.id}/chat`)
           .then((messages) => {
             this.setState({messages: [ ...messages.data]})
           })
       
+  }
+
+  componentWillUnmount() {
+   this.socket.disconnect();     
   }
 
   handleChange(event){
