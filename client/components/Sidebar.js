@@ -57,23 +57,25 @@ export class Sidebar extends React.Component {
      *         .indexOf(this.props.currentEvent.id)
      */
     if (this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1) {
-      let hideBtnTemp = [
-        <Button key="hide" className="sidebar-button"
-          onClick={this.onClickHide.bind(this)}
-          bsStyle="primary" bsSize="large" block>
-          Hide
-        </Button>
+      items = [...items,
+        [
+          <Button key="hide" className="sidebar-button"
+            onClick={this.onClickHide.bind(this)}
+            bsStyle="primary" bsSize="large" block>
+            Hide
+          </Button>
+        ]
       ]
-      items = [...hideBtnTemp]
     } else {
-      let unhideBtnTemp = [
-        <Button key="unhide" className="sidebar-button"
-          onClick={this.onClickUnhide.bind(this)}
-          bsStyle="primary" bsSize="large" block>
-          Unhide
-        </Button>
+      items = [...items,
+        [
+          <Button key="unhide" className="sidebar-button"
+            onClick={this.onClickUnhide.bind(this)}
+            bsStyle="primary" bsSize="large" block>
+            Unhide
+          </Button>
+        ]
       ]
-      items = [...unhideBtnTemp]
     }
 
     items = [...items,
