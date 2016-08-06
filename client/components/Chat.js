@@ -8,7 +8,7 @@ import axios from 'axios'
 export class ChatWindow extends React.Component {
   constructor(props){
     super(props)
-    this.state = {messages:[], comment:''}
+    this.state = {messages:[], comment:'', nextReplyTime: Date.now()}
   }
   componentDidMount() {
       this.socket = io('/')
@@ -42,8 +42,13 @@ export class ChatWindow extends React.Component {
         event:this.props.event.id,
         image: this.props.currentUser.image
       }
+      const timeStamp = Date.now();
+      if(message.text.length !==0 && timeStamp > this.state.nextReplyTime){
       this.socket.emit('message', message)
+      this.setState({nextReplyTime: timeStamp+400})
       this.setState({comment:''})
+      }
+      
   }
 
   render(){

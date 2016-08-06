@@ -36,7 +36,7 @@ export class List extends React.Component {
         ? <div className="event-info">
             <h4>{event.location}</h4>
             <p>{event.description}</p>
-            {this.friendsGoing(this.props.currentUser.friendsList,event.guests)} PICTURES
+            {this.friendsGoing(this.props.currentUser.friendsList,event.guests)}
             <Link to={`/${event.id}`}>
               <button className="view-details btn btn-secondary">
                 View Event Details
@@ -53,8 +53,10 @@ export class List extends React.Component {
         return true
       return false
     })
-    return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend) => {
+    return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend,index) => {
+      if(index<5){
       return <img className = 'eventListFriendImage'key = {friend.id} src = {friend.image}/>
+      }
     }
     )}</div>
   }
