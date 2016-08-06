@@ -6,7 +6,9 @@ module.exports = {
   getEventById,
   create,
   update,
-  deleteEvent
+  deleteEvent,
+  addChatMessage,
+  getChatMessages
 };
 
 function getAll() {
@@ -37,4 +39,18 @@ function deleteEvent(id) {
     knex('messages').where('event_id', id).del(),
     knex('events').where({'id': id}).del()
   ]);
+}
+
+function addChatMessage(id,event_id,message) {
+  return knex('messages')
+    .insert({user_id: id, event_id: event_id, text: message})
+    .return();
+}
+
+function getChatMessages(event_id) {
+  return knex('messages')
+    .join('users','messages.user_id','users.id')
+    .where('messages.event_id', event_id)
+    .select()
+    .returning(['users.name','messages.text', 'users.image']);
 }

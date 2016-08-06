@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
+import ChatWindow from './Chat'
+
 import { 
   joinEvent,
   leaveEvent, 
   hideEvent, 
   unhideEvent 
 } from '../actions/actions';
+
 
 export class EventDetails extends Component {
   /**
@@ -117,7 +120,9 @@ export class EventDetails extends Component {
             type="button"
             className="btn btn-danger">Back</button>
         </div>
-      </div>
+        
+    <ChatWindow event = {this.props.currentEvent}/>
+           </div>
     )
   }
 }
