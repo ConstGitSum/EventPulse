@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { shallow, mount } from 'enzyme';
 import { ChatWindow } from '../../../client/components/Chat'
 
-var io = require('socket.io-client');
+//var io = require('socket.io-client');
 var chai = require('chai');
 
 var options ={
@@ -40,10 +40,10 @@ xdescribe('EventDetails Component', () => {
         image: 'http://example.com'
       }
   describe('Chat Window', () => {
-    var socketURL = 'http://localhost:3000'
-    var client1 = io.connect(socketURL, options);
-    it('should send messages to socket.io', () => {
-      client1.emit('message', message)
+    //var socketURL = 'http://localhost:3000'
+    //var client1 = io.connect(socketURL, options);
+    it('should be able to type messages', () => {
+        const input = enzymeWrapper.find('input')
       // const paragraph = enzymeWrapper.find('p');
       // expect(paragraph).to.have.length(5)
       // expect(paragraph.at(0).text()).to.equal('Creator: Alice')

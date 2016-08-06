@@ -42,26 +42,12 @@ app.use('/api', routes)
 app.get('/*', (req, res) => {
   res.sendFile( assetFolder + '/index.html' );
 })
-// io.on('connection', socket => {
-//   console.log('hello')
-//   socket.join('room1')
-//   socket.to('room1').emit('message','hey!')
-// })
-// var room = 'room1'
-// io.in(room).emit('message', 'what is happening people?')
-// io.in('foobar').emit('message','boo!')
 io.on('connection', socket => {
-  //socket.join('room1')
-  var room = "";
   socket.on('room', (theRoom) => {
     socket.join(theRoom)
-    console.log("ROOOM3", io.sockets.adapter.rooms)
-    room = theRoom 
+    //console.log("ROOOM3", io.sockets.adapter.rooms)
   })
-  console.log("socket",socket.rooms)
-  //socket.to('room1').emit('message',{text: 'hello', name: 'ted', image: 'www.asdasd.com'})
   socket.on('message', (body)=> {
-    console.log('body',body)
     io.to('event'+body.event).emit('message',{
       text: body.text,
       name: body.name,
