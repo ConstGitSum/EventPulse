@@ -81,8 +81,8 @@ export class EventDetails extends React.Component {
 
     return (
       <div className="event-details">
-      <Sidebar />
-          <span>Pulse</span>
+        <Sidebar />
+        <h1>Pulse</h1>
         <div>
         {/* check if current user is already a guest
               True : Display Leave button
