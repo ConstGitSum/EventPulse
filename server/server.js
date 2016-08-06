@@ -12,7 +12,14 @@ var app = express();
 var routes = require('./controllers/index');
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
+
+var socketIo = require('socket.io')   //This is the stuff I added up here for socket IO
+var server = http.createServer(app)
+var io = socketIo(server)
+
 require('dotenv').load();
+
+var Event = require('./models/event');
 
 app.use(express.static(assetFolder));
 app.use(webpackDevMiddleware(webpack(webpackConfig), { noInfo: true }));
@@ -35,7 +42,22 @@ app.use('/api', routes)
 app.get('/*', (req, res) => {
   res.sendFile( assetFolder + '/index.html' );
 })
+io.on('connection', socket => {
+  socket.on('room', (theRoom) => {
+    socket.join(theRoom)
+    //console.log("ROOOM3", io.sockets.adapter.rooms)
+  })
+  socket.on('message', (body)=> {
+    io.to('event'+body.event).emit('message',{
+      text: body.text,
+      name: body.name,
+      image: body.image
+    })
 
-app.listen(3000);
+    Event.addChatMessage(body.user_id, body.event, body.text);
+  })
+})
+
+server.listen(3000);
 
 module.exports = app;

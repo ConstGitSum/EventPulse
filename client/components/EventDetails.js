@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
+import ChatWindow from './Chat'
 import Sidebar from './Sidebar';
 import { 
   joinEvent,
@@ -95,8 +96,9 @@ export class EventDetails extends React.Component {
         <div>Attendance: {this.props.currentEvent.guests.length}/{max_guests}</div>
 
         <div>
-          <p>Creator    : {creator ? creator.name : 'No longer in event'}</p>
-          <p>Title      : {this.props.currentEvent.title}</p>
+          <p>Attendance: {this.props.currentEvent.guests.length}/{max_guests}</p>
+          <p>Creator: {creator ? creator.name : 'No longer in event'}</p>
+          <p>Title: {this.props.currentEvent.title}</p>
           <p>Description: {this.props.currentEvent.description}</p>
           <p>Location   : {this.props.currentEvent.location}</p>
           <p>Time       : {this.props.currentEvent.time}</p>
@@ -111,7 +113,9 @@ export class EventDetails extends React.Component {
             Back
           </button>
         </div>
-      </div>
+        
+    <ChatWindow event = {this.props.currentEvent}/>
+           </div>
     )
   }
 }
