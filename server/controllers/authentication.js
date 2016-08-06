@@ -10,6 +10,7 @@ router.get('/loggedIn', function(req, res) {
     const userName = req.user[0].name
     const image = req.user[0].image
     const friendsList = req.user.slice(2)
+    
     res.status(200).send({ id: userId, name: userName, image: image, friendsList: friendsList });
   }
  else{
