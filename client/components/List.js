@@ -12,6 +12,7 @@ import {
   filterList 
 } from '../actions/actions';
 import ListFilter from './ListFilter';
+import ListMap from './ListMap';
 
 export class List extends React.Component {
   componentDidMount() {
@@ -49,27 +50,26 @@ export class List extends React.Component {
   render() {
     return (
       <div className="explore">
+        <ListMap />         
+
+        <ListFilter />
+
         <h1 id="explore">Explore</h1>
-          <ListFilter />
-          <ul className="event-list list-group">
-            {this.props.listFiltered.map((event, index) =>
-              this.renderListItem(event, index))}
-          </ul>
+        <ul className="event-list list-group">
+          {this.props.listFiltered.map((event, index) =>
+            this.renderListItem(event, index))}
+        </ul>
 
         <Link to="/create">
-        <span>
           <button className="create-event pure-button-primary">
             Create
           </button>
-         </span> 
         </Link>
-        <span>
         <button 
           className="logout btn btn-danger" 
           onClick={this.props.userLogOut}> 
           Log Out
         </button>         
-        </span>
       </div>
     )
   }
