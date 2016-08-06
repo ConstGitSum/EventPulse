@@ -1,4 +1,4 @@
-import { CREATE_EVENT, VALIDATE_EVENT_FORM, UPDATE_EVENT_FIELD } from '../actions/actions';
+import { CREATE_EVENT, VALIDATE_EVENT_FORM, UPDATE_EVENT_FIELD, CLEAR_FORM_VALUES } from '../actions/actions';
 
 const defaultState = {
   eventFormData: {},
@@ -120,6 +120,14 @@ export default function(state = defaultState, action) {
         eventFormData: { [action.payload.fieldKey]: action.payload.fieldValue },
         validationErrors: Object.assign({}, state.validationErrors,{ [action.payload.fieldKey]: validateField(action.payload.fieldKey, action.payload.fieldValue) })
       });
+
+     case CLEAR_FORM_VALUES:
+     console.log('3~~', action.payload)
+     	return Object.assign({},{
+     	  eventFormData: {},
+     	  validationErrors: {}
+     	});
+
     default:
       return state;
   }

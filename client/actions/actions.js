@@ -123,6 +123,7 @@ export function leaveEvent(eventId, userId) {
   }
 }
 
+
 export function getHiddenEvents(user_id) {
   const request = axios.get(`/api/events/hide/${user_id}`)
 
