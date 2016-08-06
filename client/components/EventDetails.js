@@ -56,10 +56,24 @@ export class EventDetails extends React.Component {
     };
   }
 
+  generateButton(text, className, onClickFunction) {
+    return (
+      <button
+        onClick={onClickFunction}
+        type="button"
+        className={className}>
+        {text}
+      </button>
+    )
+  }
+
   render() {
     {/* Check to see if the event was created by the current user */}
     const creator = this.props.currentEvent.guests.find(guest => {
       return guest.id === this.props.currentEvent.created_by});
+    const max_guests = this.props.currentEvent.max_guests === null 
+      ? '∞' 
+      : this.props.currentEvent.max_guests
 
     return (
       <div className="event-details">
@@ -71,37 +85,23 @@ export class EventDetails extends React.Component {
               False: Check if event has been hidden*/}
         {this.props.currentEvent.guests.some(guest => 
           guest.id === this.props.currentUser.id)
-        ? <button
-            onClick={this.onClickLeave.bind(this)}
-            type='button'
-            className="btn btn-danger">
-            Leave
-          </button>
+        ? this.generateButton('Leave', 'btn btn-danger', this.onClickLeave.bind(this))
         /* check if current event has been hidden
               True : Display Unhide button
               False: Display Join and Hide buttons */    
-        : this.props.hiddenEvents.indexOf(this.props.currentEvent.id) !== -1
-          ? null
-          : <button
-              onClick={this.onClickJoin.bind(this)}
-              type='button' 
-              className="btn btn-primary">
-              Join
-            </button>
+        : this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1
+          ? this.generateButton('Join', 'btn btn-primary', this.onClickJoin.bind(this))
+          : null
         }      
         </div>
+        <div>Attendance: {this.props.currentEvent.guests.length}/{max_guests}</div>
 
         <div>
-          <span className="details">Details:</span>
-          <span className="attendance">#/##</span>
-        </div>
-
-        <div>
-          <p>Creator: {creator ? creator.name : 'No longer in event'}</p>
-          <p>Title: {this.props.currentEvent.title}</p>
+          <p>Creator    : {creator ? creator.name : 'No longer in event'}</p>
+          <p>Title      : {this.props.currentEvent.title}</p>
           <p>Description: {this.props.currentEvent.description}</p>
-          <p>Location: {this.props.currentEvent.location}</p>
-          <p>Time: {this.props.currentEvent.time}</p>
+          <p>Location   : {this.props.currentEvent.location}</p>
+          <p>Time       : {this.props.currentEvent.time}</p>
         </div>
 
         <div>
