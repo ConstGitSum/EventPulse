@@ -8,7 +8,7 @@ import axios from 'axios'
 export class ChatWindow extends React.Component {
   constructor(props){
     super(props)
-    this.state = {messages:[], comment:'', nextReplyTime: Date.now()}
+    this.state = {messages:[], comment:'', comments: 0, nextReplyTime: Date.now()}
   }
   componentDidMount() {
       this.socket = io('/')
@@ -43,11 +43,27 @@ export class ChatWindow extends React.Component {
         image: this.props.currentUser.image
       }
       const timeStamp = Date.now();
+
+      if(this.state.comments == 10){
+        this.setState({nextReplyTime: timeStamp + 3000})
+        this.setState({messages: [{text:'3 second timeout:  Please stop spamming'},...this.state.messages]})
+        this.setState({comments: 0})
+      }
+
+      if(timeStamp > this.state.nextReplyTime+3000){
+        this.setState({comments: 0})
+      }
+
+      if(timeStamp < this.state.nextReplyTime){
+        this.setState({comments:this.state.comments+1})  
+      }
+      
       if(message.text.length !==0 && timeStamp > this.state.nextReplyTime){
       this.socket.emit('message', message)
       this.setState({nextReplyTime: timeStamp+400})
       this.setState({comment:''})
       }
+      
       
   }
 

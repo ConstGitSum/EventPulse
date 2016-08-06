@@ -48,7 +48,7 @@ io.on('connection', socket => {
     //console.log("ROOOM3", io.sockets.adapter.rooms)
   })
   socket.on('message', (body)=> {
-    io.to('event'+body.event).emit('message',{
+    io.to('event' + body.event).emit('message',{
       text: body.text,
       name: body.name,
       image: body.image
