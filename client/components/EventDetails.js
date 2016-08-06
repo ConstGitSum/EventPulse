@@ -20,7 +20,6 @@ export class EventDetails extends React.Component {
   }
   /**
    * Current user will join the current event
-   * @return {undefined} 
    */
   onClickJoin() {
     this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id)
@@ -30,7 +29,6 @@ export class EventDetails extends React.Component {
 
   /**
    * Current user will leave the current event if they have joined
-   * @return {undefined}
    */
   onClickLeave() {
     this.props.leaveEvent(this.props.currentEvent.id, this.props.currentUser.id)
@@ -39,31 +37,15 @@ export class EventDetails extends React.Component {
   }
 
   /**
-   * Current event will be hidden from the current user
-   * @return {undefined}
-   */
-  onClickHide() {
-    this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id)
-    .then(() => browserHistory.push('/'))
-    .catch(err => console.log('ERROR - onClickHide:', err))
-  }
-
-  /**
-   * Current event will be unhidden for the current user
-   * @return {undefined}
-   */
-  onClickUnhide() {
-    this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
-  }
-
-  /**
    * Return the user to the previous page
-   * @return {undefined} 
    */
   onClickBack() {
     browserHistory.push('/')
   }
 
+  /**
+   * Check state to see if sidebar has been toggled and then invert state
+   */
   showHideSidebar() {
     if (this.state.sidebarToggle) {
       this.setState({ sidebarToggle: false });
@@ -90,25 +72,20 @@ export class EventDetails extends React.Component {
         ? <button
             onClick={this.onClickLeave.bind(this)}
             type='button'
-            className="btn btn-danger">Leave</button>
+            className="btn btn-danger">
+            Leave
+          </button>
         /* check if current event has been hidden
               True : Display Unhide button
               False: Display Join and Hide buttons */    
         : this.props.hiddenEvents.indexOf(this.props.currentEvent.id) !== -1
-          ? <button
-              onClick={this.onClickUnhide.bind(this)}
-              type='button'
-              className='btn btn-primary'>Unhide</button>
-          : <div>
-              <button
-                onClick={this.onClickJoin.bind(this)}
-                type='button' 
-                className="btn btn-primary">Join</button>
-              <button 
-                onClick={this.onClickHide.bind(this)}
-                type="button" 
-                className="btn btn-default">Hide</button>
-            </div>
+          ? null
+          : <button
+              onClick={this.onClickJoin.bind(this)}
+              type='button' 
+              className="btn btn-primary">
+              Join
+            </button>
         }      
         </div>
 
@@ -118,7 +95,7 @@ export class EventDetails extends React.Component {
         </div>
 
         <div>
-          <p>Creator: {creator ? creator.name :  'no longer in event'}</p>
+          <p>Creator: {creator ? creator.name : 'No longer in event'}</p>
           <p>Title: {this.props.currentEvent.title}</p>
           <p>Description: {this.props.currentEvent.description}</p>
           <p>Location: {this.props.currentEvent.location}</p>
@@ -130,7 +107,9 @@ export class EventDetails extends React.Component {
           <button 
             onClick={this.onClickBack.bind(this)}
             type="button"
-            className="btn btn-danger">Back</button>
+            className="btn btn-danger">
+            Back
+          </button>
         </div>
       </div>
     )
