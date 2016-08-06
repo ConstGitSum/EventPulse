@@ -47,18 +47,14 @@ export class List extends React.Component {
     </li>
   }
   friendsGoing(friendsList, guestList){
-    console.log("LIST",friendsList,guestList)
     var friendIds = friendsList.map((friendId => friendId.id))
-    console.log("Ids",friendIds)
     var friendsGoing = guestList.filter((friendGoing) => {
-      console.log('GOING',friendGoing)
       if(friendIds.includes(friendGoing.id))
         return true
       return false
     })
-    console.log("MEEE",friendsGoing)
     return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend) => {
-      return <img key = {friend.id} src = {friend.image}/>
+      return <img className = 'eventListFriendImage'key = {friend.id} src = {friend.image}/>
     }
     )}</div>
   }

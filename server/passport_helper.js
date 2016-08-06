@@ -33,7 +33,7 @@ function newUser(user, profile) {
     .then(() => 
       profile._json.friends.data.length === 0
       // return user info if no friends
-      ? [{ id: userId, group_id: groupId, name:userName, image: image }]
+      ? [{ id: userId, group_id: groupId, name: userName, image: image }]
       // else grab the friends from database
       : Promise.all(profile._json.friends.data
           .map(friend => User.getUserByFacebookId(friend.id))
@@ -41,7 +41,6 @@ function newUser(user, profile) {
         .then(friendArray =>  {
         // take all friends and format them for database entry
         if(friendArray[0][0]) {  //Just in case a user has our app but isn't in our database
-          console.log('FA',friendArray)
           return User.addMemberships(buildMembershipList(friendArray, groupId, 'member'))
          }
         }
