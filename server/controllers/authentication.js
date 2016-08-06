@@ -6,9 +6,11 @@ module.exports = router;
 router.get('/loggedIn', function(req, res) {
   if(req.isAuthenticated()){
     const userId = req.user[0].id;
-    res.status(200).send({ id: userId });
+    const userName = req.user[0].name
+    const image = req.user[0].image
+    res.status(200).send({ id: userId, name: userName, image: image });
   }
-  else{
+ else{
     res.send(false);
   }
 })

@@ -14,12 +14,14 @@ function passport_helper(token, profile) {
 }
 
 function newUser(user, profile) {
-  let userId, groupId;
+  let userId, groupId, userName, image;
   // create the user in the database
   return User.create(buildNewUser(profile))
     // add a new friends group
     .then((user_id) => {
-      userId = user_id[0];
+      userId = user_id[0].id;
+      userName = user_id[0].name;
+      image = user_id[0].image
       return User.addGroup();
     }) 
     // add the user to the new friends group as the owner
@@ -30,7 +32,7 @@ function newUser(user, profile) {
     .then(() => 
       profile._json.friends.data.length === 0
       // return user info if no friends
-      ? [{ id: userId, group_id: groupId }]
+      ? [{ id: userId, group_id: groupId, name: userName, image: image }]
       // else grab the friends from database
       : Promise.all(profile._json.friends.data
           .map(friend => User.getUserByFacebookId(friend.id))
@@ -43,7 +45,7 @@ function newUser(user, profile) {
         }
         )
         // return your info plus new members of friends
-        .then(friends => [{ id: userId, group_id: groupId}].concat(friends))
+        .then(friends => [{ id: userId, group_id: groupId, name: userName, image: image}].concat(friends)) 
     );
 }
 
