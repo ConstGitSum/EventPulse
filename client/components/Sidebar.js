@@ -46,7 +46,7 @@ export class Sidebar extends React.Component {
 
   render() {
     return (
-      <Menu right styles={ styles }>
+      <Menu right>
         {this.getItems()}
       </Menu>
     )
