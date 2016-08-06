@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 
 import { hideEvent, unhideEvent } from '../actions/actions';
 
-let Menu = require('react-burger-menu').slide
+let Menu = require('react-burger-menu').slide;
 
 let styles = {
   bmBurgerButton: {
@@ -46,52 +46,10 @@ let styles = {
 
 
 export class Sidebar extends React.Component {
-  getItems() {
-    let items;
+  onClickGuests() {
+  }
 
-    /**
-     * Check to see if the current event is in hidden event
-     *   True (-1) : Add Hide button to the items array
-     *   False     : Add Unhide button to the items array
-     * @param  {Number} this.props.hiddenEvents
-     *         .indexOf(this.props.currentEvent.id)
-     */
-    if (this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1) {
-      items = [...items,
-        [
-          <Button key="hide" className="sidebar-button"
-            onClick={this.onClickHide.bind(this)}
-            bsStyle="primary" bsSize="large" block>
-            Hide
-          </Button>
-        ]
-      ]
-    } else {
-      items = [...items,
-        [
-          <Button key="unhide" className="sidebar-button"
-            onClick={this.onClickUnhide.bind(this)}
-            bsStyle="primary" bsSize="large" block>
-            Unhide
-          </Button>
-        ]
-      ]
-    }
-
-    items = [...items,
-      [
-        <Button key="edit1" className="sidebar-button"
-          bsStyle="primary" bsSize="large" block>
-          Edit
-        </Button>,
-        <Button key="edit2" className="sidebar-button"
-          bsStyle="primary" bsSize="large" block>
-          Edit
-        </Button>
-      ]
-    ]
-
-    return items
+  onClickEdit() {
   }
 
   onClickHide() {
@@ -100,23 +58,49 @@ export class Sidebar extends React.Component {
       .catch(err => console.log('ERROR - onClickHide:', err))
   }
 
-  /**
-   * Current event will be unhidden for the current user
-   * @return {undefined}
-   */
   onClickUnhide() {
     this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
   }
 
-  render() {
-    const items = this.getItems();
+  getItems() {
+    const items = []; 
 
+    if (this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1) {
+      items.push(generateButton('Hide', this.onClickHide.bind(this)));
+    } else {
+      items.push(generateButton('Unhide', this.onClickUnhide.bind(this)));
+    }
+
+    if(this.props.currentEvent.created_by === this.props.currentUser.id) {
+      items.push(generateButton('Edit', this.onClickEdit.bind(this)))
+    }
+
+    items.push(generateButton('Guests', this.onClickGuests.bind(this)));
+
+    return items;
+  }
+
+  render() {
     return (
       <Menu right styles={ styles }>
-        {items}
+        {this.getItems()}
       </Menu>
     )
   }
+}
+
+function generateButton(text, onClickFunction) {
+  return (
+    <Button 
+      key={text} 
+      className="sidebar-button"
+      bsStyle="primary" 
+      bsSize="large" 
+      block
+      onClick={onClickFunction}>
+      {text}
+    </Button>
+  );
 }
 
 function mapStateToProps(state) {
