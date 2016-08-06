@@ -25,6 +25,7 @@ export class List extends React.Component {
   }
 
   renderListItem(event, index) {
+    console.log('event',event.guests)
     return <li 
       key={index} 
       className="event-item list-group-item" 
@@ -35,6 +36,7 @@ export class List extends React.Component {
         ? <div className="event-info">
             <h4>{event.location}</h4>
             <p>{event.description}</p>
+            {this.friendsGoing(this.props.currentUser.friendsList,event.guests)} PICTURES
             <Link to={`/${event.id}`}>
               <button className="view-details btn btn-secondary">
                 View Event Details
@@ -43,6 +45,22 @@ export class List extends React.Component {
           </div>
         : null}
     </li>
+  }
+  friendsGoing(friendsList, guestList){
+    console.log("LIST",friendsList,guestList)
+    var friendIds = friendsList.map((friendId => friendId.id))
+    console.log("Ids",friendIds)
+    var friendsGoing = guestList.filter((friendGoing) => {
+      console.log('GOING',friendGoing)
+      if(friendIds.includes(friendGoing.id))
+        return true
+      return false
+    })
+    console.log("MEEE",friendsGoing)
+    return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend) => {
+      return <img key = {friend.id} src = {friend.image}/>
+    }
+    )}</div>
   }
 
   render() {
@@ -54,7 +72,6 @@ export class List extends React.Component {
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}
           </ul>
-
         <Link to="/create">
           <button className="create-event btn btn-primary">
             Create

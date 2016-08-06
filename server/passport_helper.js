@@ -26,13 +26,14 @@ function newUser(user, profile) {
     }) 
     // add the user to the new friends group as the owner
     .then((group_id) => {
+      console.log("FRIENDS",profile._json.friends.data)
       groupId = group_id[0];
       return User.addMemberships(buildNewMembership(userId, groupId, 'owner')); 
     })
     .then(() => 
       profile._json.friends.data.length === 0
       // return user info if no friends
-      ? [{ id: userId, group_id: groupId }]
+      ? [{ id: userId, group_id: groupId, name:userName, image: image }]
       // else grab the friends from database
       : Promise.all(profile._json.friends.data
           .map(friend => User.getUserByFacebookId(friend.id))
@@ -40,11 +41,13 @@ function newUser(user, profile) {
         .then(friendArray =>  {
         // take all friends and format them for database entry
         if(friendArray[0][0]) {  //Just in case a user has our app but isn't in our database
+          console.log('FA',friendArray)
           return User.addMemberships(buildMembershipList(friendArray, groupId, 'member'))
          }
         }
         )
         // return your info plus new members of friends
+        .then(memberships => User.getMemberList(groupId))
         .then(friends => [{ id: userId, group_id: groupId, name: userName, image: image}].concat(friends)) 
     );
 }
@@ -81,11 +84,13 @@ function existingUser(user, profile) {
         // Take all the new friends and format them for database entry
         .then(friendArray => {
           if(friendArray[0][0]){ //Just in case a user has our app but isn't in our database
+            console.log('FA2',friendArray)
             return User.addMemberships(buildMembershipList(friendArray, friendsListId, 'member'))
           }
         }
         )
         // new friends added
+        .then(memberships => User.getMemberList(friendsListId))
         .then(memberships => user.concat(memberships)); 
   });
 }
@@ -101,7 +106,7 @@ function buildNewUser(profile) {
 }
 
 // build membership object
-function buildNewMembership(userId, groupId, rank) {
+function buildNewMembership(userId,groupId, rank) {
   return {
     user_id: userId, 
     group_id: groupId, 

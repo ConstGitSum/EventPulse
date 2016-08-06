@@ -12,6 +12,7 @@ export class Home extends Component {
   }
 
   render() {
+    console.log("PROPS",this.props.currentUser)
     return (
       <div>
         {this.props.currentUser 
