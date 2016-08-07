@@ -52,7 +52,7 @@ export class EventDetails extends React.Component {
       this.setState({ sidebarToggle: false });
     } else {
       this.setState({ sidebarToggle: true });
-    };
+    }
   }
 
   generateButton(text, className, onClickFunction) {
@@ -93,6 +93,7 @@ export class EventDetails extends React.Component {
           : null
         }      
         </div>
+
         <div>
           <p>Attendance: {this.props.currentEvent.guests.length}/{max_guests}</p>
           <p>Creator: {creator ? creator.name : 'No longer in event'}</p>
