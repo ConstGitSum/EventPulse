@@ -12,7 +12,6 @@ import {
   filterList 
 } from '../actions/actions';
 import ListFilter from './ListFilter';
-import ListMap from './ListMap';
 
 export class List extends React.Component {
   componentDidMount() {
@@ -23,7 +22,36 @@ export class List extends React.Component {
       'unhidden',
       this.props.currentUser.id,
       this.props.hiddenEvents
-    ));
+    ))
+    .then(() => this.buildMap());
+  }
+
+  buildMap() {
+    var map = L.map('list-map');
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'dark-v9',
+      accessToken: 'pk.eyJ1Ijoia3Rvcm5nIiwiYSI6ImNpcmV3MXJqMzAwNWVnNW5rd3FhcXBjdnEifQ.bqImLTKsAkcFhtMsNSyDIw'
+    }).addTo(map);
+    map.locate({setView: true, maxZoom: 16});
+    map.on('locationfound', this.onLocationFound.bind(map));
+    map.on('locationerror', this.onLocationError.bind(map));
+  }
+
+  onLocationFound(e) {
+    var radius = e.accuracy / 2;
+
+    L.marker(e.latlng)
+      .addTo(this)
+      .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(this);
+  }
+
+  onLocationError(e) {
+    alert(e.message);
   }
 
   renderListItem(event, index) {
@@ -50,7 +78,8 @@ export class List extends React.Component {
   render() {
     return (
       <div className="explore">
-        <ListMap />         
+        <h1>Explore</h1>
+        <div id="list-map"></div>
 
         <ListFilter />
 

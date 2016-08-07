@@ -3,6 +3,10 @@ body {
   margin: 0;
 }
 
-html, body, #root, #list-map {
+html, body, #root, #list-map, .explore {
   height: 100%;
+}
+
+#root > div {
+ height: 100%;
 }
