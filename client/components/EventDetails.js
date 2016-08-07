@@ -93,15 +93,13 @@ export class EventDetails extends React.Component {
           : null
         }      
         </div>
-        <div>Attendance: {this.props.currentEvent.guests.length}/{max_guests}</div>
-
         <div>
           <p>Attendance: {this.props.currentEvent.guests.length}/{max_guests}</p>
           <p>Creator: {creator ? creator.name : 'No longer in event'}</p>
           <p>Title: {this.props.currentEvent.title}</p>
           <p>Description: {this.props.currentEvent.description}</p>
-          <p>Location   : {this.props.currentEvent.location}</p>
-          <p>Time       : {this.props.currentEvent.time}</p>
+          <p>Location: {this.props.currentEvent.location}</p>
+          <p>Time: {this.props.currentEvent.time}</p>
         </div>
 
         <div>
