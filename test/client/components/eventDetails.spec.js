@@ -93,13 +93,13 @@ describe('EventDetails Component', () => {
     expect(button.at(0).text()).to.equal('Join')
   })
 
-  it('should show that the creator is in the event', () => {
+  it('should display that the creator is in the event', () => {
     const paragraph = enzymeWrapper.find('p');
     expect(paragraph).to.have.length(6);
     expect(paragraph.at(1).text()).to.equal('Creator: Alice')
   })
 
-  it('should show that the creator is no longer in the event', () => {
+  it('should display that the creator is no longer in the event', () => {
     const paragraph = enzymeWrapper3.find('p');
     expect(paragraph).to.have.length(6);
     expect(paragraph.at(1).text()).to.equal('Creator: No longer in event')
@@ -137,7 +137,7 @@ describe('EventDetails Component', () => {
   })
 
   it('should display a Chat and Back buttons when the user has not joined the event', () => {
-    const buttons = enzymeWrapper.find('button');
+    const buttons = enzymeWrapper3.find('button');
     expect(buttons).to.have.length(3);
     expect(buttons.at(1).text()).to.equal('Chat');
     expect(buttons.at(2).text()).to.equal('Back');
