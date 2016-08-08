@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { CREATE_EVENT, VALIDATE_EVENT_FORM, UPDATE_EVENT_FIELD, CLEAR_FORM_VALUES, UPDATE_TIME } from '../actions/actions';
 
+const EVENT_RANGE_LIMIT_IN_MILLIS = 12 * 60 * 60 * 1000;
+const ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
+
 function getDefaultState() {
-  const d = new Date();
-  let currHour = d.getHours();
-  let currMinute = d.getMinutes();
-  //console.log('currHOUr', currHour)
+  const today = new Date();
+  let currHour = today.getHours();
+  let currMinute = today.getMinutes();
+  console.log('currHOUr', today,  currHour)
   return {
     eventFormData: {
       title: '',
@@ -19,26 +22,56 @@ function getDefaultState() {
       privacy: 'public',
       group_visibility: 1,
       max_guests: 0,
-      tomorrow:false
+      is_tomorrow: false
     },
     validationErrors: {}
   }
 }
 
 function parseTime(hour, minute, ampm){
-  let d = new Date();
-  let year = d.getFullYear();
+  const d = new Date();
+  const year = d.getFullYear();
   let month = d.getMonth() + 1;
   let day = d.getDate();
-  let currHour = d.getHours();
-  let currMinute = d.getMinutes();
+  
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
-  // event can't be more than 12 hours from now
-  // if(currHour === hour && currMinute === minute)
-  // add 1 day
-  if(currHour > hour) { day++; moveToTomorrow() };
+
   return `${year}-${month}-${day}T${Number(hour) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
+}
+
+function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
+  const currTime = new Date();
+  const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
+  console.log('isTimeWithinRange', currTime, eventTime);
+  return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS; 
+}
+
+function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
+  const currTime = new Date();
+  const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
+  console.log('isTimeInTheFuture', currTime.getTime() < eventTime.getTime());
+  return eventTime.getTime() > currTime.getTime();
+}
+
+function getEventTime(hour, minute, ampm, is_tomorrow) {
+  const d = new Date();
+  d.setHours(get24Hour(hour, ampm));
+  console.log('minute', minute);
+  d.setMinutes(minute);
+  console.log('is_tomorrow', typeof is_tomorrow, is_tomorrow);
+  if (is_tomorrow) {
+    return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
+  }
+  return d;
+}
+
+function get24Hour(hour, ampm) {
+  if (ampm === 'pm') {
+    return hour + 12;
+  } else {
+    return hour;
+  }
 }
 
 function parseDuration(hour, minute){
@@ -50,10 +83,6 @@ function parseDuration(hour, minute){
     minute = 0;
   }
   return (hour * 60 + minute) * 60;
-}
-
-function moveToTomorrow(){
-
 }
 
 function validateTitle(title) {
@@ -127,6 +156,19 @@ function validateField(fieldKey, fieldValue) {
   }
 }
 
+function validateTimeRange(validationErrors, formData) {
+  console.log('isfuture', isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow));
+  if (!isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
+    console.log('future');
+    validationErrors._time = 'The event has to be in the future'
+  } else if (!isTimeWithinRange(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
+    console.log('out of range');
+    validationErrors._time = 'The event has to be in less than 12 hours';
+  } else {
+    delete validationErrors._time;
+  }
+}
+
 function validateForm(validationErrors, formData) {
   for (let fieldKey in formData) {
     const errorMessage = validateField(fieldKey, formData[fieldKey]);
@@ -134,6 +176,8 @@ function validateForm(validationErrors, formData) {
       validationErrors[fieldKey] = errorMessage;
     }
   }
+
+  validateTimeRange(validationErrors, formData);
 
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
@@ -186,6 +230,9 @@ export default function(state = getDefaultState(), action) {
       const validationErrors = Object.assign({}, state.validationErrors);
       const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
       console.log('validationErrors ',validationErrors, ' fieldError ',fieldError)     
+      if (['is_tomorrow', 'hour', 'minute', 'ampm'].includes(action.payload.fieldKey)) {
+        validateTimeRange(validationErrors, state.eventFormData);
+      }
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
       } else {
