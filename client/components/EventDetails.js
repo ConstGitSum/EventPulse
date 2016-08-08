@@ -81,7 +81,6 @@ export class EventDetails extends React.Component {
     const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1
 
     if (isUserInEvent) {
-      console.log("leave")
       return (
         this.generateButtons(
         'Leave',
@@ -91,7 +90,6 @@ export class EventDetails extends React.Component {
     }
 
     if (!isUserInEvent && !isEventHidden) {
-      console.log("join")
       return (
         this.generateButtons(
           'Join',
