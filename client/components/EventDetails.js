@@ -131,11 +131,11 @@ export class EventDetails extends React.Component {
 
           <div className="row">
             <div className="col-md-4 col-md-offset-4">
-              <p><strong>Attendance</strong> :{currentAttending} / {max_guests}</p>
-              <p><strong>Creator</strong> : {creator ? creator.name :  'no longer in event'}</p>
-              <p><strong>Description</strong> : {this.props.currentEvent.description}</p>
-              <p><strong>Location</strong> : {this.props.currentEvent.location}</p>
-              <p><strong>Time</strong> : {this.props.currentEvent.time.substring(11, 16)} {this.props.currentEvent.time.substring(0, 10)}</p>
+              <p><strong>Attendance</strong>: {currentAttending}/{max_guests}</p>
+              <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
+              <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
+              <p><strong>Location</strong>: {this.props.currentEvent.location}</p>
+              <p><strong>Time</strong>: {this.props.currentEvent.time.substring(11, 16)} {this.props.currentEvent.time.substring(0, 10)}</p>
             </div>
           </div>
 
