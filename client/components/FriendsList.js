@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDom from 'react-dom'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import axios from 'axios'
 
 export default class FriendsList extends React.Component {
   
@@ -11,7 +12,7 @@ export default class FriendsList extends React.Component {
         invitedFriends : []
       }
   }
-  friendClick(event){
+  friendClick(event) {
     console.log(event.target.className)
     if(event.target.className === 'friend'){
       this.setState({invitedFriends:[event.target.value, ...this.state.invitedFriends]})
@@ -24,6 +25,16 @@ export default class FriendsList extends React.Component {
     console.log(this.state.invitedFriends)
   }
   
+  submitInvite(event) {
+    event.preventDefault();
+    const url = `/api/events/invite`;
+    const body = { user_id: this.props.currentUser.id, invite_ids: this.state.invitedFriends, event_id: this.props.currentEvent.id };
+      console.log('body',body)
+    axios.post(url,body).then(answer => {
+      console.log("yea", answer)
+    })
+  }
+
   render(){
     console.log("PROPS",this.props.currentEvent.title)
     return(
@@ -33,7 +44,7 @@ export default class FriendsList extends React.Component {
         return <li className ={this.state.invitedFriends.includes(friend.id)?"friend-accept":"friend"} key = {friend.id} value = {friend.id} onClick = {this.friendClick.bind(this)}><img src = {friend.image} className = "eventListFriendImage" /> {friend.name}</li>
       })}
       </ul>
-      
+      <button onClick = {this.submitInvite.bind(this)}> Invite Friends </button>
       </div>
       )
   }

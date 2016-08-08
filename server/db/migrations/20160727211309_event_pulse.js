@@ -50,6 +50,12 @@ exports.up = function(knex, Promise) {
       table.string('text').notNullable();
       table.timestamps();
     }),
+    knex.schema.createTable('invites', function(table) {
+      table.increments();
+      table.integer('user_id').notNullable().references('id').inTable('users');
+      table.integer('invitee_id').notNullable().references('id').inTable('users');
+      table.integer('event_id').notNullable().references('id').inTable('events');
+    })
   ]);
 };
 
@@ -57,6 +63,7 @@ exports.down = function(knex, Promise) {
     return knex.schema.dropTableIfExists('guests')
       .dropTableIfExists('hidden_events')
       .dropTableIfExists('messages')
+      .dropTableIfExists('invites')
       .dropTableIfExists('events')
       .dropTableIfExists('memberships')
       .dropTableIfExists('groups')

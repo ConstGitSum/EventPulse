@@ -39,7 +39,7 @@ export class ChatWindow extends React.Component {
         text: this.state.comment,
         name: this.props.currentUser.name, 
         user_id: this.props.currentUser.id,
-        event:this.props.event.id,
+        event: this.props.event.id,
         image: this.props.currentUser.image
       }
       const timeStamp = Date.now();
@@ -69,15 +69,16 @@ export class ChatWindow extends React.Component {
 
   render(){
     const messages = this.state.messages.map((message, index) => {
-      return <li key = {index}><img src = {message.image} /><b>{message.name}</b> {message.text}</li>
+      return <li key = {index}><img src = {message.image} className = 'chatImage'/><b>{message.name}</b> {message.text}</li>
     })
     return(
       <div>
-      <h1> Hello </h1>
       <form onSubmit = {this.handleSubmit.bind(this)}>
       <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
       </form>
+      <ul>
       {messages}
+      </ul>
       </div>
       )
   }
