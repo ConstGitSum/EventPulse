@@ -142,6 +142,7 @@ export function updateTime() {
 }
 
 export function createEvent(formData, currentUser) {
+  console.log('currentUser~~~',currentUser)
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
