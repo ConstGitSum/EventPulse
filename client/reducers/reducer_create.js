@@ -134,8 +134,7 @@ function validateField(fieldKey, fieldValue) {
   }
 }
 
-function validateTimeRange(validationErrors, formData) {
-  //console.log('isfuture', isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow));
+function validateTimeRange(validationErrors, formData) {  //console.log('isfuture', isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow));
   if (!isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
     //console.log('future');
     validationErrors._time = 'The event has to be in the future'
@@ -169,8 +168,6 @@ function validateForm(validationErrors, formData) {
 }
 
 export default function(state = getDefaultState(), action) {
-  //console.log('in reducer: the action is: ', action )
-  console.log('in reducer: the action type is: ', action.type )
   switch (action.type) {
     case VALIDATE_EVENT_FORM:
       // validateForm(Object.assign({}, state.validationErrors), state.eventFormData);

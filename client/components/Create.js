@@ -9,8 +9,6 @@ export class Create extends Component {
   onSubmitRedux(event) {
     event.preventDefault();
     this.props.validateEventForm(this.props.eventFormData);
-    console.log(this.props.eventFormData);
-    console.log(this.props.validationErrors);
 
     if (Object.keys(this.props.validationErrors).length === 0) {
       this.props.createEvent(this.props.eventFormData, this.props.currentUser)
@@ -26,7 +24,6 @@ export class Create extends Component {
   }
 
   onFieldChangeRedux(event) {
-    console.log(`onfieldchange: ${event.target.name} : ${event.target.value}`)
     this.props.updateEventField(event.target.name, event.target.value);
   }
 
@@ -251,6 +248,15 @@ export class Create extends Component {
               onClick={this.onClearValues.bind(this)}> 
               Clear Values 
             </button>
+            <Link to='/'>
+              <button 
+                type="button" 
+                className='btn btn-danger' 
+                role="button"
+                onClick={this.onClearValues.bind(this)}> 
+                Back
+              </button>
+            </Link>
           </div>
         </form>
         {validationErrors._form ? <div className="text-danger"> {validationErrors._form} </div> : null}
