@@ -83,14 +83,14 @@ describe('EventDetails Component', () => {
 
   it('should display leave if user has joined', () => {
     const button = enzymeWrapper.find('button')
-    expect(button).to.have.length(3)
-    expect(button.at(1).text()).to.equal('Leave')
+    expect(button).to.have.length(2)
+    expect(button.at(0).text()).to.equal('Leave')
   })
 
   it('should display join if user has not joined', () => {
     const button = enzymeWrapper2.find('button')
-    expect(button).to.have.length(3)
-    expect(button.at(1).text()).to.equal('Join')
+    expect(button).to.have.length(2)
+    expect(button.at(0).text()).to.equal('Join')
   })
 
   it('should display that the creator is in the event', () => {
@@ -126,20 +126,23 @@ describe('EventDetails Component', () => {
   it('should display the time of the event', () => {
     const paragraph = enzymeWrapper.find('p');
     expect(paragraph).to.have.length(5);
-    expect(paragraph.at(4).text()).to.equal('Time: 08:00 2016-08-30')
+    expect(paragraph.at(4).text()).to.equal('Time: Tuesday, 8:00 am')
   })
 
-  it('should display a Chat and Back buttons when the user has joined the event', () => {
+  it('should display a Chat button when the user has joined the event', () => {
     const buttons = enzymeWrapper.find('button');
-    expect(buttons).to.have.length(3);
-    expect(buttons.at(2).text()).to.equal('Chat');
-    expect(buttons.at(0).text()).to.equal('Back');
+    expect(buttons).to.have.length(2);
+    expect(buttons.at(1).text()).to.equal('Chat');
   })
 
-  it('should display a Chat and Back buttons when the user has not joined the event', () => {
+  it('should display a Chat buttons when the user has not joined the event', () => {
     const buttons = enzymeWrapper3.find('button');
-    expect(buttons).to.have.length(3);
-    expect(buttons.at(2).text()).to.equal('Chat');
-    expect(buttons.at(0).text()).to.equal('Back');
+    expect(buttons).to.have.length(2);
+    expect(buttons.at(1).text()).to.equal('Chat');
+  })
+
+  it('should display a back button', () =>{
+    const icon = enzymeWrapper.find('i')
+    expect(icon).to.have.length(1)
   })
 })
