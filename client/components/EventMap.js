@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setCurrentEvent } from '../actions/actions';
+import markers from '../utils/markers';
 
 export class EventMap extends React.Component {
   componentDidMount() {
@@ -10,9 +11,14 @@ export class EventMap extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log(markers)
     console.log(this.props.listFiltered)
     this.props.listFiltered.forEach(e => {
-      L.marker([e.latitude, e.longitude]).addTo(this.map);
+      L.marker(
+        [e.latitude, e.longitude], 
+        { icon: markers.purpleCoffeeMarker }
+      )
+      .addTo(this.map);
     });
   }
 
