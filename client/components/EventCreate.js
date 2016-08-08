@@ -3,47 +3,12 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues } from '../actions/actions';
+import { createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime } from '../actions/actions';
 
 export class EventCreate extends Component {
 
   constructor(props) {
     super(props);
-  }
-
-
-  onDurationHourChange(event) {
-    this.setState({duration_hour: event.target.value})
-  }
-
-  onDurationMinuteChange(event) {
-    this.setState({duration_minute: event.target.value})
-  }
-
-  onPrivacyChange(event) {
-    this.setState({privacy:event.target.value})
-  }
-
-  onVisibilityChange(event) {
-    this.setState({group_visibility: event.target.value})
-  }
-
-
-
-  parseTime(callback){
-    console.log('4~~~', this.state.hour, " ", this.state.minute, " ", this.state.ampm)
-
-    const d = new Date();
-    let year = d.getFullYear();
-    let month = d.getMonth() + 1;
-    let day = d.getDate();
-    if(month < 10) { month =  "0" + month}
-    if(day < 10) { day = '0' + day}
-
-    const timeString = `${year}-${month}-${day}T${Number(this.state.hour) + ((this.state.ampm === 'pm') ? 12 : 0)}:${this.state.minute}:00.000`;
-    this.setState({time: timeString}, () => {
-      callback();
-    });
   }
 
   setCurrentTime() {
@@ -52,29 +17,24 @@ export class EventCreate extends Component {
     const minute =  d.getMinutes();
     this.setState({hour: hour.toString()});
     this.setState({minute: minute.toString()})
-    console.log('hour:', hour, ' minute: ',minute)
-    console.log('state: ', this.state)
-  }
-
-  validate(event) {
-    
-  }
-
-
-  isAllValid(){
-    if (this.state.error_title === "",
-        this.state.error_description === "",
-        this.state.error_location === "",
-        this.state.error_time === "",
-        this.state.error_duration){
-      return true;
-    }
+    //console.log('hour:', hour, ' minute: ',minute)
+    //console.log('state: ', this.state)
   }
 
   onSubmitRedux(event) {
     event.preventDefault();
-    console.log('3~~~~',this.props.eventFormData)
+    //console.log('3~~~~',this.props.eventFormData)
     this.props.validateEventForm(this.props.eventFormData);
+    const self = this;
+    this.props.createEvent(this.props.currentUser, (resp) => {
+      //console.log('res.error~~',resp.error)
+      if (resp.error) {
+        self.setState({error_location: 'Location invalid'});
+        console.log('error!!!')
+        throw new Error('Unable to create event');
+      }; 
+      browserHistory.push(`/${self.props.newEventId}`);
+    });
   }
 
   onFieldChangeRedux(event) {
@@ -83,28 +43,28 @@ export class EventCreate extends Component {
   }
 
   // action creator 
-  onSubmit(event) {
-    const self = this;
-    event.preventDefault();
-    this.parseTime(() => {      
-      this.isAllValid() ? 
-        this.props.createEvent(this.state)
-          .then(res => {
-            console.log('res.error~~',res.error)
-            if (res.error) {
-              self.setState({error_location: 'Location invalid'});
-              console.log('error!!!',self.state.location)
-              throw new Error('Unable to create event');
-            }; 
-            return this.props.setCurrentEvent(this.props.newEvent);
-          })
-          .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
-          .catch(err => {
-            // clear form and display error?
-            console.log(err);
-          }): null;
-    });
-  }
+  // onSubmit(event) {
+  //   const self = this;
+  //   event.preventDefault();
+  //   this.parseTime(() => {      
+  //     this.isAllValid() ? 
+  //       this.props.createEvent(this.state)
+  //         .then(res => {
+  //           console.log('res.error~~',res.error)
+  //           if (res.error) {
+  //             self.setState({error_location: 'Location invalid'});
+  //             console.log('error!!!',self.state.location)
+  //             throw new Error('Unable to create event');
+  //           }; 
+  //           return this.props.setCurrentEvent(this.props.newEvent);
+  //         })
+  //         .then(() => { browserHistory.push(`/${this.props.newEvent.id}`) })
+  //         .catch(err => {
+  //           // clear form and display error?
+  //           console.log(err);
+  //         }): null;
+  //   });
+  // }
 
   //clear value action creator
   onClearValues(event) {
@@ -113,19 +73,11 @@ export class EventCreate extends Component {
     this.props.clearFormValues();
   }
 
-  clearAllErrors() {
-    this.setState({
-      error_title: "",
-      error_description: "",
-      error_location: "",
-      error_time: true,
-      error_duration: true
-    })
-  }
-
   render() {
 
     const { validationErrors, eventFormData } = this.props;
+    //console.log('rendering', eventFormData);
+    //console.log('errors', validationErrors);
     return(
       <div className="container">
           <br/>
@@ -177,32 +129,24 @@ export class EventCreate extends Component {
                   value={eventFormData.hour}
                   onBlur={this.onFieldChangeRedux.bind(this)}
                   onChange={this.onFieldChangeRedux.bind(this)}>
-                  <option value="">  </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                    return (
+                      <option key={h} value={h}>{h}</option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-xs-2">
                 <select name="minute" 
                   className="form-control"   
-                  value={eventFormData.minute}
+                  value={10 * Math.ceil(eventFormData.minute/10)}
                   onBlur={this.onFieldChangeRedux.bind(this)}
                   onChange={this.onFieldChangeRedux.bind(this)}>
-                  <option value=""> </option>
-                  <option value="00">00</option>
-                  <option value="15">15</option>
-                  <option value="30">30</option>
-                  <option value="45">45</option>
+                  {['00', '10', '20', '30', '40', '50'].map((minute) => {
+                    return (
+                      <option key={minute} value={minute}>{minute}</option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-xs-2">
@@ -211,7 +155,6 @@ export class EventCreate extends Component {
                   value={eventFormData.ampm}
                   onBlur={this.onFieldChangeRedux.bind(this)}
                   onChange={this.onFieldChangeRedux.bind(this)}>
-                  <option value=""></option>
                   <option value="am">am</option>
                   <option value="pm">pm</option>
                 </select>
@@ -230,42 +173,42 @@ export class EventCreate extends Component {
                   <span> Event happening now? </span>
                
               </div>*/}
-        
-              {validationErrors.hour ? <div className="text-danger"> {validationErrors.hour} </div> : null}
-              {validationErrors.minute ? <div className="text-danger"> {validationErrors.minute} </div> : null}
-              {validationErrors.ampm ? <div className="text-danger"> {validationErrors.ampm} </div> : null}
+              <div className="row">
+                <div className="col-xs-4"></div>
+                <div className="col-xs-8"> 
+                  {validationErrors.hour ? <div className="text-danger"> {validationErrors.hour} </div> : null}
+                  {validationErrors.minute ? <div className="text-danger"> {validationErrors.minute} </div> : null}
+                  {validationErrors.ampm ? <div className="text-danger"> {validationErrors.ampm} </div> : null}
+                </div>
+              </div>
             </div>
 
             <div className="form-group row">
               <label className="col-xs-4">Duration</label>
               <div className="col-xs-2">
-                <select name="hour"  
+                <select name="duration_hour"  
                   className="form-control"               
-                  value={eventFormData.duration_hour} 
+                  value={eventFormData.duration_hour}
+                  onBlur={this.onFieldChangeRedux.bind(this)}
                   onChange={this.onFieldChangeRedux.bind(this)}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                </select>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                    return (
+                      <option key={h} value={h}>{h}</option>
+                    );
+                  })}
+                </select>                
               </div>
               <div className="col-xs-2">
-                <select name="minute" 
+                <select name="duration_minute" 
                   className="form-control"   
-                  value={eventFormData.duration_minute} 
+                  value={10 * Math.ceil(eventFormData.duration_minute/10)}
+                  onBlur={this.onFieldChangeRedux.bind(this)}
                   onChange={this.onFieldChangeRedux.bind(this)}>
-                  <option value="00">00</option>
-                  <option value="15">15</option>
-                  <option value="30">30</option>
-                  <option value="45">45</option>
+                  {['00', '10', '20', '30', '40', '50'].map((minute) => {
+                    return (
+                      <option key={minute} value={minute}>{minute}</option>
+                    );
+                  })}
                 </select>
               </div>
             </div>
@@ -289,8 +232,8 @@ export class EventCreate extends Component {
                     name="privacy" 
                     type="radio" 
                     value="false" 
-                    checked={this.state.privacy === "false"} 
-                    onChange={this.onPrivacyChange.bind(this)}/> 
+                    checked={!eventFormData.privacy} 
+                    onChange={this.onFieldChangeRedux.bind(this)}/> 
                   <span>public</span>
                 </label>
                 <label className="col-xs-2">
@@ -299,8 +242,8 @@ export class EventCreate extends Component {
                     name="privacy" 
                     type="radio" 
                     value="true" 
-                    checked={this.state.privacy === "true"} 
-                    onChange={this.onPrivacyChange.bind(this)}/> 
+                    checked={eventFormData.privacy} 
+                    onChange={this.onFieldChangeRedux.bind(this)}/> 
                     <span>private</span>
                 </label>
               </div>
@@ -314,8 +257,8 @@ export class EventCreate extends Component {
                     name="group_visibility" 
                     type="radio" 
                     value="1" 
-                    checked={this.state.group_visibility === "1"} 
-                    onChange={this.onVisibilityChange.bind(this)}/> 
+                    checked={eventFormData.group_visibility} 
+                    onChange={this.onFieldChangeRedux.bind(this)}/> 
                     <span>group1</span>
                   </label>
               </div>
@@ -354,7 +297,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues}, dispatch)
+    createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventCreate);
