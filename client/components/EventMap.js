@@ -7,6 +7,7 @@ import markers from '../utils/markers';
 
 export class EventMap extends React.Component {
   componentDidMount() {
+    console.log(process.env)
     this._buildMap();
   }
 
@@ -16,7 +17,7 @@ export class EventMap extends React.Component {
     this.props.listFiltered.forEach(e => {
       L.marker(
         [e.latitude, e.longitude], 
-        { icon: markers.purpleCoffeeMarker }
+        { icon: markers.entertainment }
       )
       .addTo(this.map);
     });
