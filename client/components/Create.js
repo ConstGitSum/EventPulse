@@ -6,26 +6,23 @@ import { bindActionCreators } from 'redux';
 import { createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime } from '../actions/actions';
 
 export class Create extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   onSubmitRedux(event) {
     event.preventDefault();
     this.props.validateEventForm(this.props.eventFormData);
-    const self = this;
-    console.log('after validating form in create.js')
-    console.log('this.props.currentUser:' , this.props.currentUser)
+    console.log(this.props.eventFormData);
+    console.log(this.props.validationErrors);
 
-    this.props.createEvent(this.props.currentUser, (resp) => {
-      if (resp.error) {
-        self.setState({error_location: 'Location invalid'});
-        console.log('error!!!')
-        throw new Error('Unable to create event');
-      }; 
-      browserHistory.push(`/${self.props.newEventId}`);
-    });
+    if (Object.keys(this.props.validationErrors).length === 0) {
+      this.props.createEvent(this.props.eventFormData, this.props.currentUser)
+      .then(res => {
+        if (res.error) throw new Error('Unable to create event');
+        this.props.clearFormValues();
+        browserHistory.push(`/${this.props.currentEvent.id}`);
+      })
+      .catch(err => {
+        console.log(err)
+      });
+    }
   }
 
   onFieldChangeRedux(event) {
@@ -38,8 +35,8 @@ export class Create extends Component {
   }
 
   render() {
-
     const { validationErrors, eventFormData } = this.props;
+
     return(
       <div className="container">
         <br/>
@@ -264,7 +261,7 @@ export class Create extends Component {
 
 function mapStateToProps(state) {
   return {
-    newEvent: state.create,
+    currentEvent: state.currentEvent,
     currentUser: state.currentUser,
     validationErrors: state.create.validationErrors,
     eventFormData: state.create.eventFormData

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { parseTime, parseDuration } from '../utils/form';
+
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const GET_EVENTS = 'GET_EVENTS';
 export const FILTER_EVENTS = 'FILTER_EVENTS';
@@ -139,16 +141,26 @@ export function updateTime() {
   }
 }
 
-export function createEvent(currentUser) {
-  console.log('444444currentUser: ', currentUser)
+export function createEvent(formData, currentUser) {
+  const request = axios.post('/api/events', {
+    title: formData.title,
+    description: formData.description,
+    created_by: currentUser.id,
+    location: formData.location,
+    time: parseTime(formData.hour, formData.minute, formData.ampm),
+    duration: parseDuration(formData.duration_hour,formData.duration_minute),
+    max_guests: formData.max_guests || 999999999,
+    privacy: formData.privacy || false,
+    group_visibility: formData.group_visibility || null
+  })
+
   return {
     type: CREATE_EVENT,
-    payload: currentUser
+    payload: request
   }
 }
 
 export function validateEventForm(formData) {
-  //console.log('validateEventForm in actions', formData);
 
   return {
     type: VALIDATE_EVENT_FORM,
@@ -157,7 +169,6 @@ export function validateEventForm(formData) {
 }
 
 export function updateEventField(fieldKey, fieldValue) {
-  //console.log('updateEventField in actions', fieldKey, ' ', fieldValue);
   return {
     type: UPDATE_EVENT_FIELD,
     payload: { fieldKey, fieldValue }

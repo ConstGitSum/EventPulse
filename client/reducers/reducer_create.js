@@ -14,9 +14,9 @@ function getDefaultState() {
       title: '',
       description: '',
       location: '',
-      hour: currHour > 12? currHour - 12: currHour,
+      hour: currHour > 12 ? currHour - 12: currHour,
       minute: currMinute,
-      ampm: currHour > 12? 'pm': 'am',
+      ampm: currHour > 12 ? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
       privacy: 'false',
@@ -28,17 +28,6 @@ function getDefaultState() {
   }
 }
 
-function parseTime(hour, minute, ampm){
-  const d = new Date();
-  const year = d.getFullYear();
-  let month = d.getMonth() + 1;
-  let day = d.getDate();
-  
-  if(month < 10) { month =  "0" + month}
-  if(day < 10) { day = '0' + day}
-
-  return `${year}-${month}-${day}T${Number(hour) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
-}
 
 function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
@@ -72,17 +61,6 @@ function get24Hour(hour, ampm) {
   } else {
     return hour;
   }
-}
-
-function parseDuration(hour, minute){
-  if(!hour && !minute) {
-    return 9999999;
-  } else if (!hour) {
-    hour = 0
-  } else if (!minute) {
-    minute = 0;
-  }
-  return (hour * 60 + minute) * 60;
 }
 
 function validateTitle(title) {
@@ -190,42 +168,12 @@ function validateForm(validationErrors, formData) {
   return validationErrors;
 }
 
-function createEvent(formData, currentUser, callback) {
-  console.log('formData:',formData,' currentUser:', currentUser, ' callback: ', callback);
-
-  const request = axios.post('/api/events', {
-    title: formData.title,
-    description: formData.description,
-    created_by: currentUser.id,
-    location: formData.location,
-    time: parseTime(formData.hour, formData.minute, formData.ampm),
-    duration: parseDuration(formData.duration_hour,formData.duration_minute),
-    max_guests: formData.max_guests || 999999999,
-    privacy: formData.privacy || false,
-    group_visibility: formData.group_visibility || null
-  })
-  .then(function(resp) {
-    callback(resp);
-  });
-}
-
 export default function(state = getDefaultState(), action) {
   //console.log('in reducer: the action is: ', action )
   console.log('in reducer: the action type is: ', action.type )
   switch (action.type) {
-
-    case CREATE_EVENT:
-    console.log('in case create_event now~~~' )
-      if (Object.keys(state.validationErrors).length > 0) {
-        return Object.assign({}, state);
-      }
-      //change 
-      createEvent(state.eventFormData, action.payload, function(resp) {
-        return Object.assign({}, state);
-      });
-
     case VALIDATE_EVENT_FORM:
-      validateForm(Object.assign({}, state.validationErrors), state.eventFormData);
+      // validateForm(Object.assign({}, state.validationErrors), state.eventFormData);
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, action.payload.formData),
         validationErrors: validateForm(Object.assign({}, state.validationErrors), state.eventFormData)
