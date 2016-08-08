@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import io from 'socket.io-client'
 
 import { 
   userLogOut, 
@@ -22,6 +23,13 @@ export class List extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents
     ));
+    this.socket = io('/')
+    this.socket.on('connect', () => {
+        console.log("connected!")
+      });
+    this.socket.on('invite', invite => {
+        
+      })
   }
 
   renderListItem(event, index) {
@@ -66,6 +74,7 @@ export class List extends React.Component {
       <div className="explore">
         <h1>Explore</h1>
           <ListFilter />
+          <button>pending invites (1)</button>
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}

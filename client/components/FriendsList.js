@@ -3,6 +3,7 @@ import ReactDom from 'react-dom'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios'
+import { browserHistory } from 'react-router';
 
 export default class FriendsList extends React.Component {
   
@@ -35,10 +36,14 @@ export default class FriendsList extends React.Component {
     })
   }
 
+  onClickBack() {
+    browserHistory.push(`/${this.props.currentEvent.id}`)
+  }
+
   render(){
-    console.log("PROPS",this.props.currentEvent.title)
     return(
       <div>
+      <button onClick = {this.onClickBack.bind(this)} type = 'type' className = "ed-btn back-btn btn btn-danger"> Back </button>
       Invite Friends to {this.props.currentEvent.title}
       <ul>{this.props.currentUser.friendsList.map((friend) => {
         return <li className ={this.state.invitedFriends.includes(friend.id)?"friend-accept":"friend"} key = {friend.id} value = {friend.id} onClick = {this.friendClick.bind(this)}><img src = {friend.image} className = "eventListFriendImage" /> {friend.name}</li>
