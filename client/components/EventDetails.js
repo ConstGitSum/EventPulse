@@ -12,7 +12,7 @@ import {
   unhideEvent 
 } from '../actions/actions';
 
-export class EventDetails extends Component {
+export class EventDetails extends React.Component {
   /**
    * Current user will join the current event
    */
@@ -60,7 +60,7 @@ export class EventDetails extends Component {
     )
   }
 
-  generateButtons(text, className, onClickFunction=null) {
+  generateButtons(text, className, onClickFunction) {
     return (
       <button
         onClick={onClickFunction}
@@ -81,6 +81,7 @@ export class EventDetails extends Component {
     const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1
 
     if (isUserInEvent) {
+      console.log("leave")
       return (
         this.generateButtons(
         'Leave',
@@ -90,17 +91,12 @@ export class EventDetails extends Component {
     }
 
     if (!isUserInEvent && !isEventHidden) {
+      console.log("join")
       return (
-        <div>
-          {this.generateButtons(
-            'Join',
-            'ed-btn btn btn-primary',
-            this.onClickJoin.bind(this))}
-          {this.generateButtons(
-            'Hide',
-            'ed-btn btn btn-default',
-            this.onClickHide.bind(this))}
-        </div>
+        this.generateButtons(
+          'Join',
+          'ed-btn btn btn-primary',
+          this.onClickJoin.bind(this))
       )
     }
   }
@@ -112,50 +108,51 @@ export class EventDetails extends Component {
     const max_guests = this.props.currentEvent.max_guests === null 
       ? '∞' 
       : this.props.currentEvent.max_guests
+    const currentAttending = this.props.currentEvent.guests.length
 
     return (
-      <div className="container">
-              
-        <div className="row">
-          <div className="col-lg-12 page-header">
-            <h1 className="text-center">{this.props.currentEvent.title}</h1>
-          </div>
-        </div>
+      <div>
+        {this.generateButtons(
+          "Back",
+          "ed-btn back-btn btn btn-danger",
+          this.onClickBack.bind(this))}
+        <Sidebar />
 
-        <div className="row">
-          <div className="col-md-12 btn-group text-center" role="group">
-            {this.renderButtons()}
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12 page-header">
+              <h1 className="text-center">{this.props.currentEvent.title}</h1>
+            </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-4 col-md-offset-4">
-            <p>Attendance: #/##</p>
-            <p>Creator: {creator ? creator.name :  'no longer in event'}</p>
-            {/*<p>Title: {this.props.currentEvent.title}</p>*/}
-            <p>Description: {this.props.currentEvent.description}</p>
-            <p>Location: {this.props.currentEvent.location}</p>
-            <p>Time: {this.props.currentEvent.time}</p>
+          <div className="row">
+            <div className="col-md-12 text-center" role="group">
+              {this.renderButtons()}
+            </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-12 btn-group text-center" role="group">
-            <div>
+          <div className="row">
+            <div className="col-md-4 col-md-offset-4">
+              <p><strong>Attendance</strong> :{currentAttending} / {max_guests}</p>
+              <p><strong>Creator</strong> : {creator ? creator.name :  'no longer in event'}</p>
+              <p><strong>Description</strong> : {this.props.currentEvent.description}</p>
+              <p><strong>Location</strong> : {this.props.currentEvent.location}</p>
+              <p><strong>Time</strong> : {this.props.currentEvent.time.substring(11, 16)} {this.props.currentEvent.time.substring(0, 10)}</p>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12 text-center" role="group">
               {this.generateButtons(
                 "Chat",
                 'ed-btn btn btn-primary')}
-              {this.generateButtons(
-                "Back",
-                "ed-btn btn btn-danger",
-                this.onClickBack.bind(this))}
             </div>
           </div>
-        </div>
-        
-        <div className="row">
-          <div className="col-md-12 text-center">
-            <ChatWindow event={ this.props.currentEvent }/>
+
+          <div className="row">
+            <div className="col-md-12 text-center">
+              <ChatWindow event={ this.props.currentEvent }/>
+            </div>
           </div>
         </div>
       </div>
