@@ -5,7 +5,7 @@ function getDefaultState() {
   const d = new Date();
   let currHour = d.getHours();
   let currMinute = d.getMinutes();
-  console.log('currHOUr', currHour)
+  //console.log('currHOUr', currHour)
   return {
     eventFormData: {
       title: '',
@@ -16,15 +16,45 @@ function getDefaultState() {
       ampm: currHour > 12? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
-      privacy: false,
+      privacy: 'public',
       group_visibility: 1,
-      max_guests: 0
+      max_guests: 0,
+      tomorrow:false
     },
     validationErrors: {}
   }
 }
 
+function parseTime(hour, minute, ampm){
+  let d = new Date();
+  let year = d.getFullYear();
+  let month = d.getMonth() + 1;
+  let day = d.getDate();
+  let currHour = d.getHours();
+  let currMinute = d.getMinutes();
+  if(month < 10) { month =  "0" + month}
+  if(day < 10) { day = '0' + day}
+  // event can't be more than 12 hours from now
+  // if(currHour === hour && currMinute === minute)
+  // add 1 day
+  if(currHour > hour) { day++; moveToTomorrow() };
+  return `${year}-${month}-${day}T${Number(hour) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
+}
 
+function parseDuration(hour, minute){
+  if(!hour && !minute) {
+    return 9999999;
+  } else if (!hour) {
+    hour = 0
+  } else if (!minute) {
+    minute = 0;
+  }
+  return (hour * 60 + minute) * 60;
+}
+
+function moveToTomorrow(){
+
+}
 
 function validateTitle(title) {
   if (title.length === 0) {
@@ -55,9 +85,7 @@ function validateLocation(location) {
 }
 
 function validateHour(hour) {
-	//console.log('hour~~~', hour, 'type:', typeof(hour))
   if (hour === '') {
-  	//console.log('no empty')
     return 'Hour cannot be empty';
   } else {
     return '';
@@ -79,8 +107,6 @@ function validateAmpm(ampm) {
     return '';
   }
 }
-
-
 
 function validateField(fieldKey, fieldValue) {
   switch (fieldKey) {
@@ -108,45 +134,19 @@ function validateForm(validationErrors, formData) {
       validationErrors[fieldKey] = errorMessage;
     }
   }
-  // console.log('3~~~',validationErrors)
-  // console.log('4~~~',Object.keys(validationErrors).length)
+
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
   } else if (Object.keys(validationErrors).length > 0) {
     validationErrors._form = 'Please fill out all the required fields';
-    //console.log('Object.keys(validationErrors).length~~~',Object.keys(validationErrors).length)
-    if (Object.keys(validationErrors).length === 1) {
-      validationErrors = {};
-      // validationErrors._form = '';
-    }
-  }
-  
+      if (Object.keys(validationErrors).length === 1) {
+        validationErrors = {};
+      }
+  } 
   return validationErrors;
 }
 
-function parseTime(hour, minute, ampm){
-  const d = new Date();
-  let year = d.getFullYear();
-  let month = d.getMonth() + 1;
-  let day = d.getDate();
-  if(month < 10) { month =  "0" + month}
-  if(day < 10) { day = '0' + day}
-  return `${year}-${month}-${day}T${Number(hour) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
-}
-
-function parseDuration(hour, minute){
-  if(!hour && !minute) {
-    return 9999999;
-  } else if (!hour) {
-    hour = 0
-  } else if (!minute) {
-    minute = 0;
-  }
-  return (hour * 60 + minute) * 60;
-}
-
 function createEvent(formData, currentUser, callback) {
-  //console.log('in CREATE EVENT~~~', formData,currentUser, callback)
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
@@ -172,29 +172,25 @@ export default function(state = getDefaultState(), action) {
         return Object.assign({}, state);
       }
       createEvent(state.eventFormData, action.payload, function(resp) {
-        //console.log('in creating event, resp is ~~~~~',resp);
         return Object.assign({}, state);
       });
 
     case VALIDATE_EVENT_FORM:
-      //console.log('submitting form', state);
       validateForm(Object.assign({}, state.validationErrors), state.eventFormData);
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, action.payload.formData),
         validationErrors: validateForm(Object.assign({}, state.validationErrors), state.eventFormData)
-    });
+      });
     
     case UPDATE_EVENT_FIELD:      
       const validationErrors = Object.assign({}, state.validationErrors);
-
-      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue);
-      
+      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
+      console.log('validationErrors ',validationErrors, ' fieldError ',fieldError)     
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
       } else {
         delete validationErrors[action.payload.fieldKey]; 
       }
-
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, { [action.payload.fieldKey]: action.payload.fieldValue }),
         validationErrors
