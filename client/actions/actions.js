@@ -140,6 +140,7 @@ export function updateTime() {
 }
 
 export function createEvent(currentUser) {
+  console.log('444444currentUser: ', currentUser)
   return {
     type: CREATE_EVENT,
     payload: currentUser
@@ -166,22 +167,5 @@ export function updateEventField(fieldKey, fieldValue) {
 export function clearFormValues() {
   return {
     type: CLEAR_FORM_VALUES
-  }
-}
-
-export function validateEventForm(formData) {
-  console.log('validateEventForm in actions', formData);
-
-  return {
-    type: VALIDATE_EVENT_FORM,
-    payload: { formData }
-  }
-}
-
-export function updateEventField(fieldKey, fieldValue) {
-  //console.log('updateEventField in actions', fieldKey, ' ', fieldValue);
-  return {
-    type: UPDATE_EVENT_FIELD,
-    payload: { fieldKey, fieldValue }
   }
 }

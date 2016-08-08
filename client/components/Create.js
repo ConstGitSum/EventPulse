@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime } from '../actions/actions';
 
-export class EventCreate extends Component {
+export class Create extends Component {
 
   constructor(props) {
     super(props);
@@ -15,6 +15,9 @@ export class EventCreate extends Component {
     event.preventDefault();
     this.props.validateEventForm(this.props.eventFormData);
     const self = this;
+    console.log('after validating form in create.js')
+    console.log('this.props.currentUser:' , this.props.currentUser)
+
     this.props.createEvent(this.props.currentUser, (resp) => {
       if (resp.error) {
         self.setState({error_location: 'Location invalid'});
@@ -204,8 +207,8 @@ export class EventCreate extends Component {
                   className="form-check-input"
                   name="privacy" 
                   type="radio" 
-                  value="public"
-                  checked={eventFormData.privacy === 'public'} 
+                  value="false"
+                  checked={eventFormData.privacy === 'false'} 
                   onChange={this.onFieldChangeRedux.bind(this)}/> 
                 <span>public</span>
               </label>
@@ -214,8 +217,8 @@ export class EventCreate extends Component {
                   className="form-check-input"
                   name="privacy" 
                   type="radio" 
-                  value="private"
-                  checked={eventFormData.privacy === 'private'} 
+                  value="true"
+                  checked={eventFormData.privacy === 'true'} 
                   onChange={this.onFieldChangeRedux.bind(this)}/> 
                   <span>private</span>
               </label>
@@ -261,10 +264,10 @@ export class EventCreate extends Component {
 
 function mapStateToProps(state) {
   return {
-    newEvent: state.eventCreate,
+    newEvent: state.create,
     currentUser: state.currentUser,
-    validationErrors: state.eventCreate.validationErrors,
-    eventFormData: state.eventCreate.eventFormData
+    validationErrors: state.create.validationErrors,
+    eventFormData: state.create.eventFormData
   }
 }
 
@@ -273,4 +276,4 @@ function mapDispatchToProps(dispatch) {
     createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(Create);

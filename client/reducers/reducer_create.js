@@ -8,7 +8,7 @@ function getDefaultState() {
   const today = new Date();
   let currHour = today.getHours();
   let currMinute = today.getMinutes();
-  console.log('currHOUr', today,  currHour)
+  //console.log('currHOUr', today,  currHour)
   return {
     eventFormData: {
       title: '',
@@ -19,7 +19,7 @@ function getDefaultState() {
       ampm: currHour > 12? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
-      privacy: 'public',
+      privacy: 'false',
       group_visibility: 1,
       max_guests: 0,
       is_tomorrow: false
@@ -43,23 +43,23 @@ function parseTime(hour, minute, ampm){
 function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
-  console.log('isTimeWithinRange', currTime, eventTime);
+  //console.log('isTimeWithinRange', currTime, eventTime);
   return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS; 
 }
 
 function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
-  console.log('isTimeInTheFuture', currTime.getTime() < eventTime.getTime());
+  //console.log('isTimeInTheFuture', currTime.getTime() < eventTime.getTime());
   return eventTime.getTime() > currTime.getTime();
 }
 
 function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
-  console.log('minute', minute);
+  //console.log('minute', minute);
   d.setMinutes(minute);
-  console.log('is_tomorrow', typeof is_tomorrow, is_tomorrow);
+  //console.log('is_tomorrow', typeof is_tomorrow, is_tomorrow);
   if (is_tomorrow) {
     return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
   }
@@ -157,12 +157,12 @@ function validateField(fieldKey, fieldValue) {
 }
 
 function validateTimeRange(validationErrors, formData) {
-  console.log('isfuture', isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow));
+  //console.log('isfuture', isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow));
   if (!isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
-    console.log('future');
+    //console.log('future');
     validationErrors._time = 'The event has to be in the future'
   } else if (!isTimeWithinRange(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
-    console.log('out of range');
+    //console.log('out of range');
     validationErrors._time = 'The event has to be in less than 12 hours';
   } else {
     delete validationErrors._time;
@@ -177,7 +177,7 @@ function validateForm(validationErrors, formData) {
     }
   }
 
-  validateTimeRange(validationErrors, formData);
+  //validateTimeRange(validationErrors, formData);
 
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
@@ -191,6 +191,8 @@ function validateForm(validationErrors, formData) {
 }
 
 function createEvent(formData, currentUser, callback) {
+  console.log('formData:',formData,' currentUser:', currentUser, ' callback: ', callback);
+
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
@@ -208,13 +210,16 @@ function createEvent(formData, currentUser, callback) {
 }
 
 export default function(state = getDefaultState(), action) {
- 
+  //console.log('in reducer: the action is: ', action )
+  console.log('in reducer: the action type is: ', action.type )
   switch (action.type) {
 
     case CREATE_EVENT:
+    console.log('in case create_event now~~~' )
       if (Object.keys(state.validationErrors).length > 0) {
         return Object.assign({}, state);
       }
+      //change 
       createEvent(state.eventFormData, action.payload, function(resp) {
         return Object.assign({}, state);
       });
@@ -229,10 +234,10 @@ export default function(state = getDefaultState(), action) {
     case UPDATE_EVENT_FIELD:      
       const validationErrors = Object.assign({}, state.validationErrors);
       const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
-      console.log('validationErrors ',validationErrors, ' fieldError ',fieldError)     
-      if (['is_tomorrow', 'hour', 'minute', 'ampm'].includes(action.payload.fieldKey)) {
-        validateTimeRange(validationErrors, state.eventFormData);
-      }
+      //console.log('validationErrors ',validationErrors, ' fieldError ',fieldError)     
+      // if (['is_tomorrow', 'hour', 'minute', 'ampm'].includes(action.payload.fieldKey)) {
+      //   validateTimeRange(validationErrors, state.eventFormData);
+      // }
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
       } else {
