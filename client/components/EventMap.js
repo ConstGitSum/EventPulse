@@ -9,28 +9,38 @@ export class EventMap extends React.Component {
     this._buildMap();
   }
 
-  _buildMap() {
-    var map = L.map('list-map');
+  componentDidUpdate() {
+    console.log(this.props.listFiltered)
+    this.props.listFiltered.forEach(e => {
+      L.marker([e.latitude, e.longitude]).addTo(this.map);
+    });
+  }
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
+  _buildMap() {
+    const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
       maxZoom: 18,
       id: 'dark-v9',
       accessToken: 'pk.eyJ1Ijoia3Rvcm5nIiwiYSI6ImNpcmV3MXJqMzAwNWVnNW5rd3FhcXBjdnEifQ.bqImLTKsAkcFhtMsNSyDIw'
-    }).addTo(map);
-    map.locate({setView: true, maxZoom: 16});
-    map.on('locationfound', this._onLocationFound.bind(map));
-    map.on('locationerror', this._onLocationError.bind(map));
+    });
+
+    this.map = L.map('list-map', {
+      layers: [tiles]
+    });
+
+    this.map.locate({setView: true, maxZoom: 16});
+    this.map.on('locationfound', this._onLocationFound.bind(this));
+    this.map.on('locationerror', this._onLocationError.bind(this));
   }
 
   _onLocationFound(e) {
     var radius = e.accuracy / 2;
 
     L.marker(e.latlng)
-      .addTo(this)
-      .bindPopup("You are within " + radius + " meters from this point").openPopup();
+      .addTo(this.map)
+      .bindPopup("You are within " + radius + " meters from this point");
 
-    L.circle(e.latlng, radius).addTo(this);
+    L.circle(e.latlng, radius).addTo(this.map);
   }
 
   _onLocationError(e) {
@@ -39,7 +49,7 @@ export class EventMap extends React.Component {
 
   render() {
     return (
-      <div id="list-map"></div>
+      <div className="col-sm-8" id="list-map"></div>
     );
   }
 }
