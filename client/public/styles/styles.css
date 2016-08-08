@@ -10,3 +10,13 @@ html, body, #root, #list-map, .explore {
 #root > div {
  height: 100%;
 }
+
+.ed-btn {
+	width: 60px;
+}
+
+i.fa {
+	position: absolute;
+	left: 1%;
+	top: 1%;
+}
