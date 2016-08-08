@@ -25,7 +25,7 @@ export class EventDetails extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setState({ timeObj: moment(this.props.currentEvent.time) },
       () => this.setState({ timeText: this.state.timeObj.format('dddd, h:mm a')})
     )
