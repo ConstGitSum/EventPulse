@@ -1,3 +1,4 @@
 FACEBOOK_ID='facebook id'
 FACEBOOK_SECRET='facebook secret'
 GEO_API_KEY='google geocode API key'
+MAP_API_KEY='mapbox API key'

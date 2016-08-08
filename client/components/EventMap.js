@@ -3,24 +3,38 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setCurrentEvent } from '../actions/actions';
-import markers from '../utils/markers';
+import generateMarker, { userMarker } from '../utils/markers';
 
 export class EventMap extends React.Component {
   componentDidMount() {
-    console.log(process.env)
+    this.markers = [];
     this._buildMap();
   }
 
   componentDidUpdate() {
-    console.log(markers)
-    console.log(this.props.listFiltered)
-    this.props.listFiltered.forEach(e => {
-      L.marker(
-        [e.latitude, e.longitude], 
-        { icon: markers.entertainment }
+    console.log(this.markers)
+    // clear existing markers before adding new markers for updated list
+    this._clearMarkers();
+
+    this.props.listFiltered.forEach(event => {
+      this.markers.push(L.marker(
+        [event.latitude, event.longitude], 
+        { 
+          icon: generateMarker(event.type)
+        }
       )
-      .addTo(this.map);
+      .on('click', this._onClickMarker.bind(this, event))
+      .addTo(this.map));
     });
+  }
+
+  _clearMarkers() {
+    this.markers.forEach(marker => { this.map.removeLayer(marker) });
+    this.markers = [];
+  }
+
+  _onClickMarker(event) {
+    this.props.setCurrentEvent(event);
   }
 
   _buildMap() {
@@ -28,7 +42,7 @@ export class EventMap extends React.Component {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
       maxZoom: 18,
       id: 'dark-v9',
-      accessToken: 'pk.eyJ1Ijoia3Rvcm5nIiwiYSI6ImNpcmV3MXJqMzAwNWVnNW5rd3FhcXBjdnEifQ.bqImLTKsAkcFhtMsNSyDIw'
+      accessToken: process.env.MAP_API_KEY
     });
 
     this.map = L.map('list-map', {
@@ -43,7 +57,7 @@ export class EventMap extends React.Component {
   _onLocationFound(e) {
     var radius = e.accuracy / 2;
 
-    L.marker(e.latlng)
+    L.marker(e.latlng, { icon: userMarker })
       .addTo(this.map)
       .bindPopup("You are within " + radius + " meters from this point");
 
