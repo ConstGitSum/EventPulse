@@ -1,0 +1,9 @@
+.ed-btn {
+	width: 60px;
+}
+
+.ed-btn.back-btn {
+	position: absolute;
+	left: 2%;
+	top: 2%;
+}
