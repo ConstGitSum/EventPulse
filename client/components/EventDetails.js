@@ -12,13 +12,7 @@ import {
   unhideEvent 
 } from '../actions/actions';
 
-export class EventDetails extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      sidebarToggle: false
-    }
-  }
+export class EventDetails extends Component {
   /**
    * Current user will join the current event
    */
@@ -66,6 +60,51 @@ export class EventDetails extends React.Component {
     )
   }
 
+  generateButtons(text, className, onClickFunction=null) {
+    return (
+      <button
+        onClick={onClickFunction}
+        type="button"
+        className={className}>
+        {text}
+      </button>
+    )
+  }
+
+  renderButtons() {
+    const currentEvent = this.props.currentEvent;
+    const currentUser = this.props.currentUser;
+    const hiddenEvents = this.props.hiddenEvents;
+
+    const isUserInEvent = currentEvent.guests.some(guest =>
+      guest.id === currentUser.id || currentEvent.created_by === currentUser.id)
+    const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1
+
+    if (isUserInEvent) {
+      return (
+        this.generateButtons(
+        'Leave',
+        'ed-btn btn btn-danger',
+        this.onClickLeave.bind(this))
+      )
+    }
+
+    if (!isUserInEvent && !isEventHidden) {
+      return (
+        <div>
+          {this.generateButtons(
+            'Join',
+            'ed-btn btn btn-primary',
+            this.onClickJoin.bind(this))}
+          {this.generateButtons(
+            'Hide',
+            'ed-btn btn btn-default',
+            this.onClickHide.bind(this))}
+        </div>
+      )
+    }
+  }
+
   render() {
     {/* Check to see if the event was created by the current user */}
     const creator = this.props.currentEvent.guests.find(guest => {
@@ -75,46 +114,51 @@ export class EventDetails extends React.Component {
       : this.props.currentEvent.max_guests
 
     return (
-      <div className="event-details">
-        <Sidebar />
-        <h1>Pulse</h1>
-        <div>
-        {/* check if current user is already a guest
-              True : Display Leave button
-              False: Check if event has been hidden*/}
-        {this.props.currentEvent.guests.some(guest => 
-          guest.id === this.props.currentUser.id)
-        ? this.generateButton('Leave', 'btn btn-danger', this.onClickLeave.bind(this))
-        /* check if current event has been hidden
-              True : Display Unhide button
-              False: Display Join and Hide buttons */    
-        : this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1
-          ? this.generateButton('Join', 'btn btn-primary', this.onClickJoin.bind(this))
-          : null
-        }      
+      <div className="container">
+              
+        <div className="row">
+          <div className="col-lg-12 page-header">
+            <h1 className="text-center">{this.props.currentEvent.title}</h1>
+          </div>
         </div>
 
-        <div>
-          <p>Attendance: {this.props.currentEvent.guests.length}/{max_guests}</p>
-          <p>Creator: {creator ? creator.name : 'No longer in event'}</p>
-          <p>Title: {this.props.currentEvent.title}</p>
-          <p>Description: {this.props.currentEvent.description}</p>
-          <p>Location: {this.props.currentEvent.location}</p>
-          <p>Time: {this.props.currentEvent.time}</p>
+        <div className="row">
+          <div className="col-md-12 btn-group text-center" role="group">
+            {this.renderButtons()}
+          </div>
         </div>
 
-        <div>
-          <button className="btn btn-primary">Chat</button>
-          <button 
-            onClick={this.onClickBack.bind(this)}
-            type="button"
-            className="btn btn-danger">
-            Back
-          </button>
+        <div className="row">
+          <div className="col-md-4 col-md-offset-4">
+            <p>Attendance: #/##</p>
+            <p>Creator: {creator ? creator.name :  'no longer in event'}</p>
+            {/*<p>Title: {this.props.currentEvent.title}</p>*/}
+            <p>Description: {this.props.currentEvent.description}</p>
+            <p>Location: {this.props.currentEvent.location}</p>
+            <p>Time: {this.props.currentEvent.time}</p>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-12 btn-group text-center" role="group">
+            <div>
+              {this.generateButtons(
+                "Chat",
+                'ed-btn btn btn-primary')}
+              {this.generateButtons(
+                "Back",
+                "ed-btn btn btn-danger",
+                this.onClickBack.bind(this))}
+            </div>
+          </div>
         </div>
         
-    <ChatWindow event = {this.props.currentEvent}/>
-           </div>
+        <div className="row">
+          <div className="col-md-12 text-center">
+            <ChatWindow event={ this.props.currentEvent }/>
+          </div>
+        </div>
+      </div>
     )
   }
 }
