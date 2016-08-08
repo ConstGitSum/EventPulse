@@ -7,3 +7,16 @@
 	left: 2%;
 	top: 2%;
 }
+.eventListFriendImage {
+  width: 7%;  
+  overflow: hidden;
+  border-radius: 50%;
+}
+.friend-accept {
+font-size: large;
+background-color: #5cb85c;
+}
+.friend {
+ font-size: large;
+background-color: white; 
+}

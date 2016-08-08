@@ -55,7 +55,7 @@ export class List extends React.Component {
     })
     return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend,index) => {
       if(index<5){
-      return <img className = 'eventListFriendImage'key = {friend.id} src = {friend.image}/>
+      return <img className = 'eventListFriendImage' key = {friend.id} src = {friend.image}/>
       }
     }
     )}</div>
