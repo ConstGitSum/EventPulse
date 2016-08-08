@@ -88,7 +88,7 @@ export class EventCreate extends Component {
                 value={eventFormData.hour}
                 onBlur={this.onFieldChangeRedux.bind(this)}
                 onChange={this.onFieldChangeRedux.bind(this)}>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
                   return (
                     <option key={h} value={h}>{h}</option>
                   );
@@ -117,6 +117,17 @@ export class EventCreate extends Component {
                 <option value="am">am</option>
                 <option value="pm">pm</option>
               </select>
+            </div>
+            <div className="col-xs-2">
+              <select name="is_tomorrow"
+                className="form-control"
+                value={eventFormData.is_tomorrow}
+                onBlur={this.onFieldChangeRedux.bind(this)}
+                onChange={this.onFieldChangeRedux.bind(this)}>
+                <option value="false">today</option>
+                <option value="true">tomorrow</option>
+              </select>
+              {validationErrors._time ? <div className="text-danger"> {validationErrors._time} </div> : null}
             </div>
             <div className="row">
               <div className="col-xs-4"></div>
