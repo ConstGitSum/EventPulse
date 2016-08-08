@@ -1,44 +1,44 @@
 export default function generateMarker(eventType) {
   switch (eventType) {
-    case (eventType === 'athletics'): {
+    case 'athletics': {
       return L.AwesomeMarkers.icon({
         icon: 'futbol-o',
         markerColor: 'lightgreen',
         prefix: 'fa'
       });
     }
-    case (eventType === 'entertainment'): {
+    case 'entertainment': {
       return L.AwesomeMarkers.icon({
         icon: 'television',
         markerColor: 'green',
         prefix: 'fa'
       });
     }
-    case (eventType === 'nightlife'): {
+    case 'nightlife': {
       return L.AwesomeMarkers.icon({
         icon: 'glass',
         markerColor: 'pink',
         prefix: 'fa'
       });
     }
-    case (eventType === 'dining'): {
+    case 'dining': {
       return L.AwesomeMarkers.icon({
         icon: 'cutlery',
         markerColor: 'purple',
         prefix: 'fa'
       });
     }
-    case (eventType === 'coffee'): {
+    case 'coffee': {
       return L.AwesomeMarkers.icon({
         icon: 'cutlery',
         markerColor: 'lightred',
         prefix: 'fa'
       });
     }
-    case (eventType === 'special'): {
+    case 'special': {
       return L.AwesomeMarkers.icon({
         icon: 'star',
-        markerColor: 'red',
+        markerColor: 'blue',
         prefix: 'fa'
       });
     }
@@ -54,7 +54,13 @@ export default function generateMarker(eventType) {
 
 export const userMarker = L.AwesomeMarkers.icon({
   icon: 'user',
-  markerColor: 'blue',
+  markerColor: 'red',
   prefix: 'fa'
 });
 
+export const currentMarker = L.AwesomeMarkers.icon({
+  icon: 'spinner',
+  spin: true,
+  markerColor: 'red',
+  prefix: 'fa'
+});

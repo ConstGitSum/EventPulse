@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setCurrentEvent } from '../actions/actions';
-import generateMarker, { userMarker } from '../utils/markers';
+import generateMarker, { userMarker, currentMarker } from '../utils/markers';
 
 export class EventMap extends React.Component {
   componentDidMount() {
@@ -12,29 +12,43 @@ export class EventMap extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.markers)
     // clear existing markers before adding new markers for updated list
     this._clearMarkers();
 
     this.props.listFiltered.forEach(event => {
-      this.markers.push(L.marker(
-        [event.latitude, event.longitude], 
-        { 
-          icon: generateMarker(event.type)
-        }
-      )
-      .on('click', this._onClickMarker.bind(this, event))
-      .addTo(this.map));
+      const latlng = [event.latitude, event.longitude];
+      const marker = L.marker(latlng, { icon: generateMarker(event.type) })
+        .addTo(this.map);
+
+      marker.on('click', this._onClickMarker.bind(this, marker, event))
+
+      this.markers.push(marker);
     });
   }
 
   _clearMarkers() {
     this.markers.forEach(marker => { this.map.removeLayer(marker) });
     this.markers = [];
+    this.currentMarker = null;
+    this.prevMarker = null;
   }
 
-  _onClickMarker(event) {
+  _onClickMarker(marker, event) {
+    const latlng = marker._latlng;
+    // if currentMarker already exists, replace with prevMarker
+    if (this.currentMarker) {
+      this.map.removeLayer(this.currentMarker);
+      this.prevMarker.addTo(this.map);
+    }
+
+    // set this marker as new prevMarker, and add new spinning marker as currentMarker
+    this.map.removeLayer(marker);
+    const newMarker = L.marker(latlng, { icon: currentMarker }).addTo(this.map);
+
+    this.prevMarker = marker;
+    this.currentMarker = newMarker;
     this.props.setCurrentEvent(event);
+    this.markers.push(newMarker);
   }
 
   _buildMap() {
@@ -77,8 +91,7 @@ export class EventMap extends React.Component {
 
 function mapStateToProps(state) {
   return { 
-    list: state.list,
-    listFiltered: state.listFiltered
+    listFiltered: state.listFiltered,
   };
 }
 
