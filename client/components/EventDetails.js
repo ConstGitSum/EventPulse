@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
+import moment from 'moment'
 
 import ChatWindow from './Chat'
 import Sidebar from './Sidebar';
@@ -13,6 +14,21 @@ import {
 } from '../actions/actions';
 
 export class EventDetails extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      timeObj: null,
+      timeText: null,
+      timeShow: true
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ timeObj: moment(this.props.currentEvent.time) },
+      () => this.setState({ timeText: this.state.timeObj.format('dddd, h:mm a')})
+    )
+  }
+
   /**
    * Current user will join the current event
    */
@@ -49,23 +65,23 @@ export class EventDetails extends React.Component {
     }
   }
 
-  generateButton(text, className, onClickFunction) {
-    return (
-      <button
-        onClick={onClickFunction}
-        type="button"
-        className={className}>
-        {text}
-      </button>
-    )
+  swapTime() {
+    if(this.state.timeShow) {
+      this.setState({ timeShow: false })
+      this.setState({ timeText: this.state.timeObj.fromNow() })
+    } else {
+      this.setState({ timeShow: true })
+      this.setState({ timeText: this.state.timeObj.format("dddd, h:mm a") })
+    }
   }
 
-  generateButtons(text, className, onClickFunction) {
+  generateButtons(text, className, onClickFunction, disabled=null) {
     return (
       <button
         onClick={onClickFunction}
         type="button"
-        className={className}>
+        className={className}
+        disabled={disabled}>
         {text}
       </button>
     )
@@ -75,6 +91,8 @@ export class EventDetails extends React.Component {
     const currentEvent = this.props.currentEvent;
     const currentUser = this.props.currentUser;
     const hiddenEvents = this.props.hiddenEvents;
+    const guestLength = currentEvent.guests.length;
+    const max_guests = currentEvent.max_guests;
 
     const isUserInEvent = currentEvent.guests.some(guest =>
       guest.id === currentUser.id || currentEvent.created_by === currentUser.id)
@@ -83,18 +101,28 @@ export class EventDetails extends React.Component {
     if (isUserInEvent) {
       return (
         this.generateButtons(
-        'Leave',
-        'ed-btn btn btn-danger',
-        this.onClickLeave.bind(this))
+          'Leave',
+          'btn btn-danger btn-block',
+          this.onClickLeave.bind(this)
+        )
       )
     }
 
-    if (!isUserInEvent && !isEventHidden) {
+    if (!isUserInEvent && !isEventHidden && guestLength !== max_guests) {
       return (
         this.generateButtons(
           'Join',
-          'ed-btn btn btn-primary',
+          'btn btn-primary btn-block',
           this.onClickJoin.bind(this))
+      )
+    } else {
+      return (
+        this.generateButtons(
+          'Join',
+          'btn btn-danger btn-block',
+          'disabled',
+          this.onClickJoin.bind(this)
+        )
       )
     }
   }
@@ -106,14 +134,14 @@ export class EventDetails extends React.Component {
     const max_guests = this.props.currentEvent.max_guests === null 
       ? '∞' 
       : this.props.currentEvent.max_guests
-    const currentAttending = this.props.currentEvent.guests.length
+    const currentAttending = this.props.currentEvent.guests.length;
 
     return (
       <div>
-        {this.generateButtons(
-          "Back",
-          "ed-btn back-btn btn btn-danger",
-          this.onClickBack.bind(this))}
+        <i
+          onClick={this.onClickBack.bind(this)}
+          className="fa fa-arrow-left fa-3x"
+          aria-hidden="true"></i>
         <Sidebar />
 
         <div className="container">
@@ -124,7 +152,7 @@ export class EventDetails extends React.Component {
           </div>
 
           <div className="row">
-            <div className="col-md-12 text-center" role="group">
+            <div className="col-md-4 col-md-offset-4 text-center" role="group">
               {this.renderButtons()}
             </div>
           </div>
@@ -135,21 +163,23 @@ export class EventDetails extends React.Component {
               <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
               <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
               <p><strong>Location</strong>: {this.props.currentEvent.location}</p>
-              <p><strong>Time</strong>: {this.props.currentEvent.time.substring(11, 16)} {this.props.currentEvent.time.substring(0, 10)}</p>
+              <p onClick={this.swapTime.bind(this)}>
+                <strong>Time</strong>: {this.state.timeText}
+              </p>
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-12 text-center" role="group">
+            <div className="col-md-4 col-md-offset-4 text-center" role="group">
               {this.generateButtons(
                 "Chat",
-                'ed-btn btn btn-primary')}
+                'btn btn-primary btn-block')}
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-12 text-center">
-              <ChatWindow event={ this.props.currentEvent }/>
+            <div className="col-md-4 col-md-offset-4">
+              <ChatWindow  event={this.props.currentEvent}/>
             </div>
           </div>
         </div>
