@@ -20,14 +20,13 @@ export class Create extends Component {
     if (Object.keys(this.props.validationErrors).length === 0) {
       this.props.createEvent(this.props.eventFormData, this.props.currentUser)
       .then(res => {
-        console.log('44444~~~res.body:',res.body)
-        if (res.error) {console.log('66666~~~address wrong',res.error); throw new Error('Unable to create event');}
+        if (res.error) {throw new Error('Unable to create event');}
         this.props.clearFormValues();
         browserHistory.push(`/${this.props.currentEvent.id}`);
       })
       .catch(err => {
         this.setState({locationError: true})
-        console.log('55555~~~address wrong',err)
+        console.log(err)
       });
     }
   }
@@ -192,13 +191,13 @@ export class Create extends Component {
 
           <div className="form-group row">
             <label className="col-xs-4">Category</label>
-            <div className="col-xs-2">
+            <div className="col-xs-4">
               <select name="category"  
                 className="form-control"               
                 value={eventFormData.category}
                 onBlur={this.onFieldChangeRedux.bind(this)}
                 onChange={this.onFieldChangeRedux.bind(this)}>
-                {['athletics', 'entertainment', 'nightlife', 'dining', 'coffee', 'olympics-special', 'other'].map((h) => {
+                {['athletics', 'entertainment', 'nightlife', 'music','dining', 'coffee', 'olympics-special', 'other'].map((h) => {
                   return (
                     <option key={h} value={h}>{h}</option>
                   );
