@@ -1,18 +1,17 @@
 * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /*
  * -- BASE STYLES --
- * Most of these are inherited from Base, but I want to change a few.
  */
 body {
-    line-height: 1.7em;
-    color: #7f8c8d;
-    font-size: 13px;
-    text-align:centre;
+  line-height: 1.7em;
+  color: #7f8c8d;
+  font-size: 13px;
+  text-align:centre;
 }
 
 h1,
@@ -22,316 +21,77 @@ h4,
 h5,
 h6,
 label {
-    color: #34495e;
+  color: #34495e;
 }
 
-.pure-img-responsive {
-    max-width: 100%;
-    height: auto;
+@font-face {
+  font-family: Expansiva bold;
+  src: url('./Expansiva.otf');
 }
 
-/*
- * -- LAYOUT STYLES --
- * These are some useful classes which I will need
- */
-.l-box {
-    padding: 1em;
-}
-
-.l-box-lrg {
-    padding: 2em;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-.is-center {
-    text-align: center;
-}
 
 /*
  * -- PURE BUTTON STYLES --
- * I want my pure-button elements to look a little different
  */
 .pure-button {
-    color: white;
-    padding: 0.5em 2em;
-    border-radius: 5px;
-    box-shadow: 0 8px 16px 0;
+  color: white;
+  padding: 0.5em 2em;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0;
 }
 
 a.pure-button-primary {
-    background: white;
-    color: #000;
-    border-radius: 5px;
-    font-size: 100%;
+  background: white;
+  color: #000;
+  border-radius: 5px;
+  font-size: medium;
 }
 
 /*
  * -- AUTH STYLES --
  */
-
 .pure-g {
-    background: #434141;
-    z-index: 1;
-    overflow: hidden;
-    /* The following styles are required for the "scroll-over" effect */
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: fixed !important;
-
+  background: #434141;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed !important;
 }
 
 div.pure-u-1 {
-    width: 80%;
-    height: 50%;
-    margin-top: 1em;
-    margin-bottom: auto;
-    position: absolute;
-    top: 100px; left: 0; bottom: 0; right: 0;
-    text-align: center;
-    text-transform: uppercase;
+  width: 80%;
+  height: 50%;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: auto;
+  position: absolute;
+  top: 100px; left: 0; bottom: 0; right: 0;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 /* This is the main heading that appears on the page */
 .auth-head {
-    text-shadow: 2px 2px 2px black;
-    font-size: 100px;
-    font-weight: bold;
-    color: white;
-    font-weight: 500;
-    border-radius: 5px;
-    line-height: 1em;
+  font-family: Expansiva bold; 
+  text-shadow: 2px 2px 2px black;
+  font-size: 5em;
+  font-weight: bold;
+  color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  line-height: 1em;
 }
-
-/*
- * -- EVENTLIST STYLES --
- */
-.explore {
-    height: 44em;
-    background-color: #434141;
-}
-
-h1#explore {
-    color: #c5d0db; 
-    font-size: 4em; 
-    margin-top: auto; 
-    text-align: center;
-}
-
-h4#event_location {
-    color: #34495e; 
-}
-
-p#event_description {
-    color: ##34495e; 
-}
-
-button#event-filter-dropdown{
-    color: black
-    position: absolute;
-    left: 16em;
-    top: -2em; 
-}
-
-ul.dropdown-menu {
-    background-color: #bfbbbb;
-    margin-top: -2em; 
-    left: 16em;
-    border-radius: 5px;
-    box-shadow: 0 8px 16px 0;
-}
-
-button.create-event.pure-button-primary {
-    position: absolute;
-    left: 20em;
-    height: 2.2em;
-    width: 5em;
-    border-radius: 5px;
-}
-
-button.logout.btn-danger{
-    left: 26em;
-    position: absolute;
-    border-radius: 5px;
-}
-
-ul.event-list.list-group{
-    height: 25em;
-}
-
-li.list-group-item {
-    color: white;
-    width: 50%;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-top: 2em; 
-    margin-left: 20em;
-    margin-bottom: 1em;
-}
-
-button.btn.btn-secondary {
-    border: 2px solid black;
-    background-color: #434141; 
-    color: white;
-    border-radius: 5px;
-    box-shadow: 0 8px 16px 0;
-}
-
-
-
 /*
  * -- EVENTCREATE STYLES --
  */
 
-.pure-g {
-    background: #434141;
-    z-index: 1;
-    overflow: hidden;
-    /* The following styles are required for the "scroll-over" effect */
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: fixed !important;
 
-}
-
-.pure-u-1 {
-    width: 80%;
-    height: 50%;
-    margin: auto;
-    position: absolute;
-    top: 100px; left: 0; bottom: 0; right: 0;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-/* This is the main heading that appears on the page */
-.auth-head {
-    font-size: 100px;
-    font-weight: bold;
-    color: white;
-    font-weight: 500;
-    border-radius: 5px;
-    line-height: 1em;
-}
 
 /*
  * -- EVENTDETAILS STYLES --
  */
-.content-wrapper {
-    /* These styles are required for the "scroll-over" effect */
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #434141;
 
-}
-
-/* This is the class used for the main content headers (<h2>) */
-.content-head {
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 2em 0 1em;
-}
-
-h1#event_title {
-    color: #c5d0db; 
-    font-size: 3em; 
-    margin-top: auto; 
-    text-align: center;
-
-}
-
-button#leave_event {
-    position: absolute;
-    left: 20em;
-    height: 2.2em;
-    width: 5em;
-    border-radius: 5px;
-}
-
-button#join {
-    position: absolute;
-    left: 20em;
-    height: 2.2em;
-    width: 5em;
-    border-radius: 5px;
-}
-
-button#hide {
-    left: 26em;
-    position: absolute;
-    border-radius: 5px;
-}
-
-button#hide #unhide {
-    left: 26em;
-    position: absolute;
-    border-radius: 5px;
-}
-
-div#event_detail_title {
-    position: absolute;
-    margin-top: 2.1em;
-    left: 16em;
-    background-color: white; 
-    color: black;
-    font-size: 1.5em; 
-}
-
-div#detail_items {
-    left: 16em;
-    position: absolute;
-    top: 7em;
-    background-color: white; 
-    color: black;
-    font-size: 1.5em; 
-}
-
-
-button#chat {
-    position: absolute;
-    left: 20em;
-    height: 2.2em;
-    width: 5em;
-    border-radius: 5px;
-    top: 19em;
-}
-
-button#back {
-    left: 26em;
-    position: absolute;
-    border-radius: 5px;
-    top: 19em;
-}
-
-/* This is a modifier class used when the content-head is inside a ribbon */
-.content-head-ribbon {
-    color: white;
-}
-
-/* This is the class used for the content sub-headers (<h3>) */
-.content-subhead {
-    color: #1f8dd6;
-}
-    .content-subhead i {
-        margin-right: 7px;
-    }
-
-/* This is the class used for the dark-background areas. */
-.ribbon {
-    background: #2d3e50;
-    color: #aaa;
-}
-
-/* This is the class used for the footer */
-.footer {
-    background: #111;
-}
 
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
@@ -340,41 +100,25 @@ button#back {
  */
 @media (max-width:767px) {
 
-    /* We want to give the content area some more padding */
-    .content {
-        padding: 1em;
-    }
+  /* We want to give the content area some more padding */
+  .content {
+      padding: 1em;
+  }
 
-    /* We can align the menu header to the left, but float the
-    menu items to the right. */
-    .home-menu {
-        text-align: left;
-    }
-        .home-menu ul {
-            float: right;
-        }
+  /* We decrease the width of the .auth, since we have more width
+  to work with */
+  .auth {
+    width: 50%;
+    height: 50%;
+  }
 
-    /* We increase the height of the auth-container */
-    .auth-container {
-        height: 500px;
-    }
+  .auth-head {
+    font-size: 3.1em;
+  }
 
-    /* We decrease the width of the .auth, since we have more width
-    to work with */
-    .auth {
-        width: 50%;
-        height: 50%;
-    }
-
-    .auth-head {
-        font-size: 500%;
-    }
-/*
-
-     We remove the border-separator assigned to .l-box-lrg 
-    .l-box-lrg {
-        border: none;
-    }*/
+  a.pure-button-primary {
+    font-size: 1.1em;
+  }
 
 }
 
@@ -384,8 +128,13 @@ button#back {
  * of the mobile and tablet styles.
  */
 @media (min-width:992px) {
-    /* We increase the header font size even more */
-    .auth-head {
-        font-size: 600%;
-    }
+  /* Increase the header font size. */
+  .auth-head {
+    font-size: 8em;
+  }
+  /* Increase the button font size. */
+  a.pure-button-primary {
+    font-size: 1.8em;
+  }
+
 }

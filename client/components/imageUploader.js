@@ -52,4 +52,4 @@ export default class ImageUpload extends React.Component {
   }
 }
   
-ReactDOM.render(<ImageUpload/>, document.getElementById("root"));
+// ReactDOM.render(<ImageUpload/>, document.getElementById("root"));

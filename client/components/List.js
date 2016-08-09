@@ -49,13 +49,8 @@ export class List extends React.Component {
   render() {
     return (
       <div className="explore">
-<<<<<<< fcd7a729b25f2db5fc18876af728ff17eac73a3b:client/components/List.js
-        <h1>Explore</h1>
-          <ListFilter />
-=======
         <h1 id="explore">Explore</h1>
-          <EventListFilter />
->>>>>>> (feat) added background for EventDetails & EventList:client/components/EventList.js
+          <ListFilter />
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}
@@ -70,11 +65,7 @@ export class List extends React.Component {
         </Link>
         <span>
         <button 
-<<<<<<< fcd7a729b25f2db5fc18876af728ff17eac73a3b:client/components/List.js
           className="logout btn btn-danger" 
-=======
-          className="logout btn-danger" 
->>>>>>> (feat) added background for EventDetails & EventList:client/components/EventList.js
           onClick={this.props.userLogOut}> 
           Log Out
         </button>         
