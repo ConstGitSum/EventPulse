@@ -26,6 +26,9 @@ export class EventDetails extends React.Component {
   }
 
   componentWillMount() {
+    if (!this.props.currentUser) {
+      browserHistory.push('/');
+    }
     this.setState({ timeObj: moment(this.props.currentEvent.time) },
       () => this.setState({ timeText: this.state.timeObj.format('dddd, h:mm a')})
     )
