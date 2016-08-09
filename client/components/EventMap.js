@@ -22,8 +22,25 @@ export class EventMap extends React.Component {
     // if current event has changed, locate marker and set to currentMarker
     if (prevProps.currentEvent !== this.props.currentEvent && !equal(this.props.currentEvent, {})) {
       this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
-      this.props.setCurrentEvent(event);
     }
+  }
+
+  _buildMap() {
+    const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'dark-v9',
+      accessToken: process.env.MAP_API_KEY
+    });
+
+    this.map = L.map('list-map', {
+      layers: [tiles]
+    });
+    this._drawMarkers();
+
+    this.map.locate({setView: true, maxZoom: 16});
+    this.map.on('locationfound', this._onLocationFound.bind(this));
+    this.map.on('locationerror', this._onLocationError.bind(this));
   }
 
   _drawMarkers() {
@@ -44,7 +61,7 @@ export class EventMap extends React.Component {
   // clear all current markers on map 
   // clear state of currMarker, prevMarker, and currentEvent
   _clearMarkers() {
-    for (let id in this.markerTracker) this.map.removeLayer(this.markers[id]);
+    for (let id in this.markerTracker) this.map.removeLayer(this.markerTracker[id]);
     this.markerTracker = {};
     this.props.setCurrMarker({});
     this.props.setPrevMarker({});
@@ -67,24 +84,8 @@ export class EventMap extends React.Component {
     const newMarker = L.marker(marker._latlng, { icon: alertMarker }).addTo(this.map);
     this.props.setPrevMarker({marker: marker, eventId: event.id });
     this.props.setCurrMarker({marker: newMarker, eventId: event.id });
+    this.props.setCurrentEvent(event);
     this.markerTracker[event.id] = newMarker;
-  }
-
-  _buildMap() {
-    const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      maxZoom: 18,
-      id: 'dark-v9',
-      accessToken: process.env.MAP_API_KEY
-    });
-
-    this.map = L.map('list-map', {
-      layers: [tiles]
-    });
-
-    this.map.locate({setView: true, maxZoom: 16});
-    this.map.on('locationfound', this._onLocationFound.bind(this));
-    this.map.on('locationerror', this._onLocationError.bind(this));
   }
 
   _onLocationFound(e) {

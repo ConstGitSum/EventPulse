@@ -3,18 +3,9 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { filterList, setCurrentEvent } from '../actions/actions';
+import { filterList } from '../actions/actions';
 
 export class ListFilter extends React.Component {
-  _onClickFilter(filter) {
-    this.props.filterList(
-      this.props.list,
-      filter,
-      this.props.currentUser.id,
-      this.props.hiddenEvents
-    );
-  }
-
   render() {
     const filters = ['all', 'unhidden', 'hidden', 'created', 'joined', 'pending'];
 
@@ -23,7 +14,13 @@ export class ListFilter extends React.Component {
         {filters.map((filter, index) => 
           <MenuItem 
             key={index} 
-            onClick={this._onClickFilter.bind(this, filter)}>
+            onClick={this.props.filterList.bind(
+              null, 
+              this.props.list,
+              filter,
+              this.props.currentUser.id,
+              this.props.hiddenEvents
+            )}>
             {filter}
           </MenuItem>
         )}
@@ -42,8 +39,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
-    filterList,
-    setCurrentEvent
+    filterList
   }, dispatch);
 }
 
