@@ -10,8 +10,10 @@ export default class Auth extends Component {
             <h1 className="page-header" className="auth-head">PULSE</h1>
               <a 
                 href='/api/passportFacebook/facebookLogin' 
-                className="pure-button pure-button-primary"> 
-                <i className="fa fa-facebook-official" aria-hidden="true"></i> LOGIN!  
+                className="pure-button pure-button-primary"
+                > 
+                <span className="fa fa-facebook-official" aria-hidden="true"></span>
+                LOGIN!  
               </a> 
           </div>    
         </div>
