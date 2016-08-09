@@ -16,6 +16,7 @@ import EventMap from './EventMap';
 
 export class List extends React.Component {
   componentDidMount() {
+    this.props.setCurrentEvent({});
     this.props.getHiddenEvents(this.props.currentUser.id)
     .then(() => this.props.getList())
     .then(() => this.props.filterList(

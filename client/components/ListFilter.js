@@ -13,7 +13,6 @@ export class ListFilter extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents
     );
-    this.props.setCurrentEvent({});
   }
 
   render() {

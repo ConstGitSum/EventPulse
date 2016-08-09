@@ -6,26 +6,27 @@ import equal from 'deep-equal';
 
 import { setCurrentEvent } from '../actions/actions';
 import { setCurrMarker, setPrevMarker } from '../actions/map';
-import generateMarker, { userMarker, currentMarker } from '../utils/markers';
+import generateMarker, { userMarker, alertMarker } from '../utils/markers';
 
 export class EventMap extends React.Component {
   componentDidMount() {
-    this.markers = [];
+    this.markers = {}
     this._buildMap();
   }
 
   componentDidUpdate(prevProps, prevState) {
     // if filtered event list has changed, redraw markers
-    if (!equal(prevProps.listFiltered, this.props.listFiltered)) this._redrawMarkers();
+    if (!equal(prevProps.listFiltered, this.props.listFiltered)) this._drawMarkers();
 
     // if current event has changed, locate marker and set to currentMarker
-    if (prevProps.currentEvent !== this.props.currentEvent) {
+    if (prevProps.currentEvent !== this.props.currentEvent && !equal(this.props.currentEvent, {})) {
       console.log('current event has changed');
       console.log(this.markers);
+      this._alertCurrentMarker(this.markers[this.props.currentEvent.id], this.props.currentEvent);
     }
   }
 
-  _redrawMarkers() {
+  _drawMarkers() {
     // clear existing markers before adding new markers for updated list
     this._clearMarkers();
 
@@ -34,35 +35,36 @@ export class EventMap extends React.Component {
       const marker = L.marker(latlng, { icon: generateMarker(event.type) })
         .addTo(this.map);
 
-      marker.on('click', this._onClickMarker.bind(this, marker, event))
+      marker.on('click', this.props.setCurrentEvent.bind(this, event))
 
-      this.markers.push(marker);
+      this.markers[event.id] = marker;
     });
   }
 
   _clearMarkers() {
-    this.markers.forEach(marker => { this.map.removeLayer(marker) });
-    this.markers = [];
-    this.currentMarker = null;
-    this.prevMarker = null;
+    for (let id in this.markers) this.map.removeLayer(this.markers[id]);
+    this.markers = {};
+    this.props.setCurrMarker({});
+    this.props.setPrevMarker({});
+    this.props.setCurrentEvent({});
   }
 
-  _onClickMarker(marker, event) {
+  _alertCurrentMarker(marker, event) {
     const latlng = marker._latlng;
     // if currMarker already exists, replace with prevMarker
-    if (this.props.map.currMarker) {
-      this.map.removeLayer(this.props.map.currMarker);
-      this.props.map.prevMarker.addTo(this.map);
+    if (this.props.map.currMarker.eventId) {
+      this.map.removeLayer(this.props.map.currMarker.marker);
+      this.props.map.prevMarker.marker.addTo(this.map);
+      this.markers[this.props.map.currMarker.eventId] = this.props.map.prevMarker.marker;
     }
 
-    // set this marker as new prevMarker, and add new spinning marker as currMarker
+    // set this marker as new prevMarker, and add new alert marker as currMarker
     this.map.removeLayer(marker);
-    const newMarker = L.marker(latlng, { icon: currentMarker }).addTo(this.map);
-
-    this.props.setPrevMarker(marker);
-    this.props.setCurrMarker(newMarker);
+    const newMarker = L.marker(latlng, { icon: alertMarker }).addTo(this.map);
+    this.props.setPrevMarker({marker: marker, eventId: event.id });
+    this.props.setCurrMarker({marker: newMarker, eventId: event.id });
     this.props.setCurrentEvent(event);
-    this.markers.push(newMarker);
+    this.markers[event.id] = newMarker;
   }
 
   _buildMap() {

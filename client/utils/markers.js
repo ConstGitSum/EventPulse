@@ -60,7 +60,7 @@ export const userMarker = L.AwesomeMarkers.icon({
   prefix: 'fa'
 });
 
-export const currentMarker = L.AwesomeMarkers.icon({
+export const alertMarker = L.AwesomeMarkers.icon({
   icon: 'exclamation',
   spin: true,
   markerColor: 'red',
