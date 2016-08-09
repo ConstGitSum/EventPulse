@@ -15,6 +15,7 @@ export function getDefaultState() {
       ampm: currHour > 12 ? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
+      category:'other',
       privacy: 'false',
       group_visibility: 1,
       max_guests: 0,
