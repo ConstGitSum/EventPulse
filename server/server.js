@@ -47,6 +47,21 @@ io.on('connection', socket => {
     socket.join(theRoom)
     //console.log("ROOOM3", io.sockets.adapter.rooms)
   })
+
+  socket.on('user', user => {
+    socket.join(user)
+  })
+
+  socket.on('invite', invites => {
+    //have invites be [eventID,[invites]]
+    invites.forEach(invite => io.to(invite).emit('invite', "hey you!"))
+    console.log('HEY YO!')
+  })
+
+  socket.on('leaving', socketId => {
+    io.sockets.connected[socketId].disconnect();
+  })
+
   socket.on('message', (body)=> {
     io.to('event' + body.event).emit('message',{
       text: body.text,

@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios'
 import { browserHistory } from 'react-router';
+import {addInvite} from '../actions/actions'
 
-export default class FriendsList extends React.Component {
+export class FriendsList extends React.Component {
   
   constructor(props){
       super(props)
@@ -31,6 +32,7 @@ export default class FriendsList extends React.Component {
     const url = `/api/events/invite`;
     const body = { user_id: this.props.currentUser.id, invite_ids: this.state.invitedFriends, event_id: this.props.currentEvent.id };
       console.log('body',body)
+      this.props.addInvite([1,2,3])
     axios.post(url,body).then(answer => {
       console.log("yea", answer)
     })
@@ -62,7 +64,7 @@ export default class FriendsList extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({})
+  return bindActionCreators({addInvite},dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsList);

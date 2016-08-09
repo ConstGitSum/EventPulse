@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import io from 'socket.io-client'
 
 import { 
   userLogOut, 
   getList, 
   setCurrentEvent, 
   getHiddenEvents,
-  filterList 
+  filterList,
+  addInvite 
 } from '../actions/actions';
 import ListFilter from './ListFilter';
 
@@ -23,13 +23,7 @@ export class List extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents
     ));
-    this.socket = io('/')
-    this.socket.on('connect', () => {
-        console.log("connected!")
-      });
-    this.socket.on('invite', invite => {
-        
-      })
+    
   }
 
   renderListItem(event, index) {
@@ -74,7 +68,7 @@ export class List extends React.Component {
       <div className="explore">
         <h1>Explore</h1>
           <ListFilter />
-          <button>pending invites (1)</button>
+          <button>pending invites ({this.props.addInvite})</button>
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}
@@ -111,7 +105,8 @@ function mapDispatchToProps(dispatch) {
     getHiddenEvents,
     getList,
     filterList,
-    userLogOut
+    userLogOut,
+    addInvite
   }, dispatch);
 }
 

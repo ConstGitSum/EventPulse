@@ -17,6 +17,7 @@ export class ChatWindow extends React.Component {
         this.socket.emit('room',room)
       });
       this.socket.on('message', message => {
+        console.log("ID",this.socket)
         this.setState({messages: [message, ...this.state.messages]})
       })
       axios.get(`/api/events/${this.props.event.id}/chat`)
@@ -27,7 +28,8 @@ export class ChatWindow extends React.Component {
   }
 
   componentWillUnmount() {
-   this.socket.disconnect();     
+    this.socket.emit('leaving',this.socket.id)
+   //this.socket.disconnect();     
   }
 
   handleChange(event){

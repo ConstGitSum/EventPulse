@@ -11,6 +11,7 @@ export const UNHIDE_EVENT = 'UNHIDE_EVENT';
 export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const CREATE_EVENT = 'CREATE_EVENT';
 export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
+export const GET_INVITES = 'GET_INVITES';
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -144,5 +145,13 @@ export function getHiddenEvents(user_id) {
   return {
     type: GET_HIDDEN_EVENTS,
     payload: request
+  }
+}
+
+export function addInvite(inviteInfo) {
+
+  return{
+    type: GET_INVITES,
+    payload: inviteInfo
   }
 }
