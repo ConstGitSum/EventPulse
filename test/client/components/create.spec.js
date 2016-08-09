@@ -10,7 +10,7 @@ var chai = require('chai');
 describe("Create Component", () => {
 
   describe('Display form', () => {
-    it('should display title, description, location, time, duration, guests', () => {
+    it('should display title, description, location, time, duration, category, guests', () => {
       const component = renderIntoDocument(<Create 
           currentUser={{id:1}} 
           eventFormData={{
@@ -31,7 +31,8 @@ describe("Create Component", () => {
       expect(labels[2].textContent).to.equal('Location*')
       expect(labels[3].textContent).to.equal('Time*')
       expect(labels[4].textContent).to.equal('Duration')
-      expect(labels[5].textContent).to.equal('Guests')
+      expect(labels[5].textContent).to.equal('Category')
+      expect(labels[6].textContent).to.equal('Guests')
     })
 
     it('should display privacy and visibility', () => {
@@ -50,13 +51,13 @@ describe("Create Component", () => {
         validationErrors={{}}
       />)
       const labels = scryRenderedDOMComponentsWithTag(component, 'label')
-      expect(labels[6].textContent).to.equal('Privacy')
-      expect(labels[9].textContent).to.equal('Visibility')
+      expect(labels[7].textContent).to.equal('Privacy')
+      expect(labels[10].textContent).to.equal('Visibility')
     })
   })
 
   describe('Display Button', () => {
-    it('should display Submit and Clear Values buttons', () => {
+    it('should display Submit, Clear Values and Back buttons', () => {
       const component = renderIntoDocument(<Create 
         currentUser={{id:1}} 
         eventFormData={{

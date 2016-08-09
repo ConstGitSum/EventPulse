@@ -27,6 +27,7 @@ exports.up = function(knex, Promise) {
       table.decimal('longitude', 10, 7);
       table.dateTime('time');
       table.integer('duration');
+      table.string('category').defaultTo('other').notNullable();
       table.integer('max_guests');
       table.boolean('privacy').notNullable();
       table.integer('group_visibility').references('id').inTable('groups');

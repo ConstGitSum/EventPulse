@@ -149,6 +149,7 @@ export function createEvent(formData, currentUser) {
     location: formData.location,
     time: parseTime(formData.hour, formData.minute, formData.ampm),
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
+    category: formData.category || 'other',
     max_guests: formData.max_guests || 999999999,
     privacy: formData.privacy || false,
     group_visibility: formData.group_visibility || null
@@ -169,7 +170,7 @@ export function validateEventForm(formData) {
 }
 
 export function updateEventField(fieldKey, fieldValue) {
-  
+ 
   return {
     type: UPDATE_EVENT_FIELD,
     payload: { fieldKey, fieldValue }
