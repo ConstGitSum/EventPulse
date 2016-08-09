@@ -158,7 +158,7 @@ export class EventDetails extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-xs-12 page-header">
-              <h2 className="text-center">{this.props.currentEvent.title}</h2>
+              <h1 className="text-center">{this.props.currentEvent.title}</h1>
             </div>
           </div>
 
