@@ -11,7 +11,7 @@ body {
   line-height: 1.7em;
   color: #7f8c8d;
   font-size: 13px;
-  text-align:centre;
+  text-align: center;
 }
 
 h1,
@@ -59,7 +59,7 @@ a.pure-button-primary {
   position: fixed !important;
 }
 
-div.pure-u-1 {
+.pure-u-1 {
   width: 80%;
   height: 50%;
   margin: auto;
@@ -78,7 +78,6 @@ div.pure-u-1 {
   font-size: 5em;
   font-weight: bold;
   color: white;
-  font-weight: 500;
   border-radius: 5px;
   line-height: 1em;
 }
