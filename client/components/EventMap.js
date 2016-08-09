@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import L from 'leaflet';
 
 import { setCurrentEvent } from '../actions/actions';
 import generateMarker, { userMarker, currentMarker } from '../utils/markers';

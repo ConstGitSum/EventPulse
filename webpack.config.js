@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const DotenvPlugin = require('webpack-dotenv-plugin');
 
 module.exports = {

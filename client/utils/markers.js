@@ -1,3 +1,5 @@
+var L = require('./leaflet.awesome-markers');
+
 export default function generateMarker(eventType) {
   switch (eventType) {
     case 'athletics': {
