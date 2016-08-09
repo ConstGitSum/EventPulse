@@ -12,9 +12,11 @@ import {
   filterList 
 } from '../actions/actions';
 import ListFilter from './ListFilter';
+import EventMap from './EventMap';
 
 export class List extends React.Component {
   componentDidMount() {
+    this.props.setCurrentEvent({});
     this.props.getHiddenEvents(this.props.currentUser.id)
     .then(() => this.props.getList())
     .then(() => this.props.filterList(
@@ -22,7 +24,7 @@ export class List extends React.Component {
       'unhidden',
       this.props.currentUser.id,
       this.props.hiddenEvents
-    ));
+    ))
   }
 
   renderListItem(event, index) {
@@ -48,28 +50,30 @@ export class List extends React.Component {
 
   render() {
     return (
-      <div className="explore">
-        <h1 id="explore">Explore</h1>
+      <div className="explore container-fluid text-center">
+        <EventMap />
+
+        <div className="col-sm-4 text-left">
+          <h1 id="explore">Explore</h1>
           <ListFilter />
+
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}
           </ul>
 
-        <Link to="/create">
-        <span>
-          <button className="create-event pure-button-primary">
-            Create
-          </button>
-         </span> 
-        </Link>
-        <span>
-        <button 
-          className="logout btn btn-danger" 
-          onClick={this.props.userLogOut}> 
-          Log Out
-        </button>         
-        </span>
+          <Link to="/create">
+            <button className="create-event btn btn-primary">
+              Create
+            </button>
+          </Link>
+
+          <button 
+            className="logout btn btn-danger" 
+            onClick={this.props.userLogOut}> 
+            Log Out
+          </button>         
+        </div>
       </div>
     )
   }

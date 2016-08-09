@@ -7,10 +7,21 @@
 /*
  * -- BASE STYLES --
  */
+
+html, body, #root, #list-map, .explore {
+  height: 100%;
+}
+
+#root > div {
+ height: 100%;
+}
+
 body {
   line-height: 1.7em;
   color: #7f8c8d;
   font-size: 13px;
+  padding: 0;
+  margin: 0;
 }
 
 h1,

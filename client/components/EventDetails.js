@@ -137,8 +137,9 @@ export class EventDetails extends React.Component {
     const currentAttending = this.props.currentEvent.guests.length;
 
     return (
-      <div>
+      <div className="event-details">
         <Sidebar />
+
         <i
           onClick={this.onClickBack.bind(this)}
           className="fa fa-arrow-left fa-3x"

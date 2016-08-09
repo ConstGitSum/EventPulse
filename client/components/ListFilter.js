@@ -16,8 +16,8 @@ export class ListFilter extends React.Component {
             key={index} 
             onClick={this.props.filterList.bind(
               null, 
-              this.props.list, 
-              filter, 
+              this.props.list,
+              filter,
               this.props.currentUser.id,
               this.props.hiddenEvents
             )}>
