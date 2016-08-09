@@ -4,7 +4,7 @@ import reducer from '../../../client/reducers/reducer_create';
 
 describe('create Reducer', () => {
 
-  xit('should handle VALIDATE_EVENT_FORM', () => {
+  it('should handle VALIDATE_EVENT_FORM', () => {
     const initialState = {
       title: 'moreThanTenWords',
       description: 'description',
@@ -52,7 +52,7 @@ describe('create Reducer', () => {
       }
     }
     const nextState = reducer(initialState, action);
-    console.log('33333~~~nextState',nextState )
+    //console.log('33333~~~nextState',nextState )
     expect(nextState).to.deep.equal({ title: 'newTitle'});
   });
 

@@ -42,7 +42,7 @@ export class Create extends Component {
         <br/>
         <form role="form">
           <div className="form-group row">  
-            <label className="col-xs-4">Title*</label>     
+            <label className="col-xs-4">Title*</label>   
             <input 
               className="col-xs-8"
               type="text" 
