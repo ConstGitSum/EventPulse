@@ -142,9 +142,6 @@ export function updateTime() {
 }
 
 export function createEvent(formData, currentUser) {
-  console.log('address in actions is ~~',formData.location)
-  console.log('category in actions is ~~',formData.category)
-
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
@@ -173,7 +170,7 @@ export function validateEventForm(formData) {
 }
 
 export function updateEventField(fieldKey, fieldValue) {
-  console.log('1~~~~~', fieldKey, ': ',fieldValue)
+ 
   return {
     type: UPDATE_EVENT_FIELD,
     payload: { fieldKey, fieldValue }
