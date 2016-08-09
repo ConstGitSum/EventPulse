@@ -71,7 +71,11 @@ export class ChatWindow extends React.Component {
 
   render(){
     const messages = this.state.messages.map((message, index) => {
-      return <li key={index}><img src = {message.image} className = 'chatImage'/><b>{message.name}</b> {message.text}</li>
+      return 
+        <li className="col-xs-10 col-xs-offset-1" key={index}>
+          <img className='chatImage' src={message.image} />
+          <b>{message.name}</b> {message.text}
+        </li>
     })
     return(
       <div>

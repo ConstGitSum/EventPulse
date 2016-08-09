@@ -154,18 +154,18 @@ export class EventDetails extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-xs-12 page-header">
-              <h1 className="text-center">{this.props.currentEvent.title}</h1>
+              <h2 className="text-center">{this.props.currentEvent.title}</h2>
             </div>
           </div>
 
           <div className="row">
-            <div className="col-xs-8 col-xs-offset-2 text-center" role="group">
+            <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.renderButtons()}
             </div>
           </div>
 
           <div className="row">
-            <div className="col-xs-8 col-xs-offset-2">
+            <div className="col-xs-10 col-xs-offset-1">
               <p><strong>Attendance</strong>: {currentAttending}/{max_guests}</p>
               <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
               <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
@@ -177,15 +177,15 @@ export class EventDetails extends React.Component {
           </div>
 
           <div className="row">
-            <div className="col-xs-8 col-xs-offset-2 text-center" role="group">
+            <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.generateButtons(
                 "Chat",
-                'btn btn-primary btn-block')}
+                'btn btn-primary btn-block btn-lg')}
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-4 col-md-offset-4">
+            <div className="col-md-10 col-md-offset-1">
               <ChatWindow  event={this.props.currentEvent}/>
             </div>
           </div>
