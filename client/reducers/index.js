@@ -6,6 +6,7 @@ import ListFilteredReducer from './reducer_listFiltered';
 import CreateReducer from './reducer_create';
 import HiddenEventsReducer from './reducer_hiddenEvents';
 import InviteReducer from './reducer_invite';
+import InvitationReducer from './reducer_invitations'
 
 // bundle up reducers and send to store.
 const rootReducer = combineReducers({
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   listFiltered: ListFilteredReducer,
   create: CreateReducer,
   hiddenEvents: HiddenEventsReducer,
-  invites: InviteReducer
+  invites: InviteReducer,
+  invitations: InvitationReducer
 });
 
 export default rootReducer;

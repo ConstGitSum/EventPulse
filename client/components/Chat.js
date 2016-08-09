@@ -29,7 +29,7 @@ export class ChatWindow extends React.Component {
 
   componentWillUnmount() {
     this.socket.emit('leaving',this.socket.id)
-   //this.socket.disconnect();     
+   this.socket.disconnect();     
   }
 
   handleChange(event){

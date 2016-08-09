@@ -12,6 +12,7 @@ export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const CREATE_EVENT = 'CREATE_EVENT';
 export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
 export const GET_INVITES = 'GET_INVITES';
+export const GET_INVITATIONS = 'GET_INVITATIONS';
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -60,6 +61,8 @@ export function filterList(eventList, filter, userId, hiddenEvents) {
     filter === 'pending' ?
       eventList.filter(e => e.guests.some(guest => 
         guest.id === userId && guest.status === 'pending')) :
+      filter === 'invites' ?
+      eventList :
     eventList;
 
   return {
@@ -154,4 +157,12 @@ export function addInvite(inviteInfo) {
     type: GET_INVITES,
     payload: inviteInfo
   }
+}
+
+export function getInvitations(invites) {
+
+  return {
+    type: GET_INVITATIONS,
+  payload: invites
+}
 }

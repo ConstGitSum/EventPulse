@@ -75,7 +75,7 @@ export class EventDetails extends React.Component {
     const currentEvent = this.props.currentEvent;
     const currentUser = this.props.currentUser;
     const hiddenEvents = this.props.hiddenEvents;
-
+    console.log("current Evnet",currentEvent)
     const isUserInEvent = currentEvent.guests.some(guest =>
       guest.id === currentUser.id || currentEvent.created_by === currentUser.id)
     const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1

@@ -63,12 +63,27 @@ export class List extends React.Component {
     )}</div>
   }
 
+  seeInvites() {
+    console.log("hey there", this.props.invitations)
+    var newList = this.props.list.filter((event) => {
+      return this.props.invitations.includes(event.id)
+    })
+    console.log("newList",newList)
+    this.props.filterList(
+      newList,
+      'invites',
+      this.props.currentUser.id,
+      this.props.hiddenEvents
+    )
+  }
+
   render() {
+    console.log("WHATTTT",this.props.invitations)
     return (
       <div className="explore">
         <h1>Explore</h1>
           <ListFilter />
-          <button>pending invites ({this.props.addInvite})</button>
+          <button onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button>
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}
@@ -95,7 +110,9 @@ function mapStateToProps(state) {
     currentUser: state.currentUser,
     list: state.list,
     listFiltered: state.listFiltered,
-    hiddenEvents: state.hiddenEvents
+    hiddenEvents: state.hiddenEvents,
+    invites: state.invites,
+    invitations: state.invitations
   };
 }
 

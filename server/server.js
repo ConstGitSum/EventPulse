@@ -54,12 +54,12 @@ io.on('connection', socket => {
 
   socket.on('invite', invites => {
     //have invites be [eventID,[invites]]
-    invites.forEach(invite => io.to(invite).emit('invite', "hey you!"))
-    console.log('HEY YO!')
+    console.log("here we are", invites)
+    invites.forEach(invite => io.to(invite).emit('invite', invites[0]))
   })
 
   socket.on('leaving', socketId => {
-    io.sockets.connected[socketId].disconnect();
+    //io.sockets.connected[socketId].disconnect();
   })
 
   socket.on('message', (body)=> {

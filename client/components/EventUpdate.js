@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDom from 'react-dom'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import axios from 'axios'
-import io from 'socket.io-client'
-import {addInvite} from '../actions/actions'
+import axios from 'axios';
+import io from 'socket.io-client';
+import {addInvite, getInvitations} from '../actions/actions';
 
 export class EventUpdate extends React.Component {
   constructor(props) {
@@ -20,12 +20,15 @@ componentDidMount() {
       }
       });
     this.socket.on('invite', invite => {
-        this.props.addInvite(invite)
-      })
-    this.socket.emit()  
+      console.log("invitesssss", invite)
+        this.props.getInvitations(invite)
+      })  
 }
 sendInvites(invites) {
-  console.log("invitessss",invites)
+  console.log('here now', invites)
+  if(invites.length > 0){
+    this.socket.emit('invite', invites)
+  }
 }
 
 render(){
@@ -40,12 +43,13 @@ render(){
   return {
     currentEvent: state.currentEvent,
     currentUser: state.currentUser,
-    invites: state.invites
+    invites: state.invites,
+    
   }
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({addInvite})
+  return bindActionCreators({addInvite, getInvitations}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventUpdate);

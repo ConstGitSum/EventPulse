@@ -32,9 +32,10 @@ export class FriendsList extends React.Component {
     const url = `/api/events/invite`;
     const body = { user_id: this.props.currentUser.id, invite_ids: this.state.invitedFriends, event_id: this.props.currentEvent.id };
       console.log('body',body)
-      this.props.addInvite([1,2,3])
+      this.props.addInvite([1,2,3,4])
     axios.post(url,body).then(answer => {
       console.log("yea", answer)
+      this.props.addInvite([])
     })
   }
 
