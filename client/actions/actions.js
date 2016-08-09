@@ -13,6 +13,8 @@ export const CREATE_EVENT = 'CREATE_EVENT';
 export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
 export const GET_INVITES = 'GET_INVITES';
 export const GET_INVITATIONS = 'GET_INVITATIONS';
+export const REMOVE_INVITATION = 'REMOVE_INVITATION';
+export const GET_ALL_INVITATIONS = 'GET_ALL_INVITATIONS';
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -163,6 +165,23 @@ export function getInvitations(invites) {
 
   return {
     type: GET_INVITATIONS,
-  payload: invites
+    payload: invites
 }
+}
+
+export function removeInvitation(invite) {
+  return {
+    type: REMOVE_INVITATION,
+    payload: invite
+  }
+}
+
+export function getAllInvitations(user_id) {
+  console.log("HHHHHH", user_id)
+  const request = axios.get(`/api/events/invite/${user_id}`)
+  console.log('reqest', request)
+  return {
+    type: GET_ALL_INVITATIONS,
+    payload: request
+  }
 }

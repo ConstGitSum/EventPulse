@@ -64,11 +64,10 @@ export class List extends React.Component {
   }
 
   seeInvites() {
-    console.log("hey there", this.props.invitations)
+    console.log("invites",this.props.invitations)
     var newList = this.props.list.filter((event) => {
       return this.props.invitations.includes(event.id)
     })
-    console.log("newList",newList)
     this.props.filterList(
       newList,
       'invites',
@@ -78,7 +77,6 @@ export class List extends React.Component {
   }
 
   render() {
-    console.log("WHATTTT",this.props.invitations)
     return (
       <div className="explore">
         <h1>Explore</h1>

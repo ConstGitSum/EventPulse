@@ -11,11 +11,26 @@ export class FriendsList extends React.Component {
   constructor(props){
       super(props)
       this.state = {
-        invitedFriends : []
+        invitedFriends : [],
       }
+      this.friendsNotGoing();
+      console.log('pasdasd',this.props.currentEvent, this.props.currentUser.friendsList)
   }
+
+  friendsNotGoing() {
+    console.log("what")
+    let guestIDs = this.props.currentEvent.guests.map(guest_id => {
+      return guest_id.id;
+    })
+    let friendIDs = this.props.currentUser.friendsList.filter(friend_id => {
+      return !guestIDs.includes(friend_id.id)
+    })
+    return friendIDs
+    console.log("FRIEND",friendIDs)
+
+  }
+
   friendClick(event) {
-    console.log(event.target.className)
     if(event.target.className === 'friend'){
       this.setState({invitedFriends:[event.target.value, ...this.state.invitedFriends]})
     }else if(event.target.className === 'friend-accept'){
@@ -23,18 +38,14 @@ export class FriendsList extends React.Component {
       var newList = this.state.invitedFriends.slice(0,indexRemove).concat(this.state.invitedFriends.slice(indexRemove+1))
       this.setState({invitedFriends: newList})
     }
-
-    console.log(this.state.invitedFriends)
   }
   
   submitInvite(event) {
     event.preventDefault();
     const url = `/api/events/invite`;
     const body = { user_id: this.props.currentUser.id, invite_ids: this.state.invitedFriends, event_id: this.props.currentEvent.id };
-      console.log('body',body)
-      this.props.addInvite([1,2,3,4])
+      this.props.addInvite(['add', this.props.currentEvent.id, this.props.currentUser.id,  ...this.state.invitedFriends])  //will go add, event_id, inviter_id, invitee_ids
     axios.post(url,body).then(answer => {
-      console.log("yea", answer)
       this.props.addInvite([])
     })
   }
@@ -48,7 +59,7 @@ export class FriendsList extends React.Component {
       <div>
       <button onClick = {this.onClickBack.bind(this)} type = 'type' className = "ed-btn back-btn btn btn-danger"> Back </button>
       Invite Friends to {this.props.currentEvent.title}
-      <ul>{this.props.currentUser.friendsList.map((friend) => {
+      <ul>{this.friendsNotGoing().map((friend) => {
         return <li className ={this.state.invitedFriends.includes(friend.id)?"friend-accept":"friend"} key = {friend.id} value = {friend.id} onClick = {this.friendClick.bind(this)}><img src = {friend.image} className = "eventListFriendImage" /> {friend.name}</li>
       })}
       </ul>

@@ -199,9 +199,16 @@ router.post('/invite', function(req, res, next) {
   })
   console.log('invites',invites)
   Event.addInvite(invites).then((invite) => {
-    console.log("invite",invite)
+    //console.log("invite",invite)
     res.status(201).json(invite)
   }).catch((err) => {
     res.status(400).send('Did not insert!',err)
+  })
+})
+
+router.get('/invite/:id', function(req, res, next) {
+  Event.getInvites(req.params.id).then(invites => {
+    console.log('invites',invites)
+    res.status(200).json(invites.map(invite => invite.event_id))
   })
 })

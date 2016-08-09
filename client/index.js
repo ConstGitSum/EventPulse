@@ -24,6 +24,7 @@ ReactDOM.render(
       <Route path="/FriendsList" component={FriendsList}/>
       <Route path="/:eventId" component={EventDetails} />
     </Router>
+    
     </div>
   </Provider>
   ,document.getElementById('root'));

@@ -12,22 +12,24 @@ export class EventUpdate extends React.Component {
 
   }
 componentDidMount() {
+
     this.socket = io('/')
     this.socket.on('connect', () => {
-         console.log("connected!", this.socket)
       if(this.props.currentUser) {
         this.socket.emit('user', this.props.currentUser.id)
       }
       });
     this.socket.on('invite', invite => {
-      console.log("invitesssss", invite)
         this.props.getInvitations(invite)
-      })  
+      })
 }
 sendInvites(invites) {
-  console.log('here now', invites)
-  if(invites.length > 0){
-    this.socket.emit('invite', invites)
+  console.log("this invite",invites)
+  if(invites[0]=== 'add') {
+    this.socket.emit('invite', invites.slice(1))
+  }
+  if(invites[0] === 'remove') {
+    this.socket.emit('removeInvite',invites.slice(1))
   }
 }
 

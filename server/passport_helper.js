@@ -26,7 +26,7 @@ function newUser(user, profile) {
     }) 
     // add the user to the new friends group as the owner
     .then((group_id) => {
-      console.log("FRIENDS",profile._json.friends.data)
+      //console.log("FRIENDS",profile._json.friends.data)
       groupId = group_id[0];
       return User.addMemberships(buildNewMembership(userId, groupId, 'owner')); 
     })
@@ -83,7 +83,7 @@ function existingUser(user, profile) {
         // Take all the new friends and format them for database entry
         .then(friendArray => {
           if(friendArray[0][0]){ //Just in case a user has our app but isn't in our database
-            console.log('FA2',friendArray)
+            //console.log('FA2',friendArray)
             return User.addMemberships(buildMembershipList(friendArray, friendsListId, 'member'))
           }
         }

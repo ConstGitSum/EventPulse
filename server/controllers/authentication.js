@@ -9,7 +9,7 @@ router.get('/loggedIn', function(req, res) {
     const userId = req.user[0].id;
     const userName = req.user[0].name
     const image = req.user[0].image
-    const friendsList = req.user.slice(2)
+    const friendsList = req.user.slice(1)   // CHANGE THIS TO SLICE(2) TO NOT SHOW YOURSELF IN FRIEND'S LIST  CURRENTLY AT 1 FOR TESTING
     
     res.status(200).send({ id: userId, name: userName, image: image, friendsList: friendsList });
   }

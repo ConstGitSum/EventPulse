@@ -53,9 +53,16 @@ io.on('connection', socket => {
   })
 
   socket.on('invite', invites => {
-    //have invites be [eventID,[invites]]
-    console.log("here we are", invites)
-    invites.forEach(invite => io.to(invite).emit('invite', invites[0]))
+    console.log("invites2", invites)
+    invites.slice(2).forEach(invite => io.to(invite).emit('invite', invites[0]))
+    var inviteMap = invites.slice(2).map((invitee) => {
+      return {user_id: invites[1], invitee_id: invitee, event_id: invites[0]}
+    })
+    Event.addInvite(inviteMap).then()
+  })
+  socket.on('removeInvite', invite => {
+    Event.removeInvite({id: invite[0], event_id: invite[1]}).then()
+
   })
 
   socket.on('leaving', socketId => {
