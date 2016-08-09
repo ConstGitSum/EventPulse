@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 
 import { Button } from 'react-bootstrap';
 
-import { hideEvent, unhideEvent } from '../actions/actions';
+import { hideEvent, unhideEvent, editEvent } from '../actions/actions';
 
 let Menu = require('react-burger-menu').slide;
 
@@ -14,6 +14,8 @@ export class Sidebar extends React.Component {
   }
 
   onClickEdit() {
+    this.props.editEvent(this.props.currentEvent)
+    browserHistory.push('/create')
   }
 
   onClickHide() {
@@ -87,7 +89,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ hideEvent, unhideEvent }, dispatch)
+  return bindActionCreators({ editEvent, hideEvent, unhideEvent }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
