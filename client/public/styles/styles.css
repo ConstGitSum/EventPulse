@@ -15,7 +15,7 @@ html, body, #root, #list-map, .explore {
 	width: 60px;
 }
 
-i.fa {
+.event-details i.fa {
 	position: absolute;
 	left: 1%;
 	top: 1%;
