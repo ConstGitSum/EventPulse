@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Button, Cell } from 'react-pure';
 
 import { 
   userLogOut, 
@@ -32,9 +33,9 @@ export class List extends React.Component {
       <h3>{event.title}</h3>
         {/* Show additional info if clicked */}
         {this.props.currentEvent && event.id === this.props.currentEvent.id
-        ? <div className="event-info">
-            <h4>{event.location}</h4>
-            <p>{event.description}</p>
+        ? <div id="event-info">
+            <h4 id="event_location">{event.location}</h4>
+            <p id="event_description">{event.description}</p>
             <Link to={`/${event.id}`}>
               <button className="view-details btn btn-secondary">
                 View Event Details
@@ -48,7 +49,7 @@ export class List extends React.Component {
   render() {
     return (
       <div className="explore">
-        <h1>Explore</h1>
+        <h1 id="explore">Explore</h1>
           <ListFilter />
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
@@ -56,16 +57,19 @@ export class List extends React.Component {
           </ul>
 
         <Link to="/create">
-          <button className="create-event btn btn-primary">
+        <span>
+          <button className="create-event pure-button-primary">
             Create
           </button>
+         </span> 
         </Link>
-
+        <span>
         <button 
           className="logout btn btn-danger" 
           onClick={this.props.userLogOut}> 
           Log Out
         </button>         
+        </span>
       </div>
     )
   }
