@@ -3,13 +3,18 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime } from '../actions/actions';
+import {
+  createEvent, 
+  setCurrentEvent, 
+  validateEventForm, 
+  updateEventField, 
+  clearFormValues, 
+  updateTime } from '../actions/actions';
 
 export class Create extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      locationError: false
+  componentWillMount() {
+    if (!this.props.currentUser) {
+      browserHistory.push('/');
     }
   }
   onSubmitRedux(event) {
