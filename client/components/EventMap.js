@@ -5,6 +5,7 @@ import L from 'leaflet';
 import equal from 'deep-equal';
 
 import { setCurrentEvent } from '../actions/actions';
+import { setCurrMarker, setPrevMarker } from '../actions/map';
 import generateMarker, { userMarker, currentMarker } from '../utils/markers';
 
 export class EventMap extends React.Component {
@@ -14,15 +15,17 @@ export class EventMap extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps.listFiltered);
-    console.log(this.props.listFiltered);
-
     // if filtered event list has changed, redraw markers
     if (!equal(prevProps.listFiltered, this.props.listFiltered)) this._redrawMarkers();
+
+    // if current event has changed, locate marker and set to currentMarker
+    if (prevProps.currentEvent !== this.props.currentEvent) {
+      console.log('current event has changed');
+      console.log(this.markers);
+    }
   }
 
   _redrawMarkers() {
-    console.log('redrawing markers');
     // clear existing markers before adding new markers for updated list
     this._clearMarkers();
 
@@ -46,18 +49,18 @@ export class EventMap extends React.Component {
 
   _onClickMarker(marker, event) {
     const latlng = marker._latlng;
-    // if currentMarker already exists, replace with prevMarker
-    if (this.currentMarker) {
-      this.map.removeLayer(this.currentMarker);
-      this.prevMarker.addTo(this.map);
+    // if currMarker already exists, replace with prevMarker
+    if (this.props.map.currMarker) {
+      this.map.removeLayer(this.props.map.currMarker);
+      this.props.map.prevMarker.addTo(this.map);
     }
 
-    // set this marker as new prevMarker, and add new spinning marker as currentMarker
+    // set this marker as new prevMarker, and add new spinning marker as currMarker
     this.map.removeLayer(marker);
     const newMarker = L.marker(latlng, { icon: currentMarker }).addTo(this.map);
 
-    this.prevMarker = marker;
-    this.currentMarker = newMarker;
+    this.props.setPrevMarker(marker);
+    this.props.setCurrMarker(newMarker);
     this.props.setCurrentEvent(event);
     this.markers.push(newMarker);
   }
@@ -103,12 +106,16 @@ export class EventMap extends React.Component {
 function mapStateToProps(state) {
   return { 
     listFiltered: state.listFiltered,
+    currentEvent: state.currentEvent,
+    map: state.map
   };
 }
 
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
     setCurrentEvent,
+    setCurrMarker,
+    setPrevMarker
   }, dispatch);
 }
 
