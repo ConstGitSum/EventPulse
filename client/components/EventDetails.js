@@ -138,11 +138,11 @@ export class EventDetails extends React.Component {
 
     return (
       <div>
+        <Sidebar />
         <i
           onClick={this.onClickBack.bind(this)}
           className="fa fa-arrow-left fa-3x"
           aria-hidden="true"></i>
-        <Sidebar />
 
         <div className="container">
           <div className="row">

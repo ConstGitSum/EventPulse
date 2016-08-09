@@ -11,7 +11,6 @@ body {
   line-height: 1.7em;
   color: #7f8c8d;
   font-size: 13px;
-  text-align: center;
 }
 
 h1,
@@ -26,7 +25,7 @@ label {
 
 @font-face {
   font-family: Expansiva bold;
-  src: url('./Expansiva.otf');
+  src: url('../fonts/Expansiva.otf');
 }
 
 
@@ -92,6 +91,62 @@ a.pure-button-primary {
  * -- EVENTDETAILS STYLES --
  */
 
+.ed-btn {
+	width: 60px;
+}
+
+.event-details i.fa {
+	position: absolute;
+	left: 1%;
+	top: 1%;
+}
+
+/*
+ * -- EVENTDETAILS SIDEBAR STYLES --
+ */
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  left: 95%;
+  top: 2%;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgb(0,0,0);
+}
 
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
