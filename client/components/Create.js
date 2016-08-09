@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime } from '../actions/actions';
 
 export class Create extends Component {
+
   onSubmitRedux(event) {
     event.preventDefault();
     this.props.validateEventForm(this.props.eventFormData);
@@ -141,9 +142,6 @@ export class Create extends Component {
              
             </div>*/}
             <div className="row">
-            Event will start
-            </div>
-            <div className="row">
               <div className="col-xs-4"></div>
               <div className="col-xs-8"> 
                 {validationErrors.hour ? <div className="text-danger"> {validationErrors.hour} </div> : null}
@@ -204,7 +202,7 @@ export class Create extends Component {
                   value="false"
                   checked={eventFormData.privacy === 'false'} 
                   onChange={this.onFieldChangeRedux.bind(this)}/> 
-                <span>public</span>
+                <span> public</span>
               </label>
               <label className="col-xs-2">
                 <input 
@@ -214,7 +212,7 @@ export class Create extends Component {
                   value="true"
                   checked={eventFormData.privacy === 'true'} 
                   onChange={this.onFieldChangeRedux.bind(this)}/> 
-                  <span>private</span>
+                  <span> private</span>
               </label>
             </div>
           </div>
@@ -229,7 +227,7 @@ export class Create extends Component {
                   value="1" 
                   checked={eventFormData.group_visibility} 
                   onChange={this.onFieldChangeRedux.bind(this)}/> 
-                  <span>group1</span>
+                  <span> group1</span>
                 </label>
             </div>
           </div>

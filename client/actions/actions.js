@@ -142,7 +142,6 @@ export function updateTime() {
 }
 
 export function createEvent(formData, currentUser) {
-  console.log('currentUser~~~',currentUser)
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
@@ -170,6 +169,7 @@ export function validateEventForm(formData) {
 }
 
 export function updateEventField(fieldKey, fieldValue) {
+  
   return {
     type: UPDATE_EVENT_FIELD,
     payload: { fieldKey, fieldValue }
@@ -177,6 +177,7 @@ export function updateEventField(fieldKey, fieldValue) {
 }
 
 export function clearFormValues() {
+  
   return {
     type: CLEAR_FORM_VALUES
   }
