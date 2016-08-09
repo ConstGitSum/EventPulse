@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import L from 'leaflet';
+import equal from 'deep-equal';
 
 import { setCurrentEvent } from '../actions/actions';
 import generateMarker, { userMarker, currentMarker } from '../utils/markers';
@@ -12,7 +13,16 @@ export class EventMap extends React.Component {
     this._buildMap();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps.listFiltered);
+    console.log(this.props.listFiltered);
+
+    // if filtered event list has changed, redraw markers
+    if (!equal(prevProps.listFiltered, this.props.listFiltered)) this._redrawMarkers();
+  }
+
+  _redrawMarkers() {
+    console.log('redrawing markers');
     // clear existing markers before adding new markers for updated list
     this._clearMarkers();
 

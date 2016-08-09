@@ -15,7 +15,7 @@ import ListFilter from './ListFilter';
 import EventMap from './EventMap';
 
 export class List extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.getHiddenEvents(this.props.currentUser.id)
     .then(() => this.props.getList())
     .then(() => this.props.filterList(

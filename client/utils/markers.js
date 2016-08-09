@@ -61,7 +61,7 @@ export const userMarker = L.AwesomeMarkers.icon({
 });
 
 export const currentMarker = L.AwesomeMarkers.icon({
-  icon: 'spinner',
+  icon: 'exclamation',
   spin: true,
   markerColor: 'red',
   prefix: 'fa'
