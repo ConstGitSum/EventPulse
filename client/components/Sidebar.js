@@ -32,15 +32,19 @@ export class Sidebar extends React.Component {
   }
 
   getItems() {
+    const hiddenEvents = this.props.hiddenEvents
+    const currentEvent = this.props.currentEvent
+    const currentUser  = this.props.currentUser
     const items = []; 
 
-    if (this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1) {
+    if (currentUser.id !== currentEvent.created_by 
+      && hiddenEvents.indexOf(currentEvent.id) === -1) {
       items.push(generateButton('Hide', this.onClickHide.bind(this)));
-    } else {
+    } else if (currentUser.id !== currentEvent.created_by) {
       items.push(generateButton('Show', this.onClickUnhide.bind(this)));
     }
 
-    if(this.props.currentEvent.created_by === this.props.currentUser.id) {
+    if(currentEvent.created_by === currentUser.id) {
       items.push(generateButton('Edit', this.onClickEdit.bind(this)))
     }
 
