@@ -9,7 +9,9 @@ import {
   validateEventForm, 
   updateEventField, 
   clearFormValues, 
-  updateTime } from '../actions/actions';
+  updateTime,
+  updateEvent,
+  deleteUpdateData } from '../actions/actions';
 
 export class Create extends Component {
   componentWillMount() {
@@ -23,16 +25,27 @@ export class Create extends Component {
     this.props.validateEventForm(this.props.eventFormData);
 
     if (Object.keys(this.props.validationErrors).length === 0) {
-      this.props.createEvent(this.props.eventFormData, this.props.currentUser)
-      .then(res => {
-        if (res.error) {throw new Error('Unable to create event');}
-        this.props.clearFormValues();
-        browserHistory.push(`/${this.props.currentEvent.id}`);
-      })
-      .catch(err => {
-        this.setState({locationError: true})
-        console.log(err)
-      });
+
+      if (this.props.toggleEventUpdate) {
+        this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
+        .then(res => {
+          if (res.error) throw new Error('Unable to update event');
+          this.props.clearFormValues();
+          browserHistory.push(`/${this.props.currentEvent.id}`)
+        })
+        .catch(err => {
+        })
+
+      } else {
+        this.props.createEvent(this.props.eventFormData, this.props.currentUser)
+        .then(res => {
+          if (res.error) throw new Error('Unable to create event');
+          this.props.clearFormValues();
+          browserHistory.push(`/${this.props.currentEvent.id}`);
+        })
+        .catch(err => {
+        });
+      }
     }
   }
 
@@ -44,13 +57,40 @@ export class Create extends Component {
     this.props.clearFormValues();
   }
 
+  generateButton() {
+    if (this.props.toggleEventUpdate) {
+      return (
+        <button
+          type="submit"
+          className='btn btn-primary'
+          role="button"
+          onClick={this.onSubmitRedux.bind(this)}>
+          Update
+        </button>
+      )
+    } else {
+      return (
+        <button
+          type="submit"
+          className='btn btn-primary'
+          role="button"
+          onClick={this.onSubmitRedux.bind(this)}>
+          Submit
+        </button>
+      )
+    }
+  }
+
   render() {
     const { validationErrors, eventFormData } = this.props;
 
     return(
       <div className="container">
         <br/>
-        <h3 className="row">Create New Event</h3>
+        {this.props.toggleEventUpdate
+          ? <h3 className="row"> Update Event</h3>
+          : <h3 className="row">Create New Event</h3>
+        }
         <p>* required</p>
         <br/>
         <form role="form">
@@ -144,15 +184,6 @@ export class Create extends Component {
               <div className="col-xs-2 text-info"> hour </div>
               <div className="col-xs-2 text-info"> minute </div>
             </div>
-            {/*<div className="col-xs-8">
-              <input 
-                type="checkbox" 
-                className="" 
-                role="button"
-                onClick={this.setCurrentTime.bind(this)}/> 
-                <span> Event happening now? </span>
-             
-            </div>*/}
             <div className="row">
               <div className="col-xs-4"></div>
               <div className="col-xs-8"> 
@@ -264,13 +295,7 @@ export class Create extends Component {
             </div>
           </div>
           <div className="btn-toolbar">
-            <button 
-              type="submit" 
-              className='btn btn-primary' 
-              role="button"
-              onClick={this.onSubmitRedux.bind(this)}> 
-              Submit 
-            </button>
+            {this.generateButton()}
             <button 
               type="button" 
               className='btn btn-danger' 
@@ -301,13 +326,21 @@ function mapStateToProps(state) {
     currentEvent: state.currentEvent,
     currentUser: state.currentUser,
     validationErrors: state.create.validationErrors,
-    eventFormData: state.create.eventFormData
+    eventFormData: state.create.eventFormData,
+    toggleEventUpdate: state.create.toggleEventUpdate
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createEvent, setCurrentEvent, validateEventForm, updateEventField, clearFormValues, updateTime}, dispatch)
+    createEvent,
+    setCurrentEvent,
+    validateEventForm,
+    updateEventField,
+    clearFormValues,
+    updateTime,
+    updateEvent,
+    deleteUpdateData }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
