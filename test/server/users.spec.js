@@ -390,13 +390,13 @@ describe('API User Routes', () => {
         res.body[0].should.have.property('group_id');
         res.body[0].group_id.should.equal(4);
         res.body[1].should.have.property('id')
-        res.body[1].id.should.equal(6);
+        res.body[1].id.should.equal(5);
         res.body[1].should.have.property('id');
-        res.body[1].user_id.should.equal(1);
+        res.body[1].user_id.should.equal(5);
         res.body[1].should.have.property('group_id')
         res.body[1].group_id.should.equal(4);
         res.body[1].should.have.property('rank');
-        res.body[1].rank.should.equal('member');
+        res.body[1].rank.should.equal('owner');
         done();
       })
     })
@@ -416,17 +416,17 @@ describe('API User Routes', () => {
         res.body[0].should.have.property('group_id');
         res.body[0].group_id.should.equal(4);
         res.body[1].should.have.property('id')
-        res.body[1].id.should.equal(6);
+        res.body[1].id.should.equal(5);
         res.body[1].should.have.property('user_id');
-        res.body[1].user_id.should.equal(1);
+        res.body[1].user_id.should.equal(5);
         res.body[1].should.have.property('group_id')
         res.body[1].group_id.should.equal(4);
         res.body[1].should.have.property('rank');
-        res.body[1].rank.should.equal('member');
+        res.body[1].rank.should.equal('owner');
         res.body[2].should.have.property('id');
-        res.body[2].id.should.equal(7);
+        res.body[2].id.should.equal(1);
         res.body[2].should.have.property('user_id');
-        res.body[2].user_id.should.equal(2);
+        res.body[2].user_id.should.equal(1);
         res.body[2].should.have.property('group_id')
         res.body[2].group_id.should.equal(4);
         res.body[2].should.have.property('rank');
@@ -472,13 +472,13 @@ describe('API User Routes', () => {
         res.body[0].should.have.property('facebook_id');
         res.body[0].facebook_id.should.equal('12104755554605551');
         res.body[1].should.have.property('id')
-        res.body[1].id.should.equal(5);
+        res.body[1].id.should.equal(1);
         res.body[1].should.have.property('user_id')
-        res.body[1].user_id.should.equal(2)
+        res.body[1].user_id.should.equal(1)
         res.body[1].should.have.property('group_id');
         res.body[1].group_id.should.equal(2);
         res.body[1].should.have.property('rank');
-        res.body[1].rank.should.equal('member')
+        res.body[1].rank.should.equal('owner')
         done();
       })
     })
@@ -500,17 +500,17 @@ describe('API User Routes', () => {
         res.body[0].should.have.property('facebook_id');
         res.body[0].facebook_id.should.equal('12104755554605551');
         res.body[1].should.have.property('id')
-        res.body[1].id.should.equal(5);
+        res.body[1].id.should.equal(1);
         res.body[1].should.have.property('user_id')
-        res.body[1].user_id.should.equal(2)
+        res.body[1].user_id.should.equal(1)
         res.body[1].should.have.property('group_id');
         res.body[1].group_id.should.equal(2);
         res.body[1].should.have.property('rank');
-        res.body[1].rank.should.equal('member')
+        res.body[1].rank.should.equal('owner')
         res.body[2].should.have.property('id')
-        res.body[2].id.should.equal(6);
+        res.body[2].id.should.equal(3);
         res.body[2].should.have.property('user_id')
-        res.body[2].user_id.should.equal(4)
+        res.body[2].user_id.should.equal(3)
         res.body[2].should.have.property('group_id');
         res.body[2].group_id.should.equal(2);
         res.body[2].should.have.property('rank');

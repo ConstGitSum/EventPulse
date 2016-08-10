@@ -8,7 +8,11 @@ module.exports = {
   update,
   deleteEvent,
   addChatMessage,
-  getChatMessages
+  getChatMessages,
+  addInvite,
+  getInvites,
+  removeInvite,
+  checkInvite
 };
 
 function getAll() {
@@ -53,4 +57,32 @@ function getChatMessages(event_id) {
     .where('messages.event_id', event_id)
     .select()
     .returning(['users.name','messages.text', 'users.image']);
+}
+
+
+function addInvite(users) {
+  console.log('users',users)
+  return knex('invites')
+  .insert(users)
+  .returning('event_id')
+}
+
+function checkInvite(user_id, event_id) {
+  console.log("INVITESSSS", user_id, event_id)
+  return knex('invites')
+  .where({invitee_id: user_id, event_id: event_id})
+  .select('invitee_id')
+}
+
+function getInvites(user_id) {
+  return knex('invites')
+  .select()
+  .where('invitee_id',user_id)
+  .returning('event_id')
+}
+
+function removeInvite(invite) {
+  return knex('invites')
+  .where({invitee_id: invite.id, event_id: invite.event_id})
+  .del()
 }

@@ -9,7 +9,8 @@ import {
   getList, 
   setCurrentEvent, 
   getHiddenEvents,
-  filterList 
+  filterList,
+  addInvite 
 } from '../actions/actions';
 import ListFilter from './ListFilter';
 import EventMap from './EventMap';
@@ -24,7 +25,7 @@ export class List extends React.Component {
       'unhidden',
       this.props.currentUser.id,
       this.props.hiddenEvents
-    ))
+    ));
   }
 
   renderListItem(event, index) {
@@ -38,6 +39,7 @@ export class List extends React.Component {
         ? <div id="event-info">
             <h4 id="event_location">{event.location}</h4>
             <p id="event_description">{event.description}</p>
+            {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <Link to={`/${event.id}`}>
               <button className="view-details btn btn-secondary">
                 View Event Details
@@ -47,27 +49,52 @@ export class List extends React.Component {
         : null}
     </li>
   }
+  myFriendsGoing(friendsList, guestList){ //This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
+    if(friendsList){
+    var friendIds = friendsList.map((friendId => friendId.id))
+    var friendsGoing = guestList.filter((friendGoing) => {
+      if(friendIds.includes(friendGoing.id)){
+        return true
+      }   
+      return false
+    })
+    return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend,index) => {
+      if(index<5){
+      return <img className = 'eventListFriendImage' key = {friend.id} src = {friend.image}/>
+      }
+    }
+    )}</div>
+  }
+}
+  seeInvites() {  //This will filter via invites
+    var newList = this.props.list.filter((event) => {
+      return this.props.invitations.includes(event.id)
+    })
+    this.props.filterList(
+      newList,
+      'invites',
+      this.props.currentUser.id,
+      this.props.hiddenEvents
+    )
+  }
 
   render() {
     return (
       <div className="explore container-fluid text-center">
         <EventMap />
-
         <div className="col-sm-4 text-left">
           <h1 id="explore">Explore</h1>
           <ListFilter />
-
+          {this.props.invitations.length>0 ? <button onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button> : null}
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}
           </ul>
-
           <Link to="/create">
             <button className="create-event btn btn-primary">
               Create
             </button>
           </Link>
-
           <button 
             className="logout btn btn-danger" 
             onClick={this.props.userLogOut}> 
@@ -85,7 +112,9 @@ function mapStateToProps(state) {
     currentUser: state.currentUser,
     list: state.list,
     listFiltered: state.listFiltered,
-    hiddenEvents: state.hiddenEvents
+    hiddenEvents: state.hiddenEvents,
+    invites: state.invites,
+    invitations: state.invitations
   };
 }
 
@@ -95,7 +124,8 @@ function mapDispatchToProps(dispatch) {
     getHiddenEvents,
     getList,
     filterList,
-    userLogOut
+    userLogOut,
+    addInvite
   }, dispatch);
 }
 

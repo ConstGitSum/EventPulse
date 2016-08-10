@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getCurrentUser } from '../actions/actions';
+import { getCurrentUser, getAllInvitations } from '../actions/actions';
 
 import List from './List';
 import Auth from './Auth';
 
 export class Home extends Component {
   componentWillMount() {
-    this.props.getCurrentUser()
+    this.props.getCurrentUser()  
   }
 
   render() {
     return (
-      <div>
+      <div className = 'home'>
         {this.props.currentUser 
          ? <List /> 
          : <Auth />} 
@@ -27,7 +27,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ getCurrentUser }, dispatch);
+  return bindActionCreators({ getCurrentUser, getAllInvitations }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

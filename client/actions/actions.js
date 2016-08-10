@@ -12,6 +12,10 @@ export const HIDE_EVENT = 'HIDE_EVENT';
 export const UNHIDE_EVENT = 'UNHIDE_EVENT';
 export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
+export const GET_INVITES = 'GET_INVITES';
+export const GET_INVITATIONS = 'GET_INVITATIONS';
+export const REMOVE_INVITATION = 'REMOVE_INVITATION';
+export const GET_ALL_INVITATIONS = 'GET_ALL_INVITATIONS';
 export const CREATE_EVENT = 'CREATE_EVENT';
 export const VALIDATE_EVENT_FORM = 'VALIDATE_EVENT_FORM';
 export const UPDATE_EVENT_FIELD = 'UPDATE_EVENT_FIELD';
@@ -65,6 +69,8 @@ export function filterList(eventList, filter, userId, hiddenEvents) {
     filter === 'pending' ?
       eventList.filter(e => e.guests.some(guest => 
         guest.id === userId && guest.status === 'pending')) :
+      filter === 'invites' ?
+      eventList :
     eventList;
 
   return {
@@ -169,6 +175,37 @@ export function validateEventForm(formData) {
   }
 }
 
+export function addInvite(inviteInfo) {
+
+  return{
+    type: GET_INVITES,
+    payload: inviteInfo
+  }
+}
+
+export function getInvitations(invites) {
+
+  return {
+    type: GET_INVITATIONS,
+    payload: invites
+}
+}
+
+export function removeInvitation(invite) {
+  return {
+    type: REMOVE_INVITATION,
+    payload: invite
+  }
+}
+
+export function getAllInvitations(invites) {
+ 
+  return {
+    type: GET_ALL_INVITATIONS,
+    payload: invites
+  }
+}
+
 export function updateEventField(fieldKey, fieldValue) {
  
   return {
@@ -183,3 +220,4 @@ export function clearFormValues() {
     type: CLEAR_FORM_VALUES
   }
 }
+

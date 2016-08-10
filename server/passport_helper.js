@@ -26,6 +26,7 @@ function newUser(user, profile) {
     }) 
     // add the user to the new friends group as the owner
     .then((group_id) => {
+      //console.log("FRIENDS",profile._json.friends.data)
       groupId = group_id[0];
       return User.addMemberships(buildNewMembership(userId, groupId, 'owner')); 
     })
@@ -45,6 +46,7 @@ function newUser(user, profile) {
         }
         )
         // return your info plus new members of friends
+        .then(memberships => User.getMemberList(groupId))
         .then(friends => [{ id: userId, group_id: groupId, name: userName, image: image}].concat(friends)) 
     );
 }
@@ -76,16 +78,18 @@ function existingUser(user, profile) {
       // take all the new friends and grab their user_id 
       // by using their facebook id
       return newFriends.length === 0
-      ? user
+      ? user.concat(members)
       : Promise.all(newFriends.map(friend => User.getUserByFacebookId(friend.id)))
         // Take all the new friends and format them for database entry
         .then(friendArray => {
           if(friendArray[0][0]){ //Just in case a user has our app but isn't in our database
+            //console.log('FA2',friendArray)
             return User.addMemberships(buildMembershipList(friendArray, friendsListId, 'member'))
           }
         }
         )
         // new friends added
+        .then(memberships => User.getMemberList(friendsListId))
         .then(memberships => user.concat(memberships)); 
   });
 }
@@ -101,7 +105,7 @@ function buildNewUser(profile) {
 }
 
 // build membership object
-function buildNewMembership(userId, groupId, rank) {
+function buildNewMembership(userId,groupId, rank) {
   return {
     user_id: userId, 
     group_id: groupId, 

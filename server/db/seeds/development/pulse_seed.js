@@ -11,7 +11,7 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert({
         name: 'Alice',
         email: 'alice@gmail.com',
-        image: 'https://imageurl',
+        image: 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSIygPKYqtRBNCjBy9vWjpuWITAKNxStGPFGJf4fJV3YfsohfkMCg',
         facebook_id: '12104755554605551',
       });
     })
@@ -19,9 +19,17 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert({
         name: 'Bob',
         email: 'bob@gmail.com',
-        image: 'https://imageurl',
+        image: 'https://news.artnet.com/app/news-upload/2015/10/bobross-e1446214347195.jpg',
         facebook_id: '12104755554605552',
       });
+    })
+    .then(() =>{
+      return knex('users').insert({
+        name: 'Kenny',
+        email: 'Kenny@kenny.com',
+        image: 'http://rkfdnews.com/wp-content/uploads/2013/03/shark-man-costume-6491.jpg',
+        facebook_id: '10104745559602550'
+      })
     })
     .then(() => {
       return knex('groups').insert({

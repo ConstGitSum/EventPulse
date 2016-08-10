@@ -8,7 +8,7 @@
  * -- BASE STYLES --
  */
 
-html, body, #root, #list-map, .explore {
+html, body, #root, #list-map, .explore, .home{
   height: 100%;
 }
 
@@ -203,4 +203,22 @@ a.pure-button-primary {
     font-size: 1.8em;
   }
 
+}
+
+.eventListFriendImage {
+  width: 7%;  
+  overflow: hidden;
+  border-radius: 50%;
+}
+.friend-accept {
+font-size: large;
+background-color: #5cb85c;
+}
+.friend {
+ font-size: large;
+background-color: white; 
+}
+.chatImage {
+  width: 50px;
+  height: 50px;
 }

@@ -8,7 +8,7 @@ import axios from 'axios'
 export class ChatWindow extends React.Component {
   constructor(props){
     super(props)
-    this.state = {messages:[], comment:''}
+    this.state = {messages:[], comment:'', comments: 0, nextReplyTime: Date.now()}
   }
   componentDidMount() {
       this.socket = io('/')
@@ -17,6 +17,7 @@ export class ChatWindow extends React.Component {
         this.socket.emit('room',room)
       });
       this.socket.on('message', message => {
+        console.log("ID",this.socket)
         this.setState({messages: [message, ...this.state.messages]})
       })
       axios.get(`/api/events/${this.props.event.id}/chat`)
@@ -27,6 +28,7 @@ export class ChatWindow extends React.Component {
   }
 
   componentWillUnmount() {
+    this.socket.emit('leaving',this.socket.id)
    this.socket.disconnect();     
   }
 
@@ -39,16 +41,37 @@ export class ChatWindow extends React.Component {
         text: this.state.comment,
         name: this.props.currentUser.name, 
         user_id: this.props.currentUser.id,
-        event:this.props.event.id,
+        event: this.props.event.id,
         image: this.props.currentUser.image
       }
+      const timeStamp = Date.now();
+
+      if(this.state.comments == 10){
+        this.setState({nextReplyTime: timeStamp + 3000})
+        this.setState({messages: [{text:'3 second timeout:  Please stop spamming'},...this.state.messages]})
+        this.setState({comments: 0})
+      }
+
+      if(timeStamp > this.state.nextReplyTime+3000){
+        this.setState({comments: 0})
+      }
+
+      if(timeStamp < this.state.nextReplyTime){
+        this.setState({comments:this.state.comments+1})  
+      }
+      
+      if(message.text.length !==0 && timeStamp > this.state.nextReplyTime){
       this.socket.emit('message', message)
+      this.setState({nextReplyTime: timeStamp+400})
       this.setState({comment:''})
+      }
+      
+      
   }
 
   render(){
     const messages = this.state.messages.map((message, index) => {
-      return <li key={index}><img src = {message.image} /><b>{message.name}</b> {message.text}</li>
+      return <li key={index}><img src = {message.image} className = 'chatImage'/><b>{message.name}</b> {message.text}</li>
     })
     return(
       <div>

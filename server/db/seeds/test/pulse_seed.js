@@ -5,7 +5,8 @@ exports.seed = function(knex, Promise) {
     knex('events').del(),
     knex('memberships').del(),
     knex('groups').del(),
-    knex('users').del()
+    knex('users').del(),
+    knex('invites').del()
   ])
     .then(() => { // Inserts seed entries one by one in series
       return knex('users').insert({

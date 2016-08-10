@@ -10,7 +10,9 @@ import {
   joinEvent,
   leaveEvent, 
   hideEvent, 
-  unhideEvent 
+  unhideEvent,
+  removeInvitation,
+  addInvite
 } from '../actions/actions';
 
 export class EventDetails extends React.Component {
@@ -34,7 +36,12 @@ export class EventDetails extends React.Component {
    */
   onClickJoin() {
     this.props.joinEvent(this.props.currentEvent.id, this.props.currentUser.id)
-      .then()
+      .then(() => {
+        if(this.props.invitations.includes(this.props.currentEvent.id)){
+          this.props.removeInvitation(this.props.currentEvent.id)
+          this.props.addInvite(['remove', this.props.currentUser.id, this.props.currentEvent.id])
+        }
+      })
       .catch(err => console.log('ERROR - onClickJoin:', err))
   }
 
@@ -93,7 +100,6 @@ export class EventDetails extends React.Component {
     const hiddenEvents = this.props.hiddenEvents;
     const guestLength = currentEvent.guests.length;
     const max_guests = currentEvent.max_guests;
-
     const isUserInEvent = currentEvent.guests.some(guest =>
       guest.id === currentUser.id || currentEvent.created_by === currentUser.id)
     const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1
@@ -193,7 +199,9 @@ function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
-    hiddenEvents: state.hiddenEvents
+    hiddenEvents: state.hiddenEvents,
+    invitations: state.invitations,
+
   }
 }
 
@@ -202,7 +210,9 @@ function mapDispatchToProps(dispatch) {
     joinEvent, 
     leaveEvent, 
     hideEvent,
-    unhideEvent
+    unhideEvent,
+    removeInvitation,
+    addInvite
   }, dispatch)
 
 }
