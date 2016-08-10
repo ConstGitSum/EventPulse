@@ -57,7 +57,7 @@ describe("Create Component", () => {
   })
 
   describe('Display Button', () => {
-    it('should display Submit, Clear Values and Back buttons', () => {
+    it('should display Clear Values and Create buttons', () => {
       const component = renderIntoDocument(<Create 
         currentUser={{id:1}} 
         eventFormData={{
@@ -73,10 +73,9 @@ describe("Create Component", () => {
         validationErrors={{}}
       />)
       const buttons = scryRenderedDOMComponentsWithTag(component, 'button')
-      expect(buttons.length).to.equal(3);
-      expect(buttons[0].textContent).to.equal('Submit')
-      expect(buttons[1].textContent).to.equal('Clear Values')
-      expect(buttons[2].textContent).to.equal('Back')
+      expect(buttons.length).to.equal(2);
+      expect(buttons[0].textContent).to.equal('Clear Values')
+      expect(buttons[1].textContent).to.equal('Create')
     })
   })
 })

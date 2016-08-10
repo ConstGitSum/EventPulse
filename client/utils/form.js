@@ -160,7 +160,7 @@ export function validateForm(validationErrors, formData) {
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
   } else if (Object.keys(validationErrors).length > 0) {
-    validationErrors._form = 'Please fill out all the required fields';
+    validationErrors._form = 'Please fix errors and submit again';
       if (Object.keys(validationErrors).length === 1) {
         validationErrors = {};
       }
