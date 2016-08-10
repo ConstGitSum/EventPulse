@@ -49,7 +49,6 @@ app.get('/*', (req, res) => {
 io.on('connection', socket => {
   //if(socket.request.session.passport)  //I'm working on attaching session info to socket.
   {
-  console.log("socket request",socket.request.session)
   socket.on('room', (theRoom) => {    //if server gets a room, add the person to room
     socket.join(theRoom)
   })
