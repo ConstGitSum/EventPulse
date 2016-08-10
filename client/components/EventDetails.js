@@ -152,12 +152,7 @@ export class EventDetails extends React.Component {
           className="fa fa-arrow-left fa-3x"
           aria-hidden="true"></i>
         <Sidebar />
-
-        <i
-          onClick={this.onClickBack.bind(this)}
-          className="fa fa-arrow-left fa-3x"
-          aria-hidden="true"></i>
-
+        
         <div className="container">
           <div className="row">
             <div className="col-xs-12 page-header">
