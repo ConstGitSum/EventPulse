@@ -26,6 +26,9 @@ export class EventDetails extends React.Component {
   }
 
   componentWillMount() {
+    if (!this.props.currentUser) {
+      browserHistory.push('/');
+    }
     this.setState({ timeObj: moment(this.props.currentEvent.time) },
       () => this.setState({ timeText: this.state.timeObj.format('dddd, h:mm a')})
     )
@@ -118,14 +121,14 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-primary btn-block',
+          'btn btn-primary btn-block btn-lg',
           this.onClickJoin.bind(this))
       )
     } else {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-danger btn-block',
+          'btn btn-danger btn-block btn-lg',
           'disabled',
           this.onClickJoin.bind(this)
         )
@@ -144,28 +147,27 @@ export class EventDetails extends React.Component {
 
     return (
       <div className="event-details">
-        <Sidebar />
-
         <i
           onClick={this.onClickBack.bind(this)}
           className="fa fa-arrow-left fa-3x"
           aria-hidden="true"></i>
-
+        <Sidebar />
+        
         <div className="container">
           <div className="row">
-            <div className="col-lg-12 page-header">
-              <h1 className="text-center">{this.props.currentEvent.title}</h1>
+            <div className="col-xs-12 page-header">
+              <h2 className="text-center">{this.props.currentEvent.title}</h2>
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-4 col-md-offset-4 text-center" role="group">
+            <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.renderButtons()}
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-4 col-md-offset-4">
+            <div className="col-xs-10 col-xs-offset-1">
               <p><strong>Attendance</strong>: {currentAttending}/{max_guests}</p>
               <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
               <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
@@ -177,15 +179,15 @@ export class EventDetails extends React.Component {
           </div>
 
           <div className="row">
-            <div className="col-md-4 col-md-offset-4 text-center" role="group">
+            <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.generateButtons(
                 "Chat",
-                'btn btn-primary btn-block')}
+                'btn btn-primary btn-block btn-lg')}
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-4 col-md-offset-4">
+            <div className="col-md-10 col-md-offset-1">
               <ChatWindow  event={this.props.currentEvent}/>
             </div>
           </div>

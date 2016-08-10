@@ -106,9 +106,9 @@ describe('EventDetails Component', () => {
   })
 
   it('should display the title of the event', () => {
-    const h1 = enzymeWrapper.find('h1');
-    expect(h1).to.have.length(1);
-    expect(h1.at(0).text()).to.equal('Pokemongodb party')
+    const h2 = enzymeWrapper.find('h2');
+    expect(h2).to.have.length(1);
+    expect(h2.at(0).text()).to.equal('Pokemongodb party')
   })
 
   it('should display the description of the event', () => {

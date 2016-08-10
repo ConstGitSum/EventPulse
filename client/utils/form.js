@@ -145,8 +145,6 @@ export function validateForm(validationErrors, formData) {
   }
 
   //validateTimeRange(validationErrors, formData);
-  console.log('formData is ~~~', formData)
-  console.log('validationErrors is ~~~', validationErrors)
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
   } else if (Object.keys(validationErrors).length > 0) {

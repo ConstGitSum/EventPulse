@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 
 import { Button } from 'react-bootstrap';
 
-import { hideEvent, unhideEvent } from '../actions/actions';
+import { hideEvent, unhideEvent, editEvent } from '../actions/actions';
 
 let Menu = require('react-burger-menu').slide;
 
@@ -14,6 +14,8 @@ export class Sidebar extends React.Component {
   }
 
   onClickEdit() {
+    this.props.editEvent(this.props.currentEvent)
+    browserHistory.push('/create')
   }
 
   onClickHide() {
@@ -32,15 +34,19 @@ export class Sidebar extends React.Component {
   }
 
   getItems() {
+    const hiddenEvents = this.props.hiddenEvents
+    const currentEvent = this.props.currentEvent
+    const currentUser  = this.props.currentUser
     const items = []; 
 
-    if (this.props.hiddenEvents.indexOf(this.props.currentEvent.id) === -1) {
+    if (currentUser.id !== currentEvent.created_by 
+      && hiddenEvents.indexOf(currentEvent.id) === -1) {
       items.push(generateButton('Hide', this.onClickHide.bind(this)));
-    } else {
+    } else if (currentUser.id !== currentEvent.created_by) {
       items.push(generateButton('Show', this.onClickUnhide.bind(this)));
     }
 
-    if(this.props.currentEvent.created_by === this.props.currentUser.id) {
+    if(currentEvent.created_by === currentUser.id) {
       items.push(generateButton('Edit', this.onClickEdit.bind(this)))
     }
 
@@ -83,7 +89,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ hideEvent, unhideEvent }, dispatch)
+  return bindActionCreators({ editEvent, hideEvent, unhideEvent }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
