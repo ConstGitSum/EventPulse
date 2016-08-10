@@ -31,24 +31,6 @@ describe('currentEvent Actions', () => {
     done();
   });
 
-  it('should dispatch CREATE_EVENT action', (done) => {
-    moxios.stubRequest('/api/events', {
-      status: 201,
-      responseText: { id: 1, guests: [{ id: 1, status: 'accepted' }] }
-    });
-
-    return store.dispatch(actions.create(1, 1))
-      .then(() => {
-        const action = store.getActions()[0];
-        expect(action.type).to.equal('CREATE_EVENT');
-        expect(action.payload.data).to.be.a('object');
-        expect(action.payload.data).to.have.property('id');
-        expect(action.payload.data).to.have.property('guests');
-        expect(action.payload.data.guests).to.be.a('array');
-        done();
-      });
-  });
-
   it('should dispatch JOIN_EVENT action', (done) => {
     moxios.stubRequest('/api/events/1/guests', {
       status: 201,

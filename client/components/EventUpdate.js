@@ -39,7 +39,7 @@ sendInvites(invites) {  //Send the server your list of invites to an event
 render(){   //Every time this.props.invites changes, you rerender the page, which runs sendInvites again.
   this.sendInvites(this.props.invites)
   return(
-    <div></div>
+    null
     )
 }
 

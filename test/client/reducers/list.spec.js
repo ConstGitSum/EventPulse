@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import reducer from '../../../client/reducers/reducer_list';
 
-describe('list Reducer', () => {
+describe('List Reducer', () => {
 
   it('should handle GET_EVENTS', () => {
     const initialState = [];

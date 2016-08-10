@@ -1,0 +1,208 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*
+ * -- BASE STYLES --
+ */
+
+html, body, #root, #list-map, .explore {
+  height: 100%;
+}
+
+#root > div {
+ height: 100%;
+}
+
+body {
+  line-height: 1.7em;
+  color: #7f8c8d;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+  color: #34495e;
+}
+
+@font-face {
+  font-family: Expansiva bold;
+  src: url('../fonts/Expansiva.otf');
+}
+
+
+/*
+ * -- PURE BUTTON STYLES --
+ */
+.pure-button {
+  color: white;
+  padding: 0.5em 2em;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0;
+}
+
+a.pure-button-primary {
+  background: white;
+  color: #000;
+  border-radius: 5px;
+  font-size: medium;
+}
+
+/*
+ * -- AUTH STYLES --
+ */
+.pure-g {
+  background: #434141;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed !important;
+}
+
+.pure-u-1 {
+  width: 80%;
+  height: 50%;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: auto;
+  position: absolute;
+  top: 100px; left: 0; bottom: 0; right: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* This is the main heading that appears on the page */
+.auth-head {
+  font-family: Expansiva bold; 
+  text-shadow: 2px 2px 2px black;
+  font-size: 5em;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+  line-height: 1em;
+}
+
+/*
+ * -- EVENTCREATE STYLES --
+ */
+
+
+
+/*
+ * -- EVENTDETAILS STYLES --
+ */
+
+.ed-btn {
+	width: 60px;
+}
+
+.event-details i.fa {
+	position: absolute;
+	left: 1%;
+	top: 1%;
+}
+
+/*
+ * -- EVENTDETAILS SIDEBAR STYLES --
+ */
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  left: 95%;
+  top: 2%;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgb(0,0,0);
+}
+
+/*
+ * -- TABLET (AND UP) MEDIA QUERIES --
+ * On tablets and other medium-sized devices, we want to customize some
+ * of the mobile styles.
+ */
+@media (max-width:767px) {
+
+  /* We want to give the content area some more padding */
+  .content {
+      padding: 1em;
+  }
+
+  /* We decrease the width of the .auth, since we have more width
+  to work with */
+  .auth {
+    width: 50%;
+    height: 50%;
+  }
+
+  .auth-head {
+    font-size: 3.1em;
+  }
+
+  a.pure-button-primary {
+    font-size: 1.1em;
+  }
+
+}
+
+/*
+ * -- DESKTOP (AND UP) MEDIA QUERIES --
+ * On desktops and other large devices, we want to over-ride some
+ * of the mobile and tablet styles.
+ */
+@media (min-width:992px) {
+  /* Increase the header font size. */
+  .auth-head {
+    font-size: 8em;
+  }
+  /* Increase the button font size. */
+  a.pure-button-primary {
+    font-size: 1.8em;
+  }
+
+}
+
+

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { parseTime, parseDuration } from '../utils/form';
+
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const GET_EVENTS = 'GET_EVENTS';
 export const FILTER_EVENTS = 'FILTER_EVENTS';
@@ -9,12 +11,16 @@ export const JOIN_EVENT = 'JOIN_EVENT';
 export const HIDE_EVENT = 'HIDE_EVENT';
 export const UNHIDE_EVENT = 'UNHIDE_EVENT';
 export const LEAVE_EVENT = 'LEAVE_EVENT';
-export const CREATE_EVENT = 'CREATE_EVENT';
 export const GET_HIDDEN_EVENTS = 'GET_HIDDEN_EVENTS';
 export const GET_INVITES = 'GET_INVITES';
 export const GET_INVITATIONS = 'GET_INVITATIONS';
 export const REMOVE_INVITATION = 'REMOVE_INVITATION';
 export const GET_ALL_INVITATIONS = 'GET_ALL_INVITATIONS';
+export const CREATE_EVENT = 'CREATE_EVENT';
+export const VALIDATE_EVENT_FORM = 'VALIDATE_EVENT_FORM';
+export const UPDATE_EVENT_FIELD = 'UPDATE_EVENT_FIELD';
+export const CLEAR_FORM_VALUES = 'CLEAR_FORM_VALUES';
+export const UPDATE_TIME = 'UPDATE_TIME';
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -125,24 +131,6 @@ export function leaveEvent(eventId, userId) {
   }
 }
 
-export function create(newEvent) {
-  const request = axios.post('/api/events', {
-    title: newEvent.title,
-    description: newEvent.description,
-    created_by: newEvent.currentUser,
-    location: newEvent.location,
-    time: newEvent.time,
-    duration: newEvent.duration || 999999999,
-    max_guests: newEvent.max_guests || 999999999,
-    privacy: newEvent.privacy || false,
-    group_visibility: newEvent.group_visibility || null
-  });
-
-  return {
-    type: CREATE_EVENT,
-    payload: request
-  }
-}
 
 export function getHiddenEvents(user_id) {
   const request = axios.get(`/api/events/hide/${user_id}`)
@@ -150,6 +138,40 @@ export function getHiddenEvents(user_id) {
   return {
     type: GET_HIDDEN_EVENTS,
     payload: request
+  }
+}
+
+export function updateTime() {
+  return {
+    type: UPDATE_TIME,
+  }
+}
+
+export function createEvent(formData, currentUser) {
+  const request = axios.post('/api/events', {
+    title: formData.title,
+    description: formData.description,
+    created_by: currentUser.id,
+    location: formData.location,
+    time: parseTime(formData.hour, formData.minute, formData.ampm),
+    duration: parseDuration(formData.duration_hour,formData.duration_minute),
+    category: formData.category || 'other',
+    max_guests: formData.max_guests || 999999999,
+    privacy: formData.privacy || false,
+    group_visibility: formData.group_visibility || null
+  })
+
+  return {
+    type: CREATE_EVENT,
+    payload: request
+  }
+}
+
+export function validateEventForm(formData) {
+
+  return {
+    type: VALIDATE_EVENT_FORM,
+    payload: { formData }
   }
 }
 
@@ -176,16 +198,6 @@ export function removeInvitation(invite) {
   }
 }
 
-// export function getAllInvitations(user_id) {
-//   console.log("HHHHHH", user_id)
-//   const request = axios.get(`/api/events/invite/${user_id}`)
-//   console.log('reqest', request)
-//   return {
-//     type: GET_ALL_INVITATIONS,
-//     payload: request
-//   }
-// }
-
 export function getAllInvitations(invites) {
  
   return {
@@ -193,3 +205,19 @@ export function getAllInvitations(invites) {
     payload: invites
   }
 }
+
+export function updateEventField(fieldKey, fieldValue) {
+ 
+  return {
+    type: UPDATE_EVENT_FIELD,
+    payload: { fieldKey, fieldValue }
+  }
+}
+
+export function clearFormValues() {
+  
+  return {
+    type: CLEAR_FORM_VALUES
+  }
+}
+

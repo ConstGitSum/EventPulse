@@ -11,6 +11,7 @@ import EventDetails from './components/EventDetails'
 import Create from './components/Create'
 import FriendsList from './components/FriendsList'
 import EventUpdate from './components/EventUpdate'
+import EventMap from './components/EventMap';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -22,6 +23,7 @@ ReactDOM.render(
       <Route path="/" component={Home} />
       <Route path="/create" component={Create} />
       <Route path="/FriendsList" component={FriendsList}/>
+      <Route path="/map" component={EventMap} />
       <Route path="/:eventId" component={EventDetails} />
     </Router>
     

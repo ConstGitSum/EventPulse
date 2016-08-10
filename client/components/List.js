@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Button, Cell } from 'react-pure';
 
 import { 
   userLogOut, 
@@ -12,9 +13,11 @@ import {
   addInvite 
 } from '../actions/actions';
 import ListFilter from './ListFilter';
+import EventMap from './EventMap';
 
 export class List extends React.Component {
   componentDidMount() {
+    this.props.setCurrentEvent({});
     this.props.getHiddenEvents(this.props.currentUser.id)
     .then(() => this.props.getList())
     .then(() => this.props.filterList(
@@ -23,7 +26,6 @@ export class List extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents
     ));
-    
   }
 
   renderListItem(event, index) {
@@ -34,9 +36,9 @@ export class List extends React.Component {
       <h3>{event.title}</h3>
         {/* Show additional info if clicked */}
         {this.props.currentEvent && event.id === this.props.currentEvent.id
-        ? <div className="event-info">
-            <h4>{event.location}</h4>
-            <p>{event.description}</p>
+        ? <div id="event-info">
+            <h4 id="event_location">{event.location}</h4>
+            <p id="event_description">{event.description}</p>
             {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <Link to={`/${event.id}`}>
               <button className="view-details btn btn-secondary">
@@ -78,25 +80,27 @@ export class List extends React.Component {
 
   render() {
     return (
-      <div className="explore">
-        <h1>Explore</h1>
+      <div className="explore container-fluid text-center">
+        <EventMap />
+        <div className="col-sm-4 text-left">
+          <h1 id="explore">Explore</h1>
           <ListFilter />
-          <button onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button>
+          
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}
           </ul>
-        <Link to="/create">
-          <button className="create-event btn btn-primary">
-            Create
-          </button>
-        </Link>
-
-        <button 
-          className="logout btn btn-danger" 
-          onClick={this.props.userLogOut}> 
-          Log Out
-        </button>         
+          <Link to="/create">
+            <button className="create-event btn btn-primary">
+              Create
+            </button>
+          </Link>
+          <button 
+            className="logout btn btn-danger" 
+            onClick={this.props.userLogOut}> 
+            Log Out
+          </button>         
+        </div>
       </div>
     )
   }

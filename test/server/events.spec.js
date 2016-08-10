@@ -358,13 +358,13 @@ describe('API Event Routes', () => {
     });
   });
 
-  xdescribe('GET /api/events/hide/:user_id', function() {
-    it('should return an array of hidden event/s for the user', function(done) {
+  describe('GET /api/events/hide/:user_id', function() {
+    it('should return an array of hidden events for the user', function(done) {
       chai.request(server)
         .get('/api/events/hide/1')
         .end(function(err, res) {
           res.should.have.status(200);
-          res.should.be.json; // jshint ignore:line
+          res.should.be.json;
           res.body.should.be.a('array');
           res.body.length.should.equal(1);
           res.body[0].should.have.property('id')
