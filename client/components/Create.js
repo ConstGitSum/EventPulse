@@ -28,31 +28,20 @@ export class Create extends Component {
   onSubmitRedux(event) {
     event.preventDefault();
     this.setState({locationError: false})
-    this.props.validateEventForm(this.props.eventFormData);
-
-    if (Object.keys(this.props.validationErrors).length === 0) {
-
-      if (this.props.toggleEventUpdate) {
-        this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
-        .then(res => {
-          if (res.error) throw new Error('Unable to update event');
-          this.props.clearFormValues();
-          browserHistory.push(`/${this.props.currentEvent.id}`)
-        })
-        .catch(err => {
-        })
-
-      } else {
-        this.props.createEvent(this.props.eventFormData, this.props.currentUser)
-        .then(res => {
-          if (res.error) throw new Error('Unable to create event');
-          this.props.clearFormValues();
-          browserHistory.push(`/${this.props.currentEvent.id}`);
-        })
-        .catch(err => {
-        });
-      }
-    }
+    this.props.validateEventForm(this.props.eventFormData, (validationErrors) => {
+        if (Object.keys(validationErrors).length === 0) {
+          this.props.createEvent(this.props.eventFormData, this.props.currentUser)
+            .then(res => {
+              if (res.error) {throw new Error('Unable to create event');}
+              this.props.clearFormValues();
+              browserHistory.push(`/${this.props.currentEvent.id}`);
+            })
+            .catch(err => {
+              this.setState({locationError: true})
+              console.log(err)
+            });
+        }
+    });
   }
 
   onFieldChangeRedux(event) {

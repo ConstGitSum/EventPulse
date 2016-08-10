@@ -30,15 +30,11 @@ export function getDefaultState() {
 }
 
 export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
-  console.log('1,isTimewithinRange~~~', hour,minute, ampm,is_tomorrow)
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
-  console.log('2, eventTime ~~~~', eventTime)
-  console.log('3,eventTime.getTime() - currTime.getTime()~~~',eventTime.getTime() - currTime.getTime())
   return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS; 
 }
 
-// check if event is in the future, if not, throw error message
 export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
@@ -47,13 +43,14 @@ export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
 
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
-  console.log('3,d~~~~', d)
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
-  console.log('4,d~~~~', d)
   if (is_tomorrow === 'true') {
-    console.log('5,is_tomorrow~~~~', is_tomorrow);
-    return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
+    if(ampm === 'pm') {
+      return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
+    } else if(ampm === 'am' && hour !== '12'){
+       return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
+    }   
   }
   return d;
 }
@@ -159,9 +156,7 @@ export function validateForm(validationErrors, formData) {
       validationErrors[fieldKey] = errorMessage;
     }
   }
-
   validateTimeRange(validationErrors, formData);
- 
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
   } else if (Object.keys(validationErrors).length > 0) {
@@ -182,11 +177,7 @@ export function parseTime(hour, minute, ampm) {
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
   var currentTime = moment().toDate();
-  console.log('currentTime: ',currentTime)
-  // it gets hour,min,ampm and return a time stamp
-
-
-  return `${year}-${month}-${day}T${Number(hour) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
+  return `${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
 }
 
 export function parseDuration(hour, minute) {

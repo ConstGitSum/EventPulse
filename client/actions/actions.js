@@ -200,11 +200,11 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
   }
 }
 
-export function validateEventForm(formData) {
+export function validateEventForm(formData, callback) {
 
   return {
     type: VALIDATE_EVENT_FORM,
-    payload: { formData }
+    payload: { formData, callback }
   }
 }
 

@@ -26,17 +26,18 @@ import {
   validateForm  } from '../utils/form';
 
 export default function(state = getDefaultState(), action) {
+  let validationErrors;
   switch (action.type) {
-    case VALIDATE_EVENT_FORM: {
-     return Object.assign({}, state, {
+    case VALIDATE_EVENT_FORM:
+      validationErrors = validateForm(Object.assign({}, state.validationErrors), state.eventFormData);
+      action.payload.callback(validationErrors);
+      return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, action.payload.formData),
-        validationErrors: validateForm(Object.assign({}, state.validationErrors), state.eventFormData)
-      })
-    }
-    case UPDATE_EVENT_FIELD: {
-      const validationErrors = Object.assign({}, state.validationErrors);
+        validationErrors: validationErrors
+      });  
+    case UPDATE_EVENT_FIELD:      
+        validationErrors = Object.assign({}, state.validationErrors);
       const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
-      
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
       } else {
@@ -45,8 +46,7 @@ export default function(state = getDefaultState(), action) {
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, { [action.payload.fieldKey]: action.payload.fieldValue }),
         validationErrors
-      })
-    }
+      });
     case CLEAR_FORM_VALUES: {
       return Object.assign({}, getDefaultState());
     }

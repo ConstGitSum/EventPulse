@@ -24,9 +24,11 @@ describe('create Reducer', () => {
       type: 'CLEAR_FORM_VALUES'
     }
     const nextState = reducer(initialState, action);
+    const TEN_MINUTE = 10 * 60 * 1000;
     const today = new Date();
-    let currHour = today.getHours();
-    let currMinute = today.getMinutes();
+    const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
+    let currHour = todayInTens.getHours();
+    let currMinute = todayInTens.getMinutes(); 
     expect(nextState).to.deep.equal(
         {
           eventFormData: {
@@ -54,9 +56,11 @@ describe('create Reducer', () => {
       type: 'TEST',
     }
     const nextState = reducer(undefined, action);
+    const TEN_MINUTE = 10 * 60 * 1000;
     const today = new Date();
-    let currHour = today.getHours();
-    let currMinute = today.getMinutes();
+    const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
+    let currHour = todayInTens.getHours();
+    let currMinute = todayInTens.getMinutes(); 
     expect(nextState).to.deep.equal(
         {
           eventFormData: {
