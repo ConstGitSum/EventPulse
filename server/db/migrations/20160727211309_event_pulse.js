@@ -68,5 +68,6 @@ exports.down = function(knex, Promise) {
       .dropTableIfExists('events')
       .dropTableIfExists('memberships')
       .dropTableIfExists('groups')
-      .dropTableIfExists('users');
+      .dropTableIfExists('users')
+      .dropTableIfExists('invites')
 };

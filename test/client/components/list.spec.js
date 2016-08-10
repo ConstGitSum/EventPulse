@@ -17,7 +17,8 @@ describe('List Component', () => {
       getList: sinon.spy(),
       filterList: sinon.spy(),
       userLogOut: sinon.spy(),
-      setCurrentEvent: sinon.spy()
+      setCurrentEvent: sinon.spy(),
+      invitations: []
     }
 
     const enzymeWrapper = shallow(<List {...props} />);
