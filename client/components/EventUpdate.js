@@ -24,8 +24,7 @@ componentDidMount() {
       })
 }
 sendInvites(invites) {
-  console.log("this invite",invites)
-  if(invites[0]=== 'add') {
+  if(invites[0] === 'add') {
     this.socket.emit('invite', invites.slice(1))
   }
   if(invites[0] === 'remove') {

@@ -45,7 +45,6 @@ app.get('/*', (req, res) => {
 io.on('connection', socket => {
   socket.on('room', (theRoom) => {
     socket.join(theRoom)
-    //console.log("ROOOM3", io.sockets.adapter.rooms)
   })
 
   socket.on('user', user => {
@@ -56,7 +55,7 @@ io.on('connection', socket => {
     console.log("INVITES", invites)
     invites.slice(2).forEach(invite => io.to(invite).emit('invite', invites[0]))
     Promise.all(invites.slice(2).map((invitee) => {
-      return Event.checkInvite(invitee,invites[0]).then(value => {  //user event
+      return Event.checkInvite(invitee,invites[0]).then(value => {  
         console.log('value',value)
         if(value.length === 0){
           return {user_id: invites[1], invitee_id: invitee, event_id: invites[0]}
