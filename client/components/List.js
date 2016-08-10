@@ -12,11 +12,13 @@ import {
   filterList,
   addInvite 
 } from '../actions/actions';
+import { setLocation } from '../actions/map';
 import ListFilter from './ListFilter';
 import EventMap from './EventMap';
 
 export class List extends React.Component {
   componentDidMount() {
+    this.props.setLocation();
     this.props.setCurrentEvent({});
     this.props.getHiddenEvents(this.props.currentUser.id)
     .then(() => this.props.getList())
@@ -120,6 +122,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) { 
   return bindActionCreators({ 
+    setLocation,
     setCurrentEvent,
     getHiddenEvents,
     getList,
