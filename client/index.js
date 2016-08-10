@@ -17,7 +17,7 @@ const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <div>
+    <div className = 'App'>
     <EventUpdate />
     <Router history={browserHistory}>
       <Route path="/" component={Home} />

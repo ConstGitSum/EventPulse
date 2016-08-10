@@ -85,7 +85,7 @@ export class List extends React.Component {
         <div className="col-sm-4 text-left">
           <h1 id="explore">Explore</h1>
           <ListFilter />
-          
+          {this.props.invitations.length>0 ? <button onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button> : null}
           <ul className="event-list list-group">
             {this.props.listFiltered.map((event, index) =>
               this.renderListItem(event, index))}

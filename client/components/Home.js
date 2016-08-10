@@ -8,16 +8,12 @@ import Auth from './Auth';
 
 export class Home extends Component {
   componentWillMount() {
-    this.props.getCurrentUser().then(() => {
-      // if(this.props.currentUser.id){
-      //   this.props.getAllInvitations(this.props.currentUser.id)
-      // }
-    })  
+    this.props.getCurrentUser().then(() => {})  
   }
 
   render() {
     return (
-      <div>
+      <div className = 'home'>
         {this.props.currentUser 
          ? <List /> 
          : <Auth />} 
