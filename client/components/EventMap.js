@@ -38,7 +38,7 @@ export class EventMap extends React.Component {
     });
     this._drawMarkers();
 
-    this.map.locate({setView: true, maxZoom: 16});
+    this.map.locate({setView: true, maxZoom: 18});
     this.map.on('locationfound', this._onLocationFound.bind(this));
     this.map.on('locationerror', this._onLocationError.bind(this));
   }
@@ -86,6 +86,9 @@ export class EventMap extends React.Component {
     this.props.setCurrMarker({marker: newMarker, eventId: event.id });
     this.props.setCurrentEvent(event);
     this.markerTracker[event.id] = newMarker;
+
+    // pan map to new current event
+    this.map.setView(marker._latlng, 16, { animate: true, duration: 1.0 });
   }
 
   _onLocationFound(e) {
