@@ -191,18 +191,6 @@ router.get('/:event_id/chat', function(req, res, next){
   })
 })
 
-// router.post('/invite', function(req, res, next) {
-//   let invites = req.body.invite_ids.map(invite => {
-//     return {user_id: req.body.user_id, invitee_id: invite, event_id: req.body.event_id}
-//   })
-//   Event.addInvite(invites).then((invite) => {
-//     //console.log("invite",invite)
-//     res.status(201).json(invite)
-//   }).catch((err) => {
-//     res.status(400).send('Did not insert!',err)
-//   })
-// })
-
 router.get('/invite/:id', function(req, res, next) {
   Event.getInvites(req.params.id).then(invites => {
     res.status(200).json(invites.map(invite => invite.event_id))

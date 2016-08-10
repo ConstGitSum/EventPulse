@@ -9,9 +9,9 @@ import Auth from './Auth';
 export class Home extends Component {
   componentWillMount() {
     this.props.getCurrentUser().then(() => {
-      if(this.props.currentUser.id){
-        this.props.getAllInvitations(this.props.currentUser.id)
-      }
+      // if(this.props.currentUser.id){
+      //   this.props.getAllInvitations(this.props.currentUser.id)
+      // }
     })  
   }
 

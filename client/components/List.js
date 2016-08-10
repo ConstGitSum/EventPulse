@@ -37,7 +37,7 @@ export class List extends React.Component {
         ? <div className="event-info">
             <h4>{event.location}</h4>
             <p>{event.description}</p>
-            {this.friendsGoing(this.props.currentUser.friendsList,event.guests)}
+            {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <Link to={`/${event.id}`}>
               <button className="view-details btn btn-secondary">
                 View Event Details
@@ -47,11 +47,13 @@ export class List extends React.Component {
         : null}
     </li>
   }
-  friendsGoing(friendsList, guestList){
+  myFriendsGoing(friendsList, guestList){ //This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
+    if(friendsList){
     var friendIds = friendsList.map((friendId => friendId.id))
     var friendsGoing = guestList.filter((friendGoing) => {
-      if(friendIds.includes(friendGoing.id))
+      if(friendIds.includes(friendGoing.id)){
         return true
+      }   
       return false
     })
     return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend,index) => {
@@ -61,9 +63,8 @@ export class List extends React.Component {
     }
     )}</div>
   }
-
-  seeInvites() {
-    console.log("invites",this.props.invitations)
+}
+  seeInvites() {  //This will filter via invites
     var newList = this.props.list.filter((event) => {
       return this.props.invitations.includes(event.id)
     })

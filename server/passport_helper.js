@@ -78,7 +78,7 @@ function existingUser(user, profile) {
       // take all the new friends and grab their user_id 
       // by using their facebook id
       return newFriends.length === 0
-      ? user
+      ? user.concat(members)
       : Promise.all(newFriends.map(friend => User.getUserByFacebookId(friend.id)))
         // Take all the new friends and format them for database entry
         .then(friendArray => {

@@ -176,12 +176,20 @@ export function removeInvitation(invite) {
   }
 }
 
-export function getAllInvitations(user_id) {
-  console.log("HHHHHH", user_id)
-  const request = axios.get(`/api/events/invite/${user_id}`)
-  console.log('reqest', request)
+// export function getAllInvitations(user_id) {
+//   console.log("HHHHHH", user_id)
+//   const request = axios.get(`/api/events/invite/${user_id}`)
+//   console.log('reqest', request)
+//   return {
+//     type: GET_ALL_INVITATIONS,
+//     payload: request
+//   }
+// }
+
+export function getAllInvitations(invites) {
+ 
   return {
     type: GET_ALL_INVITATIONS,
-    payload: request
+    payload: invites
   }
 }

@@ -49,14 +49,18 @@ io.on('connection', socket => {
 
   socket.on('user', user => {
     socket.join(user)
+    Event.getInvites(user).then((values) => {
+      var event_ids = values.map(value => {
+        return value.event_id
+      })
+      io.to(user).emit('allInvites', event_ids)
+    })
   })
 
   socket.on('invite', invites => {
-    console.log("INVITES", invites)
     invites.slice(2).forEach(invite => io.to(invite).emit('invite', invites[0]))
     Promise.all(invites.slice(2).map((invitee) => {
       return Event.checkInvite(invitee,invites[0]).then(value => {  
-        console.log('value',value)
         if(value.length === 0){
           return {user_id: invites[1], invitee_id: invitee, event_id: invites[0]}
         }

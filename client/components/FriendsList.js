@@ -26,7 +26,7 @@ export class FriendsList extends React.Component {
     return friendIDs
   }
 
-  friendClick(event) {    //toggles the friend
+  friendClick(event) {    //toggles the friend's invite status from you.
     if(event.target.className === 'friend'){
       this.setState({invitedFriends:[event.target.value, ...this.state.invitedFriends]})
     }else if(event.target.className === 'friend-accept'){
@@ -36,21 +36,16 @@ export class FriendsList extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() {  //When you leave the page, want to empty the store's info here.
       this.props.addInvite([])  
   }
   
-  submitInvite(event) {
+  submitInvite(event) { //This submits the invite request.  
     event.preventDefault();
     const url = `/api/events/invite`;
     const body = { user_id: this.props.currentUser.id, invite_ids: this.state.invitedFriends, event_id: this.props.currentEvent.id };
       this.props.addInvite(['add', this.props.currentEvent.id, this.props.currentUser.id,  ...this.state.invitedFriends])  //will go add, event_id, inviter_id, invitee_ids
-      //this.props.addInvite([])
       this.setState({invitedFriends: []})
-    // axios.post(url,body).then(answer => {
-    //   this.props.addInvite([])
-    // })
-
   }
 
   onClickBack() {
@@ -69,8 +64,9 @@ export class FriendsList extends React.Component {
       <button onClick = {this.submitInvite.bind(this)}> Invite Friends </button>
       </div>
       )
+    }
   }
-  }
+
   function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,

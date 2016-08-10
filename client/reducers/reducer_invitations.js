@@ -2,6 +2,7 @@ import { GET_INVITATIONS, REMOVE_INVITATION, GET_ALL_INVITATIONS } from '../acti
 
 export default function(state = [], action) {
   switch (action.type) {
+
     case GET_INVITATIONS: {
       if(state.includes(action.payload)){
         return state
@@ -15,7 +16,7 @@ export default function(state = [], action) {
     }
 
     case GET_ALL_INVITATIONS: {
-      return action.payload.data
+      return action.payload
     }
     default: {
       return state;
