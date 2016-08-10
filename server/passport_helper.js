@@ -66,6 +66,7 @@ function existingUser(user, profile) {
   // then filter out facebook friends that are already in database
   return User.getFriendsListId(userId)
     .then((friendsList) => {
+      console.log(friendsList)
       friendsListId = friendsList[0].id;
       return User.getMemberList(friendsListId);
     }) 

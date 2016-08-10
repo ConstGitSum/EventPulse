@@ -44,15 +44,16 @@ describe('List Actions', () => {
 
   describe('should dispatch FILTER_EVENTS action', () => {
     const list = [
-      {id: 1, created_by: 1, guests:[{ id: 1, status: 'accepted' }]},
-      {id: 2, created_by: 2, guests:[{ id: 2, status: 'accepted' }]},
-      {id: 3, created_by: 3, guests:[{ id: 3, status: 'accepted' }]},
+      { id: 1, created_by: 1, guests:[{ id: 1, status: 'accepted' }], latitude: 10, longitude: 10 },
+      { id: 2, created_by: 2, guests:[{ id: 2, status: 'accepted' }], latitude: 10, longitude: 10 },
+      { id: 3, created_by: 3, guests:[{ id: 3, status: 'accepted' }], latitude: 10, longitude: 10 },
     ];
     const userId = 1;
     const hiddenEvents = [3];
+    const location = { lat: 10, lng: 10 }
       
     it('should deliver payload correctly for `unhidden` filter', (done) => {
-      store.dispatch(actions.filterList(list, 'unhidden', userId, hiddenEvents));
+      store.dispatch(actions.filterList(list, 'unhidden', userId, hiddenEvents, location));
       const action = store.getActions()[0];
       expect(action.type).to.equal('FILTER_EVENTS');
       expect(action.payload).to.be.a('array');
@@ -62,7 +63,7 @@ describe('List Actions', () => {
     });
 
     it('should deliver payload correctly for `hidden` filter', (done) => {
-      store.dispatch(actions.filterList(list, 'hidden', userId, hiddenEvents));
+      store.dispatch(actions.filterList(list, 'hidden', userId, hiddenEvents, location));
       const action = store.getActions()[0];
       expect(action.type).to.equal('FILTER_EVENTS');
       expect(action.payload).to.be.a('array');
@@ -72,7 +73,7 @@ describe('List Actions', () => {
     });
 
     it('should deliver payload correctly for `created` filter', (done) => {
-      store.dispatch(actions.filterList(list, 'created', userId, hiddenEvents));
+      store.dispatch(actions.filterList(list, 'created', userId, hiddenEvents, location));
       const action = store.getActions()[0];
       expect(action.type).to.equal('FILTER_EVENTS');
       expect(action.payload).to.be.a('array');
@@ -82,7 +83,7 @@ describe('List Actions', () => {
     });
 
     it('should deliver payload correctly for `joined` filter', (done) => {
-      store.dispatch(actions.filterList(list, 'joined', userId, hiddenEvents));
+      store.dispatch(actions.filterList(list, 'joined', userId, hiddenEvents, location));
       const action = store.getActions()[0];
       expect(action.type).to.equal('FILTER_EVENTS');
       expect(action.payload).to.be.a('array');
@@ -92,7 +93,7 @@ describe('List Actions', () => {
     });
 
     it('should deliver payload correctly for `pending` filter', (done) => {
-      store.dispatch(actions.filterList(list, 'pending', userId, hiddenEvents));
+      store.dispatch(actions.filterList(list, 'pending', userId, hiddenEvents, location));
       const action = store.getActions()[0];
       expect(action.type).to.equal('FILTER_EVENTS');
       expect(action.payload).to.be.a('array');

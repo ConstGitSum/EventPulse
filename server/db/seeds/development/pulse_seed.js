@@ -28,7 +28,7 @@ exports.seed = function(knex, Promise) {
         name: 'Kenny',
         email: 'Kenny@kenny.com',
         image: 'http://rkfdnews.com/wp-content/uploads/2013/03/shark-man-costume-6491.jpg',
-        facebook_id: '10104745559602550'
+        facebook_id: '20104745559602550'
       })
     })
     .then(() => {
