@@ -177,7 +177,17 @@ export function editEvent(currentEvent) {
 
 export function updateEvent(updatedEvent, currentUser, eventId) {
   const url = `/api/events/${eventId}`;
-  const body = updatedEvent;
+  const body = {
+    title            : updatedEvent.title,
+    description      : updatedEvent.description,
+    created_by       : currentUser.id,
+    location         : updatedEvent.location,
+    time             : updatedEvent.time,
+    duration         : updatedEvent.duration,
+    max_guests       : updatedEvent.max_guests,
+    privacy          : updatedEvent.privacy,
+    group_visibility : updatedEvent.group_visibility
+  }
   const request = axios.put(url, body);
 
   return {
