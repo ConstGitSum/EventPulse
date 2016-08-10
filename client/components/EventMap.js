@@ -38,7 +38,7 @@ export class EventMap extends React.Component {
     });
     this._drawMarkers();
 
-    this.map.locate({setView: true, maxZoom: 16});
+    this.map.locate();
     this.map.on('locationfound', this._onLocationFound.bind(this));
     this.map.on('locationerror', this._onLocationError.bind(this));
   }
@@ -49,7 +49,7 @@ export class EventMap extends React.Component {
 
     this.props.listFiltered.forEach(event => {
       const latlng = [event.latitude, event.longitude];
-      const marker = L.marker(latlng, { icon: generateMarker(event.type) })
+      const marker = L.marker(latlng, { icon: generateMarker(event.category) })
         .addTo(this.map);
 
       marker.on('click', this.props.setCurrentEvent.bind(this, event))
@@ -86,6 +86,9 @@ export class EventMap extends React.Component {
     this.props.setCurrMarker({marker: newMarker, eventId: event.id });
     this.props.setCurrentEvent(event);
     this.markerTracker[event.id] = newMarker;
+
+    // pan map to new current event
+    this.map.setView(marker._latlng, 16, { animate: true, duration: 1.0 });
   }
 
   _onLocationFound(e) {
@@ -96,6 +99,8 @@ export class EventMap extends React.Component {
       .bindPopup("You are within " + radius + " meters from this point");
 
     L.circle(e.latlng, radius).addTo(this.map);
+
+    this.map.setView(e.latlng, 16, { animate: true, duration: 1.0 });
   }
 
   _onLocationError(e) {

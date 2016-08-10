@@ -1,18 +1,18 @@
 var L = require('./leaflet.awesome-markers');
 
-export default function generateMarker(eventType) {
-  switch (eventType) {
+export default function generateMarker(category) {
+  switch (category) {
     case 'athletics': {
       return L.AwesomeMarkers.icon({
         icon: 'futbol-o',
-        markerColor: 'lightgreen',
+        markerColor: 'green',
         prefix: 'fa'
       });
     }
     case 'entertainment': {
       return L.AwesomeMarkers.icon({
         icon: 'television',
-        markerColor: 'green',
+        markerColor: 'blue',
         prefix: 'fa'
       });
     }
@@ -26,21 +26,21 @@ export default function generateMarker(eventType) {
     case 'dining': {
       return L.AwesomeMarkers.icon({
         icon: 'cutlery',
-        markerColor: 'purple',
+        markerColor: 'darkred',
         prefix: 'fa'
       });
     }
     case 'coffee': {
       return L.AwesomeMarkers.icon({
-        icon: 'cutlery',
-        markerColor: 'lightred',
+        icon: 'coffee',
+        markerColor: 'darkpurple',
         prefix: 'fa'
       });
     }
     case 'special': {
       return L.AwesomeMarkers.icon({
         icon: 'star',
-        markerColor: 'blue',
+        markerColor: 'cadetblue',
         prefix: 'fa'
       });
     }

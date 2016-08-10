@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { parseTime, parseDuration } from '../utils/form';
+import { filterByDistance } from '../utils/list';
 
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const GET_EVENTS = 'GET_EVENTS';
@@ -55,8 +56,8 @@ export function getList() {
   }
 }
 
-export function filterList(eventList, filter, userId, hiddenEvents) {
-  const payload = 
+export function filterList(eventList, filter, userId, hiddenEvents, location) {
+  const filteredList = 
     filter === 'unhidden' ?
       eventList.filter(e => !hiddenEvents.includes(e.id)) :
     filter === 'hidden' ?
@@ -72,6 +73,8 @@ export function filterList(eventList, filter, userId, hiddenEvents) {
       filter === 'invites' ?
       eventList :
     eventList;
+
+  const payload = filterByDistance(filteredList, location);
 
   return {
     type: FILTER_EVENTS,
@@ -220,4 +223,3 @@ export function clearFormValues() {
     type: CLEAR_FORM_VALUES
   }
 }
-
