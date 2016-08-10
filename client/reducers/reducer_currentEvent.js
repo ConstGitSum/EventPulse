@@ -3,7 +3,9 @@ import {
   JOIN_EVENT, 
   HIDE_EVENT, 
   SET_CURRENT_EVENT, 
-  LEAVE_EVENT
+  LEAVE_EVENT,
+  EDIT_EVENT,
+  UPDATE_EVENT
 } from '../actions/actions';
 
 /**
@@ -35,6 +37,9 @@ export default function(state = {}, action) {
       newState = Object.assign({}, state);
       newState.guests = [...newState.guests, action.payload.data];
       return newState;
+    }
+    case UPDATE_EVENT: {
+      return action.payload.data;
     }
     default: {
       return state;
