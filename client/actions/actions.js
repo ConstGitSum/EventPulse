@@ -20,6 +20,7 @@ export const VALIDATE_EVENT_FORM = 'VALIDATE_EVENT_FORM';
 export const UPDATE_EVENT_FIELD  = 'UPDATE_EVENT_FIELD';
 export const CLEAR_FORM_VALUES   = 'CLEAR_FORM_VALUES';
 export const UPDATE_TIME         = 'UPDATE_TIME';
+export const GET_ALL_INVITATIONS = 'GET_ALL_INVITATIONS'
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
