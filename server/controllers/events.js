@@ -124,12 +124,16 @@ router.post('/', function(req, res, next) {
 // *** PUT - update event *** //
 router.put('/:id', checkUpdateId, function(req, res, next) {
   Event.update(req.params.id, req.body)
-    .then((eventId) => {
-      return Event.getEventById(eventId[0]);
+    .then(eventId => {
+      return Event.getEventById(eventId[0])
     })
-    .then((event) => {
-      res.status(200).json(event[0]);
-    })
+    .then(event =>
+      Guest.getGuests(event[0].id)
+        .then(guests => {
+          event[0].guests = guests;
+          res.status(200).json(event[0]);
+        })
+    )
     .catch((err) => {
       next(err);
     });
