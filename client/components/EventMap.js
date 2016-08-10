@@ -49,7 +49,7 @@ export class EventMap extends React.Component {
 
     this.props.listFiltered.forEach(event => {
       const latlng = [event.latitude, event.longitude];
-      const marker = L.marker(latlng, { icon: generateMarker(event.type) })
+      const marker = L.marker(latlng, { icon: generateMarker(event.category) })
         .addTo(this.map);
 
       marker.on('click', this.props.setCurrentEvent.bind(this, event))
