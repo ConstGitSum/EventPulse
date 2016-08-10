@@ -1,10 +1,14 @@
+import moment from 'moment'
+
 const EVENT_RANGE_LIMIT_IN_MILLIS = 12 * 60 * 60 * 1000;
 const ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
+const TEN_MINUTE = 10 * 60 * 1000;
 
 export function getDefaultState() {
   const today = new Date();
-  let currHour = today.getHours();
-  let currMinute = today.getMinutes();
+  const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
+  let currHour = todayInTens.getHours();
+  let currMinute = todayInTens.getMinutes(); 
   return {
     eventFormData: {
       title: '',
@@ -26,11 +30,15 @@ export function getDefaultState() {
 }
 
 export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
+  console.log('1,isTimewithinRange~~~', hour,minute, ampm,is_tomorrow)
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
+  console.log('2, eventTime ~~~~', eventTime)
+  console.log('3,eventTime.getTime() - currTime.getTime()~~~',eventTime.getTime() - currTime.getTime())
   return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS; 
 }
 
+// check if event is in the future, if not, throw error message
 export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
@@ -39,15 +47,22 @@ export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
 
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
+  console.log('3,d~~~~', d)
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
-  if (is_tomorrow) {
+  console.log('4,d~~~~', d)
+  if (is_tomorrow === 'true') {
+    console.log('5,is_tomorrow~~~~', is_tomorrow);
     return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
   }
   return d;
 }
 
 export function get24Hour(hour, ampm) {
+  hour = Number(hour);
+  if (hour == 12) {
+    hour -= 12;
+  }
   if (ampm === 'pm') {
     return hour + 12;
   } else {
@@ -118,6 +133,7 @@ export function validateField(fieldKey, fieldValue) {
     case 'hour':
       return validateHour(fieldValue);
     case 'minute':
+    console.log('7~~~minute is:', fieldValue)
       return validateMinute(fieldValue);
     case 'ampm':
       return validateAmpm(fieldValue);
@@ -144,7 +160,8 @@ export function validateForm(validationErrors, formData) {
     }
   }
 
-  //validateTimeRange(validationErrors, formData);
+  validateTimeRange(validationErrors, formData);
+ 
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
   } else if (Object.keys(validationErrors).length > 0) {
@@ -164,6 +181,10 @@ export function parseTime(hour, minute, ampm) {
   
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
+  var currentTime = moment().toDate();
+  console.log('currentTime: ',currentTime)
+  // it gets hour,min,ampm and return a time stamp
+
 
   return `${year}-${month}-${day}T${Number(hour) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
 }

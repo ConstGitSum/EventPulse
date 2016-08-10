@@ -35,7 +35,8 @@ export default function(state = getDefaultState(), action) {
     }
     case UPDATE_EVENT_FIELD: {
       const validationErrors = Object.assign({}, state.validationErrors);
-      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue);
+      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
+      
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
       } else {

@@ -144,7 +144,7 @@ export class Create extends Component {
                 value={eventFormData.hour}
                 onBlur={this.onFieldChangeRedux.bind(this)}
                 onChange={this.onFieldChangeRedux.bind(this)}>
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
                   return (
                     <option key={h} value={h}>{h}</option>
                   );
@@ -154,7 +154,7 @@ export class Create extends Component {
             <div className="col-xs-2">
               <select name="minute" 
                 className="form-control"   
-                value={10 * Math.ceil(eventFormData.minute/10)}
+                value={eventFormData.minute}
                 onBlur={this.onFieldChangeRedux.bind(this)}
                 onChange={this.onFieldChangeRedux.bind(this)}>
                 {['00', '10', '20', '30', '40', '50'].map((minute) => {
@@ -208,7 +208,7 @@ export class Create extends Component {
                 value={eventFormData.duration_hour}
                 onBlur={this.onFieldChangeRedux.bind(this)}
                 onChange={this.onFieldChangeRedux.bind(this)}>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
                   return (
                     <option key={h} value={h}>{h}</option>
                   );
