@@ -14,6 +14,12 @@ import {
   deleteUpdateData } from '../actions/actions';
 
 export class Create extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      locationError: false
+    }
+  }
   componentWillMount() {
     if (!this.props.currentUser) {
       browserHistory.push('/');
