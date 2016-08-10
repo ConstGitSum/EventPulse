@@ -27,7 +27,6 @@ export class List extends React.Component {
   }
 
   renderListItem(event, index) {
-    console.log('event',event.guests)
     return <li 
       key={index} 
       className="event-item list-group-item" 

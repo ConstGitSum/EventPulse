@@ -14,11 +14,9 @@ export class FriendsList extends React.Component {
         invitedFriends : [],
       }
       this.friendsNotGoing();
-      console.log('pasdasd',this.props.currentEvent, this.props.currentUser.friendsList)
   }
 
-  friendsNotGoing() {
-    console.log("what")
+  friendsNotGoing() {   //This checking to see which of your friends are not already going to the event
     let guestIDs = this.props.currentEvent.guests.map(guest_id => {
       return guest_id.id;
     })
@@ -26,11 +24,9 @@ export class FriendsList extends React.Component {
       return !guestIDs.includes(friend_id.id)
     })
     return friendIDs
-    console.log("FRIEND",friendIDs)
-
   }
 
-  friendClick(event) {
+  friendClick(event) {    //toggles the friend
     if(event.target.className === 'friend'){
       this.setState({invitedFriends:[event.target.value, ...this.state.invitedFriends]})
     }else if(event.target.className === 'friend-accept'){
@@ -39,15 +35,22 @@ export class FriendsList extends React.Component {
       this.setState({invitedFriends: newList})
     }
   }
+
+  componentWillUnmount() {
+      this.props.addInvite([])  
+  }
   
   submitInvite(event) {
     event.preventDefault();
     const url = `/api/events/invite`;
     const body = { user_id: this.props.currentUser.id, invite_ids: this.state.invitedFriends, event_id: this.props.currentEvent.id };
       this.props.addInvite(['add', this.props.currentEvent.id, this.props.currentUser.id,  ...this.state.invitedFriends])  //will go add, event_id, inviter_id, invitee_ids
-    axios.post(url,body).then(answer => {
-      this.props.addInvite([])
-    })
+      //this.props.addInvite([])
+      this.setState({invitedFriends: []})
+    // axios.post(url,body).then(answer => {
+    //   this.props.addInvite([])
+    // })
+
   }
 
   onClickBack() {

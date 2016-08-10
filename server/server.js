@@ -53,13 +53,21 @@ io.on('connection', socket => {
   })
 
   socket.on('invite', invites => {
-    console.log("invites2", invites)
+    console.log("INVITES", invites)
     invites.slice(2).forEach(invite => io.to(invite).emit('invite', invites[0]))
-    var inviteMap = invites.slice(2).map((invitee) => {
-      return {user_id: invites[1], invitee_id: invitee, event_id: invites[0]}
-    })
-    Event.addInvite(inviteMap).then()
+    Promise.all(invites.slice(2).map((invitee) => {
+      return Event.checkInvite(invitee,invites[0]).then(value => {  //user event
+        console.log('value',value)
+        if(value.length === 0){
+          return {user_id: invites[1], invitee_id: invitee, event_id: invites[0]}
+        }
+      })
+      
+    }))
+    .then((values) => Event.addInvite(values))
+    .then()
   })
+
   socket.on('removeInvite', invite => {
     Event.removeInvite({id: invite[0], event_id: invite[1]}).then()
 

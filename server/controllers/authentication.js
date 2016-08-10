@@ -5,7 +5,6 @@ module.exports = router;
 
 router.get('/loggedIn', function(req, res) {
   if(req.isAuthenticated()){
-    console.log('req',req.user)
     const userId = req.user[0].id;
     const userName = req.user[0].name
     const image = req.user[0].image
