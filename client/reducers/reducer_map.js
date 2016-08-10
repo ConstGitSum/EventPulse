@@ -9,8 +9,17 @@ export default function(state = {}, action) {
       return Object.assign(state, { prevMarker: action.payload });
     }
     case SET_LOCATION: {
-      console.log(action.payload)
-      return Object.assign(state, { currLocation: action.payload });
+      const location = {};
+
+      if (action.payload.coords) {
+        location.lat = action.payload.coords.latitude;
+        location.lng = action.payload.coords.longitude;
+      } else {
+        location.lat = action.payload.data.lat;
+        location.lng = action.payload.data.lon;
+      }
+
+      return Object.assign(state, { currLocation: location });
     }
     default: {
       return state;

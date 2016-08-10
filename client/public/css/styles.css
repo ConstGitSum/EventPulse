@@ -91,6 +91,20 @@ a.pure-button-primary {
   border-radius: 5px;
   line-height: 1em;
 }
+/*
+ * -- LIST STYLES --
+ */
+.event-item h3 {
+  display: inline-block;
+}
+
+.event-distance {
+  display: inline-block;
+  font-style: italic;
+  font-size: 1em;
+  color: grey;
+  margin-left: 1em;
+}
 
 /*
  * -- EVENTCREATE STYLES --

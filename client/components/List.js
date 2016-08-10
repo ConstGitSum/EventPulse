@@ -18,15 +18,17 @@ import EventMap from './EventMap';
 
 export class List extends React.Component {
   componentDidMount() {
-    this.props.setLocation();
     this.props.setCurrentEvent({});
-    this.props.getHiddenEvents(this.props.currentUser.id)
+
+    this.props.setLocation()
+    .then(() => this.props.getHiddenEvents(this.props.currentUser.id))
     .then(() => this.props.getList())
     .then(() => this.props.filterList(
       this.props.list,
       'unhidden',
       this.props.currentUser.id,
-      this.props.hiddenEvents
+      this.props.hiddenEvents,
+      this.props.location
     ));
   }
 
@@ -36,6 +38,7 @@ export class List extends React.Component {
       className="event-item list-group-item" 
       onClick={this.props.setCurrentEvent.bind(null, event)}>
       <h3>{event.title}</h3>
+      <span className="event-distance">{event.distance} miles</span>
         {/* Show additional info if clicked */}
         {this.props.currentEvent && event.id === this.props.currentEvent.id
         ? <div id="event-info">
@@ -116,7 +119,8 @@ function mapStateToProps(state) {
     listFiltered: state.listFiltered,
     hiddenEvents: state.hiddenEvents,
     invites: state.invites,
-    invitations: state.invitations
+    invitations: state.invitations,
+    location: state.map.currLocation
   };
 }
 

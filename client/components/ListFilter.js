@@ -19,7 +19,8 @@ export class ListFilter extends React.Component {
               this.props.list,
               filter,
               this.props.currentUser.id,
-              this.props.hiddenEvents
+              this.props.hiddenEvents,
+              this.props.location
             )}>
             {filter}
           </MenuItem>
@@ -33,7 +34,8 @@ function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
     list: state.list,
-    hiddenEvents: state.hiddenEvents
+    hiddenEvents: state.hiddenEvents,
+    location: state.map.currLocation
   };
 }
 

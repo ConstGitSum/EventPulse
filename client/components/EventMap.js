@@ -38,7 +38,7 @@ export class EventMap extends React.Component {
     });
     this._drawMarkers();
 
-    this.map.locate({setView: true, maxZoom: 18});
+    this.map.locate();
     this.map.on('locationfound', this._onLocationFound.bind(this));
     this.map.on('locationerror', this._onLocationError.bind(this));
   }
@@ -99,6 +99,8 @@ export class EventMap extends React.Component {
       .bindPopup("You are within " + radius + " meters from this point");
 
     L.circle(e.latlng, radius).addTo(this.map);
+
+    this.map.setView(e.latlng, 16, { animate: true, duration: 1.0 });
   }
 
   _onLocationError(e) {

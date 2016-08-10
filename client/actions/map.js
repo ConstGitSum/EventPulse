@@ -20,7 +20,10 @@ export function setPrevMarker(marker) {
 
 export function setLocation() {
   const request = new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject(axios('http://ip-api.com/json')));
+    navigator.geolocation.getCurrentPosition(
+      (resp) => { resolve(resp) }, 
+      (err) => { reject(axios('http://ip-api.com/json')) }
+    );
   });
 
   return {
