@@ -116,6 +116,10 @@ a.pure-button-primary {
   margin-left: 1em;
 }
 
+div.list {
+  padding: 15px;
+}
+
 /*
  * -- LIST MAP STYLES -- 
  */
@@ -147,6 +151,10 @@ a.pure-button-primary {
  * -- EVENTDETAILS SIDEBAR STYLES --
  */
 
+div.bm-burger-button {
+  z-index: 999;
+}
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: absolute;
@@ -154,6 +162,7 @@ a.pure-button-primary {
   height: 30px;
   right: 5%;
   top: 2%;
+  z-index: 2 !important;
 }
 
 /* Color/shape of burger icon bars */
@@ -339,13 +348,23 @@ p.dropdown:hover {
 
   div.col-xs-4 {
     width: 83%;
-    margin: 0 8.5% 10% 8.5%;
+    height: 100%;
+    margin: 0 8.5% 0 8.5%;
   }
 
   .page-header {
     margin: 20 0 0 0;
   }
+  div.eventList {
+    max-height: 70%;
+    overflow-y: scroll;
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
 
+  .event-buttons {
+    bottom: 100%;
+  }
 }
 
 /*
