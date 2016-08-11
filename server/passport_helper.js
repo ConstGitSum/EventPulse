@@ -30,10 +30,13 @@ function newUser(user, profile) {
       groupId = group_id[0];
       return User.addMemberships(buildNewMembership(userId, groupId, 'owner')); 
     })
-    .then(() => 
+    .then((value) => {
+      return User.getMemberList(value[0].group_id)
+    })
+    .then((newValue) => 
       profile._json.friends.data.length === 0
       // return user info if no friends
-      ? [{ id: userId, group_id: groupId, name: userName, image: image }]
+      ? [{ id: userId, group_id: groupId, name: userName, image: image }].concat(newValue)
       // else grab the friends from database
       : Promise.all(profile._json.friends.data
           .map(friend => User.getUserByFacebookId(friend.id))
