@@ -15,6 +15,7 @@ import {
 import { setLocation } from '../actions/map';
 import ListFilter from './ListFilter';
 import EventMap from './EventMap';
+import Sidebar from './Sidebar';
 
 export class List extends React.Component {
   componentDidMount() {
@@ -88,16 +89,15 @@ export class List extends React.Component {
       <div className="explore container-fluid text-center">
         <div className="row event-map">
         <EventMap />
-          <div className="col-xs-4 text-left">
-            <div className="page-header text-center">
-              <h1 id="explore">Explore</h1>
-            </div>
+          <div className="list col-xs-4 text-left">
             <ListFilter />
             {this.props.invitations.length>0 ? <button onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button> : null}
-            <ul className="event-list list-group">
-              {this.props.listFiltered.map((event, index) =>
-                this.renderListItem(event, index))}
-            </ul>
+            <div className="eventList">
+              <ul className="event-list list-group">
+                {this.props.listFiltered.map((event, index) =>
+                  this.renderListItem(event, index))}
+              </ul>
+            </div>
             <div className="event-buttons">
               <Link to="/create">
                 <button className="create-event btn btn-primary btn-block">
