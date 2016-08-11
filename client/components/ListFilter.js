@@ -10,23 +10,46 @@ export class ListFilter extends React.Component {
     const filters = ['all', 'unhidden', 'hidden', 'created', 'joined', 'pending'];
 
     return (
-      <DropdownButton title={'Filter Events'} id={'event-filter-dropdown'}>
-        {filters.map((filter, index) => 
-          <MenuItem 
-            key={index} 
-            onClick={this.props.filterList.bind(
-              null, 
-              this.props.list,
-              filter,
-              this.props.currentUser.id,
-              this.props.hiddenEvents,
-              this.props.location
-            )}>
-            {filter}
-          </MenuItem>
-        )}
-      </DropdownButton>
-    );
+      <div class="menu">
+        <div class="title" onclick="f()">John Doe <span class="fa fa-bars"></span>
+          <div class="arrow"></div>
+        </div>
+        <div class="dropdown">
+          <p>Inbox <span class="fa fa-inbox"></span></p>
+          <p>Settings <span class="fa fa-gear"></span></p>
+          <p>Sign Out <span class="fa fa-sign-out"></span></p>
+        </div>
+      </div>
+    )
+      {/*<DropdownButton title={'Filter Events'} id={'event-filter-dropdown'}>
+              {filters.map((filter, index) => 
+                <MenuItem 
+                  key={index} 
+                  onClick={this.props.filterList.bind(
+                    null, 
+                    this.props.list,
+                    filter,
+                    this.props.currentUser.id,
+                    this.props.hiddenEvents,
+                    this.props.location
+                  )}>
+                  {filter}
+                </MenuItem>
+              )}
+            </DropdownButton>
+          );*/}
+  }
+}
+
+function f() {
+  document.getElementsByClassName('dropdown')[0].classList.toggle('down');
+  document.getElementsByClassName('arrow')[0].classList.toggle('gone');
+  if (document.getElementsByClassName('dropdown')[0].classList.contains('down')) {
+    setTimeout(function() {
+      document.getElementsByClassName('dropdown')[0].style.overflow = 'visible'
+    }, 500)
+  } else {
+    document.getElementsByClassName('dropdown')[0].style.overflow = 'hidden'
   }
 }
 

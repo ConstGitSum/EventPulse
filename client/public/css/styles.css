@@ -1,3 +1,9 @@
+@import "https: //fonts.googleapis.com/css?family=Montserrat";
+@font-face {
+  font-family: Expansiva bold;
+  src: url('../fonts/Expansiva.otf');
+}
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -22,6 +28,8 @@ body {
   font-size: 13px;
   padding: 0;
   margin: 0;
+  background-color: #181712
+  font-family: 'Montserrat', sans-serif
 }
 
 h1,
@@ -34,10 +42,6 @@ label {
   color: #34495e;
 }
 
-@font-face {
-  font-family: Expansiva bold;
-  src: url('../fonts/Expansiva.otf');
-}
 
 
 /*
@@ -135,7 +139,7 @@ a.pure-button-primary {
   position: absolute;
   width: 36px;
   height: 30px;
-  left: 95%;
+  right: 5%;
   top: 2%;
 }
 
@@ -157,7 +161,7 @@ a.pure-button-primary {
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: #757571;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
 }
@@ -171,6 +175,90 @@ a.pure-button-primary {
 /* Styling of overlay */
 .bm-overlay {
   background: rgb(0,0,0);
+}
+
+/*
+  Sidebar styles
+ */
+
+.button-container {
+  padding: 5%;
+  margin: 0 0 2% 0;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+  border-bottom-style: solid;
+}
+
+.button-text {
+  color: #;
+}
+
+/*
+  Dropdown
+ */
+.menu {
+  width: 260px;
+  margin: 60px auto 0;
+  cursor: pointer
+}
+
+.title {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 14px;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 0 40px -10px #000;
+  color: #505050
+}
+
+span {
+  float: right;
+  font-size: 18px !important
+}
+
+.dropdown {
+  width: 100%;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 40px -10px #000;
+  color: #505050;
+  margin-top: 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: all .5s
+}
+
+.down {
+  max-height: 150px
+}
+
+.arrow {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  position: absolute;
+  right: 20px;
+  bottom: -24px;
+  display: none
+}
+
+.arrow.gone {
+  display: block
+}
+
+p {
+  padding: 15px 14px;
+  margin: 0;
+  transition: all .1s
+}
+
+p:hover {
+  background: coral;
+  -webkit-transform: scale(1.05);
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 30px -10px #000
 }
 
 /*
