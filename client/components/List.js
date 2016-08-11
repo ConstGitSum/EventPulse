@@ -86,25 +86,31 @@ export class List extends React.Component {
   render() {
     return (
       <div className="explore container-fluid text-center">
+        <div className="row event-map">
         <EventMap />
-        <div className="col-sm-4 text-left">
-          <h1 id="explore">Explore</h1>
-          <ListFilter />
-          {this.props.invitations.length>0 ? <button onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button> : null}
-          <ul className="event-list list-group">
-            {this.props.listFiltered.map((event, index) =>
-              this.renderListItem(event, index))}
-          </ul>
-          <Link to="/create">
-            <button className="create-event btn btn-primary">
-              Create
-            </button>
-          </Link>
-          <button 
-            className="logout btn btn-danger" 
-            onClick={this.props.userLogOut}> 
-            Log Out
-          </button>         
+          <div className="col-xs-4 text-left">
+            <div className="page-header text-center">
+              <h1 id="explore">Explore</h1>
+            </div>
+            <ListFilter />
+            {this.props.invitations.length>0 ? <button onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button> : null}
+            <ul className="event-list list-group">
+              {this.props.listFiltered.map((event, index) =>
+                this.renderListItem(event, index))}
+            </ul>
+            <div className="event-buttons">
+              <Link to="/create">
+                <button className="create-event btn btn-primary btn-block">
+                  Create
+                </button>
+              </Link>
+              <button
+                className="logout btn btn-danger btn-block"
+                onClick={this.props.userLogOut}>
+                Log Out
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     )
