@@ -61,14 +61,12 @@ function getChatMessages(event_id) {
 
 
 function addInvite(users) {
-  console.log('users',users)
   return knex('invites')
   .insert(users)
   .returning('event_id')
 }
 
 function checkInvite(user_id, event_id) {
-  console.log("INVITESSSS", user_id, event_id)
   return knex('invites')
   .where({invitee_id: user_id, event_id: event_id})
   .select('invitee_id')
