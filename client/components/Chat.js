@@ -71,15 +71,16 @@ export class ChatWindow extends React.Component {
 
   render(){
     const messages = this.state.messages.map((message, index) => {
-      return 
+      return (
         <li className="col-xs-10 col-xs-offset-1" key={index}>
           <img className='chatImage' src={message.image} />
           <b>{message.name}</b> {message.text}
         </li>
+        )
     })
     return(
       <div>
-        <h1 className="text-center"> Hello </h1>
+        <h1 className="text-center"> </h1>
         <form className="text-center" onSubmit = {this.handleSubmit.bind(this)}>
           <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
         </form>
