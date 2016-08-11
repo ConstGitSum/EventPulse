@@ -7,49 +7,36 @@ import { filterList } from '../actions/actions';
 
 export class ListFilter extends React.Component {
   render() {
-    const filters = ['all', 'unhidden', 'hidden', 'created', 'joined', 'pending'];
+    const filters = {
+      all      : 'globe',
+      unhidden : 'eye-slash',
+      hidden   : 'eye',
+      created  : 'plus-circle',
+      joined   : 'check-circle',
+      pending  : 'question-circle'
+    }
+
 
     return (
-      <div class="menu">
-        <div class="title" onclick="f()">John Doe <span class="fa fa-bars"></span>
-          <div class="arrow"></div>
-        </div>
-        <div class="dropdown">
-          <p>Inbox <span class="fa fa-inbox"></span></p>
-          <p>Settings <span class="fa fa-gear"></span></p>
-          <p>Sign Out <span class="fa fa-sign-out"></span></p>
-        </div>
-      </div>
-    )
-      {/*<DropdownButton title={'Filter Events'} id={'event-filter-dropdown'}>
-              {filters.map((filter, index) => 
-                <MenuItem 
-                  key={index} 
-                  onClick={this.props.filterList.bind(
-                    null, 
-                    this.props.list,
-                    filter,
-                    this.props.currentUser.id,
-                    this.props.hiddenEvents,
-                    this.props.location
-                  )}>
-                  {filter}
-                </MenuItem>
-              )}
-            </DropdownButton>
-          );*/}
-  }
-}
-
-function f() {
-  document.getElementsByClassName('dropdown')[0].classList.toggle('down');
-  document.getElementsByClassName('arrow')[0].classList.toggle('gone');
-  if (document.getElementsByClassName('dropdown')[0].classList.contains('down')) {
-    setTimeout(function() {
-      document.getElementsByClassName('dropdown')[0].style.overflow = 'visible'
-    }, 500)
-  } else {
-    document.getElementsByClassName('dropdown')[0].style.overflow = 'hidden'
+      <DropdownButton title={'Filter Events'} id={'event-filter-dropdown'}>
+        {Object.keys(filters).map((filter, index) =>
+          <MenuItem
+            key={index}
+            className="capitalize dd-item"
+            onClick={this.props.filterList.bind(
+              null,
+              this.props.list,
+              filter,
+              this.props.currentUser.id,
+              this.props.hiddenEvents,
+              this.props.location
+            )}>
+            <i className={"filter-icon fa fa-" + filters[filter]} aria-hidden="true"></i>
+            {filter}
+          </MenuItem>
+        )}
+      </DropdownButton>
+    );
   }
 }
 
