@@ -173,7 +173,6 @@ export function createEvent(formData, currentUser) {
   }
    var eventStart = new Date(date)
 
-
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
@@ -182,9 +181,8 @@ export function createEvent(formData, currentUser) {
     time: eventStart,
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
     category: formData.category || 'other',
-    max_guests: formData.max_guests || null,
-    privacy: formData.privacy || false,
-    group_visibility: formData.group_visibility || null
+    max_guests: formData.max_guests || 0,
+    privacy: formData.privacy || false
   })
   return {
     type: CREATE_EVENT,
@@ -230,8 +228,7 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
     time             : eventStart,
     duration         : parseDuration(updatedEvent.duration_hour,updatedEvent.duration_minute),
     max_guests       : updatedEvent.max_guests,
-    privacy          : updatedEvent.privacy,
-    group_visibility : updatedEvent.group_visibility
+    privacy          : updatedEvent.privacy
   }
   const request = axios.put(url, body);
 

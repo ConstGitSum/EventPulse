@@ -21,6 +21,7 @@ import {
   validateHour,
   validateMinute,
   validateAmpm,
+  validateCapacity,
   validateField,
   validateTimeRange,
   validateForm  } from '../utils/form';

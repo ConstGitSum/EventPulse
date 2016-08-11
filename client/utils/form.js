@@ -20,7 +20,6 @@ export function getDefaultState() {
       duration_minute: 0,
       category:'other',
       privacy: 'false',
-      group_visibility: 1,
       max_guests: 0,
       is_tomorrow: false
     },
@@ -78,9 +77,7 @@ export function validateTitle(title) {
 }
 
 export function validateDescription(description) {
-  if (description.length === 0) {
-    return 'description cannot be empty';
-  } else if (description.length > 10) {
+  if (description.length > 10) {
     return 'description should be less than 10 characters (for now)';
   } else {
     return '';
@@ -119,6 +116,15 @@ export function validateAmpm(ampm) {
   }
 }
 
+export function validateCapacity(num) {
+  num = Number(num);
+  if(num <= 0) {
+    return 'Please enter a number greater than 0';
+  } else {
+    return '';
+  }
+}
+
 export function validateField(fieldKey, fieldValue) {
   switch (fieldKey) {
     case 'title':
@@ -133,6 +139,8 @@ export function validateField(fieldKey, fieldValue) {
       return validateMinute(fieldValue);
     case 'ampm':
       return validateAmpm(fieldValue);
+    case 'max_guests':
+      return validateCapacity(fieldValue);
     default:
       return '';
   }

@@ -47,6 +47,11 @@ button.view-details.btn.btn-secondary {
 .back-btn:hover {
   opacity: 0.6;
 }
+  
+*:focus {
+  outline: none !important;
+  box-shadow: none;
+}
 
 /*
  * -- PURE BUTTON STYLES --
@@ -189,11 +194,34 @@ div.list {
 .leaflet-left {
   left: 1%;
 }
+
 /*
  * -- EVENTCREATE STYLES --
  */
 form.create-form input {
   color: black;
+}
+
+.create-form .errors, .create-form .dropdown {
+  padding-left: 0em;
+}
+
+.create-form .col-xs-10 {
+  float:none;
+}
+
+.create-form .radios {
+  padding-left: 0;
+}
+
+.create-form .capacity-radio {
+  margin-left :10px;
+}
+
+.create-form .form-check-label {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 15px 0 5px;
 }
 
 
