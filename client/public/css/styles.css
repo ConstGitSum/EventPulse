@@ -1,4 +1,3 @@
-@import "https: //fonts.googleapis.com/css?family=Montserrat";
 @font-face {
   font-family: Expansiva bold;
   src: url('../fonts/Expansiva.otf');
@@ -14,7 +13,7 @@
  * -- BASE STYLES --
  */
 
-html, body, #root, #list-map, .explore, .home{
+html, body, #root, #list-map, .event-map, .explore, .home{
   height: 100%;
 }
 
@@ -41,6 +40,13 @@ h6,
 label {
   color: #34495e;
 }
+
+div.container-fluid {
+  padding-left: 0px;
+  padding-right: 15px;
+}
+
+
 
 
 
@@ -110,6 +116,13 @@ a.pure-button-primary {
   margin-left: 1em;
 }
 
+/*
+ * -- LIST MAP STYLES -- 
+ */
+
+.leaflet-left {
+  left: 1%;
+}
 /*
  * -- EVENTCREATE STYLES --
  */
@@ -194,15 +207,38 @@ a.pure-button-primary {
 }
 
 /*
-  Dropdown
+ * Dropdown Styles
  */
-.menu {
+
+.capitalize {
+  text-transform: capitalize;
+}
+.dd-item {
+  padding: 5px;
+  width: 80%;
+  margin: auto;
+  color: inherit;
+}
+.dd-item:not(:last-child) {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.filter-icon {
+  padding: 5%;
+}
+
+
+/*
+  Dropdown
+
+.dropdown-menu {
   width: 260px;
   margin: 60px auto 0;
   cursor: pointer
 }
 
-.title {
+.dropdown-title {
   width: 100%;
   box-sizing: border-box;
   background: #fff;
@@ -213,7 +249,7 @@ a.pure-button-primary {
   color: #505050
 }
 
-span {
+span.dropdown-menu {
   float: right;
   font-size: 18px !important
 }
@@ -248,18 +284,18 @@ span {
   display: block
 }
 
-p {
+p.dropdown {
   padding: 15px 14px;
   margin: 0;
   transition: all .1s
 }
 
-p:hover {
+p.dropdown:hover {
   background: coral;
   -webkit-transform: scale(1.05);
   color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 30px -10px #000
-}
+}*/
 
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
@@ -288,6 +324,28 @@ p:hover {
     font-size: 1.1em;
   }
 
+  #list-map {
+    height: 100%;
+    width: 100%;
+  }
+
+  .leaflet-left{
+    left: 3.5%;
+  }
+
+  .event-map {
+    height: 50%;
+  }
+
+  div.col-xs-4 {
+    width: 83%;
+    margin: 0 8.5% 10% 8.5%;
+  }
+
+  .page-header {
+    margin: 20 0 0 0;
+  }
+
 }
 
 /*
@@ -304,7 +362,6 @@ p:hover {
   a.pure-button-primary {
     font-size: 1.8em;
   }
-
 }
 
 .eventListFriendImage {
