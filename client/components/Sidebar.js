@@ -68,14 +68,15 @@ export class Sidebar extends React.Component {
 
 function generateButton(text, onClickFunction) {
   return (
-    <div className="button-container">
-      <div className="button-icon">
-        <i className="fa fa-area-chart" aria-hidden="true"></i>
-      </div>
-      <div className="button-text">
-        {text}
-      </div>
-    </div>
+    <Button 
+      key={text} 
+      className="sidebar-button"
+      bsStyle="primary" 
+      bsSize="large" 
+      block
+      onClick={onClickFunction}>
+      {text}
+    </Button>
   );
 }
 
