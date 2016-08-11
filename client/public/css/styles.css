@@ -138,6 +138,10 @@ a.pure-button-primary {
   padding-left: 0;
 }
 
+.create-form .col-xs-10 {
+  float:none;
+}
+
 .summary {
   font-size: 1.2em;
   margin: 1em 0;

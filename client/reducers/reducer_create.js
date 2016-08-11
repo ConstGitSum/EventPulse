@@ -35,8 +35,8 @@ export default function(state = getDefaultState(), action) {
         eventFormData: Object.assign({}, state.eventFormData, action.payload.formData),
         validationErrors: validationErrors
       });  
-    case UPDATE_EVENT_FIELD:      
-        validationErrors = Object.assign({}, state.validationErrors);
+    case UPDATE_EVENT_FIELD:
+      validationErrors = Object.assign({}, state.validationErrors);
       const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
@@ -60,12 +60,21 @@ export default function(state = getDefaultState(), action) {
         ampm: moment(action.payload.time).format('a')
       }
       let newState = Object.assign({}, state);
+      console.log('1EDIT_EVENT', action.payload);
       newState.eventFormData = action.payload;
-      newState.eventFormData.hour = time.hour
-      newState.eventFormData.minute = time.minute
-      newState.eventFormData.ampm = time.ampm
+      newState.eventFormData.hour = time.hour;
+      newState.eventFormData.minute = time.minute;
+      newState.eventFormData.ampm = time.ampm;
+      const seconds = action.payload.duration;
+      const dhours = Math.floor(seconds/(60 * 60)); 
+      const dmins = Math.floor((seconds - dhours * 60 * 60)/ 60);
+      newState.eventFormData.duration_hour = dhours;
+      newState.eventFormData.duration_minute = dmins;
+      console.log('dhours: dminutes',dhours, dmins)
+      newState.eventFormData.privacy = action.payload.privacy.toString();
       newState.toggleEventUpdate = true;
       newState.validationErrors = {}
+      console.log('2EDIT_EVENT', newState);
       return newState;
     }
     default:

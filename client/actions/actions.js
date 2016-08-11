@@ -165,7 +165,6 @@ export function createEvent(formData, currentUser) {
     privacy: formData.privacy || false,
     group_visibility: formData.group_visibility || null
   })
-
   return {
     type: CREATE_EVENT,
     payload: request
@@ -186,8 +185,9 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
     description      : updatedEvent.description,
     created_by       : currentUser.id,
     location         : updatedEvent.location,
-    time             : updatedEvent.time,
-    duration         : updatedEvent.duration,
+    category         : updatedEvent.category,
+    time             : parseTime(updatedEvent.hour, updatedEvent.minute, updatedEvent.ampm),
+    duration         : parseDuration(updatedEvent.duration_hour,updatedEvent.duration_minute),
     max_guests       : updatedEvent.max_guests,
     privacy          : updatedEvent.privacy,
     group_visibility : updatedEvent.group_visibility

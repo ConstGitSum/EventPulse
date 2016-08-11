@@ -36,6 +36,7 @@ export class Create extends Component {
             .then(res => {
               if (res.error) throw new Error('Unable to update event');
               this.props.clearFormValues();
+
               browserHistory.push(`/${this.props.currentEvent.id}`)
             })
             .catch(err => {
@@ -62,8 +63,6 @@ export class Create extends Component {
 
   onClearValues(event) {
     this.props.clearFormValues();
-    window.location.reload();
-    //browserHistory.push('./create');
   }
 
   generateButton() {
@@ -71,7 +70,7 @@ export class Create extends Component {
       return (
         <button
           type="submit"
-          className='btn btn-primary'
+          className="btn btn-primary col-xs-offset-1 col-xs-10"
           role="button"
           onClick={this.onSubmitRedux.bind(this)}>
           Update
@@ -81,10 +80,10 @@ export class Create extends Component {
       return (
         <button
           type="submit"
-          className='btn btn-primary'
+          className="btn btn-primary col-xs-offset-1 col-xs-10"
           role="button"
           onClick={this.onSubmitRedux.bind(this)}>
-          Submit
+          Create
         </button>
       )
     }
@@ -133,10 +132,10 @@ export class Create extends Component {
                 onChange={this.onFieldChangeRedux.bind(this)}/>
               
                 {validationErrors.title ? 
-                  <div className="col-xs-12 errors">
-                    <div className="col-sm-4"></div>
+                  (<div className="col-xs-12 errors">
+                      <div className="col-sm-4"></div>
                       <div className="text-danger col-sm-8 errors"> {validationErrors.title} </div>
-                    </div> : null}             
+                   </div>) : null}             
             </div>
             <div className="form-group row col-xs-10 col-xs-offset-1">
               <label className="col-xs-12 col-sm-4">Description*</label>
@@ -286,7 +285,7 @@ export class Create extends Component {
                 name="max_guests" 
                 type="number" 
                 placeholder="Number of guests" 
-                value={eventFormData.guests} 
+                value={Number(eventFormData.max_guests)} 
                 onChange={this.onFieldChangeRedux.bind(this)}/>
             </div>
             <br/>
@@ -332,13 +331,6 @@ export class Create extends Component {
             </div>
             <div className="row">
               {this.generateButton()}
-              <button 
-                type="submit" 
-                className='btn btn-primary col-xs-offset-1 col-xs-10' 
-                role="button"
-                onClick={this.onSubmitRedux.bind(this)}> 
-                Create 
-              </button>
             </div>
           </form>         
           <div className="col-xs-10 col-xs-offset-1 text-center">
