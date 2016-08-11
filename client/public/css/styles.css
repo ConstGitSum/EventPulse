@@ -39,6 +39,9 @@ label {
   src: url('../fonts/Expansiva.otf');
 }
 
+*:focus {
+    outline: none;
+}
 
 /*
  * -- PURE BUTTON STYLES --
@@ -110,7 +113,39 @@ a.pure-button-primary {
  * -- EVENTCREATE STYLES --
  */
 
+/* to fix: diy; */
+.event-create i.fa {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+}
 
+.event-create, .clear {
+  margin-bottom: 1.5em;
+}
+
+.create-form label {
+  font-size: 1.2em;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.create-form .errors {
+  padding-left: 0em;
+}
+
+.create-form .dropdown {
+  padding-left: 0;
+}
+
+.create-form .col-xs-10 {
+  float:none;
+}
+
+.summary {
+  font-size: 1.2em;
+  margin: 1em 0;
+}
 
 /*
  * -- EVENTDETAILS STYLES --

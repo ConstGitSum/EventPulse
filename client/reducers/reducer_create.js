@@ -26,16 +26,18 @@ import {
   validateForm  } from '../utils/form';
 
 export default function(state = getDefaultState(), action) {
+  let validationErrors;
   switch (action.type) {
-    case VALIDATE_EVENT_FORM: {
-     return Object.assign({}, state, {
+    case VALIDATE_EVENT_FORM:
+      validationErrors = validateForm(Object.assign({}, state.validationErrors), state.eventFormData);
+      action.payload.callback(validationErrors);
+      return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, action.payload.formData),
-        validationErrors: validateForm(Object.assign({}, state.validationErrors), state.eventFormData)
-      })
-    }
-    case UPDATE_EVENT_FIELD: {
-      const validationErrors = Object.assign({}, state.validationErrors);
-      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue);
+        validationErrors: validationErrors
+      });  
+    case UPDATE_EVENT_FIELD:
+      validationErrors = Object.assign({}, state.validationErrors);
+      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
       } else {
@@ -44,8 +46,7 @@ export default function(state = getDefaultState(), action) {
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, { [action.payload.fieldKey]: action.payload.fieldValue }),
         validationErrors
-      })
-    }
+      });
     case CLEAR_FORM_VALUES: {
       return Object.assign({}, getDefaultState());
     }
@@ -59,12 +60,21 @@ export default function(state = getDefaultState(), action) {
         ampm: moment(action.payload.time).format('a')
       }
       let newState = Object.assign({}, state);
+      console.log('1EDIT_EVENT', action.payload);
       newState.eventFormData = action.payload;
-      newState.eventFormData.hour = time.hour
-      newState.eventFormData.minute = time.minute
-      newState.eventFormData.ampm = time.ampm
+      newState.eventFormData.hour = time.hour;
+      newState.eventFormData.minute = time.minute;
+      newState.eventFormData.ampm = time.ampm;
+      const seconds = action.payload.duration;
+      const dhours = Math.floor(seconds/(60 * 60)); 
+      const dmins = Math.floor((seconds - dhours * 60 * 60)/ 60);
+      newState.eventFormData.duration_hour = dhours;
+      newState.eventFormData.duration_minute = dmins;
+      console.log('dhours: dminutes',dhours, dmins)
+      newState.eventFormData.privacy = action.payload.privacy.toString();
       newState.toggleEventUpdate = true;
       newState.validationErrors = {}
+      console.log('2EDIT_EVENT', newState);
       return newState;
     }
     default:

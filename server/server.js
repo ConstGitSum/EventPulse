@@ -39,7 +39,24 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/api/events', validSession);    //This is attaching my middleware to each endpoint besides the facebook ones.
+app.use('/api/users', validSession);
+app.use('/api/authentication', validSession);
+
 app.use('/api', routes)
+
+
+
+function validSession(req,res,next){                                          //This is the middleware function
+     if (req.isAuthenticated() || process.env.NODE_ENV === 'test') {  //This makes sure the tests can still run
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
+
+
 
 // Wild card route for client side routing.
 app.get('/*', (req, res) => {
@@ -47,7 +64,7 @@ app.get('/*', (req, res) => {
 })
 
 io.on('connection', socket => {
-  //if(socket.request.session.passport)  //I'm working on attaching session info to socket.
+  if(socket.request.session.passport)  //I'm working on attaching session info to socket.
   {
   socket.on('room', (theRoom) => {    //if server gets a room, add the person to room
     socket.join(theRoom)
