@@ -18,9 +18,10 @@ export function getDefaultState() {
       ampm: currHour > 12 ? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
+      duration: -1,
       category:'other',
       privacy: 'false',
-      max_guests: 0,
+      max_guests: -1,
       is_tomorrow: false
     },
     validationErrors: {}
@@ -116,15 +117,6 @@ export function validateAmpm(ampm) {
   }
 }
 
-export function validateCapacity(num) {
-  num = Number(num);
-  if(num <= 0) {
-    return 'Please enter a number greater than 0';
-  } else {
-    return '';
-  }
-}
-
 export function validateField(fieldKey, fieldValue) {
   switch (fieldKey) {
     case 'title':
@@ -139,8 +131,6 @@ export function validateField(fieldKey, fieldValue) {
       return validateMinute(fieldValue);
     case 'ampm':
       return validateAmpm(fieldValue);
-    case 'max_guests':
-      return validateCapacity(fieldValue);
     default:
       return '';
   }

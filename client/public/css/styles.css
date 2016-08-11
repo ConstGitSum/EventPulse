@@ -207,15 +207,15 @@ form.create-form input {
 }
 
 .create-form .col-xs-10 {
-  float:none;
+  float: none;
 }
 
 .create-form .radios {
   padding-left: 0;
 }
 
-.create-form .capacity-radio {
-  margin-left :10px;
+.create-form .checkbox {
+  margin-right :10px;
 }
 
 .create-form .form-check-label {

@@ -58,8 +58,24 @@ export class Create extends Component {
   }
 
   onFieldChangeRedux(event) {
-    console.log(event.target.name, event.target.value)
     this.props.updateEventField(event.target.name, event.target.value);
+  }
+
+  onNoDurationLimit(event) {
+    console.log(event.target.checked)
+    if (event.target.checked) {
+      this.props.updateEventField('duration', -1);
+    } else {
+      this.props.updateEventField('duration', 600);
+    }
+  }
+
+  onNoGuestLimit(event) {
+    if (event.target.checked) {
+      this.props.updateEventField('max_guests', -1);
+    } else {
+      this.props.updateEventField('max_guests', 1);
+    }
   }
 
   onClearValues(event) {
@@ -67,8 +83,6 @@ export class Create extends Component {
   }
 
   onMoreOptions(event) {
-    console.log(this.state.folded)
-
     if(this.state.folded) {
       this.setState({folded: false})
     } else {
@@ -254,114 +268,133 @@ export class Create extends Component {
               </button>
             </div>
 
-            {this.state.folded 
-              ? null
-              :<div>  
-                <div className="form-group row col-xs-10 col-xs-offset-1">
-                  <label className="col-xs-12 col-sm-4">Duration</label>
-                  <div className="col-xs-3 col-sm-2 dropdown">
-                    <select name="duration_hour"  
-                      className="form-control"               
-                      value={eventFormData.duration_hour}
-                      onBlur={this.onFieldChangeRedux.bind(this)}
-                      onChange={this.onFieldChangeRedux.bind(this)}>
-                      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
-                        return (
-                          <option key={h} value={h}>{h}</option>
-                        );
-                      })}
-                    </select>                
-                  </div>
-                  <div className="col-xs-3 col-sm-2 dropdown">
-                    <select name="duration_minute" 
-                      className="form-control"   
-                      value={10 * Math.ceil(eventFormData.duration_minute/10)}
-                      onBlur={this.onFieldChangeRedux.bind(this)}
-                      onChange={this.onFieldChangeRedux.bind(this)}>
-                      {['00', '10', '20', '30', '40', '50'].map((minute) => {
-                        return (
-                          <option key={minute} value={minute}>{minute}</option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </div>
+            
+              {this.state.folded 
+                ? null
+                :<div>  
+                    <div className="form-group row col-xs-10 col-xs-offset-1">
+                       <label className="col-xs-12 col-sm-4">Duration</label>
+                        <div> 
+                          {(eventFormData.duration === -1) ? null : (
+                            <div>
+                              <div className="col-xs-3 col-sm-2 dropdown">
+                                <select name="duration_hour"
+                                  className="form-control"             
+                                  value={eventFormData.duration_hour}
+                                  onBlur={this.onFieldChangeRedux.bind(this)}
+                                  onChange={this.onFieldChangeRedux.bind(this)}>
+                                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                                    return (
+                                      <option key={h} value={h}>{h}</option>
+                                    );
+                                  })}
+                                </select>                
+                              </div>
+                              <div className="col-xs-3 col-sm-2 dropdown">
+                                <select name="duration_minute" 
+                                  className="form-control"   
+                                  value={10 * Math.ceil(eventFormData.duration_minute/10)}
+                                  onBlur={this.onFieldChangeRedux.bind(this)}
+                                  onChange={this.onFieldChangeRedux.bind(this)}>
+                                  {['00', '10', '20', '30', '40', '50'].map((minute) => {
+                                    return (
+                                      <option key={minute} value={minute}>{minute}</option>
+                                    );
+                                  })}
+                                </select>
+                              </div>
+                            </div>
+                          )}
+                          <label>
+                            <input 
+                              className="form-check-input"
+                              name="noLimit" 
+                              type="checkbox"
+                              value={-1}
+                              checked={eventFormData.duration === -1}
+                              onChange={this.onNoDurationLimit.bind(this)}/> 
+                            <span className="form-check-label"> No duration limit</span>
+                          </label>
+                        </div>
+                      </div>
 
-                <div className="form-group row col-xs-10 col-xs-offset-1">
-                  <label className="col-xs-12 col-sm-4">Capacity</label>
-                  <input 
-                    className="col-xs-4 col-sm-2 input-sm"
-                    name="max_guests" 
-                    type="number" 
-                    placeholder="Number of guests" 
-                    value={Number(eventFormData.max_guests)} 
-                    onBlur={this.onFieldChangeRedux.bind(this)}
-                    onChange={this.onFieldChangeRedux.bind(this)}/>
-                  <label>
-                    <input 
-                      className="form-check-input capacity-radio"
-                      name="noLimit" 
-                      type="radio" 
-                      value= {0}
-                      checked={eventFormData.max_guests === 0} 
-                      onChange={this.onFieldChangeRedux.bind(this)}/> 
-                    <span className="form-check-label"> No Limit</span>
-                  </label>
-                  <div className="col-xs-12 errors">
-                    <div className="col-sm-4"></div>
-                    {validationErrors.max_guests ? <div className="text-danger col-sm-8 errors"> {validationErrors.max_guests} </div> : null}
-                  </div>
-                </div>
-                <div className="form-group row col-xs-10 col-xs-offset-1">
-                  <label className="col-xs-12 col-sm-4">Privacy</label>
-                  <div className="col-xs-12 col-sm-8 radios">
-                    <label>
-                      <input 
-                        className="form-check-input"
-                        name="privacy" 
-                        type="radio" 
-                        value="false"
-                        checked={eventFormData.privacy === 'false'} 
-                        onChange={this.onFieldChangeRedux.bind(this)}/> 
-                      <span className="form-check-label"> Public</span>
-                    </label>
-                    <label>
-                      <input 
-                        className="form-check-input"
-                        name="privacy" 
-                        type="radio" 
-                        value="true"
-                        checked={eventFormData.privacy === 'true'} 
-                        onChange={this.onFieldChangeRedux.bind(this)}/> 
-                        <span className="form-check-label"> Friends only</span>
-                    </label>
-                  </div>
-                </div>
+                    <div className="form-group row col-xs-10 col-xs-offset-1">
+                      <label className="col-xs-12 col-sm-4">Capacity</label>
+                      {(eventFormData.max_guests === -1) ? null : (
+                        <input 
+                          className="col-xs-3 col-sm-2 input-sm capacity"
+                          name="max_guests" 
+                          type="number" 
+                          placeholder="capacity" 
+                          value={Number(eventFormData.max_guests)} 
+                          onBlur={this.onFieldChangeRedux.bind(this)}
+                          onChange={this.onFieldChangeRedux.bind(this)}
+                          min="1"/>)}
+                      <label>
+                        <input 
+                          className="form-check-input"
+                          name="noLimit" 
+                          type="checkbox"
+                          value={-1}
+                          checked={eventFormData.max_guests === -1}
+                          onChange={this.onNoGuestLimit.bind(this)}/> 
+                        <span className="form-check-label"> No capacity limit</span>
+                      </label>
+                      <div className="col-xs-12 errors">
+                        <div className="col-sm-4"></div>
+                        {validationErrors.max_guests ? <div className="text-danger col-sm-8 errors"> {validationErrors.max_guests} </div> : null}
+                      </div>
+                    </div>
+                    <div className="form-group row col-xs-10 col-xs-offset-1">
+                      <label className="col-xs-12 col-sm-4">Privacy</label>
+                      <div className="col-xs-12 col-sm-8 radios">
+                        <label>
+                          <input 
+                            className="form-check-input"
+                            name="privacy" 
+                            type="radio" 
+                            value="false"
+                            checked={eventFormData.privacy === 'false'} 
+                            onChange={this.onFieldChangeRedux.bind(this)}/> 
+                          <span className="form-check-label"> Public</span>
+                        </label>
+                        <label>
+                          <input 
+                            className="form-check-input"
+                            name="privacy" 
+                            type="radio" 
+                            value="true"
+                            checked={eventFormData.privacy === 'true'} 
+                            onChange={this.onFieldChangeRedux.bind(this)}/> 
+                            <span className="form-check-label"> Friends only</span>
+                        </label>
+                      </div>
+                    </div>
 
-                <div className="form-group row col-xs-10 col-xs-offset-1">
-                  <label className="col-xs-12 col-sm-4">Description</label>
-                  <input 
-                    className="col-xs-12 col-sm-8 input-sm"
-                    type="text" 
-                    name="description" 
-                    placeholder="Description" 
-                    value={eventFormData.description}
-                    onBlur={this.onFieldChangeRedux.bind(this)}
-                    onChange={this.onFieldChangeRedux.bind(this)}/>
-                    <div className="col-xs-12 errors">
-                      <div className="col-sm-4"></div>
-                      {validationErrors.description ? <div className="text-danger col-sm-8 errors"> {validationErrors.description} </div> : null}
+                    <div className="form-group row col-xs-10 col-xs-offset-1">
+                      <label className="col-xs-12 col-sm-4">Description</label>
+                      <input 
+                        className="col-xs-12 col-sm-8 input-sm"
+                        type="text" 
+                        name="description" 
+                        placeholder="Description" 
+                        value={eventFormData.description}
+                        onBlur={this.onFieldChangeRedux.bind(this)}
+                        onChange={this.onFieldChangeRedux.bind(this)}/>
+                        <div className="col-xs-12 errors">
+                          <div className="col-sm-4"></div>
+                          {validationErrors.description ? <div className="text-danger col-sm-8 errors"> {validationErrors.description} </div> : null}
+                        </div>
                     </div>
                 </div>
-              </div>
-            }
+              }
             <div className="row">
               {this.generateButton()}
             </div>
           </form>         
           <div className="col-xs-10 col-xs-offset-1 text-center">
-            {validationErrors._form ? <div className="text-danger  summary"> {validationErrors._form} </div> : null}
-            {this.state.locationError ? <div className="text-danger  summary"> Form submission failed: invalid location </div> : null }
+            {validationErrors._form ? <div className="text-danger summary"> {validationErrors._form} </div> : null}
+            {this.state.locationError ? <div className="text-danger summary"> Form submission failed: invalid location </div> : null }
           </div>
         </div>
       </div>
