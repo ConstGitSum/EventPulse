@@ -31,29 +31,9 @@ body {
   font-family: 'Montserrat', sans-serif
 }
 
-h3 {
-  color: #1E1E24;
-}
-
-span.event-distance {
-  color: #1E1E24;
-  opacity: 0.7;
-}
-
 .container-fluid {
   padding-left: 0px;
   padding-right: 15px;
-}
-
-ul.event-item {
-  height:80vh;
-}
-li.event-item {
-  background-color: #7EA8BE;
-  margin: 2.5% 0 2.5% 0;
-  border-radius: 4px;
-  color: black;
-  /*background-color: #292928;*/
 }
 
 button.view-details.btn.btn-secondary {
@@ -137,7 +117,25 @@ a.pure-button-primary {
 /*
  * -- LIST STYLES --
  */
-.event-item h3 {
+
+ul.event-item {
+  height:80vh;
+}
+
+li.event-item {
+  background-color: transparent;
+  color: #b8b7ad;
+  border: none;
+  border-bottom: 1px solid #b8b7ad;
+}
+
+span.event-distance {
+  color: #F6F0ED;
+  opacity: 0.7;
+}
+
+.event-title {
+  color: inherit;
   display: inline-block;
 }
 
@@ -147,6 +145,12 @@ a.pure-button-primary {
   font-size: 1em;
   color: grey;
   margin-left: 1em;
+}
+
+li.event-item:hover {
+  cursor: pointer;
+  color: white;
+  border-bottom: 1px solid white;
 }
 
 div.list {
