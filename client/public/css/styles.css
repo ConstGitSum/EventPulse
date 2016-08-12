@@ -48,10 +48,6 @@ button.view-details.btn.btn-secondary {
   opacity: 0.6;
 }
 
-.landing-page-title {
-  padding: 20%;
-}
-
 /*
  * -- PURE BUTTON STYLES --
  */
@@ -82,12 +78,8 @@ a.pure-button-primary {
 }
 
 .pure-u-1 {
-  width: 80%;
-  height: 50%;
   margin: auto;
-  margin-top: 1em;
-  margin-bottom: auto;
-  position: absolute;
+  position: relative;
   top: 100px; left: 0; bottom: 0; right: 0;
   text-align: center;
   text-transform: uppercase;
@@ -95,16 +87,16 @@ a.pure-button-primary {
 }
 
 .background_image {
-  background: url("../images/background_image/map2.png") center center;
+  background: url("../images/map.png") center center;
   /*background-size: contain;*/
   display: block;
-  filter: blur(7px);
-  -webkit-filter: blur(7px);
-  height: 35em;
+  height: 100%;
+  width: 100%;
   left: 0;
   position: absolute;
   right: 0;
   z-index: -1;
+  opacity: 0.2;
 }
 
 /* This is the main heading that appears on the page */
@@ -116,6 +108,31 @@ a.pure-button-primary {
   color: white;
   border-radius: 5px;
   line-height: 1em;
+  margin: auto;
+  padding-bottom: 50px;
+}
+
+.hero-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.login-button {
+  font-family: 'Raleway', 'sans-serif'; 
+  color: #3b5998;
+}
+
+.login-button:hover {
+  background-color: #3b5998;
+  color: white;
+  text-decoration: none;
+}
+
+.facebook-icon {
+  padding-right: 10px;
 }
 /*
  * -- LIST STYLES --
@@ -446,8 +463,6 @@ ul
     padding: 40px;
 }
 
-.chatBox {
-  background-color: #bbbbbb;
-  min-height: 300px;
-  max-height: 300px;
+.inviteButton {
+  color: black
 }

@@ -97,7 +97,6 @@ export class EventMap extends React.Component {
       .addTo(this.map)
       .bindPopup("You are within " + radius + " meters from this point");
 
-    L.circle(e.latlng, radius).addTo(this.map);
 
     this.map.setView(e.latlng, 16, { animate: true, duration: 1.0 });
   }
