@@ -17,7 +17,10 @@ module.exports = {
 };
 
 function getAll() {
-  return knex('events').select();
+  var date = new Date()
+  return knex('events')
+  .select()
+  .where('duration','>',date);
 }
 
 function getEventById(id) {
