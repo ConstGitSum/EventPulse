@@ -90,8 +90,6 @@ a.pure-button-primary {
   background: url("../images/map.png") center center;
   /*background-size: contain;*/
   display: block;
-  filter: blur(2px);
-  -webkit-filter: blur(2px);
   height: 100%;
   width: 100%;
   left: 0;
@@ -110,6 +108,31 @@ a.pure-button-primary {
   color: white;
   border-radius: 5px;
   line-height: 1em;
+  margin: auto;
+  padding-bottom: 50px;
+}
+
+.hero-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.login-button {
+  font-family: 'Raleway', 'sans-serif'; 
+  color: #3b5998;
+}
+
+.login-button:hover {
+  background-color: #3b5998;
+  color: white;
+  text-decoration: none;
+}
+
+.facebook-icon {
+  padding-right: 10px;
 }
 /*
  * -- LIST STYLES --
