@@ -46,7 +46,10 @@ button.view-details.btn.btn-secondary {
 
 .back-btn:hover {
   opacity: 0.6;
-  
+}
+
+.landing-page-title {
+  padding: 20%;
 }
 
 /*
@@ -365,6 +368,9 @@ form.create-form input {
     height: 50%;
   }
 
+  .landing-page-title {
+    padding-top: 50%;
+  }
   div.col-xs-4 {
     width: 83%;
     height: 100%;
