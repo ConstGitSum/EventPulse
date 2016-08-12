@@ -60,7 +60,9 @@ export class Sidebar extends React.Component {
   render() {
     return (
       <Menu right>
-        {this.getItems()}
+        <ul className="event-details-sidebar">
+          {this.getItems()}
+        </ul>
       </Menu>
     )
   }
@@ -68,16 +70,26 @@ export class Sidebar extends React.Component {
 
 function generateButton(text, onClickFunction) {
   return (
-    <Button 
+    <li 
       key={text} 
       className="sidebar-button"
-      bsStyle="primary" 
-      bsSize="large" 
-      block
       onClick={onClickFunction}>
-      {text}
-    </Button>
+      <i className={"fa fa-2x fa-" + getFaIcon(text)}></i>
+      <p>{text}</p>
+    </li>
   );
+}
+
+function getFaIcon(text) {
+  const iconDict = {
+    'Hide': 'eye-slash',
+    'Show': 'eye',
+    'Edit': 'pencil',
+    'Guests': 'users',
+    'Invite': 'user-plus'
+  };
+
+  return iconDict[text];
 }
 
 function mapStateToProps(state) {

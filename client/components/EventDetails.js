@@ -150,7 +150,7 @@ export class EventDetails extends React.Component {
       <div className="event-details">
         <i
           onClick={this.onClickBack.bind(this)}
-          className="fa fa-arrow-left fa-3x"
+          className="back-btn fa fa-arrow-left fa-3x"
           aria-hidden="true"></i>
         <Sidebar />
         
