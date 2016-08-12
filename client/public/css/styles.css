@@ -207,6 +207,13 @@ form.create-form input {
 }
 
 /*
+ * -- CHATBOX STYLES --
+ */
+form.text-center input{
+  color: black;
+}
+
+/*
  * -- EVENTDETAILS SIDEBAR STYLES --
  */
 
