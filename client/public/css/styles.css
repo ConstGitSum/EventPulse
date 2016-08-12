@@ -209,17 +209,52 @@ div.list {
   background: #bdc3c7;
 }
 
+.bm-menu-wrap {
+  width: 100px !important;
+}
+
 /* General sidebar styles */
 .bm-menu {
-  background: #757571;
-  padding: 2.5em 1.5em 0;
+  background: #373a47;
+  padding: 2.5em 0 0;
   font-size: 1.15em;
+  -webkit-padding-start: 0;
+  text-align: center;
 }
 
 /* Wrapper for item list */
 .bm-item-list {
   color: #b8b7ad;
-  padding: 0.8em;
+}
+
+/* list */
+.event-details-sidebar {
+  list-style-type: none;
+  padding: 0 10px !important;
+}
+
+/* list item */
+.sidebar-button {
+  border-bottom: 1px solid grey;
+  padding-top: 20%;
+}
+
+.sidebar-button:hover {
+  color: white;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+}
+
+/* list item icon */
+.sidebar-button i {
+  position: relative !important;
+  display: block;
+}
+
+.sidebar-button p {
+  padding-top: 20%;
+  position: relative !important;
+  display: block;
 }
 
 /* Styling of overlay */
