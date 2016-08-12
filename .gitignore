@@ -2,6 +2,7 @@
 .AppleDouble
 .LSOverride
 azure.err
+.env
 iisnode.yml
 coverage
 node_modules
