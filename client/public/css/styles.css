@@ -40,7 +40,7 @@ span.event-distance {
   opacity: 0.7;
 }
 
-div.container-fluid {
+.container-fluid {
   padding-left: 0px;
   padding-right: 15px;
 }
@@ -248,6 +248,9 @@ div.list {
 }
 .dd-item:hover {
   -webkit-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
   box-shadow: 0 0 30px -10px #000;
 }
 
