@@ -28,7 +28,7 @@ export class EventMap extends React.Component {
   _buildMap() {
     const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       maxZoom: 18,
-      id: 'dark-v9',
+      id: 'light-v9',
       accessToken: process.env.MAP_API_KEY
     });
 
