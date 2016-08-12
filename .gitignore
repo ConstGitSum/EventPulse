@@ -1,7 +1,6 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-.env
 azure.err
 iisnode.yml
 coverage
