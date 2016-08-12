@@ -7,21 +7,31 @@ import { filterList } from '../actions/actions';
 
 export class ListFilter extends React.Component {
   render() {
-    const filters = ['all', 'unhidden', 'hidden', 'created', 'joined', 'pending'];
+    const filters = {
+      all      : 'globe',
+      unhidden : 'eye-slash',
+      hidden   : 'eye',
+      created  : 'plus-circle',
+      joined   : 'check-circle',
+      pending  : 'question-circle'
+    }
+
 
     return (
       <DropdownButton title={'Filter Events'} id={'event-filter-dropdown'}>
-        {filters.map((filter, index) => 
-          <MenuItem 
-            key={index} 
+        {Object.keys(filters).map((filter, index) =>
+          <MenuItem
+            key={index}
+            className="capitalize dd-item"
             onClick={this.props.filterList.bind(
-              null, 
+              null,
               this.props.list,
               filter,
               this.props.currentUser.id,
               this.props.hiddenEvents,
               this.props.location
             )}>
+            <i className={"filter-icon fa fa-" + filters[filter]} aria-hidden="true"></i>
             {filter}
           </MenuItem>
         )}
