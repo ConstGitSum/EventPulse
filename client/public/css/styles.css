@@ -108,6 +108,20 @@ a.pure-button-primary {
   top: 100px; left: 0; bottom: 0; right: 0;
   text-align: center;
   text-transform: uppercase;
+  z-index: 2
+}
+
+.background_image {
+  background: url("../images/background_image/map2.png") center center;
+  /*background-size: contain;*/
+  display: block;
+  filter: blur(7px);
+  -webkit-filter: blur(7px);
+  height: 35em;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: -1;
 }
 
 /* This is the main heading that appears on the page */
@@ -258,6 +272,18 @@ div.list {
   padding: 5%;
 }
 
+/*
+ * -- SMALL (IPHONE4) MEDIA QUERIES --
+ * On iPhone 4 and other small devices, we want to customize some
+ * of the mobile styles.
+ */
+@media (max-width:321px) {
+  
+  /* We want to decrease the height of the background image for center positioned. */
+  .background_image {
+    height: 17em;
+  }
+}
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
