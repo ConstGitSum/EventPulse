@@ -24,7 +24,9 @@ var io = socketIo(server).use(function(socket, next){
   sessionMiddleware(socket.request, {}, next)
 })
 
-require('dotenv').load();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
 
 var Event = require('./models/event');
 

@@ -1,6 +1,6 @@
 const DotenvPlugin = require('webpack-dotenv-plugin');
 
-module.exports = {
+module.exports = config = {
   entry: [
     './client/index.js'
   ],
@@ -25,10 +25,14 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './'
   },
-  plugins: [
+  plugins: []
+};
+
+if (process.env.NODE_ENV !== 'production') {
+  config.plugins.push(
     new DotenvPlugin({
       sample: './.sample-env',
       path: './.env'
     })
-  ]
-};
+  )
+}
