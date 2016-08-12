@@ -79,7 +79,8 @@ export class List extends React.Component {
       newList,
       'invites',
       this.props.currentUser.id,
-      this.props.hiddenEvents
+      this.props.hiddenEvents,
+      this.props.location
     )
   }
 

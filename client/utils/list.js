@@ -1,4 +1,5 @@
 export function filterByDistance(list, location, distance = 50) {
+  console.log('list', location)
   return list
     .map(e => Object.assign(e, { distance: getDistanceFromLatLonInMi(e.latitude, e.longitude, location.lat, location.lng) }))
     .filter(e => e.distance <= distance)
