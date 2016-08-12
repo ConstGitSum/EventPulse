@@ -80,7 +80,7 @@ export class List extends React.Component {
       'invites',
       this.props.currentUser.id,
       this.props.hiddenEvents,
-    this.props.location
+      this.props.location
     )
   }
 

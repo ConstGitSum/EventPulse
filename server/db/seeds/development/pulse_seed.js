@@ -57,7 +57,7 @@ exports.seed = function(knex, Promise) {
         latitude: 30.2688755, 
         longitude: -97.7405641,
         time: '2016-08-30T08:00:00.000',
-        duration: 10800,
+        duration: '2016-08-30T08:03:00.000',
         privacy: false
       }, {
         title: 'Pick-up Basketball Game',
@@ -69,7 +69,7 @@ exports.seed = function(knex, Promise) {
         longitude: -97.7185537,
         time: '2016-08-30T10:00:00.000',
         max_guests: 10,
-        duration: 3600,
+        duration: '2016-08-30T08:01:00.000',
         privacy: false
       }, {
         title: 'Olympics Viewing Party',
@@ -80,7 +80,7 @@ exports.seed = function(knex, Promise) {
         latitude: 30.402735, 
         longitude: -97.7237272,
         time: '2016-08-13T20:00:00.000',
-        duration: 7200,
+        duration: '2016-08-13T20:02:00.000',
         privacy: false
       }, {
         title: 'Chipotle Dinner',
@@ -92,7 +92,7 @@ exports.seed = function(knex, Promise) {
         longitude: -97.7416397,
         time: '2016-08-12T17:30:00.000',
         max_guests: 8,
-        duration: 1800,
+        duration: '2016-08-12T18:00:00.000',
         privacy: false
       }, {
         title: 'MKS Precourse Meetup',
@@ -104,7 +104,7 @@ exports.seed = function(knex, Promise) {
         longitude: -97.719583,
         time: '2016-08-27T09:30:00.000',
         max_guests: 10,
-        duration: 7200,
+        duration: '2016-08-27T11:30:00.000',
         privacy: false
       }, {
         title: 'Buffalo Billiards Happy Hour',
@@ -116,7 +116,7 @@ exports.seed = function(knex, Promise) {
         longitude: -97.7412727,
         time: '2016-08-19T18:00:00.000',
         max_guests: 20,
-        duration: 7200,
+        duration: '2016-08-19T20:00:00.000',
         privacy: false
       }]);
     })
