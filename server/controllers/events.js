@@ -107,8 +107,7 @@ router.delete('/:eventId/guests/:userId', function(req, res, next) {
 router.post('/', function(req, res, next) {
   // geocode entered address and send 422 if invalid
   utils.getCoords(req.body)
-    .then(newEvent => {
-      return Event.create(newEvent)})
+    .then(newEvent => Event.create(newEvent))
     .then(eventId => Event.getEventById(eventId[0].id))
     .then(event => 
       Guest.getGuests(event[0].id)
