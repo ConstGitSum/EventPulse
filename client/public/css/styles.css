@@ -163,7 +163,9 @@ div.list {
 /*
  * -- EVENTCREATE STYLES --
  */
-
+form.create-form input {
+  color: black;
+}
 
 
 /*
