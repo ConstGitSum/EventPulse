@@ -37,7 +37,7 @@ export class List extends React.Component {
       key={index} 
       className="event-item list-group-item" 
       onClick={this.props.setCurrentEvent.bind(null, event)}>
-      <h3>{event.title}</h3>
+      <h3 className="event-title">{event.title}</h3>
       <span className="event-distance">{event.distance} miles</span>
         {/* Show additional info if clicked */}
         {this.props.currentEvent && event.id === this.props.currentEvent.id
@@ -45,32 +45,31 @@ export class List extends React.Component {
             <h4 id="event_location">{event.location}</h4>
             <p id="event_description">{event.description}</p>
             {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
-            <Link to={`/${event.id}`}>
-              <button className="view-details btn btn-secondary">
-                View Event Details
-              </button>
-            </Link>
+            <div className="text-center view-details">
+              <Link to={`/${event.id}`}>
+                <button className="btn btn-secondary">
+                  View Event Details
+                </button>
+              </Link>
+            </div>
           </div>
         : null}
     </li>
   }
+
   myFriendsGoing(friendsList, guestList){ //This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
-    if(friendsList){
-    var friendIds = friendsList.map((friendId => friendId.id))
-    var friendsGoing = guestList.filter((friendGoing) => {
-      if(friendIds.includes(friendGoing.id)){
-        return true
-      }   
-      return false
-    })
-    return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend,index) => {
-      if(index<5){
-      return <img className = 'eventListFriendImage' key = {friend.id} src = {friend.image}/>
-      }
+    if (friendsList) {
+      var friendIds = friendsList.map((friendId => friendId.id))
+      var friendsGoing = guestList.filter((friendGoing) => friendIds.includes(friendGoing.id));
+
+      return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend,index) => {
+        if (index<5) {
+          return <img className = 'eventListFriendImage' key = {friend.id} src = {friend.image}/>
+        }
+      })}</div>
     }
-    )}</div>
   }
-}
+
   seeInvites() {  //This will filter via invites
     var newList = this.props.list.filter((event) => {
       return this.props.invitations.includes(event.id)
