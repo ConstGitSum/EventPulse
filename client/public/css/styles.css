@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Expansiva bold;
+  src: url('../fonts/Expansiva.otf');
+}
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -8,7 +13,7 @@
  * -- BASE STYLES --
  */
 
-html, body, #root, #list-map, .explore, .home{
+html, body, #root, #list-map, .event-map, .explore, .home{
   height: 100%;
 }
 
@@ -18,29 +23,50 @@ html, body, #root, #list-map, .explore, .home{
 
 body {
   line-height: 1.7em;
-  color: #7f8c8d;
+  color: #F6F0ED;
   font-size: 13px;
   padding: 0;
   margin: 0;
+  background-color: #34445A;
+  font-family: 'Montserrat', sans-serif
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label {
-  color: #34495e;
+h3 {
+  color: #1E1E24;
 }
 
-@font-face {
-  font-family: Expansiva bold;
-  src: url('../fonts/Expansiva.otf');
+span.event-distance {
+  color: #1E1E24;
+  opacity: 0.7;
 }
 
-*:focus {
-    outline: none;
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 15px;
+}
+
+ul.event-item {
+  height:80vh;
+}
+li.event-item {
+  background-color: #7EA8BE;
+  margin: 2.5% 0 2.5% 0;
+  border-radius: 4px;
+  color: black;
+  /*background-color: #292928;*/
+}
+
+button.view-details.btn.btn-secondary {
+  background-color: white;
+}
+
+.back-btn {
+  color: #1E1E24;
+}
+
+.back-btn:hover {
+  opacity: 0.6;
+  
 }
 
 /*
@@ -109,56 +135,35 @@ a.pure-button-primary {
   margin-left: 1em;
 }
 
+div.list {
+  padding: 15px;
+}
+
+/*
+ * -- LIST MAP STYLES -- 
+ */
+
+.leaflet-left {
+  left: 1%;
+}
 /*
  * -- EVENTCREATE STYLES --
  */
 
-/* to fix: diy; */
-.event-create i.fa {
-  position: absolute;
-  left: 1%;
-  top: 1%;
-}
 
-.event-create, .clear {
-  margin-bottom: 1.5em;
-}
-
-.create-form label {
-  font-size: 1.2em;
-  margin-left: 0;
-  padding-left: 0;
-}
-
-.create-form .errors {
-  padding-left: 0em;
-}
-
-.create-form .dropdown {
-  padding-left: 0;
-}
-
-.create-form .col-xs-10 {
-  float:none;
-}
-
-.summary {
-  font-size: 1.2em;
-  margin: 1em 0;
-}
 
 /*
  * -- EVENTDETAILS STYLES --
  */
 
 .ed-btn {
-	width: 60px;
+  width: 60px;
 }
 
 .event-details i.fa {
-	position: absolute;
-	left: 1%;
-	top: 1%;
+  position: absolute;
+  left: 1%;
+  top: 1%;
 }
 
 /*
@@ -170,13 +175,13 @@ a.pure-button-primary {
   position: absolute;
   width: 36px;
   height: 30px;
-  left: 95%;
+  right: 5%;
   top: 2%;
 }
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #373a47;
+  background: #1E1E24;
 }
 
 /* Position and sizing of clickable cross button */
@@ -192,7 +197,7 @@ a.pure-button-primary {
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: #757571;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
 }
@@ -209,11 +214,56 @@ a.pure-button-primary {
 }
 
 /*
+  Sidebar styles
+ */
+
+.button-container {
+  padding: 5%;
+  margin: 0 0 2% 0;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+  border-bottom-style: solid;
+}
+
+.button-text {
+  color: #;
+}
+
+/*
+ * Dropdown Styles
+ */
+
+.capitalize {
+  text-transform: capitalize;
+}
+.dd-item {
+  padding: 5px;
+  width: 80%;
+  margin: auto;
+  color: inherit;
+}
+.dd-item:not(:last-child) {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+.dd-item:hover {
+  -webkit-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  box-shadow: 0 0 30px -10px #000;
+}
+
+.filter-icon {
+  padding: 5%;
+}
+
+/*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
  * of the mobile styles.
  */
-@media (max-width:767px) {
+@media (max-width:768px) {
 
   /* We want to give the content area some more padding */
   .content {
@@ -235,6 +285,39 @@ a.pure-button-primary {
     font-size: 1.1em;
   }
 
+  #list-map {
+    height: 100%;
+    width: 100%;
+  }
+
+  .leaflet-left{
+    left: 3.5%;
+  }
+
+  .event-map {
+    height: 50%;
+  }
+
+  div.col-xs-4 {
+    width: 83%;
+    height: 100%;
+    margin: 0 8.5% 0 8.5%;
+  }
+
+  .page-header {
+    margin: 20 0 0 0;
+  }
+  div.eventList {
+    max-height: 70%;
+    overflow-y: scroll;
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
 }
 
 /*
@@ -251,7 +334,6 @@ a.pure-button-primary {
   a.pure-button-primary {
     font-size: 1.8em;
   }
-
 }
 
 .eventListFriendImage {

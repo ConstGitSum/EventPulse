@@ -109,7 +109,7 @@ export class EventMap extends React.Component {
 
   render() {
     return (
-      <div className="col-sm-8" id="list-map"></div>
+      <div className="col-xs-8" id="list-map"></div>
     );
   }
 }
