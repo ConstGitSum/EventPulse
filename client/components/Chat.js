@@ -84,7 +84,7 @@ export class ChatWindow extends React.Component {
         <form className="text-center" onSubmit = {this.handleSubmit.bind(this)}>
           <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
         </form>
-        {messages}
+        <div className = 'chatBox'><ul className = 'chatMessages'>{messages} </ul></div>  
       </div>
       )
   }

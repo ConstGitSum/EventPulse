@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 export default class Auth extends Component {
   render() {
     return (
-
       <div>
         <div className="background_image"></div>
         <div className="hero-container">
