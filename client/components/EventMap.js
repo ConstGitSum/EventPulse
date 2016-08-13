@@ -26,7 +26,7 @@ export class EventMap extends React.Component {
       if (!equal(this.props.currentEvent, {})) {
         this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
       } else {
-        // if current event is unset, revert current alert marker to original marker
+        // if current event is being unset, revert current alert marker to original marker
         this._revertCurrentMarker();
       }
     }
@@ -92,6 +92,7 @@ export class EventMap extends React.Component {
 
     // find index of clicked event to scroll to it on list
     const index = this.props.listFiltered.findIndex(e => e.id === event.id);
+    $('.eventList').find(`li:eq(${index})`).addClass('selected');
     setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 300)
   }
 
@@ -101,6 +102,10 @@ export class EventMap extends React.Component {
     this.map.removeLayer(curr.marker);
     prev.marker.addTo(this.map);
     this.markerTracker[curr.eventId] = prev.marker;
+
+    // find index of prev to remove selected class from it on the list
+    const prevIndex = this.props.listFiltered.findIndex(e => e.id === prev.eventId);
+    $('.eventList').find(`li:eq(${prevIndex})`).removeClass('selected');
   }
 
   _onLocationFound(e) {

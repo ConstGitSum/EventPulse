@@ -173,6 +173,11 @@ li.event-item:hover {
   border-bottom: 1px solid white;
 }
 
+li.event-item.selected {
+  color: white;
+  border-bottom: 1px solid white;
+}
+
 div.list {
   padding: 15px;
 }
