@@ -106,6 +106,7 @@ export class EventMap extends React.Component {
     // find index of prev to remove selected class from it on the list
     const prevIndex = this.props.listFiltered.findIndex(e => e.id === prev.eventId);
     $('.eventList').find(`li:eq(${prevIndex})`).removeClass('selected');
+    $('.eventList').find(`li:eq(${prevIndex})`).mouseout();
   }
 
   _onLocationFound(e) {
