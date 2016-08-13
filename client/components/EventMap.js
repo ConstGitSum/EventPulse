@@ -33,7 +33,6 @@ export class EventMap extends React.Component {
   }
 
   _buildMap() {
-    console.log("API_KEY",process.env.MAP_API_KEY)
     const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       maxZoom: 18,
       id: 'light-v9',
@@ -44,10 +43,10 @@ export class EventMap extends React.Component {
       layers: [tiles]
     });
     this._drawMarkers();
-this.map.setView([30,-90], 16, { animate: true, duration: 1.0 });
-    // this.map.locate();
-    // this.map.on('locationfound', this._onLocationFound.bind(this));
-    // this.map.on('locationerror', this._onLocationError.bind(this));
+
+    this.map.locate();
+    this.map.on('locationfound', this._onLocationFound.bind(this));
+    this.map.on('locationerror', this._onLocationError.bind(this));
   }
 
   _drawMarkers() {
