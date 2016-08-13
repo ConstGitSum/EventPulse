@@ -18,7 +18,9 @@ export class DetailsMap extends React.Component {
 
     this.map = L.map('details-map', {
       layers: [tiles],
-      zoomControl: false
+      zoomControl: false,
+      dragging: false,
+      touchZoon: false
     });
 
     const eventLatLng = [this.props.currentEvent.latitude, this.props.currentEvent.longitude];
