@@ -14,6 +14,7 @@ import {
   removeInvitation,
   addInvite
 } from '../actions/actions';
+import DetailsMap from './DetailsMap';
 
 export class EventDetails extends React.Component {
   constructor() {
@@ -161,6 +162,16 @@ export class EventDetails extends React.Component {
             </div>
           </div>
 
+          <DetailsMap />
+
+          <div className="row">
+            <div className="col-xs-10 col-xs-offset-1 text-center">
+              <strong>
+                {this.props.currentEvent.location}
+              </strong>
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.renderButtons()}
@@ -172,7 +183,6 @@ export class EventDetails extends React.Component {
               <p><strong>Attendance</strong>: {currentAttending}/{max_guests}</p>
               <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
               <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
-              <p><strong>Location</strong>: {this.props.currentEvent.location}</p>
               <p onClick={this.swapTime.bind(this)}>
                 <strong>Time</strong>: {this.state.timeText}
               </p>

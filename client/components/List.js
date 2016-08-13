@@ -57,7 +57,9 @@ export class List extends React.Component {
             <p id="event_description">{event.description}</p>
             {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <div className="text-center view-details">
-              <Link to={`/${event.id}`}>
+              <Link 
+                onClick={(e) => {e.stopPropagation()}}
+                to={`/${event.id}`}>
                 <button className="btn btn-secondary">
                   View Event Details
                 </button>

@@ -205,10 +205,18 @@ form.create-form input {
   width: 60px;
 }
 
-.event-details i.fa {
+.event-details > i.fa {
   position: absolute;
   left: 1%;
   top: 1%;
+}
+
+.details-map-container {
+  height: 100px;
+}
+
+#details-map {
+  height: 30vh;
 }
 
 /*
