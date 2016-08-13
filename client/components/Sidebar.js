@@ -11,6 +11,7 @@ let Menu = require('react-burger-menu').slide;
 
 export class Sidebar extends React.Component {
   onClickGuests() {
+    browserHistory.push('/guestList')
   }
 
   onClickEdit() {
