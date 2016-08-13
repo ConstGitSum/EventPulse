@@ -13,16 +13,16 @@ export class DetailsMap extends React.Component {
     const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       maxZoom: 18,
       id: 'light-v9',
-      accessToken: process.env.MAP_API_KEY
+      accessToken: process.env.MAP_API_KEY,
     });
 
     this.map = L.map('details-map', {
-      layers: [tiles]
+      layers: [tiles],
+      zoomControl: false
     });
 
     const eventLatLng = [this.props.currentEvent.latitude, this.props.currentEvent.longitude];
     const userLatLng = [this.props.location.lat, this.props.location.lng];
-    console.log(userLatLng)
     const eventMarker = L.marker(eventLatLng, { icon: generateMarker(this.props.currentEvent.category) })
     const locationMarker = L.marker(userLatLng, { icon: userMarker });
     const group = new L.featureGroup([eventMarker, locationMarker]).addTo(this.map);
@@ -32,7 +32,7 @@ export class DetailsMap extends React.Component {
 
   render() {
     return (
-      <div id="details-map"></div>
+      <div id="details-map" className="col-xs-10 col-xs-offset-1"></div>
     );
   }
 }

@@ -162,11 +162,7 @@ export class EventDetails extends React.Component {
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-xs-10 col-xs-offset-1 details-map-container">
-              <DetailsMap />
-            </div>
-          </div>
+          <DetailsMap />
 
           <div className="row">
             <div className="col-xs-10 col-xs-offset-1 text-center">
