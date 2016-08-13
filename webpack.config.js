@@ -25,5 +25,10 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './'
   },
-  
+  plugins: [
+    new DotenvPlugin({
+      sample: './.sample-env',
+      path: './.env'
+    })
+  ]
 };
