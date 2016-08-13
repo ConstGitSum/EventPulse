@@ -24,6 +24,7 @@ export const GET_ALL_INVITATIONS = 'GET_ALL_INVITATIONS';
 export const GET_INVITES         = 'GET_INVITES';
 export const GET_INVITATIONS     = 'GET_INVITATIONS';
 export const REMOVE_INVITATION   = 'REMOVE_INVITATION';
+export const TOGGLE_MODAL_STATE  = 'TOGGLE_MODAL_STATE'; 
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -251,5 +252,11 @@ export function clearFormValues() {
   
   return {
     type: CLEAR_FORM_VALUES
+  }
+}
+
+export function toggleModalState() {
+  return {
+   type: TOGGLE_MODAL_STATE
   }
 }
