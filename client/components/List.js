@@ -95,6 +95,7 @@ export class List extends React.Component {
   }
 
   render() {
+    console.log(this.props.currentEvent)
     return (
       <div className="explore container-fluid text-center">
         <div className="row event-map">
