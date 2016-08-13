@@ -16,28 +16,26 @@ export class GuestAndFriends extends React.Component {
   }  
 
 showGuestList() {
-  console.log('hello')
-  //return <GuestList />
-  return <div onClick = {this.clickGuestList.bind(this)}><GuestList/> </div>
+  return this.state.clicked == 'guestList' ? <div> <div className = 'guestHeader'> People Attending </div> <GuestList/> </div> : <div onClick = {this.clickGuestList.bind(this)} > expand Guest list</div>
 }
 
 clickGuestList() {
-  this.setState({clicked: 'friendsList'})
+  this.setState({clicked: 'guestList'})
 }
 
 showFriendsList() {
-  return <div onClick = {this.clickFriendsList.bind(this)}><FriendsList /> </div>
+  return this.state.clicked == 'friendsList' ? <div><div className = 'guestHeader'> Invite Friends </div> <FriendsList /> </div> : <div onClick = {this.clickFriendsList.bind(this)} > expand Friend Invites</div>
 }
 
 clickFriendsList() {
-  this.setState({clicked: 'guestList'})
+  this.setState({clicked: 'friendsList'})
 }
 
   render() {
 console.log(this.props.currentEvent)
     return(
       <div>
-      {this.state.clicked == 'guestList' ? this.showGuestList() : this.showFriendsList()}
+      {this.showGuestList()} {this.showFriendsList()}
       </div>
       )
   }
