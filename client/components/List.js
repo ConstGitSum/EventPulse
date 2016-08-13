@@ -35,7 +35,11 @@ export class List extends React.Component {
   }
 
   setCurrentEvent(event, index) {
-    this.props.setCurrentEvent(event);
+    if(this.props.currentEvent.id === event.id) {
+      this.props.setCurrentEvent({})
+    } else {
+      this.props.setCurrentEvent(event)
+    }
     setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 50)
   }
 
