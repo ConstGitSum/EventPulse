@@ -1,4 +1,4 @@
-//const DotenvPlugin = require('webpack-dotenv-plugin');
+const DotenvPlugin = require('webpack-dotenv-plugin');
 
 module.exports = {
   entry: [
@@ -25,5 +25,10 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './'
   },
-
+  plugins: [
+    new DotenvPlugin({
+      sample: './.sample-env',
+      path: './.env'
+    })
+  ]
 };
