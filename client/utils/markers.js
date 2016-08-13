@@ -62,7 +62,7 @@ export const userMarker = L.AwesomeMarkers.icon({
 
 export const alertMarker = L.AwesomeMarkers.icon({
   icon: 'exclamation',
-  spin: true,
+  extraClasses: 'animated pulse infinite',
   markerColor: 'red',
   prefix: 'fa'
 });

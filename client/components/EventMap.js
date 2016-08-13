@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import L from 'leaflet';
 import equal from 'deep-equal';
+import $ from 'jquery';
+import scrollTo from 'jquery.scrollto';
 
 import { setCurrentEvent } from '../actions/actions';
 import { setCurrMarker, setPrevMarker } from '../actions/map';
@@ -20,8 +22,13 @@ export class EventMap extends React.Component {
     if (!equal(prevProps.listFiltered, this.props.listFiltered)) this._drawMarkers();
 
     // if current event has changed, locate marker and set to currentMarker
-    if (prevProps.currentEvent !== this.props.currentEvent && !equal(this.props.currentEvent, {})) {
-      this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
+    if (!equal(prevProps.currentEvent, this.props.currentEvent)) {
+      if (!equal(this.props.currentEvent, {})) {
+        this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
+      } else {
+        // if current event is being unset, revert current alert marker to original marker
+        this._revertCurrentMarker();
+      }
     }
   }
 
@@ -70,13 +77,7 @@ export class EventMap extends React.Component {
   // set the marker for selected current event to spinning '!' marker
   _alertCurrentMarker(marker, event) {
     // if a currMarker already exists, revert it back to original marker
-    if (this.props.map.currMarker.eventId) {
-      const curr = this.props.map.currMarker;
-      const prev = this.props.map.prevMarker;
-      this.map.removeLayer(curr.marker);
-      prev.marker.addTo(this.map);
-      this.markerTracker[curr.eventId] = prev.marker;
-    }
+    if (this.props.map.currMarker.eventId) this._revertCurrentMarker();
 
     // set this marker as the new prevMarker, and add new '!' marker as currMarker
     this.map.removeLayer(marker);
@@ -88,6 +89,24 @@ export class EventMap extends React.Component {
 
     // pan map to new current event
     this.map.setView(marker._latlng, 16, { animate: true, duration: 1.0 });
+
+    // find index of clicked event to scroll to it on list
+    const index = this.props.listFiltered.findIndex(e => e.id === event.id);
+    $('.eventList').find(`li:eq(${index})`).addClass('selected');
+    setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 300)
+  }
+
+  _revertCurrentMarker() {
+    const curr = this.props.map.currMarker;
+    const prev = this.props.map.prevMarker;
+    this.map.removeLayer(curr.marker);
+    prev.marker.addTo(this.map);
+    this.markerTracker[curr.eventId] = prev.marker;
+
+    // find index of prev to remove selected class from it on the list
+    const prevIndex = this.props.listFiltered.findIndex(e => e.id === prev.eventId);
+    $('.eventList').find(`li:eq(${prevIndex})`).removeClass('selected');
+    $('.eventList').find(`li:eq(${prevIndex})`).mouseout();
   }
 
   _onLocationFound(e) {
