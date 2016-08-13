@@ -44,10 +44,10 @@ export class EventMap extends React.Component {
       layers: [tiles]
     });
     this._drawMarkers();
-
-    this.map.locate();
-    this.map.on('locationfound', this._onLocationFound.bind(this));
-    this.map.on('locationerror', this._onLocationError.bind(this));
+this.map.setView([30,-90], 16, { animate: true, duration: 1.0 });
+    // this.map.locate();
+    // this.map.on('locationfound', this._onLocationFound.bind(this));
+    // this.map.on('locationerror', this._onLocationError.bind(this));
   }
 
   _drawMarkers() {
