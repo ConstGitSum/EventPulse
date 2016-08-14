@@ -18,7 +18,7 @@ module.exports = {
 
 function getAll() {
   var date = new Date()
-  return knex('events').select().where('duration','>',date);
+  return knex('events').select().where('endTime','>',date);
 }
 
 function getEventById(id) {
@@ -26,7 +26,7 @@ function getEventById(id) {
 }
 
 function create(event) {
-  event.duration = moment(event.time).add(event.duration,'s').utc().format()
+  event.endTime = moment(event.time).add(event.duration,'s').utc().format()
   return knex('events').insert(event).returning(['id','created_by']).then((newEvent) =>{
     return Guest.create({user_id: newEvent[0].created_by, event_id: newEvent[0].id, status: 'accepted'}).then(function(value){
       return newEvent
@@ -35,6 +35,7 @@ function create(event) {
 }
 
 function update(id, event) {
+  event.endTime = moment(event.time).add(event.duration,'s').utc().format();
   return knex('events').where('id', id).update(event).returning('id');
 }
 

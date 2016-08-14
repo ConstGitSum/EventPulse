@@ -26,7 +26,8 @@ exports.up = function(knex, Promise) {
       table.decimal('latitude', 10, 7);
       table.decimal('longitude', 10, 7);
       table.dateTime('time');
-      table.dateTime('duration');
+      table.integer('duration');
+      table.dateTime('endTime');
       table.string('category').defaultTo('other').notNullable();
       table.integer('max_guests');
       table.boolean('privacy').notNullable();
