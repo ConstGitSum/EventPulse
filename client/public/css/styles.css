@@ -473,19 +473,18 @@ text-align: center;
 .friendsNotGoing
 {
     list-style-type: none;
-    padding: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
 }
 
 .inviteButton {
   color: black
 }
 
-.friendsHeader {
-  text-align: center;
-}
-
 .guestHeader {
   text-align: center;
+  font-size: 150%;
 }
 
 .guests {
@@ -494,6 +493,7 @@ border-radius: 15px;
 padding: 10px;
 margin-left: 40px;
 margin-right: 40px;
+margin-top: 10px;
 list-style-type: none;
 }
 
@@ -509,4 +509,9 @@ text-align: center;
 
 .expandFriendList {
 text-align: center;
+}
+
+.guestFriendHeader {
+  text-align: center;
+  font-size: 150%;
 }

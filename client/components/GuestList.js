@@ -9,9 +9,6 @@ import { CardStack, Card } from 'react-cardstack';
 import FriendsList from './FriendsList'
 
 export class GuestList extends React.Component {
-handleCardClick() {
-  return <h2> Clicked!</h2>
-}
   
   render() {
     return(

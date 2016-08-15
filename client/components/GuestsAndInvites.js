@@ -8,6 +8,7 @@ import {addInvite} from '../actions/actions'
 import { CardStack, Card } from 'react-cardstack';
 import FriendsList from './FriendsList'
 import GuestList from  './GuestList'
+import { browserHistory } from 'react-router';
 
 export class GuestAndFriends extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export class GuestAndFriends extends React.Component {
   }  
 
 showGuestList() {
-  return this.state.clicked == 'guestList' ? <div> <div className = 'guestHeader'> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} > expand Guest list</div>
+  return this.state.clicked == 'guestList' ? <div> <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)} > expand Friend Invites</div><div className = 'guestHeader'> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} > expand Guest list</div>
 }
 
 clickGuestList() {
@@ -24,7 +25,7 @@ clickGuestList() {
 }
 
 showFriendsList() {
-  return this.state.clicked == 'friendsList' ? <div><div className = 'guestHeader'> Invite Friends </div> <FriendsList /> </div> : <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)} > expand Friend Invites</div>
+  return this.state.clicked == 'friendsList' ? <div><div className = 'friendHeader'> Invite Friends </div> <FriendsList /> </div> : null
 }
 
 clickFriendsList() {
@@ -40,6 +41,7 @@ console.log(this.props.currentEvent)
     return(
       <div>
       <i onClick = {this.onClickBack.bind(this)} className = "back-btn fa fa-arrow-left fa-3x" aria-hidden="true"></i>
+      <h2 className = "text-center"> {this.props.currentEvent.title} </h2>
       {this.showGuestList()} {this.showFriendsList()}
       </div>
       )

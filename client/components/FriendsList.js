@@ -55,7 +55,6 @@ export class FriendsList extends React.Component {
   render(){
     return(
       <div>
-      <div className = "friendHeader"> Invite Friends to {this.props.currentEvent.title} </div>
       <ul className = "friendsNotGoing">{this.friendsNotGoing().map((friend) => {
         return <li className ={this.state.invitedFriends.includes(friend.id)?"friend-accept":"friend"} key = {friend.id} value = {friend.id} onClick = {this.friendClick.bind(this)}><img src = {friend.image} className = "eventListFriendImage" /> {friend.name}</li>
       })}
