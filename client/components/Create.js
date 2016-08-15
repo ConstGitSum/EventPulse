@@ -64,7 +64,7 @@ export class Create extends Component {
   onNoDurationLimit(event) {
     console.log(event.target.checked)
     if (event.target.checked) {
-      this.props.updateEventField('duration', -1);
+      this.props.updateEventField('duration', 0);
     } else {
       this.props.updateEventField('duration', 600);
     }
@@ -134,15 +134,16 @@ export class Create extends Component {
                 }
             </div>
           </div>
-          <div className="row text-right col-xs-12 clear">
+          <div className="row text-right col-xs-12">
             <button 
               type="button" 
-              className='btn btn-link' 
+              className="btn-link clear" 
               role="button"
               onClick={this.onClearValues.bind(this)}> 
-              Clear Values 
+              Clear Values
             </button>
           </div>
+
           <br/>
           <form role="form" className="create-form">
             <div className="form-group row col-xs-10 col-xs-offset-1">  
@@ -181,7 +182,7 @@ export class Create extends Component {
 
             <div className="form-group row col-xs-10 col-xs-offset-1">
               <label className="col-xs-12 col-sm-4">Category*</label>
-              <div className="col-xs-6 col-sm-4 dropdown">
+              <div className="col-xs-12 col-sm-8 no-padding-left no-padding-right">
                 <select name="category"  
                   className="form-control"               
                   value={eventFormData.category}
@@ -198,7 +199,7 @@ export class Create extends Component {
 
             <div className="form-group row col-xs-10 col-xs-offset-1">
               <label className="col-xs-12 col-sm-4">Time*</label>
-              <div className="col-xs-3 col-sm-2 dropdown">
+              <div className="col-xs-4 col-sm-2 no-padding-left">
                 <select name="hour"  
                   className="form-control"               
                   value={eventFormData.hour}
@@ -211,7 +212,7 @@ export class Create extends Component {
                   })}
                 </select>
               </div>
-              <div className="col-xs-3 col-sm-2 dropdown">
+              <div className="col-xs-4 col-sm-2 no-padding-left">
                 <select name="minute" 
                   className="form-control"   
                   value={eventFormData.minute}
@@ -224,7 +225,7 @@ export class Create extends Component {
                   })}
                 </select>
               </div>
-              <div className="col-xs-3 col-sm-2 dropdown">
+              <div className="col-xs-4 col-sm-2 no-padding-left">
                 <select name="ampm"
                   className="form-control"
                   value={eventFormData.ampm}
@@ -234,7 +235,7 @@ export class Create extends Component {
                   <option value="pm">pm</option>
                 </select>
               </div>
-              <div className="col-xs-3 col-sm-2 dropdown">
+              <div className="col-xs-12 col-sm-2 no-padding-left">
                 <select name="is_tomorrow"
                   className="form-control"
                   value={eventFormData.is_tomorrow}
@@ -244,20 +245,15 @@ export class Create extends Component {
                   <option value="true">tomorrow</option>
                 </select>                
               </div>
-              <div className="row">
+              <div className="col-xs-12 no-padding-left">
                 <div className="col-sm-4"></div>
-                <div className="col-xs-3 col-sm-2 text-info"> hour </div>
-                <div className="col-xs-3 col-sm-2 text-info"> minute </div>
-              </div>
-              <div className="col-xs-12 dropdown">
-                <div className="col-sm-4"></div>
-                <div className="col-xs-12 col-sm-8 dropdown"> 
+                <div className="col-xs-12 col-sm-8 no-padding-left"> 
                   {validationErrors._time ? <div className="text-danger errors"> {validationErrors._time} </div> : null}
                 </div>
               </div>
             </div>
 
-            <div className="row text-center clear">
+            <div className="row text-center">
               <button 
                 type="button" 
                 className='btn btn-link' 
@@ -266,18 +262,16 @@ export class Create extends Component {
                 {this.state.folded? <span>More Options</span>: <span>Less Options</span>}
                  
               </button>
-            </div>
-
-            
+            </div>           
               {this.state.folded 
                 ? null
                 :<div>  
                     <div className="form-group row col-xs-10 col-xs-offset-1">
                        <label className="col-xs-12 col-sm-4">Duration</label>
                         <div> 
-                          {(eventFormData.duration === -1) ? null : (
+                          {(eventFormData.duration === 0) ? null : (
                             <div>
-                              <div className="col-xs-3 col-sm-2 dropdown">
+                              <div className="col-xs-4 col-sm-2 no-padding-left">
                                 <select name="duration_hour"
                                   className="form-control"             
                                   value={eventFormData.duration_hour}
@@ -290,7 +284,7 @@ export class Create extends Component {
                                   })}
                                 </select>                
                               </div>
-                              <div className="col-xs-3 col-sm-2 dropdown">
+                              <div className="col-xs-4 col-sm-2 no-padding-left">
                                 <select name="duration_minute" 
                                   className="form-control"   
                                   value={10 * Math.ceil(eventFormData.duration_minute/10)}
@@ -310,11 +304,15 @@ export class Create extends Component {
                               className="form-check-input"
                               name="noLimit" 
                               type="checkbox"
-                              value={-1}
-                              checked={eventFormData.duration === -1}
+                              value={0}
+                              checked={eventFormData.duration === 0}
                               onChange={this.onNoDurationLimit.bind(this)}/> 
                             <span className="form-check-label"> No duration limit</span>
                           </label>
+                          <div className="col-xs-12 errors">
+                            <div className="col-sm-4"></div>
+                            {validationErrors._duration ? <div className="text-danger col-sm-8 errors"> {validationErrors._duration}</div> : null}
+                          </div>
                         </div>
                       </div>
 
@@ -322,7 +320,7 @@ export class Create extends Component {
                       <label className="col-xs-12 col-sm-4">Capacity</label>
                       {(eventFormData.max_guests === -1) ? null : (
                         <input 
-                          className="col-xs-3 col-sm-2 input-sm capacity"
+                          className="col-xs-8 col-sm-2 input-sm capacity"
                           name="max_guests" 
                           type="number" 
                           placeholder="capacity" 
@@ -347,7 +345,7 @@ export class Create extends Component {
                     </div>
                     <div className="form-group row col-xs-10 col-xs-offset-1">
                       <label className="col-xs-12 col-sm-4">Privacy</label>
-                      <div className="col-xs-12 col-sm-8 radios">
+                      <div className="col-xs-12 col-sm-8">
                         <label>
                           <input 
                             className="form-check-input"

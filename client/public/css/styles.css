@@ -198,20 +198,38 @@ div.list {
 /*
  * -- EVENTCREATE STYLES --
  */
-form.create-form input {
+
+.create-form input {
   color: black;
 }
 
-.create-form .errors, .create-form .dropdown {
+.create-form .no-padding-left {
   padding-left: 0em;
 }
 
+.create-form .no-padding-right {
+  padding-right: 0em;
+}
+
+.create-form .col-xs-4 {
+  width: 33.3333%;
+  margin: 1em 0;
+}
 .create-form .col-xs-10 {
   float: none;
 }
 
-.create-form .radios {
+.create-form label,
+.create-form .text-danger {
+  font-size: 1.3em;
   padding-left: 0;
+}
+
+.create-form .input-sm, 
+.create-form select {
+  border-radius: 5px;
+  font-size: 1em;
+  height: 40px;
 }
 
 .create-form .checkbox {
@@ -224,6 +242,15 @@ form.create-form input {
   margin: 0 15px 0 5px;
 }
 
+.create-form button.btn-link,
+.clear {
+  color: #F6F0ED;
+}
+
+.clear:hover {
+  color: #F6F0ED;
+  text-decoration: underline;
+}
 
 /*
  * -- EVENTDETAILS STYLES --

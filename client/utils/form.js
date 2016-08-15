@@ -1,4 +1,5 @@
-import moment from 'moment'
+import moment from 'moment';
+
 const EVENT_RANGE_LIMIT_IN_MILLIS = 12 * 60 * 60 * 1000;
 const ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
 const TEN_MINUTE = 10 * 60 * 1000;
@@ -18,7 +19,8 @@ export function getDefaultState() {
       ampm: currHour > 12 ? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
-      duration: -1,
+      endTime: '',
+      duration: 0,
       category:'other',
       privacy: 'false',
       max_guests: -1,
@@ -78,8 +80,8 @@ export function validateTitle(title) {
 }
 
 export function validateDescription(description) {
-  if (description.length > 10) {
-    return 'description should be less than 10 characters (for now)';
+  if (description.length > 24) {
+    return 'description should be less than 24 characters (for now)';
   } else {
     return '';
   }
@@ -117,6 +119,14 @@ export function validateAmpm(ampm) {
   }
 }
 
+export function validateCapacity(num) {
+  if (Number(num) === 0) {
+    return 'capacity cannot be 0';
+  } else {
+    return '';
+  }
+}
+
 export function validateField(fieldKey, fieldValue) {
   switch (fieldKey) {
     case 'title':
@@ -131,6 +141,12 @@ export function validateField(fieldKey, fieldValue) {
       return validateMinute(fieldValue);
     case 'ampm':
       return validateAmpm(fieldValue);
+    // case 'duration_hour':
+    //   return validateDuration(fieldValue,undefined);
+    // case 'duration_minute':
+    //   return validateDuration(undefined,fieldValue);
+    case 'max_guests':
+      return validateCapacity(fieldValue);
     default:
       return '';
   }
@@ -146,6 +162,15 @@ export function validateTimeRange(validationErrors, formData) {
   }
 }
 
+export function validateDuration(validationErrors, formData) {
+  console.log('in validationDuration, formData:', formData)
+  if (formData.duration_hour == 0 && formData.duration_minute == 0 && formData.duration !== 0) {
+    validationErrors._duration = 'Duration cannot be 0'
+  } else {
+    delete validationErrors._duration;
+  }
+}
+
 export function validateForm(validationErrors, formData) {
   for (let fieldKey in formData) {
     const errorMessage = validateField(fieldKey, formData[fieldKey]);
@@ -154,6 +179,8 @@ export function validateForm(validationErrors, formData) {
     }
   }
   validateTimeRange(validationErrors, formData);
+  validateDuration(validationErrors, formData);
+
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
   } else if (Object.keys(validationErrors).length > 0) {
@@ -186,10 +213,19 @@ export function parseTime(hour, minute, ampm) {
 
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
-
   const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
 
   return moment.utc(momTime, "YYYY-MM-DD HH:mm Z").format()
+}
+
+export function parseEndTime(startTime,hour,minute){
+  console.log('the startTime is :', startTime);
+  console.log('the hour is :', hour);
+  console.log('the minute is :', minute);
+  if(hour === 0 && minute === 0){
+
+  }
+  return moment(startTime).add(Number(hour),'hours').add(Number(minute),'minutes');
 }
 
 export function parseDuration(hour, minute) {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { parseTime, parseDuration } from '../utils/form';
+import { parseTime, parseDuration, parseEndTime } from '../utils/form';
 import { filterByDistance } from '../utils/list';
 
 export const GET_CURRENT_USER    = 'GET_CURRENT_USER';
@@ -181,7 +181,7 @@ export function createEvent(formData, currentUser) {
     time: eventStart,
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
     category: formData.category || 'other',
-    max_guests: formData.max_guests || 0,
+    max_guests: formData.max_guests || -1,
     privacy: formData.privacy || false
   })
   return {
