@@ -76,9 +76,12 @@ function checkInvite(user_id, event_id) {
 }
 
 function getInvites(user_id) {
+  var rightNow = new Date();
   return knex('invites')
+  .join('events', 'invites.event_id', 'events.id')
   .select()
-  .where('invitee_id',user_id)
+  .where('invites.invitee_id', user_id)
+  .andWhere('events.endTime', '>', rightNow)
   .returning('event_id')
 }
 

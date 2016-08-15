@@ -12,7 +12,8 @@ import {
   setCurrentEvent, 
   getHiddenEvents,
   filterList,
-  addInvite 
+  addInvite,
+  removeInvitation 
 } from '../actions/actions';
 import { setLocation } from '../actions/map';
 import ListFilter from './ListFilter';
@@ -84,16 +85,26 @@ export class List extends React.Component {
   }
 
   seeInvites() {  //This will filter via invites
+    var now = new Date();
     var newList = this.props.list.filter((event) => {
-      return this.props.invitations.includes(event.id)
+      if (this.props.invitations.includes(event.id)) {
+        var then = new Date(event.endTime);
+        if (then > now) {
+          return true;
+        } else {
+          this.props.removeInvitation(event.id);
+        }
+      }
+      return false;
     })
+
     this.props.filterList(
       newList,
       'invites',
       this.props.currentUser.id,
       this.props.hiddenEvents,
       this.props.location
-    )
+    );
   }
 
   render() {
@@ -151,7 +162,8 @@ function mapDispatchToProps(dispatch) {
     getList,
     filterList,
     userLogOut,
-    addInvite
+    addInvite,
+    removeInvitation
   }, dispatch);
 }
 
