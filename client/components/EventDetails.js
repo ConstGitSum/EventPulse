@@ -22,9 +22,12 @@ export class EventDetails extends React.Component {
   constructor() {
     super()
     this.state = {
-      timeObj: null,
-      timeText: null,
-      timeShow: true
+      startTimeObj: null,
+      startTimeText: null,
+      startTimeShow: true,
+      endTimeObj: null,
+      endTimeText: null,
+      endTimeShow: true
     }
   }
 
@@ -33,9 +36,14 @@ export class EventDetails extends React.Component {
       console.log('you need to log in');
       browserHistory.push('/');
     }
-    this.setState({ timeObj: moment(this.props.currentEvent.time) },
-      () => this.setState({ timeText: this.state.timeObj.format('dddd, h:mm a')})
-    )
+    const startTime = moment(this.props.currentEvent.time);
+    const endTime = moment(this.props.currentEvent.endTime);
+    this.setState({ 
+      startTimeObj: startTime,
+      startTimeText: startTime.format('dddd, h:mm a'),
+      endTimeObj: endTime,
+      endTimeText: endTime.format('dddd, h:mm a')
+    });
   }
 
   /**
@@ -79,13 +87,31 @@ export class EventDetails extends React.Component {
     }
   }
 
-  swapTime() {
-    if(this.state.timeShow) {
-      this.setState({ timeShow: false })
-      this.setState({ timeText: this.state.timeObj.fromNow() })
+  swapTime(type) {
+    if (type === 'start') {
+      if (this.state.startTimeShow) {
+        this.setState({ 
+          startTimeShow: false,
+          startTimeText: this.state.startTimeObj.fromNow()
+        });
+      } else {
+        this.setState({ 
+          startTimeShow: true,
+          startTimeText: this.state.startTimeObj.format('dddd, h:mm a')
+        });
+      }
     } else {
-      this.setState({ timeShow: true })
-      this.setState({ timeText: this.state.timeObj.format("dddd, h:mm a") })
+      if (this.state.endTimeShow) {
+        this.setState({ 
+          endTimeShow: false,
+          endTimeText: this.state.endTimeObj.fromNow()
+        });
+      } else {
+        this.setState({ 
+          endTimeShow: true,
+          endTimeText: this.state.endTimeObj.format('dddd, h:mm a')
+        });
+      }
     }
   }
 
@@ -207,8 +233,11 @@ export class EventDetails extends React.Component {
             <div className="col-xs-10 col-xs-offset-1">
               <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
               <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
-              <p onClick={this.swapTime.bind(this)}>
-                <strong>Time</strong>: {this.state.timeText}
+              <p onClick={this.swapTime.bind(this, 'start')}>
+                <strong>Start Time</strong>: {this.state.startTimeText}
+              </p>
+              <p onClick={this.swapTime.bind(this, 'end')}>
+                <strong>End Time</strong>: {this.state.endTimeText}
               </p>
             </div>
           </div>
