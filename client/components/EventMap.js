@@ -28,7 +28,7 @@ export class EventMap extends React.Component {
     if (!equal(prevProps.currentEvent, this.props.currentEvent)) {
       if (!equal(this.props.currentEvent, {})) {
         this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
-      } else {
+      } else if (this.props.currMarker) {
         // if current event is being unset, revert current alert marker to original marker
         this._revertCurrentMarker();
       }
@@ -49,8 +49,6 @@ export class EventMap extends React.Component {
   }
 
   _drawMarkers() {
-    console.log(this.markerTracker)
-    console.log(this.props.listFiltered)
     // clear existing markers before adding new markers for updated list
     this._clearMarkers();
 
