@@ -10,6 +10,7 @@ import Home from './components/Home'
 import EventDetails from './components/EventDetails'
 import Create from './components/Create'
 import FriendsList from './components/FriendsList'
+import GuestList from './components/GuestsAndInvites'
 import EventUpdate from './components/EventUpdate'
 import EventMap from './components/EventMap';
 
@@ -22,6 +23,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Home} />
       <Route path="/create" component={Create} />
+      <Route path="/guestList" component={GuestList}/>
       <Route path="/FriendsList" component={FriendsList}/>
       <Route path="/map" component={EventMap} />
       <Route path="/:eventId" component={EventDetails} />
