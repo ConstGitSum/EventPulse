@@ -46,6 +46,9 @@ export class EventMap extends React.Component {
       layers: [tiles]
     });
     this._drawMarkers();
+
+    // if current location exists, then set map center on it
+    if (this.props.location) this._onLocationFound();
   }
 
   _drawMarkers() {
