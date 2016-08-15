@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import moment from 'moment'
 
-import ChatWindow from './Chat'
+import ChatModal from './ChatModal'
 import Sidebar from './Sidebar';
 import { 
   joinEvent,
@@ -12,7 +12,8 @@ import {
   hideEvent, 
   unhideEvent,
   removeInvitation,
-  addInvite
+  addInvite, 
+  toggleChatModal
 } from '../actions/actions';
 import DetailsMap from './DetailsMap';
 
@@ -165,7 +166,7 @@ export class EventDetails extends React.Component {
           <DetailsMap />
 
           <div className="row">
-            <div className="col-xs-10 col-xs-offset-1 text-center">
+            <div id="event-location" className="col-xs-10 col-xs-offset-1 text-center">
               <strong>
                 {this.props.currentEvent.location}
               </strong>
@@ -193,13 +194,15 @@ export class EventDetails extends React.Component {
             <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.generateButtons(
                 "Chat",
-                'btn btn-primary btn-block btn-lg')}
+                'btn btn-primary btn-block btn-lg', 
+                this.props.toggleChatModal
+                )}
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              <ChatWindow  event={this.props.currentEvent}/>
+              <ChatModal/>
             </div>
           </div>
         </div>
@@ -213,8 +216,7 @@ function mapStateToProps(state) {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
     hiddenEvents: state.hiddenEvents,
-    invitations: state.invitations,
-
+    invitations: state.invitations
   }
 }
 
@@ -225,7 +227,8 @@ function mapDispatchToProps(dispatch) {
     hideEvent,
     unhideEvent,
     removeInvitation,
-    addInvite
+    addInvite, 
+    toggleChatModal
   }, dispatch)
 
 }
