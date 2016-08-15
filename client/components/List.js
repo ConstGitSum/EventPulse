@@ -31,7 +31,10 @@ export class List extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents,
       this.props.location
-    ));
+    ))
+    .then(() => {
+      console.log("List",this.props.list)
+    })
   }
 
   setCurrentEvent(event, index) {
