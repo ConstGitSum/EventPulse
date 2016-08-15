@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import L from 'leaflet';
 import equal from 'deep-equal';
+import $ from 'jquery';
+import scrollTo from 'jquery.scrollto';
 
 import { setCurrentEvent } from '../actions/actions';
 import { setCurrMarker, setPrevMarker } from '../actions/map';
@@ -15,13 +17,21 @@ export class EventMap extends React.Component {
     this._buildMap();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
+    // once user is geolocated, draw user marker and center map on location
+    if (!equal(prevProps.location, this.props.location)) this._onLocationFound();
+
     // if filtered event list has changed, redraw markers
     if (!equal(prevProps.listFiltered, this.props.listFiltered)) this._drawMarkers();
 
     // if current event has changed, locate marker and set to currentMarker
-    if (prevProps.currentEvent !== this.props.currentEvent && !equal(this.props.currentEvent, {})) {
-      this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
+    if (!equal(prevProps.currentEvent, this.props.currentEvent)) {
+      if (!equal(this.props.currentEvent, {})) {
+        this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
+      } else if (this.props.currMarker) {
+        // if current event is being unset, revert current alert marker to original marker
+        this._revertCurrentMarker();
+      }
     }
   }
 
@@ -36,10 +46,6 @@ export class EventMap extends React.Component {
       layers: [tiles]
     });
     this._drawMarkers();
-
-    this.map.locate();
-    this.map.on('locationfound', this._onLocationFound.bind(this));
-    this.map.on('locationerror', this._onLocationError.bind(this));
   }
 
   _drawMarkers() {
@@ -70,13 +76,7 @@ export class EventMap extends React.Component {
   // set the marker for selected current event to spinning '!' marker
   _alertCurrentMarker(marker, event) {
     // if a currMarker already exists, revert it back to original marker
-    if (this.props.map.currMarker.eventId) {
-      const curr = this.props.map.currMarker;
-      const prev = this.props.map.prevMarker;
-      this.map.removeLayer(curr.marker);
-      prev.marker.addTo(this.map);
-      this.markerTracker[curr.eventId] = prev.marker;
-    }
+    if (this.props.map.currMarker.eventId) this._revertCurrentMarker();
 
     // set this marker as the new prevMarker, and add new '!' marker as currMarker
     this.map.removeLayer(marker);
@@ -88,21 +88,33 @@ export class EventMap extends React.Component {
 
     // pan map to new current event
     this.map.setView(marker._latlng, 16, { animate: true, duration: 1.0 });
+
+    // find index of clicked event to scroll to it on list
+    const index = this.props.listFiltered.findIndex(e => e.id === event.id);
+    $('.eventList').find(`li:eq(${index})`).addClass('selected');
+    setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 300)
   }
 
-  _onLocationFound(e) {
-    var radius = e.accuracy / 2;
+  _revertCurrentMarker() {
+    const curr = this.props.map.currMarker;
+    const prev = this.props.map.prevMarker;
+    this.map.removeLayer(curr.marker);
+    prev.marker.addTo(this.map);
+    this.markerTracker[curr.eventId] = prev.marker;
 
-    L.marker(e.latlng, { icon: userMarker })
+    // find index of prev to remove selected class from it on the list
+    const prevIndex = this.props.listFiltered.findIndex(e => e.id === prev.eventId);
+    $('.eventList').find(`li:eq(${prevIndex})`).removeClass('selected');
+    $('.eventList').find(`li:eq(${prevIndex})`).mouseout();
+  }
+
+  _onLocationFound() {
+    const latlng = [this.props.location.lat, this.props.location.lng]
+    L.marker(latlng, { icon: userMarker })
       .addTo(this.map)
-      .bindPopup("You are within " + radius + " meters from this point");
+      .bindPopup("You are here!");
 
-
-    this.map.setView(e.latlng, 16, { animate: true, duration: 1.0 });
-  }
-
-  _onLocationError(e) {
-      alert(e.message);
+    this.map.setView(latlng, 16, { animate: true, duration: 1.0 });
   }
 
   render() {
@@ -116,7 +128,8 @@ function mapStateToProps(state) {
   return { 
     listFiltered: state.listFiltered,
     currentEvent: state.currentEvent,
-    map: state.map
+    map: state.map,
+    location: state.map.currLocation
   };
 }
 

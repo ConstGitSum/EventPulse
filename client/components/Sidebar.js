@@ -29,10 +29,6 @@ export class Sidebar extends React.Component {
     this.props.unhideEvent(this.props.currentEvent.id, this.props.currentUser.id)
   }
 
-  onClickInvite(){
-    console.log('invite!')
-    browserHistory.push('/FriendsList')
-  }
 
   getItems() {
     const hiddenEvents = this.props.hiddenEvents
@@ -52,8 +48,6 @@ export class Sidebar extends React.Component {
     }
 
     items.push(generateButton('Guests', this.onClickGuests.bind(this)));
-
-    items.push(generateButton('Invite', this.onClickInvite.bind(this)));
 
     return items;
   }

@@ -81,7 +81,8 @@ exports.seed = function(knex, Promise) {
         created_by: 1,
         location: '701 Brazos St, Austin, TX 78701',
         time: '2016-08-30T08:00:00.000',
-        duration: '2016-08-30T11:00:00.000',
+        duration: 10800 ,
+        endTime: '2016-08-30T11:00:00.000',
         privacy: false
       });
     })
@@ -93,7 +94,8 @@ exports.seed = function(knex, Promise) {
         location: '2100 Alamo St, Austin, TX 78722',
         time: '2016-08-30T10:00:00.000',
         max_guests: 10,
-        duration: '2016-08-30T11:00:00.000',
+        duration: 3600, 
+        endTime: '2016-08-30T11:00:00.000',
         privacy: false
       });
     })

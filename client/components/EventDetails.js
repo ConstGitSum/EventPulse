@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import moment from 'moment'
 
-import ChatWindow from './Chat'
+import ChatModal from './ChatModal'
 import Sidebar from './Sidebar';
 import { 
   joinEvent,
@@ -12,8 +12,10 @@ import {
   hideEvent, 
   unhideEvent,
   removeInvitation,
-  addInvite
+  addInvite, 
+  toggleChatModal
 } from '../actions/actions';
+import DetailsMap from './DetailsMap';
 
 export class EventDetails extends React.Component {
   constructor() {
@@ -161,6 +163,16 @@ export class EventDetails extends React.Component {
             </div>
           </div>
 
+          <DetailsMap />
+
+          <div className="row">
+            <div id="event-location" className="col-xs-10 col-xs-offset-1 text-center">
+              <strong>
+                {this.props.currentEvent.location}
+              </strong>
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.renderButtons()}
@@ -172,7 +184,6 @@ export class EventDetails extends React.Component {
               <p><strong>Attendance</strong>: {currentAttending}/{max_guests}</p>
               <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
               <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
-              <p><strong>Location</strong>: {this.props.currentEvent.location}</p>
               <p onClick={this.swapTime.bind(this)}>
                 <strong>Time</strong>: {this.state.timeText}
               </p>
@@ -183,13 +194,15 @@ export class EventDetails extends React.Component {
             <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.generateButtons(
                 "Chat",
-                'btn btn-primary btn-block btn-lg')}
+                'btn btn-primary btn-block btn-lg', 
+                this.props.toggleChatModal
+                )}
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              <ChatWindow  event={this.props.currentEvent}/>
+              <ChatModal/>
             </div>
           </div>
         </div>
@@ -203,8 +216,7 @@ function mapStateToProps(state) {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
     hiddenEvents: state.hiddenEvents,
-    invitations: state.invitations,
-
+    invitations: state.invitations
   }
 }
 
@@ -215,7 +227,8 @@ function mapDispatchToProps(dispatch) {
     hideEvent,
     unhideEvent,
     removeInvitation,
-    addInvite
+    addInvite, 
+    toggleChatModal
   }, dispatch)
 
 }

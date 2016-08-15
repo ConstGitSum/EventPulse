@@ -173,6 +173,11 @@ li.event-item:hover {
   border-bottom: 1px solid white;
 }
 
+li.event-item.selected {
+  color: white;
+  border-bottom: 1px solid white;
+}
+
 div.list {
   padding: 15px;
 }
@@ -200,10 +205,18 @@ form.create-form input {
   width: 60px;
 }
 
-.event-details i.fa {
+.event-details > i.fa {
   position: absolute;
   left: 1%;
   top: 1%;
+}
+
+.details-map-container {
+  height: 100px;
+}
+
+#details-map {
+  height: 30vh;
 }
 
 /*

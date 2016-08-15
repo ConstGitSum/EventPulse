@@ -3,6 +3,8 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Cell } from 'react-pure';
+import $ from 'jquery';
+import scrollTo from 'jquery.scrollto';
 
 import { 
   userLogOut, 
@@ -32,11 +34,20 @@ export class List extends React.Component {
     ));
   }
 
+  setCurrentEvent(event, index) {
+    if(this.props.currentEvent.id === event.id) {
+      this.props.setCurrentEvent({})
+    } else {
+      this.props.setCurrentEvent(event)
+    }
+    setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 50)
+  }
+
   renderListItem(event, index) {
     return <li 
-      key={index} 
+      key={index}
       className="event-item list-group-item" 
-      onClick={this.props.setCurrentEvent.bind(null, event)}>
+      onClick={this.setCurrentEvent.bind(this, event, index)}>
       <h3 className="event-title">{event.title}</h3>
       <span className="event-distance">{event.distance} miles</span>
         {/* Show additional info if clicked */}
@@ -46,7 +57,9 @@ export class List extends React.Component {
             <p id="event_description">{event.description}</p>
             {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <div className="text-center view-details">
-              <Link to={`/${event.id}`}>
+              <Link 
+                onClick={(e) => {e.stopPropagation()}}
+                to={`/${event.id}`}>
                 <button className="btn btn-secondary">
                   View Event Details
                 </button>
