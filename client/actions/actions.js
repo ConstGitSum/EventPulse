@@ -155,7 +155,7 @@ export function updateTime() {
 
 export function createEvent(formData, currentUser) {
   var date = new Date(parseTime(formData.hour, formData.minute, formData.ampm))
-  console.log(date)
+  console.log(date, "what",parseTime(formData.hour, formData.minute, formData.ampm))
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
