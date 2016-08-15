@@ -159,7 +159,7 @@ export function createEvent(formData, currentUser) {
     description: formData.description,
     created_by: currentUser.id,
     location: formData.location,
-    time: parseTime(formData.hour, formData.minute, formData.ampm, formDate.location),
+    time: parseTime(formData.hour, formData.minute, formData.ampm, formData.location),
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
     category: formData.category || 'other',
     max_guests: formData.max_guests || null,
