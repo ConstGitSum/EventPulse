@@ -13,23 +13,23 @@ import { browserHistory } from 'react-router';
 export class GuestAndFriends extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {clicked: 'guestList'}
+    this.state = {clicked: "guestList" }
   }  
 
 showGuestList() {
-  return this.state.clicked == 'guestList' ? <div> <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)} > expand Friend Invites</div><div className = 'guestHeader'> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} > expand Guest list</div>
+  return this.state.clicked == "guestList" ? <div> <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)} > Expand Friend Invites</div><div className = "guestHeader"> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} > Expand Guest list</div>
 }
 
 clickGuestList() {
-  this.setState({clicked: 'guestList'})
+  this.setState({clicked: "guestList"})
 }
 
 showFriendsList() {
-  return this.state.clicked == 'friendsList' ? <div><div className = 'friendHeader'> Invite Friends </div> <FriendsList /> </div> : null
+  return this.state.clicked == "friendsList" ? <div><div className = "friendHeader"> Invite Friends </div> <FriendsList /> </div> : null
 }
 
 clickFriendsList() {
-  this.setState({clicked: 'friendsList'})
+  this.setState({clicked: "friendsList" })
 }
 
   onClickBack() {
