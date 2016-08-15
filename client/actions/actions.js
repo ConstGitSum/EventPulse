@@ -24,7 +24,7 @@ export const GET_ALL_INVITATIONS = 'GET_ALL_INVITATIONS';
 export const GET_INVITES         = 'GET_INVITES';
 export const GET_INVITATIONS     = 'GET_INVITATIONS';
 export const REMOVE_INVITATION   = 'REMOVE_INVITATION';
-export const TOGGLE_MODAL_STATE  = 'TOGGLE_MODAL_STATE'; 
+export const TOGGLE_CHAT_MODAL  = 'TOGGLE_CHAT_MODAL'; 
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -255,8 +255,8 @@ export function clearFormValues() {
   }
 }
 
-export function toggleModalState() {
+export function toggleChatModal() {
   return {
-   type: TOGGLE_MODAL_STATE
+   type: TOGGLE_CHAT_MODAL
   }
 }

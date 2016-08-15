@@ -13,7 +13,7 @@ import {
   unhideEvent,
   removeInvitation,
   addInvite, 
-  toggleModalState
+  toggleChatModal
 } from '../actions/actions';
 import DetailsMap from './DetailsMap';
 
@@ -65,13 +65,6 @@ export class EventDetails extends React.Component {
    */
   onClickBack() {
     browserHistory.push('/')
-  }
-
-  /**
-   * Return the user to the previous page
-   */
-  onClickChat() {
-    this.props.toggleModalState()
   }
 
   /**
@@ -202,7 +195,7 @@ export class EventDetails extends React.Component {
               {this.generateButtons(
                 "Chat",
                 'btn btn-primary btn-block btn-lg', 
-                this.onClickChat.bind(this)
+                this.props.toggleChatModal
                 )}
             </div>
           </div>
@@ -223,8 +216,7 @@ function mapStateToProps(state) {
     currentEvent: state.currentEvent,
     currentUser:  state.currentUser,
     hiddenEvents: state.hiddenEvents,
-    invitations: state.invitations,
-    modalState: state.modalState
+    invitations: state.invitations
   }
 }
 
@@ -236,7 +228,7 @@ function mapDispatchToProps(dispatch) {
     unhideEvent,
     removeInvitation,
     addInvite, 
-    toggleModalState
+    toggleChatModal
   }, dispatch)
 
 }
