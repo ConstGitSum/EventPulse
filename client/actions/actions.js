@@ -47,8 +47,7 @@ export function userLogOut() {
 export function getList() {
   const request = axios.get('/api/events')
     .then(events => 
-      console.log("events",events)
-      return Promise.all(events.data.map(event => 
+      Promise.all(events.data.map(event => 
         axios.get(`/api/events/${event.id}/guests`)
           .then(guests => Object.assign(event, { guests: guests.data }))
       ))
