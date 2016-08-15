@@ -31,6 +31,14 @@ body {
   font-family: 'Montserrat', sans-serif
 }
 
+ul {
+  list-style:none;
+}
+
+li {
+  margin: 0.5em;
+}
+
 .container-fluid {
   padding-left: 0px;
   padding-right: 15px;
@@ -293,6 +301,52 @@ div.list {
 form.text-center input{
   color: black;
 }
+
+div.modal-dialog {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  margin: auto;
+  top: 13em;
+}
+
+div.chatBox {
+  color: white; 
+  height: 250px; 
+  overflow-y: auto;
+}
+
+div.modal-content {
+  background-color: #434141;   
+}
+
+.modal-dialog{
+  overflow-y: initial !important
+}
+
+div.modal-header {
+  min-height: 16.42857143px;
+  padding: 15px;
+  border-bottom: none;
+  margin-bottom: -3em; 
+  text-align: center;
+  }
+
+.modal-body {
+  min-height: 16.42857143px;
+  padding: 15px;
+  border-bottom: none;
+  }
+
+form.text-center {
+  margin-bottom: 2em;
+}
+
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+  border-top: none;
+}  
 
 /*
  * -- EVENTDETAILS SIDEBAR STYLES --

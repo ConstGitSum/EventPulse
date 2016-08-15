@@ -81,12 +81,12 @@ export class ChatWindow extends React.Component {
     return(
       <div>
         <h1 className="text-center"> </h1>
-        <form className="text-center" onSubmit = {this.handleSubmit.bind(this)}>
-          <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
-        </form>
+      <form className="text-center" onSubmit = {this.handleSubmit.bind(this)}>
+        <input type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
+      </form>
         <div className = 'chatBox'><ul className = 'chatMessages'>{messages} </ul></div>  
       </div>
-      )
+    )
   }
 }
 

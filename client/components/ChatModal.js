@@ -7,21 +7,25 @@ import { toggleChatModal } from "../actions/actions";
 import Chat from "./Chat";
 
 export class ChatModal extends React.Component {
-   render() {
-      return (
-         <Modal show={this.props.modals.chat} onHide={this.props.toggleChatModal}>
+  render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <Modal show={this.props.modals.chat} onHide={this.props.toggleChatModal}>
             <Modal.Header closeButton>
-              <Modal.Title>Chatroom</Modal.Title>
+              <Modal.Title>CHATROOM</Modal.Title>
             </Modal.Header>
-            <Modal.Body> 
-               <Chat event={this.props.currentEvent}/>
-            </Modal.Body>
+              <Modal.Body> 
+                <Chat event={this.props.currentEvent}/>
+              </Modal.Body>
             <Modal.Footer>
-               <Button onClick={this.props.toggleChatModal}>Close</Button>
+              <Button onClick={this.props.toggleChatModal}>Close</Button>
             </Modal.Footer>
-         </Modal>   
-      )
-   }
+          </Modal>   
+        </div>
+      </div>
+    )
+  }
 }
 
 function mapStateToProps(state) {
