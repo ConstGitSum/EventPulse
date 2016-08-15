@@ -187,7 +187,7 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
     created_by       : currentUser.id,
     location         : updatedEvent.location,
     category         : updatedEvent.category,
-    time             : parseTime(updatedEvent.hour, updatedEvent.minute, updatedEvent.ampm, updatedEvent.location),
+    time             : parseTime(updatedEvent.hour, updatedEvent.minute, updatedEvent.ampm, 'CST'),
     duration         : parseDuration(updatedEvent.duration_hour,updatedEvent.duration_minute),
     max_guests       : updatedEvent.max_guests,
     privacy          : updatedEvent.privacy,
