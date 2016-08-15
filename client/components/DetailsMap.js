@@ -20,7 +20,11 @@ export class DetailsMap extends React.Component {
       layers: [tiles],
       zoomControl: false,
       dragging: false,
-      touchZoon: false
+      touchZoom: false,
+      doubleClickZoom: false,
+      scrollWheelZoom: false,
+      boxZoom: false,
+      tap: false
     });
 
     const eventLatLng = [this.props.currentEvent.latitude, this.props.currentEvent.longitude];

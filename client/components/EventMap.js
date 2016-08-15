@@ -17,7 +17,10 @@ export class EventMap extends React.Component {
     this._buildMap();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
+    // once user is geolocated, draw user marker and center map on location
+    if (!equal(prevProps.location, this.props.location)) this._onLocationFound();
+
     // if filtered event list has changed, redraw markers
     if (!equal(prevProps.listFiltered, this.props.listFiltered)) this._drawMarkers();
 
@@ -43,13 +46,11 @@ export class EventMap extends React.Component {
       layers: [tiles]
     });
     this._drawMarkers();
-
-    this.map.locate();
-    this.map.on('locationfound', this._onLocationFound.bind(this));
-    this.map.on('locationerror', this._onLocationError.bind(this));
   }
 
   _drawMarkers() {
+    console.log(this.markerTracker)
+    console.log(this.props.listFiltered)
     // clear existing markers before adding new markers for updated list
     this._clearMarkers();
 
@@ -109,19 +110,13 @@ export class EventMap extends React.Component {
     $('.eventList').find(`li:eq(${prevIndex})`).mouseout();
   }
 
-  _onLocationFound(e) {
-    var radius = e.accuracy / 2;
-
-    L.marker(e.latlng, { icon: userMarker })
+  _onLocationFound() {
+    const latlng = [this.props.location.lat, this.props.location.lng]
+    L.marker(latlng, { icon: userMarker })
       .addTo(this.map)
-      .bindPopup("You are within " + radius + " meters from this point");
+      .bindPopup("You are here!");
 
-
-    this.map.setView(e.latlng, 16, { animate: true, duration: 1.0 });
-  }
-
-  _onLocationError(e) {
-      alert(e.message);
+    this.map.setView(latlng, 16, { animate: true, duration: 1.0 });
   }
 
   render() {
@@ -135,7 +130,8 @@ function mapStateToProps(state) {
   return { 
     listFiltered: state.listFiltered,
     currentEvent: state.currentEvent,
-    map: state.map
+    map: state.map,
+    location: state.map.currLocation
   };
 }
 
