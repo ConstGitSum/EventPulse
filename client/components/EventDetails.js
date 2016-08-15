@@ -166,7 +166,7 @@ export class EventDetails extends React.Component {
           <DetailsMap />
 
           <div className="row">
-            <div className="col-xs-10 col-xs-offset-1 text-center">
+            <div id="event-location" className="col-xs-10 col-xs-offset-1 text-center">
               <strong>
                 {this.props.currentEvent.location}
               </strong>

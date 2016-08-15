@@ -2,9 +2,11 @@ process.env.NODE_ENV = 'test';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { renderIntoDocument,
+import { 
+  renderIntoDocument, 
   scryRenderedDOMComponentsWithTag,
-  Simulate } from 'react-addons-test-utils';
+  Simulate 
+} from 'react-addons-test-utils';
 import { expect } from 'chai';
 
 import { shallow, mount } from 'enzyme';
@@ -71,13 +73,13 @@ describe('EventDetails Component', () => {
 
   it('should display how many people can join (no max size)', () => {
     const paragraph = enzymeWrapper.find('p');
-    expect(paragraph).to.have.length(5);
+    expect(paragraph).to.have.length(4);
     expect(paragraph.at(0).text()).to.equal('Attendance: 1/');
   })
 
   it('should display how many people can join (max size)', () => {
     const paragraph = enzymeWrapper2.find('p');
-    expect(paragraph).to.have.length(5);
+    expect(paragraph).to.have.length(4);
     expect(paragraph.at(0).text()).to.equal('Attendance: 1/10');
   })
 
@@ -95,13 +97,13 @@ describe('EventDetails Component', () => {
 
   it('should display that the creator is in the event', () => {
     const paragraph = enzymeWrapper.find('p');
-    expect(paragraph).to.have.length(5);
+    expect(paragraph).to.have.length(4);
     expect(paragraph.at(1).text()).to.equal('Creator: Alice')
   })
 
   it('should display that the creator is no longer in the event', () => {
     const paragraph = enzymeWrapper3.find('p');
-    expect(paragraph).to.have.length(5);
+    expect(paragraph).to.have.length(4);
     expect(paragraph.at(1).text()).to.equal('Creator: No longer in event')
   })
 
@@ -113,20 +115,18 @@ describe('EventDetails Component', () => {
 
   it('should display the description of the event', () => {
     const paragraph = enzymeWrapper.find('p');
-    expect(paragraph).to.have.length(5);
+    expect(paragraph).to.have.length(4);
     expect(paragraph.at(2).text()).to.equal('Description: Catch pokemon and do some coding');
   })
 
   it('should display the location of the event', () => {
-    const paragraph = enzymeWrapper.find('p');
-    expect(paragraph).to.have.length(5);
-    expect(paragraph.at(3).text()).to.equal('Location: 701 Brazos St, Austin, TX 78701');
+    expect(enzymeWrapper.find('#event-location').text()).to.equal('701 Brazos St, Austin, TX 78701');
   })
 
   it('should display the time of the event', () => {
     const paragraph = enzymeWrapper.find('p');
-    expect(paragraph).to.have.length(5);
-    expect(paragraph.at(4).text()).to.equal('Time: Tuesday, 8:00 am')
+    expect(paragraph).to.have.length(4);
+    expect(paragraph.at(3).text()).to.equal('Time: Tuesday, 8:00 am')
   })
 
   it('should display a Chat button when the user has joined the event', () => {
