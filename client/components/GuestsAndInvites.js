@@ -16,7 +16,7 @@ export class GuestAndFriends extends React.Component {
   }  
 
 showGuestList() {
-  return this.state.clicked == 'guestList' ? <div> <div className = 'guestHeader'> People Attending </div> <GuestList/> </div> : <div onClick = {this.clickGuestList.bind(this)} > expand Guest list</div>
+  return this.state.clicked == 'guestList' ? <div> <div className = 'guestHeader'> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} > expand Guest list</div>
 }
 
 clickGuestList() {
@@ -24,17 +24,22 @@ clickGuestList() {
 }
 
 showFriendsList() {
-  return this.state.clicked == 'friendsList' ? <div><div className = 'guestHeader'> Invite Friends </div> <FriendsList /> </div> : <div onClick = {this.clickFriendsList.bind(this)} > expand Friend Invites</div>
+  return this.state.clicked == 'friendsList' ? <div><div className = 'guestHeader'> Invite Friends </div> <FriendsList /> </div> : <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)} > expand Friend Invites</div>
 }
 
 clickFriendsList() {
   this.setState({clicked: 'friendsList'})
 }
 
+  onClickBack() {
+    browserHistory.push(`/${this.props.currentEvent.id}`)
+  }
+
   render() {
 console.log(this.props.currentEvent)
     return(
       <div>
+      <i onClick = {this.onClickBack.bind(this)} className = "back-btn fa fa-arrow-left fa-3x" aria-hidden="true"></i>
       {this.showGuestList()} {this.showFriendsList()}
       </div>
       )

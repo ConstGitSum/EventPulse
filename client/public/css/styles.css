@@ -479,3 +479,34 @@ text-align: center;
 .inviteButton {
   color: black
 }
+
+.friendsHeader {
+  text-align: center;
+}
+
+.guestHeader {
+  text-align: center;
+}
+
+.guests {
+background-color: white;
+border-radius: 15px;
+padding: 10px;
+margin-left: 40px;
+margin-right: 40px;
+list-style-type: none;
+}
+
+.guest {
+   font-size: large;
+   color: black;
+   padding-top: 5px;
+}
+
+.expandGuestList {
+text-align: center;
+}
+
+.expandFriendList {
+text-align: center;
+}

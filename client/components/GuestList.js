@@ -14,12 +14,10 @@ handleCardClick() {
 }
   
   render() {
-console.log(this.props.currentEvent)
     return(
       <div>
-      <div> People Going to {this.props.currentEvent.title}</div>
-      <ul>{this.props.currentEvent.guests.map((guest) => {
-       return <li key = {guest.id}>{guest.name} </li>
+      <ul className = "guests">{this.props.currentEvent.guests.map((guest) => {
+       return <li key = {guest.id} className = "guest"><img src  = {guest.image} className = "eventListFriendImage"/> {guest.name} </li>
       })} </ul>
       </div>
       )
