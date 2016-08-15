@@ -32,10 +32,7 @@ export class List extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents,
       this.props.location
-    )).then(() => {
-    console.log("LIST",this.props.list)  
-    })
-    
+    ));
   }
 
   setCurrentEvent(event, index) {
@@ -90,23 +87,24 @@ export class List extends React.Component {
   seeInvites() {  //This will filter via invites
     var now = new Date();
     var newList = this.props.list.filter((event) => {
-    if(this.props.invitations.includes(event.id)){
-       var then = new Date(event.endTime)
-      if(then > now){
-        return true;
-      }else{
-        this.props.removeInvitation(event.id)
+      if (this.props.invitations.includes(event.id)) {
+        var then = new Date(event.endTime);
+        if (then > now) {
+          return true;
+        } else {
+          this.props.removeInvitation(event.id);
+        }
       }
-    }
-    return false
+      return false;
     })
+
     this.props.filterList(
       newList,
       'invites',
       this.props.currentUser.id,
       this.props.hiddenEvents,
       this.props.location
-    )
+    );
   }
 
   render() {
