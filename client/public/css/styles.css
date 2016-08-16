@@ -215,6 +215,11 @@ div.list {
   width: 33.3333%;
   margin: 1em 0;
 }
+
+.create-form .col-xs-8 {
+  margin: 1em 0;
+}
+
 .create-form .col-xs-10 {
   float: none;
 }
@@ -250,6 +255,10 @@ div.list {
 .clear:hover {
   color: #F6F0ED;
   text-decoration: underline;
+}
+
+.create-form .submit {
+  margin: 20px 0;
 }
 
 /*
@@ -482,6 +491,28 @@ form.text-center input{
   ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
+  }
+}
+
+@media (min-width:768px) {
+  .create-form .col-sm-2 {
+    width: 16.66666667%;;
+  }
+  .create-form .is-tomorrow {
+    margin: 1em 0;
+  }
+  .create-form .checkbox-text {
+    margin: 1.2em 0;
+  }
+  .create-form .more-option {
+    margin-bottom: 1.2em;
+  }
+  .create-form .more-label {
+    margin-top: 1.2em;
+  }
+  .create-form .capacity {
+    margin-top: -5px;
+    margin-right: 1em;
   }
 }
 

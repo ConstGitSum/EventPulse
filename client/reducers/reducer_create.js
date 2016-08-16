@@ -65,6 +65,13 @@ export default function(state = getDefaultState(), action) {
       newState.eventFormData.hour = time.hour;
       newState.eventFormData.minute = time.minute;
       newState.eventFormData.ampm = time.ampm;
+      const endTime = newState.eventFormData.endTime;
+      const currentTime = moment();
+      if(moment(endTime).isSame(currentTime, 'day')) {
+        newState.eventFormData.is_tomorrow = false;
+      } else {
+        newState.eventFormData.is_tomorrow = true;
+      }     
       const seconds = action.payload.duration;
       const dhours = Math.floor(seconds/(60 * 60)); 
       const dmins = Math.floor((seconds - dhours * 60 * 60)/ 60);

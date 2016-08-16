@@ -62,9 +62,10 @@ export class Create extends Component {
   }
 
   onNoDurationLimit(event) {
-    console.log(event.target.checked)
     if (event.target.checked) {
       this.props.updateEventField('duration', 0);
+      this.props.updateEventField('duration_hour', 0);
+      this.props.updateEventField('duration_minute', 0);
     } else {
       this.props.updateEventField('duration', 600);
     }
@@ -235,7 +236,7 @@ export class Create extends Component {
                   <option value="pm">pm</option>
                 </select>
               </div>
-              <div className="col-xs-12 col-sm-2 no-padding-left">
+              <div className="col-xs-12 col-sm-2 no-padding-left is-tomorrow">
                 <select name="is_tomorrow"
                   className="form-control"
                   value={eventFormData.is_tomorrow}
@@ -253,7 +254,7 @@ export class Create extends Component {
               </div>
             </div>
 
-            <div className="row text-center">
+            <div className="row text-center more-option">
               <button 
                 type="button" 
                 className='btn btn-link' 
@@ -267,7 +268,7 @@ export class Create extends Component {
                 ? null
                 :<div>  
                     <div className="form-group row col-xs-10 col-xs-offset-1">
-                       <label className="col-xs-12 col-sm-4">Duration</label>
+                       <label className="col-xs-12 col-sm-4 more-label">Duration</label>
                         <div> 
                           {(eventFormData.duration === 0) ? null : (
                             <div>
@@ -299,7 +300,7 @@ export class Create extends Component {
                               </div>
                             </div>
                           )}
-                          <label>
+                          <label className="checkbox-text">
                             <input 
                               className="form-check-input"
                               name="noLimit" 
@@ -387,7 +388,9 @@ export class Create extends Component {
                 </div>
               }
             <div className="row">
-              {this.generateButton()}
+              <div className="col-xs-12 submit">
+                {this.generateButton()}
+              </div>
             </div>
           </form>         
           <div className="col-xs-10 col-xs-offset-1 text-center">

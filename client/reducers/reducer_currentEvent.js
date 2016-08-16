@@ -26,7 +26,6 @@ export default function(state = {}, action) {
       return newState;
     }
     case CREATE_EVENT: {
-      console.log('2~~~',action.payload)
       return action.payload.data;
     }
     case SET_CURRENT_EVENT: {

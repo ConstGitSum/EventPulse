@@ -184,6 +184,7 @@ export function createEvent(formData, currentUser) {
     max_guests: formData.max_guests || -1,
     privacy: formData.privacy || false
   })
+  
   return {
     type: CREATE_EVENT,
     payload: request
@@ -259,7 +260,7 @@ export function getInvitations(invites) {
   return {
     type: GET_INVITATIONS,
     payload: invites
-}
+  }
 }
 
 export function removeInvitation(invite) {

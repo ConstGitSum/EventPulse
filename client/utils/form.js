@@ -49,7 +49,6 @@ export function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
-
   if (is_tomorrow === 'true') {
     return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
   }
@@ -163,7 +162,6 @@ export function validateTimeRange(validationErrors, formData) {
 }
 
 export function validateDuration(validationErrors, formData) {
-  console.log('in validationDuration, formData:', formData)
   if (formData.duration_hour == 0 && formData.duration_minute == 0 && formData.duration !== 0) {
     validationErrors._duration = 'Duration cannot be 0'
   } else {
@@ -192,13 +190,12 @@ export function validateForm(validationErrors, formData) {
   return validationErrors;
 }
 
-export function parseTime(hour, minute, ampm) {
+export function parseTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   const year = d.getFullYear();
   const offSet = d.getTimezoneOffset()
   let month = d.getMonth() + 1;
   let day = d.getDate();
-
 
   let newHour;
   if(ampm === 'pm') {
@@ -223,9 +220,24 @@ export function parseEndTime(startTime,hour,minute){
   console.log('the hour is :', hour);
   console.log('the minute is :', minute);
   if(hour === 0 && minute === 0){
+||||||| merged common ancestors
+  console.log('in parseTime:' ,`${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`);
+  return `${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
+}
 
+export function parseEndTime(startTime,hour,minute){
+  console.log('the startTime is :', startTime);
+  console.log('the hour is :', hour);
+  console.log('the minute is :', minute);
+  if(hour === 0 && minute === 0){
+
+  const start_time = moment(`${year}-${month}-${day} ${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}`, 'YYYY-MM-DD HH:mm');
+  if(is_tomorrow) { 
+    return start_time.add(1,'days');
+  } else {
+    return start_time;
   }
-  return moment(startTime).add(Number(hour),'hours').add(Number(minute),'minutes');
+  
 }
 
 export function parseDuration(hour, minute) {
