@@ -9,21 +9,17 @@ import Chat from "./Chat";
 export class ChatModal extends React.Component {
   render() {
     return (
-      <div className="container">
-        <div className="row">
           <Modal show={this.props.modals.chat} onHide={this.props.toggleChatModal}>
-            <Modal.Header closeButton>
+            <Modal.Header className="col-xs-10 col-md-11">
               <Modal.Title>CHATROOM</Modal.Title>
             </Modal.Header>
               <Modal.Body> 
                 <Chat event={this.props.currentEvent}/>
               </Modal.Body>
             <Modal.Footer>
-              <Button onClick={this.props.toggleChatModal}>Close</Button>
+              <Button className="col-xs-3 col-xs-offset-8" onClick={this.props.toggleChatModal}>Close</Button>
             </Modal.Footer>
           </Modal>   
-        </div>
-      </div>
     )
   }
 }
