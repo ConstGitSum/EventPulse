@@ -33,7 +33,6 @@ export class List extends React.Component {
       this.props.location
     ))
     .then(() => {
-      console.log("List",this.props.list)
     })
   }
 
@@ -100,7 +99,6 @@ export class List extends React.Component {
   }
 
   render() {
-    console.log(this.props.currentEvent)
     return (
       <div className="explore container-fluid text-center">
         <div className="row event-map">

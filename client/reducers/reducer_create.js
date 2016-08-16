@@ -60,7 +60,6 @@ export default function(state = getDefaultState(), action) {
         ampm: moment(action.payload.time).format('a')
       }
       let newState = Object.assign({}, state);
-      console.log('1EDIT_EVENT', action.payload);
       newState.eventFormData = action.payload;
       newState.eventFormData.hour = time.hour;
       newState.eventFormData.minute = time.minute;
@@ -70,11 +69,9 @@ export default function(state = getDefaultState(), action) {
       const dmins = Math.floor((seconds - dhours * 60 * 60)/ 60);
       newState.eventFormData.duration_hour = dhours;
       newState.eventFormData.duration_minute = dmins;
-      console.log('dhours: dminutes',dhours, dmins)
       newState.eventFormData.privacy = action.payload.privacy.toString();
       newState.toggleEventUpdate = true;
       newState.validationErrors = {}
-      console.log('2EDIT_EVENT', newState);
       return newState;
     }
     default:

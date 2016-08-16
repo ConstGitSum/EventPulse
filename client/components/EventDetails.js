@@ -29,7 +29,6 @@ export class EventDetails extends React.Component {
 
   componentWillMount() {
     if (!this.props.currentUser) {
-      console.log('you need to log in');
       browserHistory.push('/');
     }
     this.setState({ timeObj: moment(this.props.currentEvent.time) },

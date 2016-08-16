@@ -50,7 +50,6 @@ export class Create extends Component {
             })
             .catch(err => {
               this.setState({locationError: true})
-              console.log(err)
             });
         }          
       }

@@ -37,11 +37,8 @@ export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
 
 export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
-  //currTime.setHours(23);
-  //console.log('currTime: ', currTime)
-  //console.log('FUTURE:hour, minute, ampm, is_tomorrow:' ,hour, minute, ampm, is_tomorrow)
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
-  //console.log('eventTime.getTime() > currTime.getTime(): ', eventTime.getTime() > currTime.getTime())
+
   return eventTime.getTime() > currTime.getTime();
 }
 
@@ -50,29 +47,18 @@ export function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
-  //console.log('getEventTime => hour, ampm,is_tomorrow ', hour,ampm, is_tomorrow)//12 am true
 
   if (is_tomorrow === 'true') {
-    // if(ampm === 'pm') {
-    //   return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
-    // } else if(ampm === 'am' && hour != '12'){ 
-    //    return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
-    // } else {
-
-    // } 
     return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
   }
-  //console.log('d => ', d)
   return d;
 }
 
 export function get24Hour(hour, ampm) {
-  //console.log('get24hours => hour, ampm', hour,ampm)
   hour = Number(hour);
   if (hour == 12) {
     hour -= 12;
   }
-  //console.log('get24hours, after if=> hour, ampm', hour,ampm)
   if (ampm === 'pm') {
     return hour + 12;
   } else {
@@ -204,11 +190,8 @@ export function parseTime(hour, minute, ampm) {
   if(day < 10) { day = '0' + day}
 
   const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
-  console.log(momTime)
-  console.log(moment.utc(momTime, "YYYY-MM-DD HH:mm Z"))
-  return moment.utc(momTime, "YYYY-MM-DD HH:mm Z").format()
 
-  // return `${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
+  return moment.utc(momTime, "YYYY-MM-DD HH:mm Z").format()
 }
 
 export function parseDuration(hour, minute) {
