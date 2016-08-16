@@ -313,7 +313,7 @@ div.list {
 .details-table {
   margin: auto;
   text-align: left;
-  height: 25vh;
+  height: 30vh;
   overflow-y: scroll;
   table-layout: fixed;
   display: block;
@@ -327,6 +327,19 @@ div.list {
 }
 .table-info {
   font-size: 100%;
+}
+
+.event-buttons.btn-group {
+  width: 100%;
+  padding-right: 9%;
+}
+
+button.create-event.btn.btn-primary {
+  width: 50%;
+}
+
+button.logout.btn.btn-danger {
+  width: 50%;
 }
 
 
@@ -530,7 +543,7 @@ form.text-center input{
     margin: 20 0 0 0;
   }
   div.eventList {
-    max-height: 70%;
+    height: 80%;
     overflow-y: scroll;
     margin-bottom: 1%;
     margin-top: 1%;
