@@ -23,8 +23,8 @@ var server = http.createServer(app)
 var io = socketIo(server).use(function(socket, next){
   sessionMiddleware(socket.request, {}, next)
 })
-
-require('dotenv').load();
+if(process.env.NODE_ENV != 'production')
+  require('dotenv').load();
 
 var Event = require('./models/event');
 
@@ -111,6 +111,6 @@ io.on('connection', socket => {
 }
 })
 
-server.listen(3000);
+server.listen(process.env.PORT || 3000);
 
 module.exports = app;

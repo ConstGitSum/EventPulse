@@ -33,7 +33,6 @@ export class EventDetails extends React.Component {
 
   componentWillMount() {
     if (!this.props.currentUser) {
-      console.log('you need to log in');
       browserHistory.push('/');
     }
     const startTime = moment(this.props.currentEvent.time);

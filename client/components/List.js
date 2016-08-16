@@ -32,7 +32,9 @@ export class List extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents,
       this.props.location
-    ));
+    ))
+    .then(() => {
+    })
   }
 
   setCurrentEvent(event, index) {

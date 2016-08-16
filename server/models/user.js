@@ -25,7 +25,9 @@ function create(user) {
   return knex('users').insert(user).returning(['id', 'name', 'image']);
 }
 
-function addGroup(groupName='friends') {
+function addGroup(groupName) {
+  if(!groupName)
+    groupName = 'friends'
   return knex('groups').insert({ name: groupName }).returning('id');
 }
 

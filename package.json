@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "Makersquare Thesis Project",
   "main": "index.js",
+  "engines": {
+    "node": "6.2.1"
+  },
   "babel": {
     "presets": [
       "es2015",
