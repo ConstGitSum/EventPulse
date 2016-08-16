@@ -303,6 +303,7 @@ div.list {
 
 #details-map {
   height: 30vh;
+  z-index: 0;
 }
 
 .align-white {
