@@ -1,3 +1,4 @@
+import moment from 'moment'
 const EVENT_RANGE_LIMIT_IN_MILLIS = 12 * 60 * 60 * 1000;
 const ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
 const TEN_MINUTE = 10 * 60 * 1000;
@@ -45,6 +46,7 @@ export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
 }
 
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
+  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
@@ -76,6 +78,7 @@ export function get24Hour(hour, ampm) {
   } else {
     return hour;
   }
+  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
 }
 
 export function validateTitle(title) {
@@ -181,12 +184,31 @@ export function validateForm(validationErrors, formData) {
 export function parseTime(hour, minute, ampm) {
   const d = new Date();
   const year = d.getFullYear();
+  const offSet = d.getTimezoneOffset()
   let month = d.getMonth() + 1;
   let day = d.getDate();
-  
+
+
+  let newHour;
+  if(ampm === 'pm') {
+    if(hour !== '12') {
+      newHour = hour * 1 + 12;
+    }
+  } else if (ampm === 'am' && hour === '12') {
+    newHour = hour - 12;
+  } else {
+    newHour = hour;
+  }
+
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
-  return `${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
+
+  const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
+  console.log(momTime)
+  console.log(moment.utc(momTime, "YYYY-MM-DD HH:mm Z"))
+  return moment.utc(momTime, "YYYY-MM-DD HH:mm Z").format()
+
+  // return `${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
 }
 
 export function parseDuration(hour, minute) {
