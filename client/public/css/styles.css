@@ -287,6 +287,27 @@ div.list {
   height: 30vh;
 }
 
+.details-align-white {
+  white-space: pre;
+}
+
+.details-table {
+  margin: auto;
+  text-align: left;
+  height: 18vh;
+  overflow-y: scroll;
+  display: block;
+}
+
+.table-heading {
+  font-size: 125%;
+}
+.table-info {
+  font-size: 100%;
+}
+
+
+
 /*
  * -- CHATBOX STYLES --
  */
@@ -493,9 +514,15 @@ form.text-center input{
   }
 
   ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-  }
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
 }
 
 @media (min-width:768px) {
