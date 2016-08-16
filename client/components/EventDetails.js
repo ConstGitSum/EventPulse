@@ -262,9 +262,6 @@ export class EventDetails extends React.Component {
                 </tbody>
               </table>
             </div>
-          </div>
-
-          <div className="row footer">
             <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.generateButtons(
                 "Chat",

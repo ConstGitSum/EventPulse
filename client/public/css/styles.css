@@ -56,7 +56,8 @@ button.view-details.btn.btn-secondary {
 div.footer {
   position: absolute;
   bottom: 2%;
-  width: 100%
+  margin: 0 auto;
+  width: 66.14%
 
 }
 
