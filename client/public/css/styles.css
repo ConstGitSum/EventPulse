@@ -57,7 +57,7 @@ div.footer {
   position: absolute;
   bottom: 2%;
   margin: 0 auto;
-  width: 66.14%
+  width: 100%
 
 }
 
@@ -206,6 +206,11 @@ div.list {
   padding: 15px;
 }
 
+div.eventList {
+  margin-bottom: 7%;
+}
+
+
 /*
  * -- LIST MAP STYLES -- 
  */
@@ -314,7 +319,7 @@ div.list {
 .details-table {
   margin: auto;
   text-align: left;
-  height: 30vh;
+  height: 28vh;
   overflow-y: scroll;
   table-layout: fixed;
   display: block;
@@ -544,10 +549,18 @@ form.text-center input{
     margin: 20 0 0 0;
   }
   div.eventList {
-    height: 80%;
+    height: 75%;
     overflow-y: scroll;
     margin-bottom: 1%;
     margin-top: 1%;
+  }
+
+  h3.event-title {
+    font-size: 18px;
+  }
+
+  h4#event-location {
+    font-size: 15px;
   }
 }
 
