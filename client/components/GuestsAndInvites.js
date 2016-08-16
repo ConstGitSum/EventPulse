@@ -37,12 +37,11 @@ clickFriendsList() {
   }
 
   render() {
-console.log(this.props.currentEvent)
     return(
       <div>
-      <i onClick = {this.onClickBack.bind(this)} className = "back-btn fa fa-arrow-left fa-3x" aria-hidden="true"></i>
-      <h2 className = "text-center"> {this.props.currentEvent.title} </h2>
-      {this.showGuestList()} {this.showFriendsList()}
+        <i onClick = {this.onClickBack.bind(this)} className = "back-btn fa fa-arrow-left fa-3x" aria-hidden="true"></i>
+        <h2 className = "text-center"> {this.props.currentEvent.title} </h2>
+        {this.showGuestList()} {this.showFriendsList()}
       </div>
       )
   }

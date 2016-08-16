@@ -1,3 +1,4 @@
+import moment from 'moment'
 const EVENT_RANGE_LIMIT_IN_MILLIS = 12 * 60 * 60 * 1000;
 const ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
 const TEN_MINUTE = 10 * 60 * 1000;
@@ -36,46 +37,34 @@ export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
 
 export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
-  //currTime.setHours(23);
-  //console.log('currTime: ', currTime)
-  //console.log('FUTURE:hour, minute, ampm, is_tomorrow:' ,hour, minute, ampm, is_tomorrow)
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
-  //console.log('eventTime.getTime() > currTime.getTime(): ', eventTime.getTime() > currTime.getTime())
+
   return eventTime.getTime() > currTime.getTime();
 }
 
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
+  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
-  //console.log('getEventTime => hour, ampm,is_tomorrow ', hour,ampm, is_tomorrow)//12 am true
 
   if (is_tomorrow === 'true') {
-    // if(ampm === 'pm') {
-    //   return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
-    // } else if(ampm === 'am' && hour != '12'){ 
-    //    return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
-    // } else {
-
-    // } 
     return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
   }
-  //console.log('d => ', d)
   return d;
 }
 
 export function get24Hour(hour, ampm) {
-  //console.log('get24hours => hour, ampm', hour,ampm)
   hour = Number(hour);
   if (hour == 12) {
     hour -= 12;
   }
-  //console.log('get24hours, after if=> hour, ampm', hour,ampm)
   if (ampm === 'pm') {
     return hour + 12;
   } else {
     return hour;
   }
+  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
 }
 
 export function validateTitle(title) {
@@ -181,12 +170,28 @@ export function validateForm(validationErrors, formData) {
 export function parseTime(hour, minute, ampm) {
   const d = new Date();
   const year = d.getFullYear();
+  const offSet = d.getTimezoneOffset()
   let month = d.getMonth() + 1;
   let day = d.getDate();
-  
+
+
+  let newHour;
+  if(ampm === 'pm') {
+    if(hour !== '12') {
+      newHour = hour * 1 + 12;
+    }
+  } else if (ampm === 'am' && hour === '12') {
+    newHour = hour - 12;
+  } else {
+    newHour = hour;
+  }
+
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
-  return `${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
+
+  const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
+
+  return moment.utc(momTime, "YYYY-MM-DD HH:mm Z").format()
 }
 
 export function parseDuration(hour, minute) {

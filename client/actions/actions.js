@@ -154,12 +154,32 @@ export function updateTime() {
 }
 
 export function createEvent(formData, currentUser) {
+
+  var date = Date.now();
+  var newDate = new Date();
+  if(formData.is_tomorrow) {
+    if(Number(formData.hour) === 12)
+      data = date + (Number(formData.hour)+12-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    else
+      date = date + (Number(formData.hour)+24-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+  }else{
+    if(formData.ampm ==='pm'){
+      var newHour = Number(formData.hour) === 12 ? Number(formData.hour) : Number(formData.hour) + 12;
+      date = date + (newHour-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    }else{
+      date = date + (Number(formData.hour)-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    }
+
+  }
+   var eventStart = new Date(date)
+
+
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
     created_by: currentUser.id,
     location: formData.location,
-    time: parseTime(formData.hour, formData.minute, formData.ampm),
+    time: eventStart,
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
     category: formData.category || 'other',
     max_guests: formData.max_guests || null,
@@ -180,6 +200,26 @@ export function editEvent(currentEvent) {
 }
 
 export function updateEvent(updatedEvent, currentUser, eventId) {
+
+  var date = Date.now();
+  var newDate = new Date();
+  if(formData.is_tomorrow) {
+    if(Number(formData.hour) === 12)
+      data = date + (Number(formData.hour)+12-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    else
+      date = date + (Number(formData.hour)+24-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+  }else{
+    if(formData.ampm ==='pm'){
+      var newHour = Number(formData.hour) === 12 ? Number(formData.hour) : Number(formData.hour) + 12;
+      date = date + (newHour-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    }else{
+      date = date + (Number(formData.hour)-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    }
+
+  }
+   var eventStart = new Date(date)
+
+
   const url = `/api/events/${eventId}`;
   const body = {
     title            : updatedEvent.title,
@@ -187,7 +227,7 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
     created_by       : currentUser.id,
     location         : updatedEvent.location,
     category         : updatedEvent.category,
-    time             : parseTime(updatedEvent.hour, updatedEvent.minute, updatedEvent.ampm),
+    time             : eventStart,
     duration         : parseDuration(updatedEvent.duration_hour,updatedEvent.duration_minute),
     max_guests       : updatedEvent.max_guests,
     privacy          : updatedEvent.privacy,
