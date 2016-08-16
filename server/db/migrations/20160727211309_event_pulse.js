@@ -31,7 +31,6 @@ exports.up = function(knex, Promise) {
       table.string('category').defaultTo('other').notNullable();
       table.integer('max_guests');
       table.boolean('privacy').notNullable();
-      table.integer('group_visibility').references('id').inTable('groups');
       table.timestamps();
     }),
     knex.schema.createTable('hidden_events', function(table) {

@@ -47,6 +47,11 @@ button.view-details.btn.btn-secondary {
 .back-btn:hover {
   opacity: 0.6;
 }
+  
+*:focus {
+  outline: none !important;
+  box-shadow: none;
+}
 
 /*
  * -- PURE BUTTON STYLES --
@@ -189,14 +194,77 @@ div.list {
 .leaflet-left {
   left: 1%;
 }
+
 /*
  * -- EVENTCREATE STYLES --
  */
-form.create-form input {
+
+.create-form input {
   color: black;
 }
 
+.create-form .no-padding-left {
+  padding-left: 0em;
+}
 
+.create-form .no-padding-right {
+  padding-right: 0em;
+}
+
+.create-form .col-xs-4 {
+  width: 33.3333%;
+  margin: 1em 0;
+}
+
+.create-form .col-xs-8 {
+  margin: 1em 0;
+}
+
+.create-form .col-xs-10 {
+  float: none;
+}
+
+.create-form label,
+.create-form .text-danger {
+  font-size: 1.3em;
+  padding-left: 0;
+}
+
+.create-form .input-sm, 
+.create-form select {
+  border-radius: 5px;
+  font-size: 1em;
+  height: 40px;
+}
+
+.create-form .checkbox {
+  margin-right :10px;
+}
+
+.create-form .form-check-label {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 15px 0 5px;
+}
+
+.create-form button.btn-link,
+.clear {
+  color: #F6F0ED;
+}
+
+.clear:hover {
+  color: #F6F0ED;
+  text-decoration: underline;
+}
+
+.create-form .submit {
+  margin: 20px 0;
+}
+
+.create-form .scroll {
+  overflow-y: scroll;
+  height: 70%;
+}
 /*
  * -- EVENTDETAILS STYLES --
  */
@@ -427,6 +495,28 @@ form.text-center input{
   ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
+  }
+}
+
+@media (min-width:768px) {
+  .create-form .col-sm-2 {
+    width: 16.66666667%;;
+  }
+  .create-form .is-tomorrow {
+    margin: 1em 0;
+  }
+  .create-form .checkbox-text {
+    margin: 1.2em 0;
+  }
+  .create-form .more-option {
+    margin-bottom: 1.2em;
+  }
+  .create-form .more-label {
+    margin-top: 1.2em;
+  }
+  .create-form .capacity {
+    margin-top: -5px;
+    margin-right: 1em;
   }
 }
 

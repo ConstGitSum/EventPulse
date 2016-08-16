@@ -1,4 +1,5 @@
-import moment from 'moment'
+import moment from 'moment';
+
 const EVENT_RANGE_LIMIT_IN_MILLIS = 12 * 60 * 60 * 1000;
 const ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
 const TEN_MINUTE = 10 * 60 * 1000;
@@ -18,10 +19,11 @@ export function getDefaultState() {
       ampm: currHour > 12 ? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
+      endTime: '',
+      duration: 0,
       category:'other',
       privacy: 'false',
-      group_visibility: 1,
-      max_guests: 0,
+      max_guests: -1,
       is_tomorrow: false
     },
     validationErrors: {}
@@ -47,7 +49,6 @@ export function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
-
   if (is_tomorrow === 'true') {
     return new Date(d.getTime() + ONE_DAY_IN_MILLIS);
   }
@@ -78,10 +79,8 @@ export function validateTitle(title) {
 }
 
 export function validateDescription(description) {
-  if (description.length === 0) {
-    return 'description cannot be empty';
-  } else if (description.length > 10) {
-    return 'description should be less than 10 characters (for now)';
+  if (description.length > 24) {
+    return 'description should be less than 24 characters (for now)';
   } else {
     return '';
   }
@@ -119,6 +118,14 @@ export function validateAmpm(ampm) {
   }
 }
 
+export function validateCapacity(num) {
+  if (Number(num) === 0) {
+    return 'capacity cannot be 0';
+  } else {
+    return '';
+  }
+}
+
 export function validateField(fieldKey, fieldValue) {
   switch (fieldKey) {
     case 'title':
@@ -133,6 +140,12 @@ export function validateField(fieldKey, fieldValue) {
       return validateMinute(fieldValue);
     case 'ampm':
       return validateAmpm(fieldValue);
+    // case 'duration_hour':
+    //   return validateDuration(fieldValue,undefined);
+    // case 'duration_minute':
+    //   return validateDuration(undefined,fieldValue);
+    case 'max_guests':
+      return validateCapacity(fieldValue);
     default:
       return '';
   }
@@ -148,6 +161,14 @@ export function validateTimeRange(validationErrors, formData) {
   }
 }
 
+export function validateDuration(validationErrors, formData) {
+  if (formData.duration_hour == 0 && formData.duration_minute == 0 && formData.duration !== 0) {
+    validationErrors._duration = 'Duration cannot be 0'
+  } else {
+    delete validationErrors._duration;
+  }
+}
+
 export function validateForm(validationErrors, formData) {
   for (let fieldKey in formData) {
     const errorMessage = validateField(fieldKey, formData[fieldKey]);
@@ -156,6 +177,8 @@ export function validateForm(validationErrors, formData) {
     }
   }
   validateTimeRange(validationErrors, formData);
+  validateDuration(validationErrors, formData);
+
   if(Object.keys(formData).length === 0 && formData.constructor === Object) {
     validationErrors._form = 'Form cannot be empty'
   } else if (Object.keys(validationErrors).length > 0) {
@@ -167,13 +190,12 @@ export function validateForm(validationErrors, formData) {
   return validationErrors;
 }
 
-export function parseTime(hour, minute, ampm) {
+export function parseTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   const year = d.getFullYear();
   const offSet = d.getTimezoneOffset()
   let month = d.getMonth() + 1;
   let day = d.getDate();
-
 
   let newHour;
   if(ampm === 'pm') {
@@ -188,10 +210,25 @@ export function parseTime(hour, minute, ampm) {
 
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
-
   const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
 
   return moment.utc(momTime, "YYYY-MM-DD HH:mm Z").format()
+}
+
+export function parseEndTime(startTime,hour,minute){
+  console.log('the startTime is :', startTime);
+  console.log('the hour is :', hour);
+  console.log('the minute is :', minute);
+  if(hour === 0 && minute === 0){
+
+    const start_time = moment(`${year}-${month}-${day} ${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}`, 'YYYY-MM-DD HH:mm');
+    if(is_tomorrow) { 
+      return start_time.add(1,'days');
+    } else {
+      return start_time;
+    }
+    
+  }
 }
 
 export function parseDuration(hour, minute) {

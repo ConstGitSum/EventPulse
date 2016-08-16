@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { parseTime, parseDuration } from '../utils/form';
+import { parseTime, parseDuration, parseEndTime } from '../utils/form';
 import { filterByDistance } from '../utils/list';
 
 export const GET_CURRENT_USER    = 'GET_CURRENT_USER';
@@ -173,7 +173,6 @@ export function createEvent(formData, currentUser) {
   }
    var eventStart = new Date(date)
 
-
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
@@ -182,10 +181,10 @@ export function createEvent(formData, currentUser) {
     time: eventStart,
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
     category: formData.category || 'other',
-    max_guests: formData.max_guests || null,
-    privacy: formData.privacy || false,
-    group_visibility: formData.group_visibility || null
+    max_guests: formData.max_guests || -1,
+    privacy: formData.privacy || false
   })
+  
   return {
     type: CREATE_EVENT,
     payload: request
@@ -200,20 +199,20 @@ export function editEvent(currentEvent) {
 }
 
 export function updateEvent(updatedEvent, currentUser, eventId) {
-
+  console.log('updatedEvent:' ,updatedEvent)
   var date = Date.now();
   var newDate = new Date();
-  if(formData.is_tomorrow) {
-    if(Number(formData.hour) === 12)
-      data = date + (Number(formData.hour)+12-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+  if(updatedEvent.is_tomorrow) {
+    if(Number(updatedEvent.hour) === 12)
+      data = date + (Number(updatedEvent.hour)+12-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     else
-      date = date + (Number(formData.hour)+24-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+      date = date + (Number(updatedEvent.hour)+24-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
   }else{
-    if(formData.ampm ==='pm'){
-      var newHour = Number(formData.hour) === 12 ? Number(formData.hour) : Number(formData.hour) + 12;
-      date = date + (newHour-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    if(updatedEvent.ampm ==='pm'){
+      var newHour = Number(updatedEvent.hour) === 12 ? Number(updatedEvent.hour) : Number(updatedEvent.hour) + 12;
+      date = date + (newHour-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     }else{
-      date = date + (Number(formData.hour)-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+      date = date + (Number(updatedEvent.hour)-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     }
 
   }
@@ -230,8 +229,7 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
     time             : eventStart,
     duration         : parseDuration(updatedEvent.duration_hour,updatedEvent.duration_minute),
     max_guests       : updatedEvent.max_guests,
-    privacy          : updatedEvent.privacy,
-    group_visibility : updatedEvent.group_visibility
+    privacy          : updatedEvent.privacy
   }
   const request = axios.put(url, body);
 
@@ -262,7 +260,7 @@ export function getInvitations(invites) {
   return {
     type: GET_INVITATIONS,
     payload: invites
-}
+  }
 }
 
 export function removeInvitation(invite) {
