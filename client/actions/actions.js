@@ -175,9 +175,6 @@ export function createEvent(formData, currentUser) {
    var eventStart = new Date(date)
     console.log('event Start',even
 
-
-  var date = parseTime(formData.hour, formData.minute, formData.ampm)
-  console.log(date)
   const request = axios.post('/api/events', {
     title: formData.title,
     description: formData.description,
