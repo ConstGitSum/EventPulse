@@ -220,24 +220,15 @@ export function parseEndTime(startTime,hour,minute){
   console.log('the hour is :', hour);
   console.log('the minute is :', minute);
   if(hour === 0 && minute === 0){
-||||||| merged common ancestors
-  console.log('in parseTime:' ,`${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`);
-  return `${year}-${month}-${day}T${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}:00.000`;
-}
 
-export function parseEndTime(startTime,hour,minute){
-  console.log('the startTime is :', startTime);
-  console.log('the hour is :', hour);
-  console.log('the minute is :', minute);
-  if(hour === 0 && minute === 0){
-
-  const start_time = moment(`${year}-${month}-${day} ${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}`, 'YYYY-MM-DD HH:mm');
-  if(is_tomorrow) { 
-    return start_time.add(1,'days');
-  } else {
-    return start_time;
+    const start_time = moment(`${year}-${month}-${day} ${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}`, 'YYYY-MM-DD HH:mm');
+    if(is_tomorrow) { 
+      return start_time.add(1,'days');
+    } else {
+      return start_time;
+    }
+    
   }
-  
 }
 
 export function parseDuration(hour, minute) {

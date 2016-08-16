@@ -199,20 +199,20 @@ export function editEvent(currentEvent) {
 }
 
 export function updateEvent(updatedEvent, currentUser, eventId) {
-
+  console.log('updatedEvent:' ,updatedEvent)
   var date = Date.now();
   var newDate = new Date();
-  if(formData.is_tomorrow) {
-    if(Number(formData.hour) === 12)
-      data = date + (Number(formData.hour)+12-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+  if(updatedEvent.is_tomorrow) {
+    if(Number(updatedEvent.hour) === 12)
+      data = date + (Number(updatedEvent.hour)+12-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     else
-      date = date + (Number(formData.hour)+24-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+      date = date + (Number(updatedEvent.hour)+24-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
   }else{
-    if(formData.ampm ==='pm'){
-      var newHour = Number(formData.hour) === 12 ? Number(formData.hour) : Number(formData.hour) + 12;
-      date = date + (newHour-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    if(updatedEvent.ampm ==='pm'){
+      var newHour = Number(updatedEvent.hour) === 12 ? Number(updatedEvent.hour) : Number(updatedEvent.hour) + 12;
+      date = date + (newHour-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     }else{
-      date = date + (Number(formData.hour)-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+      date = date + (Number(updatedEvent.hour)-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     }
 
   }

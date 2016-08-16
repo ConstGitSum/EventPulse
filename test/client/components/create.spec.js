@@ -26,7 +26,7 @@ describe("Create Component", () => {
           validationErrors={{}}
       />)
       const labels = scryRenderedDOMComponentsWithTag(component, 'label')
-      console.log(labels)
+      //console.log(labels)
       expect(labels[0].textContent).to.equal('Title*')
       expect(labels[1].textContent).to.equal('Location*')
       expect(labels[2].textContent).to.equal('Category*')
