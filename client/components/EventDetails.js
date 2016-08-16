@@ -10,11 +10,11 @@ import ChatModal from './ChatModal'
 import Sidebar from './Sidebar';
 import { 
   joinEvent,
-  leaveEvent, 
-  hideEvent, 
+  leaveEvent,
+  hideEvent,
   unhideEvent,
   removeInvitation,
-  addInvite, 
+  addInvite,
   toggleChatModal
 } from '../actions/actions';
 import DetailsMap from './DetailsMap';
@@ -142,7 +142,7 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Leave',
-          'btn btn-danger btn-block btn-lg',
+          'btn btn-danger btn-block',
           this.onClickLeave.bind(this)
         )
       )
@@ -152,14 +152,14 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-primary btn-block btn-lg',
+          'btn btn-primary btn-block',
           this.onClickJoin.bind(this))
       )
     } else {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-danger btn-block btn-lg',
+          'btn btn-danger btn-block',
           'disabled',
           this.onClickJoin.bind(this)
         )
@@ -268,7 +268,7 @@ export class EventDetails extends React.Component {
             <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.generateButtons(
                 "Chat",
-                'btn btn-primary btn-block btn-lg', 
+                'btn btn-primary btn-block',
                 this.props.toggleChatModal
                 )}
             </div>
@@ -296,12 +296,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    joinEvent, 
-    leaveEvent, 
+    joinEvent,
+    leaveEvent,
     hideEvent,
     unhideEvent,
     removeInvitation,
-    addInvite, 
+    addInvite,
     toggleChatModal
   }, dispatch)
 
