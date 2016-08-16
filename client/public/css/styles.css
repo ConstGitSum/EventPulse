@@ -518,10 +518,12 @@ list-style-type: none;
 
 .expandGuestList {
 text-align: center;
+color: black;
 }
 
 .expandFriendList {
 text-align: center;
+color: black;
 }
 
 .guestFriendHeader {
