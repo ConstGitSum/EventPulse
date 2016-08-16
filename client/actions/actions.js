@@ -173,7 +173,7 @@ export function createEvent(formData, currentUser) {
   }
   console.log("date",date, newDate.getHours())
    var eventStart = new Date(date)
-    console.log('event Start',even
+
 
   const request = axios.post('/api/events', {
     title: formData.title,
