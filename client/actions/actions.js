@@ -155,12 +155,9 @@ export function updateTime() {
 
 export function createEvent(formData, currentUser) {
 
- console.log("FORM",formData)
   var date = Date.now();
   var newDate = new Date();
-  console.log("bDate",date)
   if(formData.is_tomorrow) {
-    console.log("hours",Number(formData.hour)+24-newDate.getHours())
     if(Number(formData.hour) === 12)
       data = date + (Number(formData.hour)+12-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
     else
@@ -174,7 +171,6 @@ export function createEvent(formData, currentUser) {
     }
 
   }
-  console.log("date",date, newDate.getHours())
    var eventStart = new Date(date)
 
 
