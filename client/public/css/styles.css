@@ -53,6 +53,24 @@ button.view-details.btn.btn-secondary {
   box-shadow: none;
 }
 
+div.footer {
+  position: absolute;
+  bottom: 2%;
+  width: 100%
+
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
 /*
  * -- PURE BUTTON STYLES --
  */
@@ -287,18 +305,22 @@ div.list {
   height: 30vh;
 }
 
-.details-align-white {
+.align-white {
   white-space: pre;
 }
 
 .details-table {
   margin: auto;
   text-align: left;
-  height: 18vh;
+  height: 25vh;
   overflow-y: scroll;
+  table-layout: fixed;
   display: block;
 }
 
+.details-table td {
+  word-wrap: break-word;
+}
 .table-heading {
   font-size: 125%;
 }
@@ -512,17 +534,6 @@ form.text-center input{
     margin-bottom: 1%;
     margin-top: 1%;
   }
-
-  ::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 7px;
-}
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(0,0,0,.5);
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-}
 }
 
 @media (min-width:768px) {
