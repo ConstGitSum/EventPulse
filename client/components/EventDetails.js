@@ -233,31 +233,33 @@ export class EventDetails extends React.Component {
           <div className="row">
             <div className="col-xs-10 col-xs-offset-1">
               <table className="details-table">
-                <tr>
-                  <td className="table-heading"><strong>Created By</strong></td>
-                  <td className="table-heading align-white"><strong> : </strong></td>
-                  <td className="table-info">{creator ? creator.name : "Creator is no longer in the event"}</td>
-                </tr>
-                <tr>
-                  <td className="table-heading"><h4><strong>Category</strong></h4></td>
-                  <td className="table-heading align-white"><strong> : </strong></td>
-                  <td className="table-info capitalize">{this.props.currentEvent.category}</td>
-                </tr>
-                <tr>
-                  <td className="table-heading"><h4><strong>Description</strong></h4></td>
-                  <td className="table-heading align-white"><strong> : </strong></td>
-                  <td className="table-info">{this.props.currentEvent.description}</td>
-                </tr>
-                <tr>
-                  <td className="table-heading"><h4><strong>Duration</strong></h4></td>
-                  <td className="table-heading align-white"><strong> : </strong></td>
-                  <td className="table-info">{humanizeDuration(this.props.currentEvent.duration * 1000)}</td>
-                </tr>
-                <tr onClick={this.swapTime.bind(this, 'start')}>
-                  <td className="table-heading"><h4><strong>Start Time</strong></h4></td>
-                  <td className="table-heading align-white"><strong> : </strong></td>
-                  <td className="table-info">{this.state.startTimeText}</td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td className="table-heading"><strong>Created By</strong></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{creator ? creator.name : "Creator is no longer in the event"}</td>
+                  </tr>
+                  <tr>
+                    <td className="table-heading"><h4><strong>Category</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info capitalize">{this.props.currentEvent.category}</td>
+                  </tr>
+                  <tr>
+                    <td className="table-heading"><h4><strong>Description</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{this.props.currentEvent.description}</td>
+                  </tr>
+                  <tr>
+                    <td className="table-heading"><h4><strong>Duration</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{humanizeDuration(this.props.currentEvent.duration * 1000)}</td>
+                  </tr>
+                  <tr onClick={this.swapTime.bind(this, 'start')}>
+                    <td className="table-heading"><h4><strong>Start Time</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{this.state.startTimeText}</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
