@@ -155,24 +155,24 @@ export function updateTime() {
 
 export function createEvent(formData, currentUser) {
 
- // console.log("FORM",formData)
- //  var date = Date.now();
- //  var newDate = new Date();
- //  console.log("bDate",date)
- //  if(formData.is_tomorrow) {
- //    console.log("hours",Number(formData.hour)+24-newDate.getHours())
- //    date = date + (Number(formData.hour)+24-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
- //  }else{
- //    if(formData.ampm ==='pm'){
- //      var newHour = Number(formData.hour) + 12;
- //      date = date + (newHour-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
- //    }else{
- //      date = date + (Number(formData.hour)-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
- //    }
+ console.log("FORM",formData)
+  var date = Date.now();
+  var newDate = new Date();
+  console.log("bDate",date)
+  if(formData.is_tomorrow) {
+    console.log("hours",Number(formData.hour)+24-newDate.getHours())
+    date = date + (Number(formData.hour)+24-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+  }else{
+    if(formData.ampm ==='pm'){
+      var newHour = Number(formData.hour) + 12;
+      date = date + (newHour-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    }else{
+      date = date + (Number(formData.hour)-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    }
 
- //  }
- //  console.log("date",date, newDate.getHours())
- //   var eventStart = new Date(date)
+  }
+  console.log("date",date, newDate.getHours())
+   var eventStart = new Date(date)
 
 
   const request = axios.post('/api/events', {
@@ -180,7 +180,7 @@ export function createEvent(formData, currentUser) {
     description: formData.description,
     created_by: currentUser.id,
     location: formData.location,
-    time: parseTime(formData.hour, formData.minute, formData.ampm),
+    time: eventStart,
     duration: parseDuration(formData.duration_hour,formData.duration_minute),
     category: formData.category || 'other',
     max_guests: formData.max_guests || null,
