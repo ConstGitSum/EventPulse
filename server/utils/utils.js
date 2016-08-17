@@ -9,14 +9,13 @@ module.exports = {
 // attempts to geocode event location
 // returns updated event details if successful
 function getCoords(event) {
-  console.log("HERE WE ARE",event)
   const API_KEY = process.env.GEO_API_KEY;
   const ROOT_URL = `https://maps.googleapis.com/maps/api/geocode/json?key=${API_KEY}`;
   const address = event.location.replace(/ /g, '+').replace(/;/g, '+');
   const GEO_URL = `${ROOT_URL}&address=${address}`;
 
   return axios.get(GEO_URL)
-  .then(res => { 
+  .then(res => {
     if (res.data.status === 'ZERO_RESULTS') {
       throw new Error('Error getting coordinates');
     }
