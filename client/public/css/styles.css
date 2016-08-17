@@ -31,6 +31,14 @@ body {
   font-family: 'Montserrat', sans-serif
 }
 
+ul {
+  list-style:none;
+}
+
+li {
+  margin: 0.5em;
+}
+
 .container-fluid {
   padding-left: 0px;
   padding-right: 15px;
@@ -355,7 +363,72 @@ button.logout.btn.btn-danger {
  */
 form.text-center input{
   color: black;
+  width: 12em;
+  margin-top: 1em;
 }
+
+div.modal-dialog {
+  position: relative;
+  height: 50%;
+  top: 13em;
+}
+
+div.chatBox {
+  color: white; 
+  height: 250px; 
+  overflow-y: auto;
+}
+
+div.modal-content {
+  background-color: #434141;   
+  width: 300px;
+  height: 30em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -150px;
+  margin-top: -235px;
+}
+
+.modal-dialog{
+  overflow-y: initial !important
+}
+
+div.modal-header {
+  /*min-height: 16.42857143px;*/
+  padding: 15px;
+  border-bottom: none;
+  text-align: center;
+  margin-bottom: -2em;
+}
+
+.modal-body {
+  min-height: 16.42857143px;
+  padding: 15px;
+  border-bottom: none;
+}
+
+form.text-center {
+  margin-bottom: 2em;
+}
+
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+  border-top: none;
+}  
+
+img.chatImage {
+  margin-left: -2.5em;
+  border-radius: 2em;
+  width: 2em;
+  height: 2em;
+}
+
+input {
+  margin-bottom: 1em;
+}
+
 
 /*
  * -- EVENTDETAILS SIDEBAR STYLES --
@@ -495,7 +568,9 @@ form.text-center input{
   .background_image {
     height: 17em;
   }
+
 }
+
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
@@ -548,6 +623,7 @@ form.text-center input{
   .page-header {
     margin: 20 0 0 0;
   }
+
   div.eventList {
     height: 75%;
     overflow-y: scroll;
@@ -618,11 +694,6 @@ border-style: inset;
  font-size: large;
 background-color: #aaa6a6;
 border-style: outset; 
-}
-
-.chatImage {
-  width: 50px;
-  height: 50px;
 }
 
 .inviteButton {
