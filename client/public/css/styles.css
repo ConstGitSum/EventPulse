@@ -697,8 +697,7 @@ border-style: outset;
 }
 
 .inviteButton {
-  background-color: #aaa6a6;
-  color: white;
+  color: black;
 }
 
 .friendHeader {
@@ -756,4 +755,26 @@ color: black;
 .guestFriendHeader {
   text-align: center;
   font-size: 150%;
+}
+
+.filterAndInvites {
+    position:relative;
+    display:inline-block;
+    text-align:center;
+}
+
+.inviteNotice {
+    position:absolute;
+    color: black;
+    background-color: #ff6f6f;
+    font-family: "Impact";
+    bottom: 20px;
+    right: -13px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    z-index: 9999;
+}
+.filtering {
+  
 }

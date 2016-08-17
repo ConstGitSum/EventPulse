@@ -115,8 +115,10 @@ export class List extends React.Component {
         <div className="row event-map">
         <EventMap />
           <div className="list col-xs-4 text-left">
+          <div className = "filterAndInvites">
             <ListFilter />
-            {this.props.invitations.length>0 ? <button className ="inviteButton" onClick = {this.seeInvites.bind(this)}>pending invites ({this.props.invitations.length})</button> : null}
+            {this.props.invitations.length>0 ? <button className ="inviteNotice" onClick = {this.seeInvites.bind(this)}>{this.props.invitations.length}</button> : null}
+              </div>
             <div className="eventList">
               <ul className="event-list list-group">
                 {this.props.listFiltered.map((event, index) =>
