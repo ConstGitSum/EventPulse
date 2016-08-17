@@ -11,13 +11,13 @@ export class ChatModal extends React.Component {
     return (
           <Modal show={this.props.modals.chat} onHide={this.props.toggleChatModal}>
             <Modal.Header className="col-xs-10 col-md-11">
-              <Modal.Title>CHATROOM</Modal.Title>
+              <Modal.Title className="chatroom">CHATROOM</Modal.Title>
             </Modal.Header>
               <Modal.Body> 
                 <Chat event={this.props.currentEvent}/>
               </Modal.Body>
             <Modal.Footer>
-              <Button className="col-xs-3 col-xs-offset-8" onClick={this.props.toggleChatModal}>Close</Button>
+              <Button className="col-xs-3 col-xs-offset-9" onClick={this.props.toggleChatModal}>Close</Button>
             </Modal.Footer>
           </Modal>   
     )

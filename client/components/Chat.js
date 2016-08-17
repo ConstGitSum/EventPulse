@@ -73,7 +73,7 @@ export class ChatWindow extends React.Component {
     const messages = this.state.messages.map((message, index) => {
       return (
         <li className="col-xs-12 col-md-12" key={index}>
-          <img className='chatImage' src={message.image} />
+          <img className="chatImage" src={message.image} />
           <b>{message.name}</b> {message.text}
         </li>
         )
@@ -82,9 +82,9 @@ export class ChatWindow extends React.Component {
       <div>
         <h1 className="text-center"> </h1>
             <form className="text-center" onSubmit = {this.handleSubmit.bind(this)}>
-              <input className="col-xs-12 col-xs-offset-2 col-md-8 col-md-offset-3" type = 'text' placeholder = 'Enter a message' value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
+              <input className="col-xs-12 col-xs-offset-2 col-md-8 col-md-offset-3" type = "text" placeholder = "Enter a message" value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
             </form>
-        <div className='chatBox col-xs-10'><ul className = 'chatMessages'>{messages} </ul></div>  
+        <div className="chatBox col-xs-12"><ul className = "chatMessages">{messages} </ul></div>  
       </div>
     )
   }
