@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { ProgressBar } from 'react-bootstrap';
 import moment from 'moment';
-import humanizeDuration from 'humanize-Duration';
+import humanizeDuration from 'humanize-duration';
 
 import ChatModal from './ChatModal'
 import Sidebar from './Sidebar';
