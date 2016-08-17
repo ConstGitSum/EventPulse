@@ -13,12 +13,11 @@ export class ListFilter extends React.Component {
       hidden   : 'eye',
       created  : 'plus-circle',
       joined   : 'check-circle',
-      pending  : 'question-circle'
     }
 
 
     return (
-      <DropdownButton title={'Filter Events'} id={'event-filter-dropdown'}>
+      <DropdownButton title={'Filter Events'} id={'event-filter-dropdown'} className = "filtering">
         {Object.keys(filters).map((filter, index) =>
           <MenuItem
             key={index}
