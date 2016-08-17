@@ -53,6 +53,25 @@ button.view-details.btn.btn-secondary {
   box-shadow: none;
 }
 
+div.footer {
+  position: absolute;
+  bottom: 2%;
+  margin: 0 auto;
+  width: 100%
+
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
 /*
  * -- PURE BUTTON STYLES --
  */
@@ -187,6 +206,11 @@ div.list {
   padding: 15px;
 }
 
+div.eventList {
+  margin-bottom: 7%;
+}
+
+
 /*
  * -- LIST MAP STYLES -- 
  */
@@ -285,7 +309,46 @@ div.list {
 
 #details-map {
   height: 30vh;
+  z-index: 0;
 }
+
+.align-white {
+  white-space: pre;
+}
+
+.details-table {
+  margin: auto;
+  text-align: left;
+  height: 28vh;
+  overflow-y: scroll;
+  table-layout: fixed;
+  display: block;
+}
+
+.details-table td {
+  word-wrap: break-word;
+}
+.table-heading {
+  font-size: 125%;
+}
+.table-info {
+  font-size: 100%;
+}
+
+.event-buttons.btn-group {
+  width: 100%;
+  padding-right: 9%;
+}
+
+button.create-event.btn.btn-primary {
+  width: 50%;
+}
+
+button.logout.btn.btn-danger {
+  width: 50%;
+}
+
+
 
 /*
  * -- CHATBOX STYLES --
@@ -486,15 +549,18 @@ form.text-center input{
     margin: 20 0 0 0;
   }
   div.eventList {
-    max-height: 70%;
+    height: 75%;
     overflow-y: scroll;
     margin-bottom: 1%;
     margin-top: 1%;
   }
 
-  ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+  h3.event-title {
+    font-size: 18px;
+  }
+
+  h4#event-location {
+    font-size: 15px;
   }
 }
 

@@ -123,14 +123,15 @@ export class List extends React.Component {
                   this.renderListItem(event, index))}
               </ul>
             </div>
-            <div className="event-buttons">
+
+            <div className="event-buttons btn-group footer" role="group">
               <Link to="/create">
-                <button className="create-event btn btn-primary btn-block">
+                <button className="create-event btn btn-primary">
                   Create
                 </button>
               </Link>
               <button
-                className="logout btn btn-danger btn-block"
+                className="logout btn btn-danger"
                 onClick={this.props.userLogOut}>
                 Log Out
               </button>

@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { ProgressBar } from 'react-bootstrap';
-import moment from 'moment'
+import moment from 'moment';
+import humanizeDuration from 'humanize-duration';
 
 import ChatModal from './ChatModal'
 import Sidebar from './Sidebar';
 import { 
   joinEvent,
-  leaveEvent, 
-  hideEvent, 
+  leaveEvent,
+  hideEvent,
   unhideEvent,
   removeInvitation,
-  addInvite, 
+  addInvite,
   toggleChatModal
 } from '../actions/actions';
 import DetailsMap from './DetailsMap';
@@ -22,12 +23,12 @@ export class EventDetails extends React.Component {
   constructor() {
     super()
     this.state = {
-      startTimeObj: null,
-      startTimeText: null,
-      startTimeShow: true,
-      endTimeObj: null,
-      endTimeText: null,
-      endTimeShow: true
+      startTimeObj  : null,
+      startTimeText : null,
+      startTimeShow : true,
+      endTimeObj    : null,
+      endTimeText   : null,
+      endTimeShow   : true
     }
   }
 
@@ -36,12 +37,12 @@ export class EventDetails extends React.Component {
       browserHistory.push('/');
     }
     const startTime = moment(this.props.currentEvent.time);
-    const endTime = moment(this.props.currentEvent.endTime);
+    const endTime   = moment(this.props.currentEvent.endTime);
     this.setState({ 
-      startTimeObj: startTime,
-      startTimeText: startTime.format('dddd, h:mm a'),
-      endTimeObj: endTime,
-      endTimeText: endTime.format('dddd, h:mm a')
+      startTimeObj  : startTime,
+      startTimeText : startTime.format('dddd, h:mm a'),
+      endTimeObj    : endTime,
+      endTimeText   : endTime.format('dddd, h:mm a')
     });
   }
 
@@ -127,20 +128,21 @@ export class EventDetails extends React.Component {
   }
 
   renderButtons() {
-    const currentEvent = this.props.currentEvent;
-    const currentUser = this.props.currentUser;
-    const hiddenEvents = this.props.hiddenEvents;
-    const guestLength = currentEvent.guests.length;
-    const max_guests = currentEvent.max_guests;
+    const currentEvent  = this.props.currentEvent;
+    const currentUser   = this.props.currentUser;
+    const hiddenEvents  = this.props.hiddenEvents;
+    const guestLength   = currentEvent.guests.length;
+    const max_guests    = currentEvent.max_guests;
+
+    const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1
     const isUserInEvent = currentEvent.guests.some(guest =>
       guest.id === currentUser.id || currentEvent.created_by === currentUser.id)
-    const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1
 
     if (isUserInEvent) {
       return (
         this.generateButtons(
           'Leave',
-          'btn btn-danger btn-block btn-lg',
+          'btn btn-danger btn-block',
           this.onClickLeave.bind(this)
         )
       )
@@ -150,14 +152,14 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-primary btn-block btn-lg',
+          'btn btn-primary btn-block',
           this.onClickJoin.bind(this))
       )
     } else {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-danger btn-block btn-lg',
+          'btn btn-danger btn-block',
           'disabled',
           this.onClickJoin.bind(this)
         )
@@ -216,9 +218,9 @@ export class EventDetails extends React.Component {
 
           <div className="row">
             <div id="event-location" className="col-xs-10 col-xs-offset-1 text-center">
-              <strong>
-                {this.props.currentEvent.location}
-              </strong>
+              <h4>
+                <strong>{this.props.currentEvent.location}</strong>
+              </h4>
             </div>
           </div>
 
@@ -230,22 +232,40 @@ export class EventDetails extends React.Component {
 
           <div className="row">
             <div className="col-xs-10 col-xs-offset-1">
-              <p><strong>Creator</strong>: {creator ? creator.name :  'No longer in event'}</p>
-              <p><strong>Description</strong>: {this.props.currentEvent.description}</p>
-              <p onClick={this.swapTime.bind(this, 'start')}>
-                <strong>Start Time</strong>: {this.state.startTimeText}
-              </p>
-              <p onClick={this.swapTime.bind(this, 'end')}>
-                <strong>End Time</strong>: {this.state.endTimeText}
-              </p>
+              <table className="details-table">
+                <tbody>
+                  <tr>
+                    <td className="table-heading"><strong>Created By</strong></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{creator ? creator.name : "Creator is no longer in the event"}</td>
+                  </tr>
+                  <tr>
+                    <td className="table-heading"><h4><strong>Category</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info capitalize">{this.props.currentEvent.category}</td>
+                  </tr>
+                  <tr>
+                    <td className="table-heading"><h4><strong>Description</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{this.props.currentEvent.description}</td>
+                  </tr>
+                  <tr>
+                    <td className="table-heading"><h4><strong>Duration</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{humanizeDuration(this.props.currentEvent.duration * 1000)}</td>
+                  </tr>
+                  <tr onClick={this.swapTime.bind(this, 'start')}>
+                    <td className="table-heading"><h4><strong>Start Time</strong></h4></td>
+                    <td className="table-heading align-white"><strong> : </strong></td>
+                    <td className="table-info">{this.state.startTimeText}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-
-          <div className="row">
             <div className="col-xs-10 col-xs-offset-1 text-center" role="group">
               {this.generateButtons(
                 "Chat",
-                'btn btn-primary btn-block btn-lg', 
+                'btn btn-primary btn-block',
                 this.props.toggleChatModal
                 )}
             </div>
@@ -264,21 +284,21 @@ export class EventDetails extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentEvent: state.currentEvent,
-    currentUser:  state.currentUser,
-    hiddenEvents: state.hiddenEvents,
-    invitations: state.invitations
+    currentEvent : state.currentEvent,
+    currentUser  : state.currentUser,
+    hiddenEvents : state.hiddenEvents,
+    invitations  : state.invitations
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    joinEvent, 
-    leaveEvent, 
+    joinEvent,
+    leaveEvent,
     hideEvent,
     unhideEvent,
     removeInvitation,
-    addInvite, 
+    addInvite,
     toggleChatModal
   }, dispatch)
 
