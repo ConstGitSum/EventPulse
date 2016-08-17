@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import $ from 'jquery';
+import scrollTo from 'jquery.scrollto';
 
 import {
   createEvent, 
@@ -89,6 +91,7 @@ export class Create extends Component {
     } else {
       this.setState({folded: true});
     }
+    setTimeout(() => $('.create-form').scrollTo(350),50);
   }
 
   generateButton() {
@@ -122,20 +125,20 @@ export class Create extends Component {
       <div className="event-create">
         <Link to='/'>
           <i onClick={this.onClearValues.bind(this)} 
-             className="fa fa-arrow-left fa-3x"
+             className="back-btn fa fa-arrow-left fa-3x"
              aria-hidden="true"> 
           </i>
         </Link>
         <div className="container">
           <div className="row">
-            <div className='col-xs-10 col-xs-offset-1 page-header'>
+            <div className="col-xs-12 page-header">
               {this.props.toggleEventUpdate
-                ? <h1 className="row text-center"> Update Pulse</h1>
-                  : <h1 className="row text-center">New Pulse</h1>
+                ? <h2 className="text-center"> Update Pulse</h2>
+                  : <h2 className="text-center">New Pulse</h2>
                 }
             </div>
           </div>
-          <div className="scroll">
+          <div className="form-wrapper">
             <div className="row text-right col-xs-12">
               <button 
                 type="button" 
@@ -200,7 +203,7 @@ export class Create extends Component {
               </div>
 
               <div className="form-group row col-xs-10 col-xs-offset-1">
-                <label className="col-xs-12 col-sm-4">Time*</label>
+                <label className="col-xs-12 col-sm-4 time-label">Time*</label>
                 <div className="col-xs-4 col-sm-2 no-padding-left">
                   <select name="hour"  
                     className="form-control"               
@@ -267,7 +270,7 @@ export class Create extends Component {
               </div>           
                 {this.state.folded 
                   ? null
-                  :<div>  
+                  :<div className="more-content">  
                       <div className="form-group row col-xs-10 col-xs-offset-1">
                          <label className="col-xs-12 col-sm-4 more-label">Duration</label>
                           <div> 
@@ -330,7 +333,7 @@ export class Create extends Component {
                             onBlur={this.onFieldChangeRedux.bind(this)}
                             onChange={this.onFieldChangeRedux.bind(this)}
                             min="1"/>)}
-                        <label>
+                        <label className="capacity-check-label">
                           <input 
                             className="form-check-input"
                             name="noLimit" 
@@ -347,7 +350,7 @@ export class Create extends Component {
                       </div>
                       <div className="form-group row col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4">Privacy</label>
-                        <div className="col-xs-12 col-sm-8">
+                        <div className="col-xs-12 col-sm-8 no-padding-left">
                           <label>
                             <input 
                               className="form-check-input"

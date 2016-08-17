@@ -231,6 +231,47 @@ div.eventList {
  * -- EVENTCREATE STYLES --
  */
 
+.event-create {
+  height: 100%;
+}
+
+.event-create .container {
+  margin-bottom: 1%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.event-create .form-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.create-form {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 62vh;
+  width: 100vw;
+}
+
+.create-form::-webkit-scrollbar { 
+  -webkit-appearance: none;
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.create-form .form-group {
+  margin-bottom: 10px;
+}
+
+.event-create i.fa {
+    position: absolute;
+    left: 1%;
+    top: 1%;
+    z-index: 2;
+}
+
 .create-form input {
   color: black;
 }
@@ -245,6 +286,7 @@ div.eventList {
 
 .create-form .col-xs-4 {
   width: 33.3333%;
+  /*margin: 0 0 0.5em 0;*/
   margin: 1em 0;
 }
 
@@ -258,25 +300,39 @@ div.eventList {
 
 .create-form label,
 .create-form .text-danger {
-  font-size: 1.3em;
+  font-size: 1.1em;
   padding-left: 0;
 }
 
 .create-form .input-sm, 
 .create-form select {
   border-radius: 5px;
-  font-size: 1em;
-  height: 40px;
+  font-size: 0.8em;
+  height: 30px;
+  margin-bottom: 0;
 }
 
 .create-form .checkbox {
   margin-right :10px;
 }
 
+.create-form .form-control {
+  padding: 6px;
+}
+
 .create-form .form-check-label {
   font-size: 1em;
   font-weight: normal;
   margin: 0 15px 0 5px;
+}
+
+.create-form .time-label {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.create-form .capacity {
+  margin-bottom: 10px;
 }
 
 .create-form button.btn-link,
@@ -293,10 +349,10 @@ div.eventList {
   margin: 20px 0;
 }
 
-.create-form .scroll {
-  overflow-y: scroll;
-  height: 70%;
+.event-create .footer {
+  left: 0;
 }
+
 /*
  * -- EVENTDETAILS STYLES --
  */
@@ -657,24 +713,34 @@ input {
 }
 
 @media (min-width:768px) {
+
   .create-form .col-sm-2 {
     width: 16.66666667%;;
   }
+
   .create-form .is-tomorrow {
     margin: 1em 0;
   }
+
   .create-form .checkbox-text {
     margin: 1.2em 0;
   }
+
   .create-form .more-option {
     margin-bottom: 1.2em;
   }
+
   .create-form .more-label {
     margin-top: 1.2em;
   }
+
   .create-form .capacity {
     margin-top: -5px;
     margin-right: 1em;
+    margin-bottom: 5px;
+  }
+  .create-form .footer {
+    position: static;
   }
 }
 
