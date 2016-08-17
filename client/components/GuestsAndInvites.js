@@ -17,7 +17,7 @@ export class GuestAndFriends extends React.Component {
   }  
 
 showGuestList() {
-  return this.state.clicked == "guestList" ? <div> <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)} > Expand Friend Invites</div><div className = "guestHeader"> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} > Expand Guest list</div>
+  return this.state.clicked == "guestList" ? <div> <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)}> <button className = "btn"> Show Friend Invites </button> </div><div className = "guestHeader"> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} ><button className = "btn"> Show Guest list</button></div>
 }
 
 clickGuestList() {
