@@ -376,6 +376,7 @@ div.modal-dialog {
 div.chatBox {
   color: white; 
   height: 250px; 
+  padding: 0em;
   overflow-y: auto;
 }
 
@@ -395,7 +396,6 @@ div.modal-content {
 }
 
 div.modal-header {
-  /*min-height: 16.42857143px;*/
   padding: 15px;
   border-bottom: none;
   text-align: center;
@@ -425,8 +425,24 @@ img.chatImage {
   height: 2em;
 }
 
+form.text-center input {
+  margin-bottom: 1em;
+  width: 18em; 
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+li.col-xs-12.col-md-12 {
+  padding: 0em; 
+  left: -1em; 
+}
+
 input {
   margin-bottom: 1em;
+}
+
+.chatroom.modal-title {
+  margin-left: 2em;
 }
 
 
