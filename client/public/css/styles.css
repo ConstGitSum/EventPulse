@@ -120,7 +120,6 @@ a.pure-button-primary {
 
 .background_image {
   background: url("../images/map.png") center center;
-  /*background-size: contain;*/
   display: block;
   height: 100%;
   width: 100%;
@@ -631,20 +630,6 @@ input {
 
 .filter-icon {
   padding: 5%;
-}
-
-/*
- * -- SMALL (IPHONE4) MEDIA QUERIES --
- * On iPhone 4 and other small devices, we want to customize some
- * of the mobile styles.
- */
-@media (max-width:321px) {
-  
-  /* We want to decrease the height of the background image for center positioned. */
-  .background_image {
-    height: 17em;
-  }
-
 }
 
 /*
