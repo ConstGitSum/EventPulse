@@ -17,7 +17,7 @@ export function getDefaultState() {
       hour: currHour > 12 ? currHour - 12: currHour === 0 ? 12 : currHour,
       minute: currMinute,
       ampm: currHour >= 12 ? 'pm': 'am',
-      duration_hour: 0,
+      duration_hour: 1,
       duration_minute: 0,
       endTime: '',
       duration: 0,
@@ -160,7 +160,7 @@ export function validateTimeRange(validationErrors, formData) {
 }
 
 export function validateDuration(validationErrors, formData) {
-  if (formData.duration_hour == 0 && formData.duration_minute == 0 && formData.duration !== 0) {
+  if (formData.duration_hour == 0 && formData.duration_minute == 0) {
     validationErrors._duration = 'Duration cannot be 0'
   } else {
     delete validationErrors._duration;

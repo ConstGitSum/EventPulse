@@ -372,7 +372,7 @@ div.eventList {
    margin-right: 0;
    margin-left: 0;
  }
-
+ 
 /*
  * -- EVENTDETAILS STYLES --
  */
@@ -963,6 +963,8 @@ color: black;
     border-radius: 50%;
     z-index: 9999;
 }
-.filtering {
-  
+
+.create-form .input-sm, 
+.create-form select {
+  font-size: 1em;
 }
