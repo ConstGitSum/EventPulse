@@ -51,7 +51,7 @@ describe('List Actions', () => {
     const userId = 1;
     const hiddenEvents = [3];
     const location = { lat: 10, lng: 10 }
-      
+
     it('should deliver payload correctly for `unhidden` filter', (done) => {
       store.dispatch(actions.filterList(list, 'unhidden', userId, hiddenEvents, location));
       const action = store.getActions()[0];

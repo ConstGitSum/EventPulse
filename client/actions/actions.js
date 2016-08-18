@@ -255,7 +255,6 @@ export function addInvite(inviteInfo) {
 }
 
 export function getInvitations(invites) {
-
   return {
     type: GET_INVITATIONS,
     payload: invites
@@ -270,7 +269,6 @@ export function removeInvitation(invite) {
 }
 
 export function getAllInvitations(invites) {
-
   return {
     type: GET_ALL_INVITATIONS,
     payload: invites
@@ -278,7 +276,6 @@ export function getAllInvitations(invites) {
 }
 
 export function updateEventField(fieldKey, fieldValue) {
-
   return {
     type: UPDATE_EVENT_FIELD,
     payload: { fieldKey, fieldValue }
@@ -286,14 +283,11 @@ export function updateEventField(fieldKey, fieldValue) {
 }
 
 export function clearFormValues() {
-
   return {
     type: CLEAR_FORM_VALUES
   }
 }
 
 export function toggleChatModal() {
-  return {
-   type: TOGGLE_CHAT_MODAL
-  }
+  return { type: TOGGLE_CHAT_MODAL }
 }
