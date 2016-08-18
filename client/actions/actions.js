@@ -154,24 +154,24 @@ export function updateTime() {
 }
 
 export function createEvent(formData, currentUser) {
-
   var date = Date.now();
   var newDate = new Date();
-  if(formData.is_tomorrow) {
-    if(Number(formData.hour) === 12)
+
+  if(formData.is_tomorrow === 'true') {
+    if(Number(formData.hour) === 12){
       data = date + (Number(formData.hour)+12-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
-    else
+    } else {
       date = date + (Number(formData.hour)+24-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
+    }
   }else{
-    if(formData.ampm ==='pm'){
+    if(formData.ampm ==='pm') {
       var newHour = Number(formData.hour) === 12 ? Number(formData.hour) : Number(formData.hour) + 12;
       date = date + (newHour-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
-    }else{
+    } else {
       date = date + (Number(formData.hour)-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000
     }
-
   }
-   var eventStart = new Date(date)
+  var eventStart = new Date(date)
 
   const request = axios.post('/api/events', {
     title: formData.title,
@@ -184,7 +184,7 @@ export function createEvent(formData, currentUser) {
     max_guests: formData.max_guests || -1,
     privacy: formData.privacy || false
   })
-  
+
   return {
     type: CREATE_EVENT,
     payload: request

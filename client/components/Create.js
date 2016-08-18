@@ -91,7 +91,7 @@ export class Create extends Component {
     } else {
       this.setState({folded: true});
     }
-    setTimeout(() => $('.create-form').scrollTo(350),50);
+    setTimeout(() => $('.create-form').scrollTo(300,50))
   }
 
   generateButton() {
@@ -125,33 +125,31 @@ export class Create extends Component {
       <div className="event-create">
         <Link to='/'>
           <i onClick={this.onClearValues.bind(this)} 
-             className="back-btn fa fa-arrow-left fa-3x"
+             className="fa fa-arrow-left fa-3x"
              aria-hidden="true"> 
           </i>
         </Link>
         <div className="container">
           <div className="row">
-            <div className="col-xs-12 page-header">
+            <div className='col-xs-10 col-xs-offset-1 page-header'>
               {this.props.toggleEventUpdate
-                ? <h2 className="text-center"> Update Pulse</h2>
-                  : <h2 className="text-center">New Pulse</h2>
+                ? <h1 className="row text-center"> Update Pulse</h1>
+                  : <h1 className="row text-center">New Pulse</h1>
                 }
             </div>
           </div>
-          <div className="form-wrapper">
+          <div className="scroll">
             <div className="row text-right col-xs-12">
               <button 
                 type="button" 
-                className="btn-link clear" 
+                className="clear btn-link" 
                 role="button"
                 onClick={this.onClearValues.bind(this)}> 
                 Clear Values
               </button>
             </div>
-
-            <br/>
             <form role="form" className="create-form">
-              <div className="form-group row col-xs-10 col-xs-offset-1">  
+              <div className="form-group col-xs-10 col-xs-offset-1">  
                 <label className="col-xs-12 col-sm-4">Title*</label>   
                 <input 
                   className="col-xs-12 col-sm-8 input-sm"
@@ -169,7 +167,7 @@ export class Create extends Component {
                      </div>) : null}             
               </div>
               
-              <div className="form-group row col-xs-10 col-xs-offset-1">
+              <div className="form-group col-xs-10 col-xs-offset-1">
                 <label className="col-xs-12 col-sm-4">Location*</label>
                 <input 
                   className="col-xs-12 col-sm-8 input-sm"
@@ -185,7 +183,7 @@ export class Create extends Component {
                 </div>
               </div>
 
-              <div className="form-group row col-xs-10 col-xs-offset-1">
+              <div className="form-group col-xs-10 col-xs-offset-1">
                 <label className="col-xs-12 col-sm-4">Category*</label>
                 <div className="col-xs-12 col-sm-8 no-padding-left no-padding-right">
                   <select name="category"  
@@ -202,8 +200,8 @@ export class Create extends Component {
                 </div>
               </div>
 
-              <div className="form-group row col-xs-10 col-xs-offset-1">
-                <label className="col-xs-12 col-sm-4 time-label">Time*</label>
+              <div className="form-group col-xs-10 col-xs-offset-1">
+                <label className="col-xs-12 col-sm-4">Time*</label>
                 <div className="col-xs-4 col-sm-2 no-padding-left">
                   <select name="hour"  
                     className="form-control"               
@@ -264,14 +262,14 @@ export class Create extends Component {
                   className='btn btn-link' 
                   role="button"
                   onClick={this.onMoreOptions.bind(this)}> 
-                  {this.state.folded? <span>More Options</span>: <span>Less Options</span>}
+                  {this.state.folded? <span className='more-option-btn'>More Options</span>: <span>Less Options</span>}
                    
                 </button>
               </div>           
                 {this.state.folded 
                   ? null
-                  :<div className="more-content">  
-                      <div className="form-group row col-xs-10 col-xs-offset-1">
+                  :<div>  
+                      <div className="form-group col-xs-10 col-xs-offset-1">
                          <label className="col-xs-12 col-sm-4 more-label">Duration</label>
                           <div> 
                             {(eventFormData.duration === 0) ? null : (
@@ -321,7 +319,7 @@ export class Create extends Component {
                           </div>
                         </div>
 
-                      <div className="form-group row col-xs-10 col-xs-offset-1">
+                      <div className="form-group col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4">Capacity</label>
                         {(eventFormData.max_guests === -1) ? null : (
                           <input 
@@ -333,7 +331,7 @@ export class Create extends Component {
                             onBlur={this.onFieldChangeRedux.bind(this)}
                             onChange={this.onFieldChangeRedux.bind(this)}
                             min="1"/>)}
-                        <label className="capacity-check-label">
+                        <label>
                           <input 
                             className="form-check-input"
                             name="noLimit" 
@@ -348,9 +346,9 @@ export class Create extends Component {
                           {validationErrors.max_guests ? <div className="text-danger col-sm-8 errors"> {validationErrors.max_guests} </div> : null}
                         </div>
                       </div>
-                      <div className="form-group row col-xs-10 col-xs-offset-1">
+                      <div className="form-group col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4">Privacy</label>
-                        <div className="col-xs-12 col-sm-8 no-padding-left">
+                        <div className="col-xs-12 col-sm-8">
                           <label>
                             <input 
                               className="form-check-input"
@@ -374,7 +372,7 @@ export class Create extends Component {
                         </div>
                       </div>
 
-                      <div className="form-group row col-xs-10 col-xs-offset-1">
+                      <div className="form-group col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4">Description</label>
                         <input 
                           className="col-xs-12 col-sm-8 input-sm"

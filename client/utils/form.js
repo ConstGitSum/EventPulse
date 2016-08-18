@@ -71,16 +71,16 @@ export function get24Hour(hour, ampm) {
 export function validateTitle(title) {
   if (title.length === 0) {
     return 'title cannot be empty';
-  } else if (title.length > 10) {
-    return 'title should be less than 10 characters (for now)';
+  } else if (title.length > 24) {
+    return 'title should be less than 24 characters';
   } else {
     return '';
   }
 }
 
 export function validateDescription(description) {
-  if (description.length > 24) {
-    return 'description should be less than 24 characters (for now)';
+  if (description.length > 100) {
+    return 'description should be less than 100 characters';
   } else {
     return '';
   }
