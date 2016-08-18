@@ -8,7 +8,7 @@ export function getDefaultState() {
   const today = new Date();
   const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
   let currHour = todayInTens.getHours();
-  let currMinute = todayInTens.getMinutes(); 
+  let currMinute = todayInTens.getMinutes();
   return {
     eventFormData: {
       title: '',
@@ -34,7 +34,7 @@ export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   hour = Number(hour);
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
-  return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS; 
+  return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS;
 }
 
 export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
@@ -45,7 +45,6 @@ export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
 }
 
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
-  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
@@ -65,7 +64,6 @@ export function get24Hour(hour, ampm) {
   } else {
     return hour;
   }
-  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
 }
 
 export function validateTitle(title) {
@@ -151,7 +149,7 @@ export function validateField(fieldKey, fieldValue) {
   }
 }
 
-export function validateTimeRange(validationErrors, formData) { 
+export function validateTimeRange(validationErrors, formData) {
   if (!isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
     validationErrors._time = 'The event has to be in the future'
   } else if (!isTimeWithinRange(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
@@ -186,7 +184,7 @@ export function validateForm(validationErrors, formData) {
       if (Object.keys(validationErrors).length === 1) {
         validationErrors = {};
       }
-  } 
+  }
   return validationErrors;
 }
 
@@ -216,9 +214,6 @@ export function parseTime(hour, minute, ampm, is_tomorrow) {
 }
 
 export function parseEndTime(startTime,hour,minute){
-  console.log('the startTime is :', startTime);
-  console.log('the hour is :', hour);
-  console.log('the minute is :', minute);
   if(hour === 0 && minute === 0){
 
     const start_time = moment(`${year}-${month}-${day} ${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}`, 'YYYY-MM-DD HH:mm');
@@ -227,7 +222,7 @@ export function parseEndTime(startTime,hour,minute){
     } else {
       return start_time;
     }
-    
+
   }
 }
 

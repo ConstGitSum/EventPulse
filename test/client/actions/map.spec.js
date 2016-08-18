@@ -1,5 +1,6 @@
 import configureStore from 'redux-mock-store';
 import ReduxPromise from 'redux-promise';
+import sinon from 'sinon';
 import { expect } from 'chai';
 
 import * as actions from '../../../client/actions/map';
@@ -32,6 +33,15 @@ describe('Map Actions', () => {
     expect(action.payload).to.have.property('marker');
     expect(action.payload).to.have.property('eventId');
     expect(action.payload.eventId).to.be.a('number');
+    done();
+  });
+
+  it('should dispatch SET_LOCATION action', (done) => {
+    navigator.geolocation = { getCurrentPosition: sinon.spy() };
+    store.dispatch(actions.setLocation());
+    const action = store.getActions()[0];
+    expect(action.type).to.equal('SET_LOCATION');
+    expect(navigator.geolocation.getCurrentPosition.calledOnce).to.equal(true);
     done();
   });
 
