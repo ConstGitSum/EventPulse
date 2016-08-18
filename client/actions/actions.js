@@ -24,7 +24,7 @@ export const GET_ALL_INVITATIONS = 'GET_ALL_INVITATIONS';
 export const GET_INVITES         = 'GET_INVITES';
 export const GET_INVITATIONS     = 'GET_INVITATIONS';
 export const REMOVE_INVITATION   = 'REMOVE_INVITATION';
-export const TOGGLE_CHAT_MODAL  = 'TOGGLE_CHAT_MODAL'; 
+export const TOGGLE_CHAT_MODAL  = 'TOGGLE_CHAT_MODAL';
 
 export function getCurrentUser() {
   const request = axios.get('/api/auth/loggedIn')
@@ -46,8 +46,8 @@ export function userLogOut() {
 
 export function getList() {
   const request = axios.get('/api/events')
-    .then(events => 
-      Promise.all(events.data.map(event => 
+    .then(events =>
+      Promise.all(events.data.map(event =>
         axios.get(`/api/events/${event.id}/guests`)
           .then(guests => Object.assign(event, { guests: guests.data }))
       ))
@@ -60,7 +60,7 @@ export function getList() {
 }
 
 export function filterList(eventList, filter, userId, hiddenEvents, location) {
-  const filteredList = 
+  const filteredList =
     filter === 'unhidden' ?
       eventList.filter(e => !hiddenEvents.includes(e.id)) :
     filter === 'hidden' ?
@@ -68,10 +68,10 @@ export function filterList(eventList, filter, userId, hiddenEvents, location) {
     filter === 'created' ?
       eventList.filter(e => e.created_by === userId) :
     filter === 'joined' ?
-      eventList.filter(e => e.guests.some(guest => 
+      eventList.filter(e => e.guests.some(guest =>
         guest.id === userId && guest.status === 'accepted')) :
     filter === 'pending' ?
-      eventList.filter(e => e.guests.some(guest => 
+      eventList.filter(e => e.guests.some(guest =>
         guest.id === userId && guest.status === 'pending')) :
       filter === 'invites' ?
       eventList :
@@ -199,7 +199,6 @@ export function editEvent(currentEvent) {
 }
 
 export function updateEvent(updatedEvent, currentUser, eventId) {
-  console.log('updatedEvent:' ,updatedEvent)
   var date = Date.now();
   var newDate = new Date();
   if(updatedEvent.is_tomorrow) {
@@ -256,7 +255,6 @@ export function addInvite(inviteInfo) {
 }
 
 export function getInvitations(invites) {
-
   return {
     type: GET_INVITATIONS,
     payload: invites
@@ -271,30 +269,26 @@ export function removeInvitation(invite) {
 }
 
 export function getAllInvitations(invites) {
- 
   return {
     type: GET_ALL_INVITATIONS,
     payload: invites
   }
 }
 
+// update value for a given field's key
 export function updateEventField(fieldKey, fieldValue) {
- 
   return {
     type: UPDATE_EVENT_FIELD,
     payload: { fieldKey, fieldValue }
   }
 }
 
+// clear create event form values
 export function clearFormValues() {
-  
-  return {
-    type: CLEAR_FORM_VALUES
-  }
+  return { type: CLEAR_FORM_VALUES }
 }
 
+// toggle boolean chat modal view state in modals reducer
 export function toggleChatModal() {
-  return {
-   type: TOGGLE_CHAT_MODAL
-  }
+  return { type: TOGGLE_CHAT_MODAL }
 }

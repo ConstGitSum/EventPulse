@@ -120,7 +120,6 @@ a.pure-button-primary {
 
 .background_image {
   background: url("../images/map.png") center center;
-  /*background-size: contain;*/
   display: block;
   height: 100%;
   width: 100%;
@@ -250,7 +249,7 @@ div.eventList {
 .create-form {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 56vh;
+  height: 62vh;
   width: 94vw;
 }
 
@@ -634,15 +633,28 @@ input {
 }
 
 /*
- * -- SMALL (IPHONE4) MEDIA QUERIES --
- * On iPhone 4 and other small devices, we want to customize some
+ * -- SMALL (IPHONE5) MEDIA QUERIES --
+ * On iPhone 5, we want to customize some
  * of the mobile styles.
  */
-@media (max-width:321px) {
-  
-  /* We want to decrease the height of the background image for center positioned. */
-  .background_image {
-    height: 17em;
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) {
+
+  .create-form .input-sm, 
+  .create-form select,
+  .create-form label, 
+  .create-form .text-danger,
+  input {
+    margin-bottom: 0;
+  }
+
+  .create-form {
+    height: 56vh;
+  }
+
+  .create-form .col-xs-4 {
+      margin: 0.2em 0;
   }
 
 }
@@ -719,7 +731,6 @@ input {
 @media (min-width:768px) {
 
   .create-form {
-    height: 62vh;
     overflow-y: hidden;
   }
 

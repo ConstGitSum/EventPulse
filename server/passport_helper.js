@@ -6,11 +6,11 @@ module.exports = {
 
 function passport_helper(token, profile) {
   return User.getUserByFacebookId(profile.id)
-    .then(user => 
+    .then(user =>
       user.length === 0
       ? newUser(user, profile)
       : existingUser(user, profile)
-    ); 
+    );
 }
 
 function newUser(user, profile) {
@@ -23,17 +23,16 @@ function newUser(user, profile) {
       userName = user_id[0].name;
       image = user_id[0].image
       return User.addGroup();
-    }) 
+    })
     // add the user to the new friends group as the owner
     .then((group_id) => {
-      //console.log("FRIENDS",profile._json.friends.data)
       groupId = group_id[0];
-      return User.addMemberships(buildNewMembership(userId, groupId, 'owner')); 
+      return User.addMemberships(buildNewMembership(userId, groupId, 'owner'));
     })
     .then((value) => {
       return User.getMemberList(value[0].group_id)
     })
-    .then((newValue) => 
+    .then((newValue) =>
       profile._json.friends.data.length === 0
       // return user info if no friends
       ? [{ id: userId, group_id: groupId, name: userName, image: image }].concat(newValue)
@@ -50,7 +49,7 @@ function newUser(user, profile) {
         )
         // return your info plus new members of friends
         .then(memberships => User.getMemberList(groupId))
-        .then(friends => [{ id: userId, group_id: groupId, name: userName, image: image}].concat(friends)) 
+        .then(friends => [{ id: userId, group_id: groupId, name: userName, image: image}].concat(friends))
     );
 }
 
@@ -60,7 +59,7 @@ function existingUser(user, profile) {
   let friendsListId;
 
   // if no friends in the facebook given list
-  if (friends.length === 0) { 
+  if (friends.length === 0) {
     return user;
   }
 
@@ -69,17 +68,16 @@ function existingUser(user, profile) {
   // then filter out facebook friends that are already in database
   return User.getFriendsListId(userId)
     .then((friendsList) => {
-      console.log(friendsList)
       friendsListId = friendsList[0].id;
       return User.getMemberList(friendsListId);
-    }) 
-    .then((members) => { 
-      const newFriends = friends.filter((friend) => 
+    })
+    .then((members) => {
+      const newFriends = friends.filter((friend) =>
         !members.some(e => e.facebook_id === friend.id)
       );
 
       // if you have any new friends
-      // take all the new friends and grab their user_id 
+      // take all the new friends and grab their user_id
       // by using their facebook id
       return newFriends.length === 0
       ? user.concat(members)
@@ -87,14 +85,13 @@ function existingUser(user, profile) {
         // Take all the new friends and format them for database entry
         .then(friendArray => {
           if(friendArray[0][0]){ //Just in case a user has our app but isn't in our database
-            //console.log('FA2',friendArray)
             return User.addMemberships(buildMembershipList(friendArray, friendsListId, 'member'))
           }
         }
         )
         // new friends added
         .then(memberships => User.getMemberList(friendsListId))
-        .then(memberships => user.concat(memberships)); 
+        .then(memberships => user.concat(memberships));
   });
 }
 
@@ -111,8 +108,8 @@ function buildNewUser(profile) {
 // build membership object
 function buildNewMembership(userId,groupId, rank) {
   return {
-    user_id: userId, 
-    group_id: groupId, 
+    user_id: userId,
+    group_id: groupId,
     rank: rank
   };
 }

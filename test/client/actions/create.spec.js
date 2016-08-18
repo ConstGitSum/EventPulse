@@ -24,7 +24,7 @@ describe('create Actions', () => {
   it('should dispatch CREATE_EVENT action', (done) => {
     moxios.stubRequest('/api/events', {
       status: 201,
-      responseText: { 
+      responseText: {
           title: 'title',
           description: 'description',
           created_by: 1,
@@ -36,7 +36,7 @@ describe('create Actions', () => {
           group_visibility: null}
     });
 
-    return store.dispatch(actions.createEvent({ 
+    return store.dispatch(actions.createEvent({
           title: 'title',
           description: 'description',
           created_by: 1,

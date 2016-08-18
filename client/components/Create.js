@@ -125,7 +125,7 @@ export class Create extends Component {
       <div className="event-create">
         <Link to='/'>
           <i onClick={this.onClearValues.bind(this)} 
-             className="fa fa-arrow-left fa-3x"
+             className="back-btn fa fa-arrow-left fa-3x"
              aria-hidden="true"> 
           </i>
         </Link>

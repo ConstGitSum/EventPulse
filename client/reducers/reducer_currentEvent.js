@@ -1,8 +1,8 @@
-import { 
-  CREATE_EVENT, 
-  JOIN_EVENT, 
-  HIDE_EVENT, 
-  SET_CURRENT_EVENT, 
+import {
+  CREATE_EVENT,
+  JOIN_EVENT,
+  HIDE_EVENT,
+  SET_CURRENT_EVENT,
   LEAVE_EVENT,
   EDIT_EVENT,
   UPDATE_EVENT
@@ -11,7 +11,7 @@ import {
 /**
  * Reducer to update state based on EventDetails' actions
  * @param  {Object} state  Current store's state
- * @param  {Object} action 
+ * @param  {Object} action
  * @return {Object}        New state
  */
 export default function(state = {}, action) {
