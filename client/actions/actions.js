@@ -275,6 +275,7 @@ export function getAllInvitations(invites) {
   }
 }
 
+// update value for a given field's key
 export function updateEventField(fieldKey, fieldValue) {
   return {
     type: UPDATE_EVENT_FIELD,
@@ -282,12 +283,12 @@ export function updateEventField(fieldKey, fieldValue) {
   }
 }
 
+// clear create event form values
 export function clearFormValues() {
-  return {
-    type: CLEAR_FORM_VALUES
-  }
+  return { type: CLEAR_FORM_VALUES }
 }
 
+// toggle boolean chat modal view state in modals reducer
 export function toggleChatModal() {
   return { type: TOGGLE_CHAT_MODAL }
 }
