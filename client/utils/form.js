@@ -16,7 +16,7 @@ export function getDefaultState() {
       location: '',
       hour: currHour > 12 ? currHour - 12: currHour === 0 ? 12 : currHour,
       minute: currMinute,
-      ampm: currHour > 12 ? 'pm': 'am',
+      ampm: currHour >= 12 ? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
       endTime: '',
