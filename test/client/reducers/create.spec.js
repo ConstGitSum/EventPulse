@@ -2,40 +2,59 @@ import { expect } from 'chai';
 
 import reducer from '../../../client/reducers/reducer_create';
 
-describe.only('Create Reducer', () => {
-  const initialState = {
-    eventFormData: {
-      title: 'moreThanTenWords',
-      description: 'description',
-      location: '751 street',
-      hour: 0,
-      minute: 40,
-      ampm: 'am',
-      duration_hour: 0,
-      duration_minute: 0,
-      category: 'other',
-      privacy: 'false',
-      group_visibility: 1,
-      max_guests: -1,
-      is_tomorrow: false
-    },
-    validationErrors: {}
-  };
+describe('Create Reducer', () => {
+  const TEN_MINUTE = 10 * 60 * 1000;
+  const today = new Date();
+  const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
+  let currHour = todayInTens.getHours();
+  let currMinute = todayInTens.getMinutes();
+  let initialState;
 
-  describe('should handle VALIDATE_EVENT_FORM', (done) => {
-    const action = { type: 'VALIDATE_EVENT_FORM' };
-    const nextState = reducer(initialState, action);
-    console.log(nextState)
+  beforeEach(() => {
+    // populate initial state of event form with 1 hour in the future
+    initialState = {
+      eventFormData: {
+        title: 'moreThanTenWords',
+        description: 'description',
+        location: '751 street',
+        hour: currHour > 11 ? currHour - 11: currHour + 1,
+        minute: currMinute,
+        ampm: currHour > 12 ? 'pm': 'am',
+        duration_hour: 1,
+        duration_minute: 0,
+        category: 'other',
+        privacy: 'false',
+        group_visibility: 1,
+        max_guests: -1,
+        is_tomorrow: false
+      },
+      validationErrors: {}
+    };
   })
+
+  describe('should handle VALIDATE_EVENT_FORM', () => {
+    const action = { type: 'VALIDATE_EVENT_FORM' };
+
+    it('should throw validation error for empty title', (done) => {
+      initialState.eventFormData.title = '';
+      const nextState = reducer(initialState, action);
+      expect(Object.keys(nextState.validationErrors).length).to.not.equal(0);
+      expect(nextState.validationErrors.title).to.equal('title cannot be empty');
+      done();
+    });
+
+    it('should throw validation error for empty location', (done) => {
+      initialState.eventFormData.location = '';
+      const nextState = reducer(initialState, action);
+      expect(Object.keys(nextState.validationErrors).length).to.not.equal(0);
+      expect(nextState.validationErrors.location).to.equal('location cannot be empty');
+      done();
+    });
+  });
 
   it('should handle CLEAR_FORM_VALUES', (done) => {
     const action = { type: 'CLEAR_FORM_VALUES' };
     const nextState = reducer(initialState, action);
-    const TEN_MINUTE = 10 * 60 * 1000;
-    const today = new Date();
-    const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
-    let currHour = todayInTens.getHours();
-    let currMinute = todayInTens.getMinutes();
     expect(nextState).to.deep.equal(
       {
         eventFormData: {
@@ -65,11 +84,6 @@ describe.only('Create Reducer', () => {
       type: 'TEST',
     }
     const nextState = reducer(undefined, action);
-    const TEN_MINUTE = 10 * 60 * 1000;
-    const today = new Date();
-    const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
-    let currHour = todayInTens.getHours();
-    let currMinute = todayInTens.getMinutes();
     expect(nextState).to.deep.equal(
         {
           eventFormData: {

@@ -64,29 +64,9 @@ describe('create Actions', () => {
   });
 
   it('should dispatch VALIDATE_EVENT_FORM action', (done) => {
-    store.dispatch(actions.validateEventForm({
-      title: 'title',
-      description: 'description',
-      created_by: 1,
-      location: 'location',
-      time: 5,
-      duration: 5,
-      max_guests: 9,
-      privacy: false,
-      group_visibility: null
-    }));
+    store.dispatch(actions.validateEventForm());
     const action = store.getActions()[0];
     expect(action.type).to.equal('VALIDATE_EVENT_FORM');
-    expect(action.payload).to.be.a('object');
-    expect(action.payload.formData).to.have.property('title');
-    expect(action.payload.formData).to.have.property('description');
-    expect(action.payload.formData).to.have.property('created_by');
-    expect(action.payload.formData).to.have.property('location');
-    expect(action.payload.formData).to.have.property('time');
-    expect(action.payload.formData).to.have.property('duration');
-    expect(action.payload.formData).to.have.property('max_guests');
-    expect(action.payload.formData).to.have.property('privacy');
-    expect(action.payload.formData).to.have.property('group_visibility');
     done();
   });
 

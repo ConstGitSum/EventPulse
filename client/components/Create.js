@@ -31,8 +31,8 @@ export class Create extends Component {
   onSubmitRedux(event) {
     event.preventDefault();
     this.setState({locationError: false})
-
     this.props.validateEventForm();
+    
     if (Object.keys(this.props.validationErrors).length === 0) {
       if (this.props.toggleEventUpdate) {
         this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
