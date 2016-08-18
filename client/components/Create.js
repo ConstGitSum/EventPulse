@@ -11,7 +11,6 @@ import {
   validateEventForm,
   updateEventField,
   clearFormValues,
-  updateTime,
   updateEvent,
   deleteUpdateData } from '../actions/actions';
 
@@ -32,7 +31,7 @@ export class Create extends Component {
     event.preventDefault();
     this.setState({locationError: false})
     this.props.validateEventForm();
-    
+
     if (Object.keys(this.props.validationErrors).length === 0) {
       if (this.props.toggleEventUpdate) {
         this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
@@ -423,7 +422,6 @@ function mapDispatchToProps(dispatch) {
     validateEventForm,
     updateEventField,
     clearFormValues,
-    updateTime,
     updateEvent,
     deleteUpdateData }, dispatch)
 }

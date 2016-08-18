@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-import { parseTime, parseDuration, parseEndTime } from '../utils/form';
+import axios from 'axios'; import { parseTime, parseDuration, parseEndTime } from '../utils/form';
 import { filterByDistance } from '../utils/list';
 
 export const GET_CURRENT_USER    = 'GET_CURRENT_USER';
@@ -73,8 +71,6 @@ export function filterList(eventList, filter, userId, hiddenEvents, location) {
     filter === 'pending' ?
       eventList.filter(e => e.guests.some(guest =>
         guest.id === userId && guest.status === 'pending')) :
-      filter === 'invites' ?
-      eventList :
     eventList;
 
   const payload = filterByDistance(filteredList, location);
@@ -92,6 +88,8 @@ export function setCurrentEvent(event) {
   }
 }
 
+// populate create event form data with currentEvent data
+// upon clicking edit event in event details sidebar
 export function editEvent(currentEvent) {
   return {
     type: EDIT_EVENT,
@@ -154,10 +152,54 @@ export function getHiddenEvents(user_id) {
   }
 }
 
-export function updateTime() {
-  return {
-    type: UPDATE_TIME,
+export function validateEventForm() {
+  return { type: VALIDATE_EVENT_FORM }
+}
+
+export function addInvite(inviteInfo) {
+  return{
+    type: GET_INVITES,
+    payload: inviteInfo
   }
+}
+
+export function getInvitations(invites) {
+  return {
+    type: GET_INVITATIONS,
+    payload: invites
+  }
+}
+
+export function removeInvitation(invite) {
+  return {
+    type: REMOVE_INVITATION,
+    payload: invite
+  }
+}
+
+export function getAllInvitations(invites) {
+  return {
+    type: GET_ALL_INVITATIONS,
+    payload: invites
+  }
+}
+
+// update value for a given field's key
+export function updateEventField(fieldKey, fieldValue) {
+  return {
+    type: UPDATE_EVENT_FIELD,
+    payload: { fieldKey, fieldValue }
+  }
+}
+
+// clear create event form values
+export function clearFormValues() {
+  return { type: CLEAR_FORM_VALUES }
+}
+
+// toggle boolean chat modal view state in modals reducer
+export function toggleChatModal() {
+  return { type: TOGGLE_CHAT_MODAL }
 }
 
 export function createEvent(formData, currentUser) {
@@ -239,55 +281,4 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
     type: UPDATE_EVENT,
     payload: request
   }
-}
-
-export function validateEventForm() {
-  return { type: VALIDATE_EVENT_FORM }
-}
-
-export function addInvite(inviteInfo) {
-
-  return{
-    type: GET_INVITES,
-    payload: inviteInfo
-  }
-}
-
-export function getInvitations(invites) {
-  return {
-    type: GET_INVITATIONS,
-    payload: invites
-  }
-}
-
-export function removeInvitation(invite) {
-  return {
-    type: REMOVE_INVITATION,
-    payload: invite
-  }
-}
-
-export function getAllInvitations(invites) {
-  return {
-    type: GET_ALL_INVITATIONS,
-    payload: invites
-  }
-}
-
-// update value for a given field's key
-export function updateEventField(fieldKey, fieldValue) {
-  return {
-    type: UPDATE_EVENT_FIELD,
-    payload: { fieldKey, fieldValue }
-  }
-}
-
-// clear create event form values
-export function clearFormValues() {
-  return { type: CLEAR_FORM_VALUES }
-}
-
-// toggle boolean chat modal view state in modals reducer
-export function toggleChatModal() {
-  return { type: TOGGLE_CHAT_MODAL }
 }

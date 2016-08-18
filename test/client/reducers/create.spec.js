@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-
 import reducer from '../../../client/reducers/reducer_create';
 
 describe('Create Reducer', () => {
@@ -14,7 +13,7 @@ describe('Create Reducer', () => {
     // populate initial state of event form with 1 hour in the future
     initialState = {
       eventFormData: {
-        title: 'moreThanTenWords',
+        title: 'Test Title',
         description: 'description',
         location: '751 street',
         hour: currHour > 11 ? currHour - 11: currHour + 1,
@@ -52,6 +51,37 @@ describe('Create Reducer', () => {
     });
   });
 
+  describe('should handle UPDATE_EVENT_FIELD', () => {
+    it('should update field and throw validation error for empty title', (done) => {
+      const action = {
+        type: 'UPDATE_EVENT_FIELD',
+        payload: {
+          fieldKey: 'title',
+          fieldValue: ''
+        }
+      };
+      const nextState = reducer(initialState, action);
+      expect(nextState.eventFormData.title).to.equal('');
+      expect(Object.keys(nextState.validationErrors).length).to.not.equal(0);
+      expect(nextState.validationErrors.title).to.equal('title cannot be empty');
+      done();
+    });
+
+    it('should update field and not throw validation error for valid title', (done) => {
+      const action = {
+        type: 'UPDATE_EVENT_FIELD',
+        payload: {
+          fieldKey: 'title',
+          fieldValue: 'New Title'
+        }
+      };
+      const nextState = reducer(initialState, action);
+      expect(nextState.eventFormData.title).to.equal('New Title');
+      expect(Object.keys(nextState.validationErrors).length).to.equal(0);
+      done();
+    });
+  });
+
   it('should handle CLEAR_FORM_VALUES', (done) => {
     const action = { type: 'CLEAR_FORM_VALUES' };
     const nextState = reducer(initialState, action);
@@ -76,6 +106,34 @@ describe('Create Reducer', () => {
         validationErrors: {}
       }
     );
+    done();
+  });
+
+  it('should handle EDIT_EVENT', (done) => {
+    const action = {
+      type: 'EDIT_EVENT',
+      payload: {
+        endTime: "2016-08-18T22:50:00.000Z",
+        hour: "5",
+        is_tomorrow: false,
+        minute: "50",
+        privacy: "false",
+        time: "2016-08-18T22:50:00.182Z",
+      }
+    };
+
+    const nextState = reducer(initialState, action);
+    expect(nextState.eventFormData).to.have.property('hour');
+    expect(nextState.eventFormData.hour).to.equal('5');
+    expect(nextState.eventFormData).to.have.property('minute');
+    expect(nextState.eventFormData.minute).to.equal('50');
+    expect(nextState.eventFormData).to.have.property('is_tomorrow')
+    expect(nextState.eventFormData.is_tomorrow).to.equal(false);
+    expect(nextState.eventFormData).to.have.property('privacy');
+    expect(nextState.eventFormData.privacy).to.equal('false');
+    expect(nextState.validationErrors).to.deep.equal({});
+    expect(nextState).to.have.property('toggleEventUpdate');
+    expect(nextState.toggleEventUpdate).to.equal(true);
     done();
   });
 

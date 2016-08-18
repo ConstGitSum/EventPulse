@@ -68,7 +68,6 @@ describe('currentEvent Actions', () => {
   it('should dispatch EDIT_EVENT action', (done) => {
     store.dispatch(actions.editEvent({ id: 1, guests: [] }))
     const action = store.getActions()[0];
-    console.log(action)
     expect(action.type).to.equal('EDIT_EVENT');
     expect(action.payload).to.be.a('object');
     expect(action.payload).to.have.property('id');
