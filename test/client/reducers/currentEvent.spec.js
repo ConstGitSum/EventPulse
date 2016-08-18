@@ -45,6 +45,16 @@ describe('currentEvent Reducer', () => {
     expect(nextState).to.deep.equal({ id: 1, guests: [] });
   })
 
+  it('should handle UPDATE_EVENT', () => {
+    const initialState = { id: 1, title: 'test1', guests: [] };
+    const action = {
+      type: 'UPDATE_EVENT',
+      payload: { data: { id: 1, title: 'test2', guests: [] } }
+    }
+    const nextState = reducer(initialState, action);
+    expect(nextState).to.deep.equal({ id: 1, title: 'test2', guests: [] });
+  })
+
   it('should have an initial state', () => {
     const action = {
       type: 'TEST',
