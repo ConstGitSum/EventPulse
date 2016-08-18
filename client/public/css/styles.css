@@ -250,7 +250,7 @@ div.eventList {
 .create-form {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 56vh;
+  height: 62vh;
   width: 94vw;
 }
 
@@ -648,6 +648,33 @@ input {
 }
 
 /*
+ * -- SMALL (IPHONE5) MEDIA QUERIES --
+ * On iPhone 5, we want to customize some
+ * of the mobile styles.
+ */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) {
+
+  .create-form .input-sm, 
+  .create-form select,
+  .create-form label, 
+  .create-form .text-danger,
+  input {
+    margin-bottom: 0;
+  }
+
+  .create-form {
+    height: 56vh;
+  }
+
+  .create-form .col-xs-4 {
+      margin: 0.2em 0;
+  }
+
+}
+
+/*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
  * of the mobile styles.
@@ -719,7 +746,6 @@ input {
 @media (min-width:768px) {
 
   .create-form {
-    height: 62vh;
     overflow-y: hidden;
   }
 
