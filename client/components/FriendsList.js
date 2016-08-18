@@ -26,13 +26,13 @@ export class FriendsList extends React.Component {
     return friendIDs
   }
 
-  friendClick(event) {    //toggles the friend's invite status from you.
-    if(event.target.className === 'friend'){
-      this.setState({invitedFriends:[event.target.value, ...this.state.invitedFriends]})
-    }else if(event.target.className === 'friend-accept'){
-      var indexRemove = this.state.invitedFriends.indexOf(event.target.value)
+  friendClick(event, info) {    //toggles the friend's invite status from you.
+    if(this.state.invitedFriends.includes(event)){
+      var indexRemove = this.state.invitedFriends.indexOf(event)
       var newList = this.state.invitedFriends.slice(0,indexRemove).concat(this.state.invitedFriends.slice(indexRemove+1))
       this.setState({invitedFriends: newList})
+    }else {
+      this.setState({invitedFriends:[event, ...this.state.invitedFriends]})
     }
   }
 
@@ -56,7 +56,7 @@ export class FriendsList extends React.Component {
     return(
       <div>
       <ul className = "friendsNotGoing">{this.friendsNotGoing().map((friend) => {
-        return <li className ={this.state.invitedFriends.includes(friend.id)?"friend-accept":"friend"} key = {friend.id} value = {friend.id} onClick = {this.friendClick.bind(this)}><img src = {friend.image} className = "eventListFriendImage" /> {friend.name}</li>
+        return <li className ="event-item list-group-item friend" key = {friend.id} value = {friend.id} onClick = {this.friendClick.bind(this, friend.id)}><img src = {friend.image} className = "eventListFriendImage largePicture" /> {friend.name} {this.state.invitedFriends.includes(friend.id)? <span className="glyphicon glyphicon-ok checkmark"></span> : null}</li>
       })}
       </ul>
       <div className = "inviteSpan"><button className = 'inviteButton' onClick = {this.submitInvite.bind(this)}> Invite Friends </button> </div>

@@ -780,16 +780,8 @@ input {
   border-radius: 50%;
 }
 
-.friend-accept {
-font-size: large;
-background-color: #464343;
-border-style: inset;
-}
-
 .friend {
  font-size: large;
-background-color: #aaa6a6;
-border-style: outset; 
 }
 
 .inviteButton {
@@ -799,6 +791,7 @@ border-style: outset;
 .friendHeader {
   text-align: center;
   font-size: 150%;
+  margin-top: 10px;
 }
 
 .inviteSpan {
@@ -820,22 +813,14 @@ text-align: center;
 .guestHeader {
   text-align: center;
   font-size: 150%;
-}
-
-.guests {
-background-color: white;
-border-radius: 15px;
-padding: 10px;
-margin-left: 40px;
-margin-right: 40px;
-margin-top: 10px;
-list-style-type: none;
+  margin-top: 10px;
 }
 
 .guest {
    font-size: large;
-   color: black;
-   padding-top: 5px;
+}
+.totalGuests {
+  padding-right:40px;
 }
 
 .expandGuestList {
@@ -871,6 +856,11 @@ color: black;
     border-radius: 50%;
     z-index: 9999;
 }
-.filtering {
-  
+
+.largePicture {
+  width: 20%;
+}
+
+.checkmark {
+  color: green;
 }
