@@ -199,12 +199,12 @@ export function editEvent(currentEvent) {
 }
 
 export function updateEvent(updatedEvent, currentUser, eventId) {
-  console.log('updatedEvent:' ,updatedEvent)
   var date = Date.now();
   var newDate = new Date();
-  if(updatedEvent.is_tomorrow) {
+
+  if(updatedEvent.is_tomorrow === 'true') {
     if(Number(updatedEvent.hour) === 12)
-      data = date + (Number(updatedEvent.hour)+12-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
+      date = date + (Number(updatedEvent.hour)+12-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     else
       date = date + (Number(updatedEvent.hour)+24-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
   }else{

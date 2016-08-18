@@ -16,7 +16,7 @@ export function getDefaultState() {
       location: '',
       hour: currHour > 12 ? currHour - 12: currHour === 0 ? 12 : currHour,
       minute: currMinute,
-      ampm: currHour > 12 ? 'pm': 'am',
+      ampm: currHour >= 12 ? 'pm': 'am',
       duration_hour: 0,
       duration_minute: 0,
       endTime: '',
@@ -45,7 +45,6 @@ export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
 }
 
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
-  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
   d.setMinutes(minute);
@@ -65,7 +64,6 @@ export function get24Hour(hour, ampm) {
   } else {
     return hour;
   }
-  console.log("getEventTime: Hour - ", hour , " Minute - ", minute, "ampm - ", ampm, "is_tomorrow - ", is_tomorrow)
 }
 
 export function validateTitle(title) {
@@ -216,9 +214,6 @@ export function parseTime(hour, minute, ampm, is_tomorrow) {
 }
 
 export function parseEndTime(startTime,hour,minute){
-  console.log('the startTime is :', startTime);
-  console.log('the hour is :', hour);
-  console.log('the minute is :', minute);
   if(hour === 0 && minute === 0){
 
     const start_time = moment(`${year}-${month}-${day} ${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}`, 'YYYY-MM-DD HH:mm');
