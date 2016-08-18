@@ -34,7 +34,6 @@ describe('Map Reducer', () => {
         payload: { coords: { latitude: 10, longitude: 10 } }
       }
       const nextState = reducer(initialState, action);
-      console.log(nextState)
       expect(nextState).to.have.property('currLocation');
       expect(nextState.currLocation).to.deep.equal({ lat: 10, lng: 10 });
       done();

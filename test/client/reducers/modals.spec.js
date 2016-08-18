@@ -4,7 +4,7 @@ import reducer from '../../../client/reducers/reducer_modals';
 
 describe('Modals Reducer', () => {
 
-  describe.only('should handle TOGGLE_CHAT_MODAL', () => {
+  describe('should handle TOGGLE_CHAT_MODAL', () => {
     it('should handle initial toggle to true', (done) => {
       const initialState = {}
       const action = {

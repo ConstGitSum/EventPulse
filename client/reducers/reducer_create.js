@@ -31,18 +31,18 @@ export default function(state = getDefaultState(), action) {
   switch (action.type) {
     case VALIDATE_EVENT_FORM:
       validationErrors = validateForm(Object.assign({}, state.validationErrors), state.eventFormData);
-      action.payload.callback(validationErrors);
       return Object.assign({}, state, {
-        eventFormData: Object.assign({}, state.eventFormData, action.payload.formData),
+        eventFormData: Object.assign({}, state.eventFormData),
         validationErrors: validationErrors
-      });  
+      });
+
     case UPDATE_EVENT_FIELD:
       validationErrors = Object.assign({}, state.validationErrors);
-      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue); 
+      const fieldError = validateField(action.payload.fieldKey, action.payload.fieldValue);
       if (fieldError.length !== 0) {
         validationErrors[action.payload.fieldKey] = fieldError;
       } else {
-        delete validationErrors[action.payload.fieldKey]; 
+        delete validationErrors[action.payload.fieldKey];
       }
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, { [action.payload.fieldKey]: action.payload.fieldValue }),
@@ -71,9 +71,9 @@ export default function(state = getDefaultState(), action) {
         newState.eventFormData.is_tomorrow = false;
       } else {
         newState.eventFormData.is_tomorrow = true;
-      }     
+      }
       const seconds = action.payload.duration;
-      const dhours = Math.floor(seconds/(60 * 60)); 
+      const dhours = Math.floor(seconds/(60 * 60));
       const dmins = Math.floor((seconds - dhours * 60 * 60)/ 60);
       newState.eventFormData.duration_hour = dhours;
       newState.eventFormData.duration_minute = dmins;

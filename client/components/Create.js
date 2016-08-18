@@ -6,11 +6,11 @@ import $ from 'jquery';
 import scrollTo from 'jquery.scrollto';
 
 import {
-  createEvent, 
-  setCurrentEvent, 
-  validateEventForm, 
-  updateEventField, 
-  clearFormValues, 
+  createEvent,
+  setCurrentEvent,
+  validateEventForm,
+  updateEventField,
+  clearFormValues,
   updateTime,
   updateEvent,
   deleteUpdateData } from '../actions/actions';
@@ -20,7 +20,7 @@ export class Create extends Component {
     super(props)
     this.state = {
       locationError: false,
-      folded: true 
+      folded: true
     }
   }
   componentWillMount() {
@@ -32,31 +32,30 @@ export class Create extends Component {
     event.preventDefault();
     this.setState({locationError: false})
 
-    this.props.validateEventForm(this.props.eventFormData, (validationErrors) => {
-      if (Object.keys(validationErrors).length === 0) {
-        if (this.props.toggleEventUpdate) {
-          this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
-            .then(res => {
-              if (res.error) throw new Error('Unable to update event');
-              this.props.clearFormValues();
+    this.props.validateEventForm();
+    if (Object.keys(this.props.validationErrors).length === 0) {
+      if (this.props.toggleEventUpdate) {
+        this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
+          .then(res => {
+            if (res.error) throw new Error('Unable to update event');
+            this.props.clearFormValues();
 
-              browserHistory.push(`/${this.props.currentEvent.id}`)
-            })
-            .catch(err => {
-            })
-        } else {
-          this.props.createEvent(this.props.eventFormData, this.props.currentUser)
-            .then(res => {
-              if (res.error) {throw new Error('Unable to create event');}
-              this.props.clearFormValues();
-              browserHistory.push(`/${this.props.currentEvent.id}`);
-            })
-            .catch(err => {
-              this.setState({locationError: true})
-            });
-        }          
+            browserHistory.push(`/${this.props.currentEvent.id}`)
+          })
+          .catch(err => {
+          })
+      } else {
+        this.props.createEvent(this.props.eventFormData, this.props.currentUser)
+          .then(res => {
+            if (res.error) {throw new Error('Unable to create event');}
+            this.props.clearFormValues();
+            browserHistory.push(`/${this.props.currentEvent.id}`);
+          })
+          .catch(err => {
+            this.setState({locationError: true})
+          });
       }
-    });
+    }
   }
 
   onFieldChangeRedux(event) {
@@ -114,9 +113,9 @@ export class Create extends Component {
     return(
       <div className="event-create">
         <Link to='/'>
-          <i onClick={this.onClearValues.bind(this)} 
+          <i onClick={this.onClearValues.bind(this)}
              className="back-btn fa fa-arrow-left fa-3x"
-             aria-hidden="true"> 
+             aria-hidden="true">
           </i>
         </Link>
         <div className="container">
@@ -130,85 +129,86 @@ export class Create extends Component {
           </div>
           <div className="scroll">
             <div className="row text-right col-xs-12">
-              <button 
-                type="button" 
-                className="clear btn-link" 
+              <button
+                type="button"
+                className="clear btn-link"
                 role="button"
-                onClick={this.onClearValues.bind(this)}> 
+                onClick={this.onClearValues.bind(this)}>
                 Clear Values
               </button>
             </div>
             <form role="form" className="create-form">
               <div className="required">
-                <div className="form-group col-xs-10 col-xs-offset-1">  
-                  <label className="col-xs-12 col-sm-4">Title*</label>   
-                  <input 
-                    className="col-xs-12 col-sm-8 input-sm"
-                    type="text" 
-                    name="title" 
-                    placeholder="Event title" 
-                    value={eventFormData.title}
-                    onBlur={this.onFieldChangeRedux.bind(this)}
-                    onChange={this.onFieldChangeRedux.bind(this)}/>
-                  
-                    {validationErrors.title ? 
-                      (<div className="col-xs-12 errors">
-                          <div className="col-sm-4"></div>
-                          <div className="text-danger col-sm-8 errors"> {validationErrors.title} </div>
-                       </div>) : null}             
+              <div className="form-group col-xs-10 col-xs-offset-1">
+                <label className="col-xs-12 col-sm-4">Title*</label>
+                <input
+                  className="col-xs-12 col-sm-8 input-sm"
+                  type="text"
+                  name="title"
+                  placeholder="Event title"
+                  value={eventFormData.title}
+                  onBlur={this.onFieldChangeRedux.bind(this)}
+                  onChange={this.onFieldChangeRedux.bind(this)}/>
+
+                  {validationErrors.title ?
+                    (<div className="col-xs-12 errors">
+                        <div className="col-sm-4"></div>
+                        <div className="text-danger col-sm-8 errors"> {validationErrors.title} </div>
+                     </div>) : null}
+              </div>
+
+              <div className="form-group col-xs-10 col-xs-offset-1">
+                <label className="col-xs-12 col-sm-4">Location*</label>
+                <input
+                  className="col-xs-12 col-sm-8 input-sm"
+                  type="text"
+                  name="location"
+                  placeholder="Location"
+                  value={eventFormData.location}
+                  onBlur={this.onFieldChangeRedux.bind(this)}
+                  onChange={this.onFieldChangeRedux.bind(this)}/>
+                <div className="col-xs-12 errors">
+                  <div className="col-sm-4"></div>
+                  {validationErrors.location ? <div className="text-danger col-sm-8 errors"> {validationErrors.location} </div> : null}
                 </div>
-                
-                <div className="form-group col-xs-10 col-xs-offset-1">
-                  <label className="col-xs-12 col-sm-4">Location*</label>
-                  <input 
-                    className="col-xs-12 col-sm-8 input-sm"
-                    type="text" 
-                    name="location" 
-                    placeholder="Location" 
-                    value={eventFormData.location}
+              </div>
+
+              <div className="form-group col-xs-10 col-xs-offset-1">
+                <label className="col-xs-12 col-sm-4">Category*</label>
+                <div className="col-xs-12 col-sm-8 no-padding-left no-padding-right">
+                  <select name="category"
+                    className="form-control"
+                    value={eventFormData.category}
                     onBlur={this.onFieldChangeRedux.bind(this)}
-                    onChange={this.onFieldChangeRedux.bind(this)}/>
-                  <div className="col-xs-12 errors">
-                    <div className="col-sm-4"></div>
-                    {validationErrors.location ? <div className="text-danger col-sm-8 errors"> {validationErrors.location} </div> : null}
-                  </div>
+                    onChange={this.onFieldChangeRedux.bind(this)}>
+                    {['athletics', 'entertainment', 'nightlife', 'music','dining', 'coffee', 'olympics-special', 'other'].map((h) => {
+                      return (
+                        <option key={h} value={h}>{h}</option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-group col-xs-10 col-xs-offset-1">
+                <label className="col-xs-12 col-sm-4">Time*</label>
+                <div className="col-xs-4 col-sm-2 no-padding-left">
+                  <select name="hour"
+                    className="form-control"
+                    value={eventFormData.hour}
+                    onBlur={this.onFieldChangeRedux.bind(this)}
+                    onChange={this.onFieldChangeRedux.bind(this)}>
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                      return (
+                        <option key={h} value={h}>{h}</option>
+                      );
+                    })}
+                  </select>
                 </div>
 
-                <div className="form-group col-xs-10 col-xs-offset-1">
-                  <label className="col-xs-12 col-sm-4">Category*</label>
-                  <div className="col-xs-12 col-sm-8 no-padding-left no-padding-right">
-                    <select name="category"  
-                      className="form-control"               
-                      value={eventFormData.category}
-                      onBlur={this.onFieldChangeRedux.bind(this)}
-                      onChange={this.onFieldChangeRedux.bind(this)}>
-                      {['athletics', 'entertainment', 'nightlife', 'music','dining', 'coffee', 'olympics-special', 'other'].map((h) => {
-                        return (
-                          <option key={h} value={h}>{h}</option>
-                        );
-                      })}
-                    </select>                
-                  </div>
-                </div>
-
-                <div className="form-group col-xs-10 col-xs-offset-1">
-                  <label className="col-xs-12 col-sm-4">Time*</label>
                   <div className="col-xs-4 col-sm-2 no-padding-left">
-                    <select name="hour"  
-                      className="form-control"               
-                      value={eventFormData.hour}
-                      onBlur={this.onFieldChangeRedux.bind(this)}
-                      onChange={this.onFieldChangeRedux.bind(this)}>
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
-                        return (
-                          <option key={h} value={h}>{h}</option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                  <div className="col-xs-4 col-sm-2 no-padding-left">
-                    <select name="minute" 
-                      className="form-control"   
+                    <select name="minute"
+                      className="form-control"
                       value={eventFormData.minute}
                       onBlur={this.onFieldChangeRedux.bind(this)}
                       onChange={this.onFieldChangeRedux.bind(this)}>
@@ -219,6 +219,7 @@ export class Create extends Component {
                       })}
                     </select>
                   </div>
+
                   <div className="col-xs-4 col-sm-2 no-padding-left">
                     <select name="ampm"
                       className="form-control"
@@ -229,6 +230,7 @@ export class Create extends Component {
                       <option value="pm">pm</option>
                     </select>
                   </div>
+
                   <div className="col-xs-12 col-sm-2 no-padding-left is-tomorrow">
                     <select name="is_tomorrow"
                       className="form-control"
@@ -237,38 +239,40 @@ export class Create extends Component {
                       onChange={this.onFieldChangeRedux.bind(this)}>
                       <option value="false">today</option>
                       <option value="true">tomorrow</option>
-                    </select>                
+                    </select>
                   </div>
+
                   <div className="col-xs-12 no-padding-left">
                     <div className="col-sm-4"></div>
-                    <div className="col-xs-12 col-sm-8"> 
+                    <div className="col-xs-12 col-sm-8">
                       {validationErrors._time ? <div className="text-danger errors"> {validationErrors._time} </div> : null}
                     </div>
                   </div>
+
                 </div>
               </div>
 
               <div className="form-group text-center more-option">
-                <button 
-                  type="button" 
-                  className='btn btn-link' 
+                <button
+                  type="button"
+                  className='btn btn-link'
                   role="button"
-                  onClick={this.onMoreOptions.bind(this)}> 
-                  {this.state.folded? <span className='more-option-btn'>More Options</span>: <span>Less Options</span>}                 
+                  onClick={this.onMoreOptions.bind(this)}>
+                  {this.state.folded? <span className='more-option-btn'>More Options</span>: <span>Less Options</span>}
                 </button>
-              </div>       
+              </div>
 
-                {this.state.folded 
+                {this.state.folded
                   ? null
-                  :<div>  
+                  :<div>
                       <div className="form-group col-xs-10 col-xs-offset-1">
                        <label className="col-xs-12 col-sm-4 more-label">Duration</label>
-                        <div> 
+                        <div>
 
                           <div className="row duration">
                             <div className="col-xs-4 col-sm-2 no-padding-left">
                               <select name="duration_hour"
-                                className="form-control"             
+                                className="form-control"
                                 value={eventFormData.duration_hour}
                                 onBlur={this.onFieldChangeRedux.bind(this)}
                                 onChange={this.onFieldChangeRedux.bind(this)}>
@@ -277,11 +281,11 @@ export class Create extends Component {
                                     <option key={h} value={h}>{h}</option>
                                   );
                                 })}
-                              </select>                
+                              </select>
                             </div>
                             <div className="col-xs-4 col-sm-2 no-padding-left">
-                              <select name="duration_minute" 
-                                className="form-control"   
+                              <select name="duration_minute"
+                                className="form-control"
                                 value={10 * Math.ceil(eventFormData.duration_minute/10)}
                                 onBlur={this.onFieldChangeRedux.bind(this)}
                                 onChange={this.onFieldChangeRedux.bind(this)}>
@@ -291,36 +295,47 @@ export class Create extends Component {
                                   );
                                 })}
                               </select>
+                                </div>
+                              </div>
+                            )}
+                            <label className="checkbox-text">
+                              <input
+                                className="form-check-input"
+                                name="noLimit"
+                                type="checkbox"
+                                value={0}
+                                checked={eventFormData.duration === 0}
+                                onChange={this.onNoDurationLimit.bind(this)}/>
+                              <span className="form-check-label"> No duration limit</span>
+                            </label>
+                            <div className="col-xs-12 errors">
+                              <div className="col-sm-4"></div>
+                              {validationErrors._duration ? <div className="text-danger col-sm-8 errors"> {validationErrors._duration}</div> : null}
                             </div>
                           </div>
-                     
-                          <div className="col-xs-12 errors">
-                            <div className="col-sm-4"></div>
-                            {validationErrors._duration ? <div className="text-danger col-sm-8 errors"> {validationErrors._duration}</div> : null}
-                          </div>
-                        </div>
+
                       </div>
 
                       <div className="form-group col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4">Capacity</label>
                         {(eventFormData.max_guests === -1) ? null : (
-                          <input 
+                          <input
                             className="col-xs-8 col-sm-2 input-sm capacity"
-                            name="max_guests" 
-                            type="number" 
-                            placeholder="capacity" 
-                            value={Number(eventFormData.max_guests)} 
+                            name="max_guests"
+                            type="number"
+                            placeholder="capacity"
+                            value={Number(eventFormData.max_guests)}
                             onBlur={this.onFieldChangeRedux.bind(this)}
                             onChange={this.onFieldChangeRedux.bind(this)}
                             min="1"/>)}
                         <label>
-                          <input 
+                          <input
                             className="form-check-input"
-                            name="noLimit" 
+                            name="noLimit"
                             type="checkbox"
                             value={-1}
                             checked={eventFormData.max_guests === -1}
-                            onChange={this.onNoGuestLimit.bind(this)}/> 
+                            onChange={this.onNoGuestLimit.bind(this)}/>
                           <span className="form-check-label"> No capacity limit</span>
                         </label>
                         <div className="col-xs-12 errors">
@@ -332,23 +347,23 @@ export class Create extends Component {
                         <label className="col-xs-12 col-sm-4">Privacy</label>
                         <div className="col-xs-12 col-sm-8 privacy-radio">
                           <label>
-                            <input 
+                            <input
                               className="form-check-input"
-                              name="privacy" 
-                              type="radio" 
+                              name="privacy"
+                              type="radio"
                               value="false"
-                              checked={eventFormData.privacy === 'false'} 
-                              onChange={this.onFieldChangeRedux.bind(this)}/> 
+                              checked={eventFormData.privacy === 'false'}
+                              onChange={this.onFieldChangeRedux.bind(this)}/>
                             <span className="form-check-label"> Public</span>
                           </label>
                           <label>
-                            <input 
+                            <input
                               className="form-check-input"
-                              name="privacy" 
-                              type="radio" 
+                              name="privacy"
+                              type="radio"
                               value="true"
-                              checked={eventFormData.privacy === 'true'} 
-                              onChange={this.onFieldChangeRedux.bind(this)}/> 
+                              checked={eventFormData.privacy === 'true'}
+                              onChange={this.onFieldChangeRedux.bind(this)}/>
                               <span className="form-check-label"> Friends only</span>
                           </label>
                         </div>
@@ -356,11 +371,11 @@ export class Create extends Component {
 
                       <div className="form-group col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4 desc-label">Description</label>
-                        <input 
+                        <input
                           className="col-xs-12 col-sm-8 input-sm"
-                          type="text" 
-                          name="description" 
-                          placeholder="Description" 
+                          type="text"
+                          name="description"
+                          placeholder="Description"
                           value={eventFormData.description}
                           onBlur={this.onFieldChangeRedux.bind(this)}
                           onChange={this.onFieldChangeRedux.bind(this)}/>
@@ -371,15 +386,15 @@ export class Create extends Component {
                       </div>
                 </div>
                 }
-            
-            </form>  
-          </div> 
+
+            </form>
+          </div>
           <div className="footer">
             <div className="row">
               <div className="col-xs-12 submit">
                 {this.generateButton()}
               </div>
-            </div>      
+            </div>
             <div className="col-xs-10 col-xs-offset-1 text-center">
               {validationErrors._form ? <div className="text-danger summary"> {validationErrors._form} </div> : null}
               {this.state.locationError ? <div className="text-danger summary"> Form submission failed: invalid location </div> : null }
@@ -388,7 +403,7 @@ export class Create extends Component {
         </div>
       </div>
     )
-  }  
+  }
 }
 
 function mapStateToProps(state) {

@@ -92,6 +92,13 @@ export function setCurrentEvent(event) {
   }
 }
 
+export function editEvent(currentEvent) {
+  return {
+    type: EDIT_EVENT,
+    payload: currentEvent
+  }
+}
+
 export function joinEvent(eventId, userId) {
   const url = `/api/events/${eventId}/guests`;
   const body = {
@@ -191,13 +198,6 @@ export function createEvent(formData, currentUser) {
   }
 }
 
-export function editEvent(currentEvent) {
-  return {
-    type: EDIT_EVENT,
-    payload: currentEvent
-  }
-}
-
 export function updateEvent(updatedEvent, currentUser, eventId) {
   var date = Date.now();
   var newDate = new Date();
@@ -241,12 +241,8 @@ export function updateEvent(updatedEvent, currentUser, eventId) {
   }
 }
 
-export function validateEventForm(formData, callback) {
-
-  return {
-    type: VALIDATE_EVENT_FORM,
-    payload: { formData, callback }
-  }
+export function validateEventForm() {
+  return { type: VALIDATE_EVENT_FORM }
 }
 
 export function addInvite(inviteInfo) {
