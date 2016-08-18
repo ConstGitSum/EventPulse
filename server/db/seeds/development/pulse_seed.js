@@ -59,7 +59,7 @@ exports.seed = function(knex, Promise) {
         time: '2016-08-30T08:00:00.000',
         duration: 10800,
         endTime: '2016-08-30T08:03:00.000',
-        privacy: true
+        privacy: false
       }, {
         title: 'Pick-up Basketball Game',
         description: 'A friendly game of basketball',
