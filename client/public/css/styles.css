@@ -373,7 +373,7 @@ div.eventList {
    margin-right: 0;
    margin-left: 0;
  }
-
+ 
 /*
  * -- EVENTDETAILS STYLES --
  */
@@ -756,7 +756,16 @@ and (max-device-width : 568px) {
 ||||||| merged common ancestors
 =======
 
+<<<<<<< 347f298defae268d4e7f78ef0be7be61cd52b64e
 >>>>>>> (feat) Style for mobile view
+||||||| merged common ancestors
+=======
+  .create-form {
+    height: 62vh;
+    overflow-y: hidden;
+  }
+
+>>>>>>> (bug) Fix shift to the left issue
   .create-form .col-sm-2 {
     width: 16.66666667%;;
   }
@@ -770,6 +779,7 @@ and (max-device-width : 568px) {
   }
 <<<<<<< 51ea7b8501d099ecc6fda646e66c506f40f66887
 
+<<<<<<< 347f298defae268d4e7f78ef0be7be61cd52b64e
   .create-form .more-option, .create-form .errors {
 ||||||| merged common ancestors
   .create-form .more-option {
@@ -777,6 +787,11 @@ and (max-device-width : 568px) {
 
   .create-form .more-option {
 >>>>>>> (feat) Style for mobile view
+||||||| merged common ancestors
+  .create-form .more-option {
+=======
+  .create-form .more-option, .create-form .errors {
+>>>>>>> (bug) Fix shift to the left issue
     margin-bottom: 1.2em;
   }
 
@@ -801,9 +816,14 @@ and (max-device-width : 568px) {
 =======
     margin-bottom: 5px;
   }
+
   .create-form .footer {
     position: static;
 >>>>>>> (feat) Style for mobile view
+  }
+
+  .clear {
+    margin-right: 3em;
   }
 }
 
