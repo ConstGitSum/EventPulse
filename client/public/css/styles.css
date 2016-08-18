@@ -313,11 +313,6 @@ div.eventList {
    margin: 5px 0;
  }
 
- .create-form .duration {
- /*  margin-right: 0;
-   margin-left: 0;*/
- }
-
  .create-form .checkbox {
    margin-right :10px;
  }
@@ -372,7 +367,7 @@ div.eventList {
    margin-right: 0;
    margin-left: 0;
  }
- 
+
 /*
  * -- EVENTDETAILS STYLES --
  */
@@ -771,24 +766,7 @@ and (max-device-width : 568px) {
 }
 
 @media (min-width:768px) {
-<<<<<<< 51ea7b8501d099ecc6fda646e66c506f40f66887
 
-  .create-form {
-    overflow-y: hidden;
-  }
-
-||||||| merged common ancestors
-=======
-
-<<<<<<< 347f298defae268d4e7f78ef0be7be61cd52b64e
->>>>>>> (feat) Style for mobile view
-||||||| merged common ancestors
-=======
-  .create-form {
-    overflow-y: hidden;
-  }
-
->>>>>>> (bug) Fix shift to the left issue
   .create-form .col-sm-2 {
     width: 16.66666667%;;
   }
@@ -800,21 +778,8 @@ and (max-device-width : 568px) {
   .create-form .checkbox-text {
     margin: 1.2em 0;
   }
-<<<<<<< 51ea7b8501d099ecc6fda646e66c506f40f66887
 
-<<<<<<< 347f298defae268d4e7f78ef0be7be61cd52b64e
-  .create-form .more-option, .create-form .errors {
-||||||| merged common ancestors
-  .create-form .more-option {
-=======
-
-  .create-form .more-option {
->>>>>>> (feat) Style for mobile view
-||||||| merged common ancestors
-  .create-form .more-option {
-=======
-  .create-form .more-option, .create-form .errors {
->>>>>>> (bug) Fix shift to the left issue
+  .create-form .more-option{
     margin-bottom: 1.2em;
   }
 
@@ -825,7 +790,6 @@ and (max-device-width : 568px) {
   .create-form .capacity {
     margin-top: -5px;
     margin-right: 1em;
-<<<<<<< 51ea7b8501d099ecc6fda646e66c506f40f66887
     margin-bottom: 5px;
   }
 
@@ -835,18 +799,11 @@ and (max-device-width : 568px) {
 
   .clear {
     margin-right: 3em;
-||||||| merged common ancestors
-=======
     margin-bottom: 5px;
   }
 
   .create-form .footer {
     position: static;
->>>>>>> (feat) Style for mobile view
-  }
-
-  .clear {
-    margin-right: 3em;
   }
 }
 
@@ -863,6 +820,18 @@ and (max-device-width : 568px) {
   /* Increase the button font size. */
   a.pure-button-primary {
     font-size: 1.8em;
+  }
+  .create-form .input-sm, 
+  .create-form select {
+    font-size: 1em;
+  }
+
+  .create-form .required {
+    height: 240px;
+  }
+
+  .create-form .col-xs-4, .create-form .is-tomorrow {
+      margin: 0.3em 0;
   }
 }
 
@@ -962,9 +931,4 @@ color: black;
     height: 25px;
     border-radius: 50%;
     z-index: 9999;
-}
-
-.create-form .input-sm, 
-.create-form select {
-  font-size: 1em;
 }
