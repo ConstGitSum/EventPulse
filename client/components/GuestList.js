@@ -13,8 +13,8 @@ export class GuestList extends React.Component {
   render() {
     return(
       <div>
-      <ul className = "guests">{this.props.currentEvent.guests.map((guest) => {
-       return <li key = {guest.id} className = "guest"><img src  = {guest.image} className = "eventListFriendImage"/> {guest.name} </li>
+      <ul className = "totalGuests">{this.props.currentEvent.guests.map((guest) => {
+       return <li key = {guest.id} className = "event-item list-group-item guest"><img src  = {guest.image} className = " largePicture eventListFriendImage"/> {guest.name} </li>
       })} </ul>
       </div>
       )

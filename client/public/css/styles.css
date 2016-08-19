@@ -835,22 +835,18 @@ and (max-device-width : 568px) {
   }
 }
 
+
+
+/* friend invites */
+
 .eventListFriendImage {
   width: 7%;  
   overflow: hidden;
   border-radius: 50%;
 }
 
-.friend-accept {
-font-size: large;
-background-color: #464343;
-border-style: inset;
-}
-
 .friend {
  font-size: large;
-background-color: #aaa6a6;
-border-style: outset; 
 }
 
 .inviteButton {
@@ -860,6 +856,7 @@ border-style: outset;
 .friendHeader {
   text-align: center;
   font-size: 150%;
+  margin-top: 10px;
 }
 
 .inviteSpan {
@@ -878,27 +875,26 @@ text-align: center;
   color: black
 }
 
+.checkmark {
+  color: green;
+}
+
+/* Guest List*/
+
 .guestHeader {
   text-align: center;
   font-size: 150%;
-}
-
-.guests {
-background-color: white;
-border-radius: 15px;
-padding: 10px;
-margin-left: 40px;
-margin-right: 40px;
-margin-top: 10px;
-list-style-type: none;
+  margin-top: 10px;
 }
 
 .guest {
    font-size: large;
-   color: black;
-   padding-top: 5px;
+}
+.totalGuests {
+  padding-right:40px;
 }
 
+/* guest and friends list page */
 .expandGuestList {
 text-align: center;
 color: black;
@@ -913,7 +909,7 @@ color: black;
   text-align: center;
   font-size: 150%;
 }
-
+/* the invite notice on the filter button on the list page */
 .filterAndInvites {
     position:relative;
     display:inline-block;
@@ -931,4 +927,13 @@ color: black;
     height: 25px;
     border-radius: 50%;
     z-index: 9999;
+}
+.largePicture {
+  width: 20%;
+}
+
+@media (min-width:768px) {
+  .largePicture {
+    width: 75px;
+  }
 }
