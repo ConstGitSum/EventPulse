@@ -66,8 +66,8 @@ export class EventDetails extends React.Component {
    */
   onClickLeave() {
     this.props.leaveEvent(this.props.currentEvent.id, this.props.currentUser.id)
-      // .then()
-      // .catch(err => console.log('ERROR - onClickLeave:', err))
+      .then()
+      .catch(err => console.log('ERROR - onClickLeave:', err))
   }
 
   /**
