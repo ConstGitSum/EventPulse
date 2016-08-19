@@ -15,7 +15,6 @@ export class ListFilter extends React.Component {
       joined   : 'check-circle',
     }
 
-
     return (
       <DropdownButton title={'Filter Events'} id={'event-filter-dropdown'} className = "filtering">
         {Object.keys(filters).map((filter, index) =>
@@ -39,6 +38,7 @@ export class ListFilter extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
@@ -48,10 +48,12 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ 
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
     filterList
   }, dispatch);
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(ListFilter);
