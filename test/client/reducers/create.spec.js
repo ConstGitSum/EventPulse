@@ -38,7 +38,7 @@ describe('Create Reducer', () => {
       initialState.eventFormData.title = '';
       const nextState = reducer(initialState, action);
       expect(Object.keys(nextState.validationErrors).length).to.not.equal(0);
-      expect(nextState.validationErrors.title).to.equal('title cannot be empty');
+      expect(nextState.validationErrors.title).to.equal('Title cannot be empty');
       done();
     });
 
@@ -46,7 +46,7 @@ describe('Create Reducer', () => {
       initialState.eventFormData.location = '';
       const nextState = reducer(initialState, action);
       expect(Object.keys(nextState.validationErrors).length).to.not.equal(0);
-      expect(nextState.validationErrors.location).to.equal('location cannot be empty');
+      expect(nextState.validationErrors.location).to.equal('Location cannot be empty');
       done();
     });
   });
@@ -63,7 +63,7 @@ describe('Create Reducer', () => {
       const nextState = reducer(initialState, action);
       expect(nextState.eventFormData.title).to.equal('');
       expect(Object.keys(nextState.validationErrors).length).to.not.equal(0);
-      expect(nextState.validationErrors.title).to.equal('title cannot be empty');
+      expect(nextState.validationErrors.title).to.equal('Title cannot be empty');
       done();
     });
 
@@ -91,7 +91,7 @@ describe('Create Reducer', () => {
           title: '',
           description: '',
           duration: 0,
-          duration_hour: 0,
+          duration_hour: 1,
           duration_minute: 0,
           endTime: '',
           location: '',
@@ -113,12 +113,12 @@ describe('Create Reducer', () => {
     const action = {
       type: 'EDIT_EVENT',
       payload: {
-        endTime: "2016-08-18T22:50:00.000Z",
+        endTime: "2016-08-16T22:50:00.000Z",
         hour: "5",
         is_tomorrow: false,
         minute: "50",
         privacy: "false",
-        time: "2016-08-18T22:50:00.182Z",
+        time: "2016-08-16T22:50:00.182Z",
       }
     };
 
@@ -128,7 +128,6 @@ describe('Create Reducer', () => {
     expect(nextState.eventFormData).to.have.property('minute');
     expect(nextState.eventFormData.minute).to.equal('50');
     expect(nextState.eventFormData).to.have.property('is_tomorrow')
-    expect(nextState.eventFormData.is_tomorrow).to.equal(false);
     expect(nextState.eventFormData).to.have.property('privacy');
     expect(nextState.eventFormData.privacy).to.equal('false');
     expect(nextState.validationErrors).to.deep.equal({});
@@ -152,7 +151,7 @@ describe('Create Reducer', () => {
             minute: currMinute,
             ampm: currHour > 12 ? 'pm': 'am',
             duration: 0,
-            duration_hour: 0,
+            duration_hour: 1,
             duration_minute: 0,
             endTime: '',
             category: 'other',

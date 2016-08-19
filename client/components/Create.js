@@ -73,7 +73,7 @@ export class Create extends Component {
     this.props.clearFormValues();
   }
 
-  onMoreOptions(event) {
+  onMoreOptions() {
     if(this.state.folded) {
       this.setState({folded: false})
     } else {
@@ -138,73 +138,72 @@ export class Create extends Component {
             </div>
             <form role="form" className="create-form">
               <div className="required">
-              <div className="form-group col-xs-10 col-xs-offset-1">
-                <label className="col-xs-12 col-sm-4">Title*</label>
-                <input
-                  className="col-xs-12 col-sm-8 input-sm"
-                  type="text"
-                  name="title"
-                  placeholder="Event title"
-                  value={eventFormData.title}
-                  onBlur={this.onFieldChangeRedux.bind(this)}
-                  onChange={this.onFieldChangeRedux.bind(this)}/>
-
-                  {validationErrors.title ?
-                    (<div className="col-xs-12 errors">
-                        <div className="col-sm-4"></div>
-                        <div className="text-danger col-sm-8 errors"> {validationErrors.title} </div>
-                     </div>) : null}
-              </div>
-
-              <div className="form-group col-xs-10 col-xs-offset-1">
-                <label className="col-xs-12 col-sm-4">Location*</label>
-                <input
-                  className="col-xs-12 col-sm-8 input-sm"
-                  type="text"
-                  name="location"
-                  placeholder="Location"
-                  value={eventFormData.location}
-                  onBlur={this.onFieldChangeRedux.bind(this)}
-                  onChange={this.onFieldChangeRedux.bind(this)}/>
-                <div className="col-xs-12 errors">
-                  <div className="col-sm-4"></div>
-                  {validationErrors.location ? <div className="text-danger col-sm-8 errors"> {validationErrors.location} </div> : null}
-                </div>
-              </div>
-
-              <div className="form-group col-xs-10 col-xs-offset-1">
-                <label className="col-xs-12 col-sm-4">Category*</label>
-                <div className="col-xs-12 col-sm-8 no-padding-left no-padding-right">
-                  <select name="category"
-                    className="form-control"
-                    value={eventFormData.category}
+                <div className="form-group col-xs-10 col-xs-offset-1">
+                  <label className="col-xs-12 col-sm-4">Title*</label>
+                  <input
+                    className="col-xs-12 col-sm-8 input-sm"
+                    type="text"
+                    name="title"
+                    placeholder="Event title"
+                    value={eventFormData.title}
                     onBlur={this.onFieldChangeRedux.bind(this)}
-                    onChange={this.onFieldChangeRedux.bind(this)}>
-                    {['athletics', 'entertainment', 'nightlife', 'music','dining', 'coffee', 'olympics-special', 'other'].map((h) => {
-                      return (
-                        <option key={h} value={h}>{h}</option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
+                    onChange={this.onFieldChangeRedux.bind(this)}/>
 
-              <div className="form-group col-xs-10 col-xs-offset-1">
-                <label className="col-xs-12 col-sm-4">Time*</label>
-                <div className="col-xs-4 col-sm-2 no-padding-left">
-                  <select name="hour"
-                    className="form-control"
-                    value={eventFormData.hour}
+                    {validationErrors.title ?
+                      (<div className="col-xs-12 errors">
+                          <div className="col-sm-4"></div>
+                          <div className="text-danger col-sm-8 errors"> {validationErrors.title} </div>
+                       </div>) : null}
+                </div>
+
+                <div className="form-group col-xs-10 col-xs-offset-1">
+                  <label className="col-xs-12 col-sm-4">Location*</label>
+                  <input
+                    className="col-xs-12 col-sm-8 input-sm"
+                    type="text"
+                    name="location"
+                    placeholder="Location"
+                    value={eventFormData.location}
                     onBlur={this.onFieldChangeRedux.bind(this)}
-                    onChange={this.onFieldChangeRedux.bind(this)}>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
-                      return (
-                        <option key={h} value={h}>{h}</option>
-                      );
-                    })}
-                  </select>
+                    onChange={this.onFieldChangeRedux.bind(this)}/>
+                  <div className="col-xs-12 errors">
+                    <div className="col-sm-4"></div>
+                    {validationErrors.location ? <div className="text-danger col-sm-8 errors"> {validationErrors.location} </div> : null}
+                  </div>
                 </div>
 
+                <div className="form-group col-xs-10 col-xs-offset-1">
+                  <label className="col-xs-12 col-sm-4">Category*</label>
+                  <div className="col-xs-12 col-sm-8 no-padding-left no-padding-right">
+                    <select name="category"
+                      className="form-control"
+                      value={eventFormData.category}
+                      onBlur={this.onFieldChangeRedux.bind(this)}
+                      onChange={this.onFieldChangeRedux.bind(this)}>
+                      {['athletics', 'entertainment', 'nightlife', 'music','dining', 'coffee', 'olympics-special', 'other'].map((h) => {
+                        return (
+                          <option key={h} value={h}>{h}</option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group col-xs-10 col-xs-offset-1">
+                  <label className="col-xs-12 col-sm-4">Time*</label>
+                  <div className="col-xs-4 col-sm-2 no-padding-left">
+                    <select name="hour"
+                      className="form-control"
+                      value={eventFormData.hour}
+                      onBlur={this.onFieldChangeRedux.bind(this)}
+                      onChange={this.onFieldChangeRedux.bind(this)}>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                        return (
+                          <option key={h} value={h}>{h}</option>
+                        );
+                      })}
+                    </select>
+                  </div>
                   <div className="col-xs-4 col-sm-2 no-padding-left">
                     <select name="minute"
                       className="form-control"
@@ -218,7 +217,6 @@ export class Create extends Component {
                       })}
                     </select>
                   </div>
-
                   <div className="col-xs-4 col-sm-2 no-padding-left">
                     <select name="ampm"
                       className="form-control"
@@ -229,7 +227,6 @@ export class Create extends Component {
                       <option value="pm">pm</option>
                     </select>
                   </div>
-
                   <div className="col-xs-12 col-sm-2 no-padding-left is-tomorrow">
                     <select name="is_tomorrow"
                       className="form-control"
@@ -240,14 +237,12 @@ export class Create extends Component {
                       <option value="true">tomorrow</option>
                     </select>
                   </div>
-
                   <div className="col-xs-12 no-padding-left">
                     <div className="col-sm-4"></div>
                     <div className="col-xs-12 col-sm-8">
                       {validationErrors._time ? <div className="text-danger errors"> {validationErrors._time} </div> : null}
                     </div>
                   </div>
-
                 </div>
               </div>
 
@@ -294,25 +289,14 @@ export class Create extends Component {
                                   );
                                 })}
                               </select>
-                                </div>
-                              </div>
-                            )}
-                            <label className="checkbox-text">
-                              <input
-                                className="form-check-input"
-                                name="noLimit"
-                                type="checkbox"
-                                value={0}
-                                checked={eventFormData.duration === 0}
-                                onChange={this.onNoDurationLimit.bind(this)}/>
-                              <span className="form-check-label"> No duration limit</span>
-                            </label>
-                            <div className="col-xs-12 errors">
-                              <div className="col-sm-4"></div>
-                              {validationErrors._duration ? <div className="text-danger col-sm-8 errors"> {validationErrors._duration}</div> : null}
                             </div>
                           </div>
 
+                          <div className="col-xs-12 errors">
+                            <div className="col-sm-4"></div>
+                            {validationErrors._duration ? <div className="text-danger col-sm-8 errors"> {validationErrors._duration}</div> : null}
+                          </div>
+                        </div>
                       </div>
 
                       <div className="form-group col-xs-10 col-xs-offset-1">
