@@ -55,7 +55,7 @@ describe('API Event Routes', () => {
           done();
         });
     });
-    it('should return all events including private', function(done) {
+    it('should return all events including private events you have access to', function(done) {
       chai.request(server)
         .get('/api/events')
         .send({group_id: 1})
