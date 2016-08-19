@@ -8,10 +8,9 @@ import {
   Simulate 
 } from 'react-addons-test-utils';
 import { expect } from 'chai';
-import sinon from 'sinon';
 
 import { shallow, mount } from 'enzyme';
-import ConnectedApp, { EventDetails } from '../../../client/components/EventDetails'
+import { EventDetails } from '../../../client/components/EventDetails'
 
 
 var chai = require('chai');
