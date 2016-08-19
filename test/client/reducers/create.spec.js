@@ -144,8 +144,6 @@ describe('Create Reducer', () => {
       type: 'TEST',
     }
     const nextState = reducer(undefined, action);
-    console.log(initialState)
-    console.log(nextState)
     expect(nextState).to.deep.equal(
         {
           eventFormData: {

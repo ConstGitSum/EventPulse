@@ -97,7 +97,7 @@ export class Create extends Component {
       return (
         <button
           type="submit"
-          className="btn btn-primary col-xs-offset-1 col-xs-10"
+          className="create btn btn-primary col-xs-offset-1 col-xs-10"
           role="button"
           onClick={this.onSubmitRedux.bind(this)}>
           Create
