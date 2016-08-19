@@ -17,7 +17,6 @@ module.exports = {
 };
 
 function getAll(group_id) {
-  console.log("group", group_id)
    var date = new Date()
   if(group_id){
    return knex('memberships').select('user_id').where('group_id',group_id).then((user_ids) => {
