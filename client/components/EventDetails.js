@@ -33,6 +33,7 @@ export class EventDetails extends React.Component {
   }
 
   componentWillMount() {
+    /* istanbul ignore if */
     if (!this.props.currentUser) {
       browserHistory.push('/');
     }
@@ -65,8 +66,8 @@ export class EventDetails extends React.Component {
    */
   onClickLeave() {
     this.props.leaveEvent(this.props.currentEvent.id, this.props.currentUser.id)
-      .then()
-      .catch(err => console.log('ERROR - onClickLeave:', err))
+      // .then()
+      // .catch(err => console.log('ERROR - onClickLeave:', err))
   }
 
   /**
@@ -155,7 +156,7 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Leave',
-          'btn btn-danger btn-block',
+          'leave-btn btn btn-danger btn-block',
           this.onClickLeave.bind(this)
         )
       )
@@ -165,14 +166,14 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-primary btn-block',
+          'join-btn btn btn-primary btn-block',
           this.onClickJoin.bind(this))
       )
     } else {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-danger btn-block',
+          'join-btn btn btn-danger btn-block',
           'disabled',
           this.onClickJoin.bind(this)
         )
