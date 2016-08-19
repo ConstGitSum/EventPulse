@@ -24,12 +24,12 @@ export class ChatWindow extends React.Component {
           .then((messages) => {
             this.setState({messages: [ ...messages.data]})
           })
-      
+
   }
 
   componentWillUnmount() {
     this.socket.emit('leaving',this.socket.id)
-   this.socket.disconnect();     
+   this.socket.disconnect();
   }
 
   handleChange(event){
@@ -39,7 +39,7 @@ export class ChatWindow extends React.Component {
     event.preventDefault();
       const message  = {
         text: this.state.comment,
-        name: this.props.currentUser.name, 
+        name: this.props.currentUser.name,
         user_id: this.props.currentUser.id,
         event: this.props.event.id,
         image: this.props.currentUser.image
@@ -57,16 +57,16 @@ export class ChatWindow extends React.Component {
       }
 
       if(timeStamp < this.state.nextReplyTime){
-        this.setState({comments:this.state.comments+1})  
+        this.setState({comments:this.state.comments+1})
       }
-      
+
       if(message.text.length !==0 && timeStamp > this.state.nextReplyTime){
       this.socket.emit('message', message)
       this.setState({nextReplyTime: timeStamp+400})
       this.setState({comment:''})
       }
-      
-      
+
+
   }
 
   render(){
@@ -84,16 +84,18 @@ export class ChatWindow extends React.Component {
             <form className="text-center" onSubmit = {this.handleSubmit.bind(this)}>
               <input className="col-xs-12 col-xs-offset-2 col-md-8 col-md-offset-3" type = "text" placeholder = "Enter a message" value = {this.state.comment} onChange ={this.handleChange.bind(this)} ></input>
             </form>
-        <div className="chatBox col-xs-12"><ul className = "chatMessages">{messages} </ul></div>  
+        <div className="chatBox col-xs-12"><ul className = "chatMessages">{messages} </ul></div>
       </div>
     )
   }
 }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser
   }
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps)(ChatWindow);

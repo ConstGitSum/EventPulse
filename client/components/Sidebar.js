@@ -34,9 +34,9 @@ export class Sidebar extends React.Component {
     const hiddenEvents = this.props.hiddenEvents
     const currentEvent = this.props.currentEvent
     const currentUser  = this.props.currentUser
-    const items = []; 
+    const items = [];
 
-    if (currentUser.id !== currentEvent.created_by 
+    if (currentUser.id !== currentEvent.created_by
       && hiddenEvents.indexOf(currentEvent.id) === -1) {
       items.push(generateButton('Hide', this.onClickHide.bind(this)));
     } else if (currentUser.id !== currentEvent.created_by) {
@@ -65,8 +65,8 @@ export class Sidebar extends React.Component {
 
 function generateButton(text, onClickFunction) {
   return (
-    <li 
-      key={text} 
+    <li
+      key={text}
       className="sidebar-button"
       onClick={onClickFunction}>
       <i className={"fa fa-2x fa-" + getFaIcon(text)}></i>
@@ -87,6 +87,7 @@ function getFaIcon(text) {
   return iconDict[text];
 }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
@@ -95,8 +96,10 @@ function mapStateToProps(state) {
   }
 }
 
+/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ editEvent, hideEvent, unhideEvent }, dispatch)
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

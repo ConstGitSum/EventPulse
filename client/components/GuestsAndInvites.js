@@ -14,7 +14,7 @@ export class GuestAndFriends extends React.Component {
   constructor(props) {
     super(props);
     this.state = {clicked: "guestList" }
-  }  
+  }
 
 showGuestList() {
   return this.state.clicked == "guestList" ? <div> <div className = "expandFriendList" onClick = {this.clickFriendsList.bind(this)}> <button className = "btn"> Show Friend Invites </button> </div><div className = "guestHeader"> People Attending </div> <GuestList/> </div> : <div className = "expandGuestList" onClick = {this.clickGuestList.bind(this)} ><button className = "btn"> Show Guest list</button></div>
@@ -48,6 +48,7 @@ clickFriendsList() {
 
   }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
@@ -55,8 +56,10 @@ function mapStateToProps(state) {
   }
 }
 
+/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({addInvite},dispatch)
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(GuestAndFriends);

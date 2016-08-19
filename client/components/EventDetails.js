@@ -8,7 +8,7 @@ import humanizeDuration from 'humanize-duration';
 
 import ChatModal from './ChatModal'
 import Sidebar from './Sidebar';
-import { 
+import {
   joinEvent,
   leaveEvent,
   hideEvent,
@@ -38,7 +38,7 @@ export class EventDetails extends React.Component {
     }
     const startTime = moment(this.props.currentEvent.time);
     const endTime   = moment(this.props.currentEvent.endTime);
-    this.setState({ 
+    this.setState({
       startTimeObj  : startTime,
       startTimeText : startTime.format('dddd, h:mm a'),
       endTimeObj    : endTime,
@@ -90,24 +90,24 @@ export class EventDetails extends React.Component {
   swapTime(type) {
     if (type === 'start') {
       if (this.state.startTimeShow) {
-        this.setState({ 
+        this.setState({
           startTimeShow: false,
           startTimeText: this.state.startTimeObj.fromNow()
         });
       } else {
-        this.setState({ 
+        this.setState({
           startTimeShow: true,
           startTimeText: this.state.startTimeObj.format('dddd, h:mm a')
         });
       }
     } else {
       if (this.state.endTimeShow) {
-        this.setState({ 
+        this.setState({
           endTimeShow: false,
           endTimeText: this.state.endTimeObj.fromNow()
         });
       } else {
-        this.setState({ 
+        this.setState({
           endTimeShow: true,
           endTimeText: this.state.endTimeObj.format('dddd, h:mm a')
         });
@@ -171,14 +171,14 @@ export class EventDetails extends React.Component {
     {/* Check to see if the event was created by the current user */}
     const creator = this.props.currentEvent.guests.find(guest => {
       return guest.id === this.props.currentEvent.created_by});
-    const max_guests = this.props.currentEvent.max_guests === -1 
-      ? '∞' 
+    const max_guests = this.props.currentEvent.max_guests === -1
+      ? '∞'
       : this.props.currentEvent.max_guests;
     const currentAttending = this.props.currentEvent.guests.length;
     const spotsRemaining = max_guests === '∞'
       ? '∞'
       : max_guests - currentAttending;
-    const attendancePercentage = max_guests === '∞' 
+    const attendancePercentage = max_guests === '∞'
       ? 0
       : currentAttending / max_guests * 100;
 
@@ -189,7 +189,7 @@ export class EventDetails extends React.Component {
           className="back-btn fa fa-arrow-left fa-3x"
           aria-hidden="true"></i>
         <Sidebar />
-        
+
         <div className="container">
           <div className="row">
             <div className="col-xs-12 page-header">
@@ -200,14 +200,14 @@ export class EventDetails extends React.Component {
           <div className="row">
             <div className="col-xs-10 col-xs-offset-1 text-center">
               <ProgressBar>
-                <ProgressBar 
+                <ProgressBar
                   bsStyle="info"
-                  now={attendancePercentage} 
+                  now={attendancePercentage}
                   label={`${currentAttending}/${max_guests}`}
                   key={1} />
-                <ProgressBar 
-                  bsStyle="danger" 
-                  now={100-attendancePercentage} 
+                <ProgressBar
+                  bsStyle="danger"
+                  now={100-attendancePercentage}
                   key={2}
                   label={`${spotsRemaining} spots remaining`} />
               </ProgressBar>
@@ -282,6 +282,7 @@ export class EventDetails extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentEvent : state.currentEvent,
@@ -291,6 +292,7 @@ function mapStateToProps(state) {
   }
 }
 
+/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     joinEvent,
@@ -304,4 +306,5 @@ function mapDispatchToProps(dispatch) {
 
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetails)

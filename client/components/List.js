@@ -6,14 +6,14 @@ import { Button, Cell } from 'react-pure';
 import $ from 'jquery';
 import scrollTo from 'jquery.scrollto';
 
-import { 
-  userLogOut, 
-  getList, 
-  setCurrentEvent, 
+import {
+  userLogOut,
+  getList,
+  setCurrentEvent,
   getHiddenEvents,
   filterList,
   addInvite,
-  removeInvitation 
+  removeInvitation
 } from '../actions/actions';
 import { setLocation } from '../actions/map';
 import ListFilter from './ListFilter';
@@ -47,9 +47,9 @@ export class List extends React.Component {
   }
 
   renderListItem(event, index) {
-    return <li 
+    return <li
       key={index}
-      className="event-item list-group-item" 
+      className="event-item list-group-item"
       onClick={this.setCurrentEvent.bind(this, event, index)}>
       <h3 className="event-title">{event.title}</h3>
       <span className="event-distance">{event.distance} miles</span>
@@ -60,7 +60,7 @@ export class List extends React.Component {
             <p id="event_description">{event.description}</p>
             {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <div className="text-center view-details">
-              <Link 
+              <Link
                 onClick={(e) => {e.stopPropagation()}}
                 to={`/${event.id}`}>
                 <button className="btn btn-secondary">
@@ -146,8 +146,9 @@ export class List extends React.Component {
 }
 
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
-  return { 
+  return {
     currentEvent: state.currentEvent,
     currentUser: state.currentUser,
     list: state.list,
@@ -159,8 +160,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ 
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
     setLocation,
     setCurrentEvent,
     getHiddenEvents,
@@ -172,4 +174,5 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(List);

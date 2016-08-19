@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router';
 import {addInvite} from '../actions/actions'
 
 export class FriendsList extends React.Component {
-  
+
   constructor(props){
       super(props)
       this.state = {
@@ -37,10 +37,10 @@ export class FriendsList extends React.Component {
   }
 
   componentWillUnmount() {  //When you leave the page, want to empty the store's info here.
-      this.props.addInvite([])  
+      this.props.addInvite([])
   }
-  
-  submitInvite(event) { //This submits the invite request.  
+
+  submitInvite(event) { //This submits the invite request.
     event.preventDefault();
     const url = `/api/events/invite`;
     const body = { user_id: this.props.currentUser.id, invite_ids: this.state.invitedFriends, event_id: this.props.currentEvent.id };
@@ -65,15 +65,18 @@ export class FriendsList extends React.Component {
     }
   }
 
-  function mapStateToProps(state) {
+/* istanbul ignore next */
+function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
     currentUser: state.currentUser
   }
 }
 
-function mapDispatchToProps(dispatch) { 
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({addInvite},dispatch)
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsList);
