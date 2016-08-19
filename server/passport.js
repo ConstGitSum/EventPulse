@@ -5,7 +5,7 @@ const FACEBOOK_CALLBACK_URL = process.env.NODE_ENV === 'production'
   ? 'http://eventpulse.herokuapp.com/api/passportFacebook/facebookLogin/Callback' 
   : 'http://localhost:3000/api/passportFacebook/facebookLogin/Callback'
 
-const PROFILE_FIELDS = ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'picture.type(small)', 'verified', 'friends'] //This is what tells facebook what to return		
+const PROFILE_FIELDS = ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'picture.type(normal)', 'verified', 'friends'] //This is what tells facebook what to return		
 
 var User = require('./models/user');
 var PassportHelper = require('./passport_helper')
