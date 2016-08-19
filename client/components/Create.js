@@ -272,7 +272,7 @@ export class Create extends Component {
                                 value={eventFormData.duration_hour}
                                 onBlur={this.onFieldChangeRedux.bind(this)}
                                 onChange={this.onFieldChangeRedux.bind(this)}>
-                                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((h) => {
                                   return (
                                     <option key={h} value={h}>{h}</option>
                                   );
