@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 import { shallow, mount } from 'enzyme';
 import { ChatWindow } from '../../../client/components/Chat'
 
-//var io = require('socket.io-client');
 var chai = require('chai');
 
 var options ={
@@ -33,17 +32,17 @@ xdescribe('EventDetails Component', () => {
   } 
   const enzymeWrapper = shallow(<ChatWindow currentUser={seedData.currentEvent} event={seedData.currentUser} />)
   const message  = {
-        text: 'Hello',
-        name: 'Jad', // user ID  Might want currentUser to have name as well
-        user_id: 1,
-        event:1,
-        image: 'http://example.com'
-      }
+    text: 'Hello',
+    name: 'Jad', // user ID  Might want currentUser to have name as well
+    user_id: 1,
+    event:1,
+    image: 'http://example.com'
+  }
   describe('Chat Window', () => {
     //var socketURL = 'http://localhost:3000'
     //var client1 = io.connect(socketURL, options);
     it('should be able to type messages', () => {
-        const input = enzymeWrapper.find('input')
+      const input = enzymeWrapper.find('input')
       // const paragraph = enzymeWrapper.find('p');
       // expect(paragraph).to.have.length(5)
       // expect(paragraph.at(0).text()).to.equal('Creator: Alice')

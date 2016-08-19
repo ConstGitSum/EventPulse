@@ -18,7 +18,7 @@ html, body, #root, #list-map, .event-map, .explore, .home{
 }
 
 #root > div {
- height: 100%;
+  height: 100%;
 }
 
 body {
@@ -165,10 +165,10 @@ a.pure-button-primary {
 .facebook-icon {
   padding-right: 10px;
 }
+
 /*
  * -- LIST STYLES --
  */
-
 ul.event-item {
   height:80vh;
 }
@@ -217,11 +217,9 @@ div.eventList {
   margin-bottom: 7%;
 }
 
-
 /*
  * -- LIST MAP STYLES -- 
  */
-
 .leaflet-left {
   left: 1%;
 }
@@ -229,149 +227,148 @@ div.eventList {
 /*
  * -- EVENTCREATE STYLES --
  */
- .event-create {
-   height: 100%;
- }
+.event-create {
+  height: 100%;
+}
 
- .event-create .container {
-   margin-bottom: 1%;
-   width: 100%;
-   height: 100%;
-   position: relative;
- }
+.event-create .container {
+  margin-bottom: 1%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
- .event-create .form-wrapper {
-   width: 100%;
-   overflow-x: hidden;
- }
+.event-create .form-wrapper {
+  width: 100%;
+  overflow-x: hidden;  
+}
 
- .create-form {
-   overflow-y: auto;
-   overflow-x: hidden;
-   height: 62vh;
-   width: 94vw;
- }
+.create-form {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 62vh;
+  width: 94vw;
+}
 
- .create-form .row {
-   margin-left: 15px;
- }
+.create-form .row {
+  margin-left: 15px;
+}
 
- .create-form::-webkit-scrollbar { 
-   -webkit-appearance: none;
-   display: none;
-   width: 0;
-   height: 0;
- }
+.create-form::-webkit-scrollbar { 
+  -webkit-appearance: none;
+  display: none;
+  width: 0;
+  height: 0;
+}
 
- .create-form .form-group {
-   margin-bottom: 10px;
- }
+.create-form .form-group {
+  margin-bottom: 10px;
+}
 
- .event-create i.fa {
-     position: absolute;
-     left: 1%;
-     top: 1%;
-     z-index: 2;
- }
+.event-create i.fa {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+  z-index: 2;
+}
 
- .create-form input {
-   color: black;
- }
+.create-form input {
+  color: black;
+}
 
- .create-form .no-padding-left {
-   padding-left: 0em;
- }
+.create-form .no-padding-left {
+  padding-left: 0em;
+}
 
- .create-form .no-padding-right {
-   padding-right: 0em;
- }
+.create-form .no-padding-right {
+  padding-right: 0em;
+}
 
- .create-form .col-xs-4 {
-   width: 33.3333%;
-   margin: 1em 0;
- }
+.create-form .col-xs-4 {
+  width: 33.3333%;
+  margin: 1em 0;
+}
 
- .create-form .col-xs-8 {
-   margin: 1em 0;
- }
+.create-form .col-xs-8 {
+  margin: 1em 0;
+}
 
- .create-form .col-xs-10 {
-   float: none;
- }
+.create-form .col-xs-10 {
+  float: none;
+}
 
- .create-form label,
- .create-form .text-danger {
-   font-size: 1.1em;
-   padding-left: 0;
- }
+.create-form label,
+.create-form .text-danger {
+  font-size: 1.1em;
+  padding-left: 0;
+}
 
- .create-form .input-sm, 
- .create-form select {
-   border-radius: 5px;
-   font-size: 0.8em;
-   height: 30px;
-   margin: 5px 0;
- }
+.create-form .input-sm, 
+.create-form select {
+  border-radius: 5px;
+  font-size: 0.8em;
+  height: 30px;
+  margin: 5px 0;
+}
 
- .create-form .checkbox {
-   margin-right :10px;
- }
+.create-form .checkbox {
+  margin-right :10px;
+}
 
- .create-form .form-control {
-   padding: 6px;
- }
+.create-form .form-control {
+  padding: 6px;
+}
 
- .create-form .form-check-label {
-   font-size: 1em;
-   font-weight: normal;
-   margin: 0 15px 0 5px;
- }
+.create-form .form-check-label {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 15px 0 5px;
+}
 
- .create-form .time-label {
-   margin-bottom: 0;
-   padding-bottom: 0;
- }
+.create-form .time-label {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
 
- .create-form .capacity {
-   margin-bottom: 10px;
- }
+.create-form .capacity {
+  margin-bottom: 10px;
+}
 
- .create-form .privacy-radio {
-   padding-left: 0;
- }
+.create-form .privacy-radio {
+  padding-left: 0;
+}
 
- .create-form .desc-label {
-   padding-top: 10px;
- }
+.create-form .desc-label {
+  padding-top: 10px;
+}
 
- .create-form button.btn-link,
- .clear {
-   color: #F6F0ED;
- }
+.create-form button.btn-link,
+.clear {
+  color: #F6F0ED;
+}
 
- .create-form button.btn-link:hover,
- .clear:hover {
-   color: #F6F0ED;
-   text-decoration: underline;
- }
+.create-form button.btn-link:hover,
+.clear:hover {
+  color: #F6F0ED;
+  text-decoration: underline;
+}
 
- .create-form .submit {
-   margin: 20px 0;
- }
+.create-form .submit {
+  margin: 20px 0;
+}
 
- .event-create .footer {
-   left: 0;
- }
+.event-create .footer {
+  left: 0;
+}
 
- .event-create .container .row {
-   margin-right: 0;
-   margin-left: 0;
- }
+.event-create .container .row {
+  margin-right: 0;
+  margin-left: 0;
+}
 
 /*
  * -- EVENTDETAILS STYLES --
  */
-
 .ed-btn {
   width: 60px;
 }
@@ -407,9 +404,11 @@ div.eventList {
 .details-table td {
   word-wrap: break-word;
 }
+
 .table-heading {
   font-size: 125%;
 }
+
 .table-info {
   font-size: 100%;
 }
@@ -430,7 +429,7 @@ button.logout.btn.btn-danger {
 /*
  * -- CHATBOX STYLES --
  */
-form.text-center input{
+form.text-center input {
   color: black;
   width: 12em;
   margin-top: 1em;
@@ -460,7 +459,7 @@ div.modal-content {
   margin-top: -235px;
 }
 
-.modal-dialog{
+.modal-dialog {
   overflow-y: initial !important
 }
 
@@ -600,7 +599,6 @@ input {
 /*
   Sidebar styles
  */
-
 .button-container {
   padding: 5%;
   margin: 0 0 2% 0;
@@ -616,20 +614,22 @@ input {
 /*
  * Dropdown Styles
  */
-
 .capitalize {
   text-transform: capitalize;
 }
+
 .dd-item {
   padding: 5px;
   width: 80%;
   margin: auto;
   color: inherit;
 }
+
 .dd-item:not(:last-child) {
   border-bottom-width: 1px;
   border-bottom-style: solid;
 }
+
 .dd-item:hover {
   -webkit-transform: scale(1.1);
   -o-transform: scale(1.1);
@@ -664,7 +664,7 @@ and (max-device-width : 568px) {
   }
 
   .create-form .col-xs-4 {
-      margin: 0.2em 0;
+    margin: 0.2em 0;
   }
 
 }
@@ -691,7 +691,7 @@ and (max-device-width : 568px) {
   }
 
   .create-form .col-xs-4 {
-      margin: 0.2em 0;
+    margin: 0.2em 0;
   }
 
 }
@@ -705,7 +705,7 @@ and (max-device-width : 568px) {
 
   /* We want to give the content area some more padding */
   .content {
-      padding: 1em;
+    padding: 1em;
   }
 
   /* We decrease the width of the .auth, since we have more width
@@ -817,6 +817,7 @@ and (max-device-width : 568px) {
   .auth-head {
     font-size: 8em;
   }
+
   /* Increase the button font size. */
   a.pure-button-primary {
     font-size: 1.8em;
@@ -831,7 +832,7 @@ and (max-device-width : 568px) {
   }
 
   .create-form .col-xs-4, .create-form .is-tomorrow {
-      margin: 0.3em 0;
+    margin: 0.3em 0;
   }
 }
 
@@ -846,7 +847,7 @@ and (max-device-width : 568px) {
 }
 
 .friend {
- font-size: large;
+  font-size: large;
 }
 
 .inviteButton {
@@ -860,15 +861,14 @@ and (max-device-width : 568px) {
 }
 
 .inviteSpan {
-text-align: center;
+  text-align: center;
 }
 
-.friendsNotGoing
-{
-    list-style-type: none;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 10px;
+.friendsNotGoing {
+  list-style-type: none;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 10px;
 }
 
 .inviteButton {
@@ -896,13 +896,13 @@ text-align: center;
 
 /* guest and friends list page */
 .expandGuestList {
-text-align: center;
-color: black;
+  text-align: center;
+  color: black;
 }
 
 .expandFriendList {
-text-align: center;
-color: black;
+  text-align: center;
+  color: black;
 }
 
 .guestFriendHeader {
@@ -911,22 +911,22 @@ color: black;
 }
 /* the invite notice on the filter button on the list page */
 .filterAndInvites {
-    position:relative;
-    display:inline-block;
-    text-align:center;
+  position:relative;
+  display:inline-block;
+  text-align:center;
 }
 
 .inviteNotice {
-    position:absolute;
-    color: black;
-    background-color: #ff6f6f;
-    font-family: "Impact";
-    bottom: 20px;
-    right: -13px;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    z-index: 9999;
+  position:absolute;
+  color: black;
+  background-color: #ff6f6f;
+  font-family: "Impact";
+  bottom: 20px;
+  right: -13px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  z-index: 9999;
 }
 .largePicture {
   width: 20%;

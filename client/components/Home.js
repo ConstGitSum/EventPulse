@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCurrentUser, getAllInvitations } from '../actions/actions';
@@ -6,7 +6,7 @@ import { getCurrentUser, getAllInvitations } from '../actions/actions';
 import List from './List';
 import Auth from './Auth';
 
-export class Home extends Component {
+export class Home extends React.Component {
   componentWillMount() {
     this.props.getCurrentUser()  
   }
