@@ -389,6 +389,7 @@ export class Create extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
@@ -399,6 +400,7 @@ function mapStateToProps(state) {
   }
 }
 
+/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     createEvent,
@@ -410,4 +412,5 @@ function mapDispatchToProps(dispatch) {
     deleteUpdateData }, dispatch)
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

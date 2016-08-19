@@ -8,26 +8,29 @@ import Auth from './Auth';
 
 export class Home extends React.Component {
   componentWillMount() {
-    this.props.getCurrentUser()  
+    this.props.getCurrentUser()
   }
 
   render() {
     return (
       <div className = 'home'>
-        {this.props.currentUser 
-         ? <List /> 
-         : <Auth />} 
+        {this.props.currentUser
+         ? <List />
+         : <Auth />}
       </div>
     );
   }
 }
 
-function mapStateToProps(state) { 
+/* istanbul ignore next */
+function mapStateToProps(state) {
   return { currentUser: state.currentUser };
 }
 
-function mapDispatchToProps(dispatch) { 
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({ getCurrentUser, getAllInvitations }, dispatch);
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

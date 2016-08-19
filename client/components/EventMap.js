@@ -66,7 +66,7 @@ export class EventMap extends React.Component {
     });
   }
 
-  // clear all current markers on map 
+  // clear all current markers on map
   // clear state of currMarker, prevMarker, and currentEvent
   _clearMarkers() {
     for (let id in this.markerTracker) this.map.removeLayer(this.markerTracker[id]);
@@ -127,8 +127,9 @@ export class EventMap extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
-  return { 
+  return {
     listFiltered: state.listFiltered,
     currentEvent: state.currentEvent,
     map: state.map,
@@ -136,12 +137,14 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ 
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
     setCurrentEvent,
     setCurrMarker,
     setPrevMarker
   }, dispatch);
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(EventMap);

@@ -9,7 +9,7 @@ import { CardStack, Card } from 'react-cardstack';
 import FriendsList from './FriendsList'
 
 export class GuestList extends React.Component {
-  
+
   render() {
     return(
       <div>
@@ -22,6 +22,7 @@ export class GuestList extends React.Component {
 
   }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
@@ -29,8 +30,10 @@ function mapStateToProps(state) {
   }
 }
 
+/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({addInvite},dispatch)
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(GuestList);

@@ -42,6 +42,8 @@ export class EventUpdate extends React.Component {  //This component sets up the
     )
   }
 }
+
+/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
@@ -50,8 +52,10 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) { 
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({addInvite, getInvitations, getAllInvitations}, dispatch)
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps, mapDispatchToProps)(EventUpdate);

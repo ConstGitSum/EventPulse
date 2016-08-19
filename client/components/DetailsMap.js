@@ -43,11 +43,13 @@ export class DetailsMap extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 function mapStateToProps(state) {
-  return { 
+  return {
     currentEvent: state.currentEvent,
     location: state.map.currLocation
   };
 }
 
+/* istanbul ignore next */
 export default connect(mapStateToProps)(DetailsMap);
