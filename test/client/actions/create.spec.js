@@ -25,27 +25,27 @@ describe('create Actions', () => {
     moxios.stubRequest('/api/events', {
       status: 201,
       responseText: {
-          title: 'title',
-          description: 'description',
-          created_by: 1,
-          location: 'location',
-          time: 5,
-          duration: 5,
-          max_guests: 9,
-          privacy: false,
-          group_visibility: null}
+        title: 'title',
+        description: 'description',
+        created_by: 1,
+        location: 'location',
+        time: 5,
+        duration: 5,
+        max_guests: 9,
+        privacy: false,
+        group_visibility: null}
     });
 
     return store.dispatch(actions.createEvent({
-          title: 'title',
-          description: 'description',
-          created_by: 1,
-          location: 'location',
-          time: 5,
-          duration: 5,
-          max_guests: 9,
-          privacy: false,
-          group_visibility: null}, 1))
+      title: 'title',
+      description: 'description',
+      created_by: 1,
+      location: 'location',
+      time: 5,
+      duration: 5,
+      max_guests: 9,
+      privacy: false,
+      group_visibility: null}, 1))
       .then(() => {
         const action = store.getActions()[0];
         expect(action.type).to.equal('CREATE_EVENT');

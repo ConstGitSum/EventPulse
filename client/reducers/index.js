@@ -8,7 +8,7 @@ import HiddenEventsReducer from './reducer_hiddenEvents';
 import InviteReducer from './reducer_invite';
 import InvitationReducer from './reducer_invitations'
 import MapReducer from './reducer_map';
-import ModalReducer from "./reducer_modals";
+import ModalReducer from './reducer_modals';
 
 // bundle up reducers and send to store.
 const rootReducer = combineReducers({

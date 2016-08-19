@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,7 +14,7 @@ import {
   updateEvent,
   deleteUpdateData } from '../actions/actions';
 
-export class Create extends Component {
+export class Create extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

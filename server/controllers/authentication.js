@@ -11,8 +11,7 @@ router.get('/loggedIn', function(req, res) {
     const friendsList = req.user.slice(1)   // CHANGE THIS TO SLICE(2) TO NOT SHOW YOURSELF IN FRIEND'S LIST  CURRENTLY AT 1 FOR TESTING
     
     res.status(200).send({ id: userId, name: userName, image: image, friendsList: friendsList });
-  }
- else{
+  } else {
     res.send(false);
   }
 })
