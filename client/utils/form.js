@@ -16,8 +16,8 @@ export function getDefaultState() {
       location: '',
       hour: currHour > 12 ? currHour - 12: currHour === 0 ? 12 : currHour,
       minute: currMinute,
-      ampm: currHour > 12 ? 'pm': 'am',
-      duration_hour: 0,
+      ampm: currHour >= 12 ? 'pm': 'am',
+      duration_hour: 1,
       duration_minute: 0,
       endTime: '',
       duration: 0,
@@ -68,9 +68,9 @@ export function get24Hour(hour, ampm) {
 
 export function validateTitle(title) {
   if (title.length === 0) {
-    return 'title cannot be empty';
+    return 'Title cannot be empty';
   } else if (title.length > 24) {
-    return 'title should be less than 24 characters';
+    return 'Title should be less than 24 characters';
   } else {
     return '';
   }
@@ -78,7 +78,7 @@ export function validateTitle(title) {
 
 export function validateDescription(description) {
   if (description.length > 100) {
-    return 'description should be less than 100 characters';
+    return 'Description should be less than 100 characters';
   } else {
     return '';
   }
@@ -86,7 +86,7 @@ export function validateDescription(description) {
 
 export function validateLocation(location) {
   if (location.length === 0) {
-    return 'location cannot be empty';
+    return 'Location cannot be empty';
   } else {
     return '';
   }
@@ -118,7 +118,7 @@ export function validateAmpm(ampm) {
 
 export function validateCapacity(num) {
   if (Number(num) === 0) {
-    return 'capacity cannot be 0';
+    return 'Capacity cannot be 0';
   } else {
     return '';
   }
@@ -160,7 +160,7 @@ export function validateTimeRange(validationErrors, formData) {
 }
 
 export function validateDuration(validationErrors, formData) {
-  if (formData.duration_hour == 0 && formData.duration_minute == 0 && formData.duration !== 0) {
+  if (formData.duration_hour == 0 && formData.duration_minute == 0) {
     validationErrors._duration = 'Duration cannot be 0'
   } else {
     delete validationErrors._duration;
