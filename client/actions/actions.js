@@ -201,16 +201,19 @@ export function editEvent(currentEvent) {
 export function updateEvent(updatedEvent, currentUser, eventId) {
   var date = Date.now();
   var newDate = new Date();
-  if(updatedEvent.is_tomorrow) {
-    if(Number(updatedEvent.hour) === 12)
-      data = date + (Number(updatedEvent.hour)+12-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
-    else
+
+  if(updatedEvent.is_tomorrow === 'true') {
+    if(Number(updatedEvent.hour) === 12) {
+      date = date + (Number(updatedEvent.hour)+12-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
+    }
+    else {
       date = date + (Number(updatedEvent.hour)+24-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
-  }else{
+    }
+  } else {
     if(updatedEvent.ampm ==='pm'){
       var newHour = Number(updatedEvent.hour) === 12 ? Number(updatedEvent.hour) : Number(updatedEvent.hour) + 12;
       date = date + (newHour-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
-    }else{
+    } else {
       date = date + (Number(updatedEvent.hour)-newDate.getHours())*3600000 + (Number(updatedEvent.minute) - newDate.getMinutes())*60000
     }
 
