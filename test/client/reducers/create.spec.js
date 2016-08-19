@@ -18,7 +18,7 @@ describe('Create Reducer', () => {
         location: '751 street',
         hour: currHour > 11 ? currHour - 11: currHour + 1,
         minute: currMinute,
-        ampm: currHour > 12 ? 'pm': 'am',
+        ampm: currHour > 11 ? 'pm': 'am',
         duration_hour: 1,
         duration_minute: 0,
         category: 'other',
@@ -32,7 +32,10 @@ describe('Create Reducer', () => {
   })
 
   describe('should handle VALIDATE_EVENT_FORM', () => {
-    const action = { type: 'VALIDATE_EVENT_FORM' };
+    const action = { 
+      type: 'VALIDATE_EVENT_FORM', 
+      payload: { callback: () => {} } 
+    };
 
     it('should throw validation error for empty title', (done) => {
       initialState.eventFormData.title = '';
@@ -97,7 +100,7 @@ describe('Create Reducer', () => {
           location: '',
           hour: currHour > 12 ? currHour - 12: currHour,
           minute: currMinute,
-          ampm: currHour > 12 ? 'pm': 'am',
+          ampm: currHour >= 12 ? 'pm': 'am',
           category: 'other',
           privacy: 'false',
           max_guests: -1,
@@ -141,6 +144,8 @@ describe('Create Reducer', () => {
       type: 'TEST',
     }
     const nextState = reducer(undefined, action);
+    console.log(initialState)
+    console.log(nextState)
     expect(nextState).to.deep.equal(
         {
           eventFormData: {
@@ -149,7 +154,7 @@ describe('Create Reducer', () => {
             location: '',
             hour: currHour > 12 ? currHour - 12: currHour,
             minute: currMinute,
-            ampm: currHour > 12 ? 'pm': 'am',
+            ampm: currHour >= 12 ? 'pm': 'am',
             duration: 0,
             duration_hour: 1,
             duration_minute: 0,

@@ -152,12 +152,15 @@ export function getHiddenEvents(user_id) {
   }
 }
 
-export function validateEventForm() {
-  return { type: VALIDATE_EVENT_FORM }
+export function validateEventForm(callback) {
+  return { 
+    type: VALIDATE_EVENT_FORM,
+    payload: { callback }
+  }
 }
 
 export function addInvite(inviteInfo) {
-  return{
+  return {
     type: GET_INVITES,
     payload: inviteInfo
   }

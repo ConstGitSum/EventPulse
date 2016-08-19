@@ -31,6 +31,7 @@ export default function(state = getDefaultState(), action) {
   switch (action.type) {
     case VALIDATE_EVENT_FORM:
       validationErrors = validateForm(Object.assign({}, state.validationErrors), state.eventFormData);
+      action.payload.callback(validationErrors);
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData),
         validationErrors: validationErrors
