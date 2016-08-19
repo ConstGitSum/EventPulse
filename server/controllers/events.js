@@ -13,7 +13,13 @@ module.exports = router;
 
 // *** GET all events *** //
 router.get('/', function(req, res, next) {
+  console.log("req",req.user)
+  if(req.user){
   utils.queryHandler(Event.getAll, req.user[1].group_id, req, res, next);
+  }
+  else {
+    utils.queryHandler(Event.getAll, null, req, res, next);
+  }
 });
 
 // *** GET event by id *** //
