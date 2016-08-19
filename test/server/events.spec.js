@@ -32,7 +32,7 @@ describe('API Event Routes', () => {
   });
 
   describe('GET /api/events', function() {
-    it('should return all events', function(done) {
+    it('should return all public events', function(done) {
       chai.request(server)
         .get('/api/events')
         .end(function(err, res) {
@@ -52,6 +52,30 @@ describe('API Event Routes', () => {
           //res.body[0].time.should.equal('2016-08-30T08:00:00.000Z');
           res.body[0].should.have.property('privacy');
           res.body[0].privacy.should.equal(false);
+          done();
+        });
+    });
+    it('should return all events including private events you have access to', function(done) {
+      chai.request(server)
+        .get('/api/events')
+        .send({group_id: 1})
+        .end(function(err, res) {
+          res.should.have.status(200);
+          res.should.be.json; // jshint ignore:line
+          res.body.should.be.a('array');
+          res.body.length.should.equal(3);
+          res.body[2].should.have.property('title');
+          res.body[2].title.should.equal('facebook only');
+          res.body[2].should.have.property('description');
+          res.body[2].description.should.equal('Facebook event');
+          res.body[2].should.have.property('created_by');
+          res.body[2].created_by.should.equal(2);
+          res.body[2].should.have.property('location');
+          res.body[2].location.should.equal('2100 Alamo St, Austin, TX 78722');
+          res.body[2].should.have.property('time');
+          //res.body[0].time.should.equal('2016-08-30T08:00:00.000Z');
+          res.body[2].should.have.property('privacy');
+          res.body[2].privacy.should.equal(true);
           done();
         });
     });

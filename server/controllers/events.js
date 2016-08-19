@@ -13,7 +13,16 @@ module.exports = router;
 
 // *** GET all events *** //
 router.get('/', function(req, res, next) {
-  utils.queryHandler(Event.getAll, null, req, res, next);
+  if(process.env.NODE_ENV === 'test') {
+    utils.queryHandler(Event.getAll, req.body.group_id, req, res, next);
+  } else {
+      if(req.user) {
+      utils.queryHandler(Event.getAll, req.user[1].group_id, req, res, next);
+      }
+      else {
+        utils.queryHandler(Event.getAll, null, req, res, next);
+      }
+    }
 });
 
 // *** GET event by id *** //

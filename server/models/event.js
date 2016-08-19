@@ -16,9 +16,17 @@ module.exports = {
   checkInvite
 };
 
-function getAll() {
-  var date = new Date()
-  return knex('events').select().where('endTime','>',date);
+function getAll(group_id) {
+   var date = new Date()
+  if(group_id){
+   return knex('memberships').select('user_id').where('group_id',group_id).then((user_ids) => {
+      return knex('events').select().where('endTime','>',date).andWhere(function() {
+        this.where('privacy',false).orWhereIn('created_by',user_ids.map((id) => id.user_id))
+  })  
+   })
+  } else {
+    return knex('events').select().where('endTime','>',date).andWhere('privacy',false);
+  }
 }
 
 function getEventById(id) {

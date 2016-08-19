@@ -100,6 +100,19 @@ exports.seed = function(knex, Promise) {
       });
     })
     .then(() => {
+      return knex('events').insert({
+        title: 'facebook only',
+        description: 'Facebook event',
+        created_by: 2,
+        location: '2100 Alamo St, Austin, TX 78722',
+        time: '2016-08-30T10:00:00.000',
+        max_guests: 10,
+        duration: 3600, 
+        endTime: '2016-08-30T11:00:00.000',
+        privacy: true
+      });
+    })
+    .then(() => {
       return knex('hidden_events').insert({
         user_id: 1,
         event_id: 2
