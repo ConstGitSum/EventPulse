@@ -864,13 +864,6 @@ and (max-device-width : 568px) {
 
 /* friend invites */
 
-/*img.eventListFriendImage {
-  width: 1.5em;  
-  height: 1.5em; 
-  overflow: hidden;
-  border-radius: 50%;
-}*/
-
 .friend {
   font-size: large;
 }
