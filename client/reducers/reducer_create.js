@@ -57,21 +57,27 @@ export default function(state = getDefaultState(), action) {
     case EDIT_EVENT: {
       let newState = Object.assign({}, state);
       newState.eventFormData = action.payload;
-
       const time = {
         hour: moment(action.payload.time).format('h'),
         minute: moment(action.payload.time).format('mm'),
+        ampm: moment(action.payload.time).format('a'),
       }
       const endTime = newState.eventFormData.endTime;
       const currentTime = moment();
-
+      
       newState.eventFormData.hour = time.hour;
       newState.eventFormData.minute = time.minute;
+      newState.eventFormData.ampm = time.ampm;
       if(moment(endTime).isSame(currentTime, 'day')) {
-        newState.eventFormData.is_tomorrow = false;
+        newState.eventFormData.is_tomorrow = false; 
       } else {
         newState.eventFormData.is_tomorrow = true;
       }
+      const duration_hour = Math.floor(newState.eventFormData.duration / 3600);
+      const duration_minute = (newState.eventFormData.duration - (duration_hour * 3600)) / 60;
+
+      newState.eventFormData.duration_hour = duration_hour;
+      newState.eventFormData.duration_minute = duration_minute;
       newState.eventFormData.privacy = action.payload.privacy.toString();
       newState.toggleEventUpdate = true;
       newState.validationErrors = {}
