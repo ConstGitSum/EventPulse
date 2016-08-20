@@ -185,7 +185,7 @@ export class EventDetails extends React.Component {
     {/* Check to see if the event was created by the current user */}
     const creator = this.props.currentEvent.guests.find(guest => {
       return guest.id === this.props.currentEvent.created_by});
-    const max_guests = this.props.currentEvent.max_guests === -1
+    const max_guests = this.props.currentEvent.max_guests === null
       ? '∞'
       : this.props.currentEvent.max_guests;
     const currentAttending = this.props.currentEvent.guests.length;
