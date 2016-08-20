@@ -763,6 +763,18 @@ and (max-device-width : 568px) {
   h4#event-location {
     font-size: 15px;
   }
+
+  img.eventListFriendImage {
+    width: 1.5em;  
+    height: 1.5em; 
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  img.largePicture.eventListFriendImage {
+    width: 2.5em;
+    height: 2.5em;
+  }
 }
 
 @media (min-width:768px) {
@@ -805,6 +817,18 @@ and (max-device-width : 568px) {
   .create-form .footer {
     position: static;
   }
+
+  img.eventListFriendImage {
+    width: 2em;  
+    height: 2em; 
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  img.largePicture.eventListFriendImage {
+    width: 4em;
+    height: 4em;
+  }
 }
 
 /*
@@ -840,11 +864,12 @@ and (max-device-width : 568px) {
 
 /* friend invites */
 
-.eventListFriendImage {
-  width: 7%;  
+/*img.eventListFriendImage {
+  width: 1.5em;  
+  height: 1.5em; 
   overflow: hidden;
   border-radius: 50%;
-}
+}*/
 
 .friend {
   font-size: large;
@@ -927,13 +952,4 @@ and (max-device-width : 568px) {
   height: 25px;
   border-radius: 50%;
   z-index: 9999;
-}
-.largePicture {
-  width: 20%;
-}
-
-@media (min-width:768px) {
-  .largePicture {
-    width: 75px;
-  }
 }
