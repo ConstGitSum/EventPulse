@@ -7,6 +7,7 @@ Event Pulse
   - [Usage](#usage)
     - [Getting Started](#getting-started)
     - [Testing](#testing)
+    - [Server API Reference](#server-api-reference)
     - [External API Keys](#external-api-keys)
   - [Contributing](#contributing)
 
@@ -43,24 +44,24 @@ Event Pulse
 
 # Usage
 ### Getting started
-Set up [PostGreSQL](docs/PostgreSETUP.md)
+* Set up [PostGreSQL](docs/PostgreSETUP.md)
 
-Install dependencies
+* Install dependencies
 > npm install
 
-Set up environment variables
+* Set up environment variables
 > npm run setup
 
-Start the server
+* Start the server
 > npm start
 
 Open your browser to http://localhost:3000 to view!
 
 ### Testing
-Run test suite
+* Run test suite
 > npm test
 
-Run code coverage (make sure you have babel-cli installed globally)
+* Run code coverage (make sure you have babel-cli installed globally)
 > npm run cover
 
 ### Server API Reference
@@ -69,15 +70,15 @@ See [Server API Endpoints](docs/ServerAPI.md)
 ### External API Keys
 Our code relies on several APIs. To run the code with full functionality, you will need to get several keys in order to access these APIs.
 
-#### Development variables
-<br>`FACEBOOK_ID` = Facebook App ID
-<br>`FACEBOOK_SECRET`= Facebook App Secret
-
 You will need to create a [Facebook Development](https://developers.facebook.com) account and register a new app.
 
-<br>`GEO_API_KEY` = [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/start)
+`FACEBOOK_ID` = Facebook App ID
 
-<br>`MAP_API_KEY` = [Mapbox Access Token](https://www.mapbox.com/help/create-api-access-token/)
+`FACEBOOK_SECRET`= Facebook App Secret
+
+`GEO_API_KEY` = [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/start)
+
+`MAP_API_KEY` = [Mapbox Access Token](https://www.mapbox.com/help/create-api-access-token/)
 
 
 # Contributing
