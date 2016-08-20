@@ -7,7 +7,7 @@ import sinon from 'sinon';
 
 import { Sidebar } from '../../../client/components/Sidebar';
 
-describe.only('Sidebar Component', () => {
+describe('Sidebar Component', () => {
 	const seedData = { 
 	  currentUser: {
 	    id: 1
