@@ -27,8 +27,8 @@ export class Create extends React.Component {
       browserHistory.push('/');
     }
   }
-  // onSubmitRedux runs when user clicks on create button. 
-  // This function create or update event
+  // runs when user clicks on create button
+  // this function creates or updates event
   onSubmitRedux(event) {
     event.preventDefault();
     this.setState({locationError: false})
@@ -37,7 +37,6 @@ export class Create extends React.Component {
       // after successfully updating/creating event, clears form values and redirects user to the event detail page 
       if (Object.keys(validationErrors).length === 0) {
         if (this.props.toggleEventUpdate) {
-          console.log('in create, ',this.props.eventFormData)
           this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
             .then(res => {
               if (res.error) throw new Error('Unable to update event');
@@ -60,11 +59,11 @@ export class Create extends React.Component {
       }
     });
   }
-  // onFieldChangeRedux runs when user enters values into any fields
+  // runs when user enters values into any fields
   onFieldChangeRedux(event) {
     this.props.updateEventField(event.target.name, event.target.value);
   }
-  // onFieldChangeRedux runs when user toggles no capacity limit checkbox
+  // runs when user toggles no capacity limit checkbox
   onNoGuestLimit(event) {
     if (event.target.checked) {
       this.props.updateEventField('max_guests', -1);
@@ -72,13 +71,11 @@ export class Create extends React.Component {
       this.props.updateEventField('max_guests', 1);
     }
   }
-  // onClearValues runs when user clicks on Clear Values button. 
-  // This function clears out all input values and validation errors
+  // clears out all input values and validation errors
   onClearValues(event) {
     this.props.clearFormValues();
   }
-  // onMoreOptions runs when user clicks on More Options button
-  // This function expands and collapses the optional section of form 
+  // expands and collapses the optional section of form
   onMoreOptions() {
     if(this.state.folded) {
       this.setState({folded: false})
@@ -87,7 +84,7 @@ export class Create extends React.Component {
     }
     setTimeout(() => $('.create-form').scrollTo(300,50))
   }
-  // generateButton determines which button to show: Update or Create
+  // determines which button to show: Update or Create
   generateButton() {
     if (this.props.toggleEventUpdate) {
       return (
@@ -117,7 +114,7 @@ export class Create extends React.Component {
 
     return(
       <div className="event-create">
-        {/* Back button redirects user to the homepage */}
+        {/* back button redirects user to the homepage */}
         <Link to='/'>
           <i onClick={this.onClearValues.bind(this)}
              className="back-btn fa fa-arrow-left fa-3x"
@@ -134,7 +131,7 @@ export class Create extends React.Component {
             </div>
           </div>
           <div className="scroll">
-            {/* Clear Values button */}  
+            {/* clear Values button */}  
             <div className="row text-right col-xs-12">
               <button
                 type="button"
@@ -144,7 +141,7 @@ export class Create extends React.Component {
                 Clear Values
               </button>
             </div>
-            {/* Form starts here */}
+            {/* form starts here */}
             <form role="form" className="create-form">
               <div className="required">
                 <div className="form-group col-xs-10 col-xs-offset-1">
@@ -252,7 +249,7 @@ export class Create extends React.Component {
                   </div>
                 </div>
               </div>             
-              {/* More Options button expands and collapses optional fields */}  
+              {/* more Options button expands and collapses optional fields */}  
               <div className="form-group text-center more-option">
                 <button
                   type="button"
@@ -262,7 +259,7 @@ export class Create extends React.Component {
                   {this.state.folded? <span className='more-option-btn'>More Options</span>: <span>Less Options</span>}
                 </button>
               </div>
-                {/* Do not display if this.state.folded is true */}  
+                {/* do not display if this.state.folded is true */}  
                 {this.state.folded
                   ? null
                   :<div>
@@ -271,7 +268,6 @@ export class Create extends React.Component {
                         <div>
                           <div className="row duration">
                             <div className="col-xs-4 col-sm-2 no-padding-left">
-                            {console.log(eventFormData)}
                               <select name="duration_hour"
                                 className="form-control"
                                 value={eventFormData.duration_hour}
