@@ -22,11 +22,16 @@ import EventMap from './EventMap';
 
 export class List extends React.Component {
   componentDidMount() {
+    // clear current event so no active marker on map
     this.props.setCurrentEvent({});
 
+    // geolocate user's current location
     this.props.setLocation()
+    // then get list of events user has chosen to hide
     .then(() => this.props.getHiddenEvents(this.props.currentUser.id))
+    // then get list of all events from server
     .then(() => this.props.getList())
+    // then filter list based on hiddenEvents and current location
     .then(() => this.props.filterList(
       this.props.list,
       'unhidden',
@@ -34,10 +39,9 @@ export class List extends React.Component {
       this.props.hiddenEvents,
       this.props.location
     ))
-    .then(() => {
-    })
   }
 
+  // toggles current event to show/hide additional info and scrolls to it on list
   setCurrentEvent(event, index) {
     if(this.props.currentEvent.id === event.id) {
       this.props.setCurrentEvent({})
@@ -47,8 +51,8 @@ export class List extends React.Component {
     setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 50)
   }
 
+  // renders one event item
   renderListItem(event, index) {
-    console.log(moment(event.time).format('h:mm a'))  //use moment to convert time this.state.startTimeObj.format('dddd, h:mm a')
     return <li
       key={index}
       className="event-item list-group-item"
@@ -77,7 +81,8 @@ export class List extends React.Component {
     </li>
   }
 
-  myFriendsGoing(friendsList, guestList){ //This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
+  //This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
+  myFriendsGoing(friendsList, guestList){
     if (friendsList) {
       var friendIds = friendsList.map((friendId => friendId.id))
       var friendsGoing = guestList.filter((friendGoing) => friendIds.includes(friendGoing.id));
@@ -90,7 +95,8 @@ export class List extends React.Component {
     }
   }
 
-  seeInvites() {  //This will filter via invites
+  //This will filter via invites
+  seeInvites() {
     var now = new Date();
     var newList = this.props.list.filter((event) => {
       if (this.props.invitations.includes(event.id)) {

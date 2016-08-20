@@ -36,15 +36,18 @@ export class EventMap extends React.Component {
   }
 
   _buildMap() {
+    // Mapbox tile API using light-v9 theme
     const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       maxZoom: 18,
       id: 'light-v9',
       accessToken: process.env.MAP_API_KEY
     });
 
+    // draw map to div with id 'list-map'
     this.map = L.map('list-map', {
       layers: [tiles]
     });
+    // draw markers for event list
     this._drawMarkers();
 
     // if current location exists, then set map center on it
@@ -62,6 +65,7 @@ export class EventMap extends React.Component {
 
       marker.on('click', this.props.setCurrentEvent.bind(this, event))
 
+      // add leaflet marker class to markerTracker object
       this.markerTracker[event.id] = marker;
     });
   }
@@ -98,6 +102,7 @@ export class EventMap extends React.Component {
     setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 300)
   }
 
+  // revert current marker (with exclamation alert) back to original marker
   _revertCurrentMarker() {
     const curr = this.props.map.currMarker;
     const prev = this.props.map.prevMarker;
@@ -111,6 +116,7 @@ export class EventMap extends React.Component {
     $('.eventList').find(`li:eq(${prevIndex})`).mouseout();
   }
 
+  // add marker to map for current user location
   _onLocationFound() {
     const latlng = [this.props.location.lat, this.props.location.lng]
     L.marker(latlng, { icon: userMarker })

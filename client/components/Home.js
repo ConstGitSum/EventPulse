@@ -13,6 +13,7 @@ export class Home extends React.Component {
 
   render() {
     return (
+      {/* Render Auth page if not logged in, Event List if logged in */}
       <div className = 'home'>
         {this.props.currentUser
          ? <List />
