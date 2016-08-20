@@ -185,6 +185,11 @@ span.event-distance {
   opacity: 0.7;
 }
 
+.event-time {
+  float: right;
+  color: #F6F0ED;
+  opacity: 0.7;
+}
 .event-title {
   color: inherit;
   display: inline-block;

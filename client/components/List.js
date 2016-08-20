@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Cell } from 'react-pure';
 import $ from 'jquery';
 import scrollTo from 'jquery.scrollto';
+import moment from 'moment'
 
 import {
   userLogOut,
@@ -47,17 +48,20 @@ export class List extends React.Component {
   }
 
   renderListItem(event, index) {
+    console.log(moment(event.time).format('h:mm a'))  //use moment to convert time this.state.startTimeObj.format('dddd, h:mm a')
     return <li
       key={index}
       className="event-item list-group-item"
       onClick={this.setCurrentEvent.bind(this, event, index)}>
       <h3 className="event-title">{event.title}</h3>
-      <span className="event-distance">{event.distance} miles</span>
+      <div className = "event-info">
+      <span className = "event-distance">{event.distance} miles </span>
+      <span className = "event-time">{moment(event.time).format('h:mm a')} </span>
+      </div>
         {/* Show additional info if clicked */}
         {this.props.currentEvent && event.id === this.props.currentEvent.id
         ? <div id="event-info">
             <h4 id="event_location">{event.location}</h4>
-            <p id="event_description">{event.description}</p>
             {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <div className="text-center view-details">
               <Link
