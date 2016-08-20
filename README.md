@@ -21,6 +21,13 @@ Event Pulse
   * Users can click on any individual event to view that event's details and chat with other guests or invite additional guests.
   * Users can create their own events happening within the next 12 hours.
 
+<p align="center">
+  <img src="client/public/images/demo/landing.png" alt="landing" width="350"/>
+  <img src="client/public/images/demo/list.png" alt="list" width="350"/>
+  <img src="client/public/images/demo/details.png" alt="details" width="350"/>
+  <img src="client/public/images/demo/create.png" alt="create" width="350"/>
+</p>
+
 ### Tech Stack
   * React
   * Redux
