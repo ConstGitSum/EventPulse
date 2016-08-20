@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getCurrentUser, getAllInvitations } from '../actions/actions';
 
 import List from './List';
-import Auth from './Auth';
+import Auth from './Auth.jsx';
 
 export class Home extends React.Component {
   componentWillMount() {
