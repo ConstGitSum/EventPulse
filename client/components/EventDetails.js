@@ -33,6 +33,7 @@ export class EventDetails extends React.Component {
   }
 
   componentWillMount() {
+    /* istanbul ignore if */
     if (!this.props.currentUser) {
       browserHistory.push('/');
     }
@@ -87,6 +88,10 @@ export class EventDetails extends React.Component {
     }
   }
 
+  /*
+    Changes the format of time when user clicks on the time
+    eg. Saturday, 10:30pm -> in 4 hours
+   */
   swapTime(type) {
     if (type === 'start') {
       if (this.state.startTimeShow) {
@@ -115,6 +120,10 @@ export class EventDetails extends React.Component {
     }
   }
 
+  /*
+    Provided text, className, an onclickfunction and if it is disabled or not
+    will generate a button with those parameters
+   */
   generateButtons(text, className, onClickFunction, disabled=null) {
     return (
       <button
@@ -127,6 +136,11 @@ export class EventDetails extends React.Component {
     )
   }
 
+  /*
+    Handles logic for rendering join/leave buttons and disabled join
+    depending on if the event is hidden, if the user has joined the event,
+    or if the event is not full
+   */
   renderButtons() {
     const currentEvent  = this.props.currentEvent;
     const currentUser   = this.props.currentUser;
@@ -142,7 +156,7 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Leave',
-          'btn btn-danger btn-block',
+          'leave-btn btn btn-danger btn-block',
           this.onClickLeave.bind(this)
         )
       )
@@ -152,14 +166,14 @@ export class EventDetails extends React.Component {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-primary btn-block',
+          'join-btn btn btn-primary btn-block',
           this.onClickJoin.bind(this))
       )
     } else {
       return (
         this.generateButtons(
           'Join',
-          'btn btn-danger btn-block',
+          'join-btn btn btn-danger btn-block',
           'disabled',
           this.onClickJoin.bind(this)
         )

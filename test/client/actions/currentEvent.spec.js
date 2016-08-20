@@ -74,5 +74,4 @@ describe('currentEvent Actions', () => {
     expect(action.payload).to.have.property('guests');
     done();
   })
-
 });
