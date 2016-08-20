@@ -30,6 +30,7 @@ export function getDefaultState() {
   }
 }
 
+// check if event time is within 12 hours
 export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   hour = Number(hour);
@@ -37,6 +38,7 @@ export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
   return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS;
 }
 
+// check if event time is in the future
 export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
@@ -44,6 +46,7 @@ export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   return eventTime.getTime() > currTime.getTime();
 }
 
+// get event time, add 1 more day if is_tomorrow is true
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
@@ -54,6 +57,7 @@ export function getEventTime(hour, minute, ampm, is_tomorrow) {
   return d;
 }
 
+// convert 12 hours to 24 hours (3pm to 15)
 export function get24Hour(hour, ampm) {
   hour = Number(hour);
   if (hour == 12) {
@@ -138,10 +142,6 @@ export function validateField(fieldKey, fieldValue) {
       return validateMinute(fieldValue);
     case 'ampm':
       return validateAmpm(fieldValue);
-    // case 'duration_hour':
-    //   return validateDuration(fieldValue,undefined);
-    // case 'duration_minute':
-    //   return validateDuration(undefined,fieldValue);
     case 'max_guests':
       return validateCapacity(fieldValue);
     default:
@@ -188,13 +188,13 @@ export function validateForm(validationErrors, formData) {
   return validationErrors;
 }
 
+// convert time into moment date
 export function parseTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   const year = d.getFullYear();
   const offSet = d.getTimezoneOffset()
   let month = d.getMonth() + 1;
   let day = d.getDate();
-
   let newHour;
   if(ampm === 'pm') {
     if(hour !== '12') {
@@ -205,7 +205,6 @@ export function parseTime(hour, minute, ampm, is_tomorrow) {
   } else {
     newHour = hour;
   }
-
   if(month < 10) { month =  "0" + month}
   if(day < 10) { day = '0' + day}
   const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
@@ -222,7 +221,6 @@ export function parseEndTime(startTime,hour,minute){
     } else {
       return start_time;
     }
-
   }
 }
 
