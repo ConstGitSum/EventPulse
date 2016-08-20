@@ -18,7 +18,7 @@
     "start": "./node_modules/.bin/nodemon ./server/server.js --ignore client/",
     "cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha -- --bail --recursive"
   },
-  "author": "",
+  "author": "Kenneth Torng, David Lewallen, Jad Carson, Chuwei Lu, Tony Kung",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.13.1",
@@ -69,6 +69,11 @@
     "cheerio": "^0.20.0",
     "dotenv": "^2.0.0",
     "enzyme": "^2.4.1",
+    "eslint": "^3.3.1",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.13.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.1.2",
     "isparta": "^4.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "jsdom": "^9.4.1",

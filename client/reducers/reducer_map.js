@@ -1,6 +1,6 @@
 import { SET_CURR_MARKER, SET_PREV_MARKER, SET_LOCATION } from '../actions/map';
 
-export default function(state = {}, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case SET_CURR_MARKER: {
       return Object.assign(state, { currMarker: action.payload });

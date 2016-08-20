@@ -8,7 +8,7 @@ import Auth from './Auth';
 
 export class Home extends React.Component {
   componentWillMount() {
-    this.props.getCurrentUser()
+    this.props.getCurrentUser();
   }
 
   render() {

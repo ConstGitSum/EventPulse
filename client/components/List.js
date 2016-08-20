@@ -14,7 +14,7 @@ import {
   getHiddenEvents,
   filterList,
   addInvite,
-  removeInvitation
+  removeInvitation,
 } from '../actions/actions';
 import { setLocation } from '../actions/map';
 import ListFilter from './ListFilter';
@@ -43,20 +43,21 @@ export class List extends React.Component {
 
   // toggles current event to show/hide additional info and scrolls to it on list
   setCurrentEvent(event, index) {
-    if(this.props.currentEvent.id === event.id) {
-      this.props.setCurrentEvent({})
+    if (this.props.currentEvent.id === event.id) {
+      this.props.setCurrentEvent({});
     } else {
-      this.props.setCurrentEvent(event)
+      this.props.setCurrentEvent(event);
     }
-    setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 50)
+    setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 50);
   }
 
   // renders one event item
   renderListItem(event, index) {
-    return <li
+    return (<li
       key={index}
       className="event-item list-group-item"
-      onClick={this.setCurrentEvent.bind(this, event, index)}>
+      onClick={this.setCurrentEvent.bind(this, event, index)}
+    >
       <h3 className="event-title">{event.title}</h3>
       <div className = "event-info">
       <span className = "event-distance">{event.distance} miles </span>
@@ -69,8 +70,9 @@ export class List extends React.Component {
             {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
             <div className="text-center view-details">
               <Link
-                onClick={(e) => {e.stopPropagation()}}
-                to={`/${event.id}`}>
+                onClick={(e) => { e.stopPropagation(); }}
+                to={`/${event.id}`}
+              >
                 <button className="btn btn-secondary">
                   View Event Details
                 </button>
@@ -78,29 +80,29 @@ export class List extends React.Component {
             </div>
           </div>
         : null}
-    </li>
+    </li>);
   }
 
   //This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
   myFriendsGoing(friendsList, guestList){
     if (friendsList) {
-      var friendIds = friendsList.map((friendId => friendId.id))
-      var friendsGoing = guestList.filter((friendGoing) => friendIds.includes(friendGoing.id));
+      const friendIds = friendsList.map((friendId => friendId.id));
+      const friendsGoing = guestList.filter((friendGoing) => friendIds.includes(friendGoing.id));
 
-      return <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend,index) => {
-        if (index<5) {
-          return <img className = 'eventListFriendImage' key = {friend.id} src = {friend.image}/>
+      return (<div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend, index) => {
+        if (index < 5) {
+          return <img className="eventListFriendImage" key={friend.id} src={friend.image} />;
         }
-      })}</div>
+      })}</div>);
     }
   }
 
   //This will filter via invites
   seeInvites() {
-    var now = new Date();
-    var newList = this.props.list.filter((event) => {
+    const now = new Date();
+    const newList = this.props.list.filter((event) => {
       if (this.props.invitations.includes(event.id)) {
-        var then = new Date(event.endTime);
+        const then = new Date(event.endTime);
         if (then > now) {
           return true;
         } else {
@@ -108,7 +110,7 @@ export class List extends React.Component {
         }
       }
       return false;
-    })
+    });
 
     this.props.filterList(
       newList,
@@ -125,9 +127,9 @@ export class List extends React.Component {
         <div className="row event-map">
         <EventMap />
           <div className="list col-xs-4 text-left">
-          <div className = "filterAndInvites">
+          <div className="filterAndInvites">
             <ListFilter />
-            {this.props.invitations.length>0 ? <button className ="inviteNotice" onClick = {this.seeInvites.bind(this)}>{this.props.invitations.length}</button> : null}
+            {this.props.invitations.length > 0 ? <button className="inviteNotice" onClick={this.seeInvites.bind(this)}>{this.props.invitations.length}</button> : null}
               </div>
             <div className="eventList">
               <ul className="event-list list-group">
@@ -144,14 +146,15 @@ export class List extends React.Component {
               </Link>
               <button
                 className="logout btn btn-danger"
-                onClick={this.props.userLogOut}>
+                onClick={this.props.userLogOut}
+              >
                 Log Out
               </button>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -166,7 +169,7 @@ function mapStateToProps(state) {
     hiddenEvents: state.hiddenEvents,
     invites: state.invites,
     invitations: state.invitations,
-    location: state.map.currLocation
+    location: state.map.currLocation,
   };
 }
 
@@ -180,7 +183,7 @@ function mapDispatchToProps(dispatch) {
     filterList,
     userLogOut,
     addInvite,
-    removeInvitation
+    removeInvitation,
   }, dispatch);
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Modal, Button } from "react-bootstrap";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { Modal, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { toggleChatModal } from "../actions/actions";
-import Chat from "./Chat";
+import { toggleChatModal } from '../actions/actions';
+import Chat from './Chat';
 
 export class ChatModal extends React.Component {
   render() {
@@ -14,13 +14,13 @@ export class ChatModal extends React.Component {
               <Modal.Title className="chatroom">CHATROOM</Modal.Title>
             </Modal.Header>
               <Modal.Body>
-                <Chat event={this.props.currentEvent}/>
+                <Chat event={this.props.currentEvent} />
               </Modal.Body>
             <Modal.Footer>
               <Button className="col-xs-3 col-xs-offset-9" onClick={this.props.toggleChatModal}>Close</Button>
             </Modal.Footer>
           </Modal>
-    )
+    );
   }
 }
 
@@ -28,16 +28,16 @@ export class ChatModal extends React.Component {
 function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
-    modals: state.modals
-  }
+    modals: state.modals,
+  };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    toggleChatModal
-  }, dispatch)
+    toggleChatModal,
+  }, dispatch);
 }
 
 /* istanbul ignore next */
-export default connect(mapStateToProps, mapDispatchToProps)(ChatModal)
+export default connect(mapStateToProps, mapDispatchToProps)(ChatModal);

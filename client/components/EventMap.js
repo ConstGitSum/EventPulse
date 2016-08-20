@@ -40,12 +40,12 @@ export class EventMap extends React.Component {
     const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       maxZoom: 18,
       id: 'light-v9',
-      accessToken: process.env.MAP_API_KEY
+      accessToken: process.env.MAP_API_KEY,
     });
 
     // draw map to div with id 'list-map'
     this.map = L.map('list-map', {
-      layers: [tiles]
+      layers: [tiles],
     });
     // draw markers for event list
     this._drawMarkers();
@@ -63,7 +63,7 @@ export class EventMap extends React.Component {
       const marker = L.marker(latlng, { icon: generateMarker(event.category) })
         .addTo(this.map);
 
-      marker.on('click', this.props.setCurrentEvent.bind(this, event))
+      marker.on('click', this.props.setCurrentEvent.bind(this, event));
 
       // add leaflet marker class to markerTracker object
       this.markerTracker[event.id] = marker;
@@ -73,7 +73,7 @@ export class EventMap extends React.Component {
   // clear all current markers on map
   // clear state of currMarker, prevMarker, and currentEvent
   _clearMarkers() {
-    for (let id in this.markerTracker) this.map.removeLayer(this.markerTracker[id]);
+    for (const id in this.markerTracker) this.map.removeLayer(this.markerTracker[id]);
     this.markerTracker = {};
     this.props.setCurrMarker({});
     this.props.setPrevMarker({});
@@ -88,8 +88,8 @@ export class EventMap extends React.Component {
     // set this marker as the new prevMarker, and add new '!' marker as currMarker
     this.map.removeLayer(marker);
     const newMarker = L.marker(marker._latlng, { icon: alertMarker }).addTo(this.map);
-    this.props.setPrevMarker({marker: marker, eventId: event.id });
-    this.props.setCurrMarker({marker: newMarker, eventId: event.id });
+    this.props.setPrevMarker({ marker, eventId: event.id });
+    this.props.setCurrMarker({ marker: newMarker, eventId: event.id });
     this.props.setCurrentEvent(event);
     this.markerTracker[event.id] = newMarker;
 
@@ -99,7 +99,7 @@ export class EventMap extends React.Component {
     // find index of clicked event to scroll to it on list
     const index = this.props.listFiltered.findIndex(e => e.id === event.id);
     $('.eventList').find(`li:eq(${index})`).addClass('selected');
-    setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 300)
+    setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 300);
   }
 
   // revert current marker (with exclamation alert) back to original marker
@@ -118,10 +118,10 @@ export class EventMap extends React.Component {
 
   // add marker to map for current user location
   _onLocationFound() {
-    const latlng = [this.props.location.lat, this.props.location.lng]
+    const latlng = [this.props.location.lat, this.props.location.lng];
     L.marker(latlng, { icon: userMarker })
       .addTo(this.map)
-      .bindPopup("You are here!");
+      .bindPopup('You are here!');
 
     this.map.setView(latlng, 16, { animate: true, duration: 1.0 });
   }
@@ -139,7 +139,7 @@ function mapStateToProps(state) {
     listFiltered: state.listFiltered,
     currentEvent: state.currentEvent,
     map: state.map,
-    location: state.map.currLocation
+    location: state.map.currLocation,
   };
 }
 
@@ -148,7 +148,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setCurrentEvent,
     setCurrMarker,
-    setPrevMarker
+    setPrevMarker,
   }, dispatch);
 }
 

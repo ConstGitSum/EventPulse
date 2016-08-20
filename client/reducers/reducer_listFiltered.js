@@ -1,6 +1,6 @@
 import { FETCH_EVENTS, FILTER_EVENTS } from '../actions/actions';
 
-export default function(state = [], action) {
+export default function (state = [], action) {
   switch (action.type) {
     case FILTER_EVENTS: {
       return action.payload;

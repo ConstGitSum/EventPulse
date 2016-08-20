@@ -24,9 +24,9 @@ import {
   validateCapacity,
   validateField,
   validateTimeRange,
-  validateForm  } from '../utils/form';
+  validateForm } from '../utils/form';
 
-export default function(state = getDefaultState(), action) {
+export default function (state = getDefaultState(), action) {
   let validationErrors;
   switch (action.type) {
     case VALIDATE_EVENT_FORM:
@@ -34,7 +34,7 @@ export default function(state = getDefaultState(), action) {
       action.payload.callback(validationErrors);
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData),
-        validationErrors: validationErrors
+        validationErrors,
       });
 
     case UPDATE_EVENT_FIELD:
@@ -47,7 +47,7 @@ export default function(state = getDefaultState(), action) {
       }
       return Object.assign({}, state, {
         eventFormData: Object.assign({}, state.eventFormData, { [action.payload.fieldKey]: action.payload.fieldValue }),
-        validationErrors
+        validationErrors,
       });
 
     case CLEAR_FORM_VALUES: {
@@ -55,21 +55,21 @@ export default function(state = getDefaultState(), action) {
     }
 
     case EDIT_EVENT: {
-      let newState = Object.assign({}, state);
+      const newState = Object.assign({}, state);
       newState.eventFormData = action.payload;
       const time = {
         hour: moment(action.payload.time).format('h'),
         minute: moment(action.payload.time).format('mm'),
         ampm: moment(action.payload.time).format('a'),
-      }
+      };
       const endTime = newState.eventFormData.endTime;
       const currentTime = moment();
-      
+
       newState.eventFormData.hour = time.hour;
       newState.eventFormData.minute = time.minute;
       newState.eventFormData.ampm = time.ampm;
-      if(moment(endTime).isSame(currentTime, 'day')) {
-        newState.eventFormData.is_tomorrow = false; 
+      if (moment(endTime).isSame(currentTime, 'day')) {
+        newState.eventFormData.is_tomorrow = false;
       } else {
         newState.eventFormData.is_tomorrow = true;
       }
@@ -80,7 +80,7 @@ export default function(state = getDefaultState(), action) {
       newState.eventFormData.duration_minute = duration_minute;
       newState.eventFormData.privacy = action.payload.privacy.toString();
       newState.toggleEventUpdate = true;
-      newState.validationErrors = {}
+      newState.validationErrors = {};
       return newState;
     }
 

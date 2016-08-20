@@ -1,23 +1,23 @@
-import React from 'react'
-import ReactDom from 'react-dom'
-//import io from 'socket.io-client'
+import React from 'react';
+import ReactDom from 'react-dom';
+// import io from 'socket.io-client'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import axios from 'axios'
-import {addInvite} from '../actions/actions'
+import axios from 'axios';
+import { addInvite } from '../actions/actions';
 import { CardStack, Card } from 'react-cardstack';
-import FriendsList from './FriendsList'
+import FriendsList from './FriendsList';
 
 export class GuestList extends React.Component {
 
   render() {
-    return(
+    return (
       <div>
       <ul className="totalGuests">{this.props.currentEvent.guests.map((guest) => {
-       return <li key = {guest.id} className="event-item list-group-item guest"><img src={guest.image} className="largePicture eventListFriendImage"/> {guest.name} </li>
+        return <li key={guest.id} className="event-item list-group-item guest"><img src={guest.image} className="largePicture eventListFriendImage" /> {guest.name} </li>;
       })} </ul>
       </div>
-      )
+      );
   }
 
   }
@@ -26,13 +26,13 @@ export class GuestList extends React.Component {
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
-    currentEvent: state.currentEvent
-  }
+    currentEvent: state.currentEvent,
+  };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({addInvite},dispatch)
+  return bindActionCreators({ addInvite }, dispatch);
 }
 
 /* istanbul ignore next */

@@ -9,12 +9,12 @@ export class ListFilter extends React.Component {
   render() {
     // font awesome icons for list filters
     const filters = {
-      all      : 'globe',
-      unhidden : 'eye-slash',
-      hidden   : 'eye',
-      created  : 'plus-circle',
-      joined   : 'check-circle',
-    }
+      all: 'globe',
+      unhidden: 'eye-slash',
+      hidden: 'eye',
+      created: 'plus-circle',
+      joined: 'check-circle',
+    };
 
     return (
       // react bootstrap dropdown that maps each filter to a button with corresponding icon
@@ -30,8 +30,9 @@ export class ListFilter extends React.Component {
               this.props.currentUser.id,
               this.props.hiddenEvents,
               this.props.location
-            )}>
-            <i className={"filter-icon fa fa-" + filters[filter]} aria-hidden="true"></i>
+            )}
+          >
+            <i className={'filter-icon fa fa-' + filters[filter]} aria-hidden="true"></i>
             {filter}
           </MenuItem>
         )}
@@ -46,14 +47,14 @@ function mapStateToProps(state) {
     currentUser: state.currentUser,
     list: state.list,
     hiddenEvents: state.hiddenEvents,
-    location: state.map.currLocation
+    location: state.map.currLocation,
   };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    filterList
+    filterList,
   }, dispatch);
 }
 
