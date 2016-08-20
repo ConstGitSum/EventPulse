@@ -10,12 +10,14 @@ export class DetailsMap extends React.Component {
   }
 
   _buildMap() {
+    // Mapbox tile API and light-v9 theme
     const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       maxZoom: 18,
       id: 'light-v9',
       accessToken: process.env.MAP_API_KEY,
     });
 
+    // draw map to div with id 'details-map' with scrolling and zooming disabled
     this.map = L.map('details-map', {
       layers: [tiles],
       zoomControl: false,
@@ -27,12 +29,14 @@ export class DetailsMap extends React.Component {
       tap: false
     });
 
+    // add 2 markers - current location and this event's location
     const eventLatLng = [this.props.currentEvent.latitude, this.props.currentEvent.longitude];
     const userLatLng = [this.props.location.lat, this.props.location.lng];
     const eventMarker = L.marker(eventLatLng, { icon: generateMarker(this.props.currentEvent.category) })
     const locationMarker = L.marker(userLatLng, { icon: userMarker });
     const group = new L.featureGroup([eventMarker, locationMarker]).addTo(this.map);
 
+    // fit map to encompass these 2 markers with some padding
     this.map.fitBounds(group.getBounds().pad(0.5));
   }
 

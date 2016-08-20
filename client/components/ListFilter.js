@@ -7,6 +7,7 @@ import { filterList } from '../actions/actions';
 
 export class ListFilter extends React.Component {
   render() {
+    // font awesome icons for list filters
     const filters = {
       all      : 'globe',
       unhidden : 'eye-slash',
@@ -16,6 +17,7 @@ export class ListFilter extends React.Component {
     }
 
     return (
+      {/* react bootstrap dropdown that maps each filter to a button with corresponding icon */}
       <DropdownButton title={'Filter Events'} id={'event-filter-dropdown'} className = "filtering">
         {Object.keys(filters).map((filter, index) =>
           <MenuItem
