@@ -208,7 +208,6 @@ export function toggleChatModal() {
 export function createEvent(formData, currentUser) {
   var date = Date.now();
   var newDate = new Date();
-
   if(formData.is_tomorrow === 'true') {
     if(Number(formData.hour) === 12){
       data = date + (Number(formData.hour)+12-newDate.getHours())*3600000 + (Number(formData.minute) - newDate.getMinutes())*60000

@@ -30,6 +30,7 @@ export function getDefaultState() {
   }
 }
 
+// Check if event time is within 12 hours
 export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   hour = Number(hour);
@@ -37,6 +38,7 @@ export function isTimeWithinRange(hour, minute, ampm, is_tomorrow) {
   return (eventTime.getTime() - currTime.getTime()) <= EVENT_RANGE_LIMIT_IN_MILLIS;
 }
 
+// Check if event time is in the future
 export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   const currTime = new Date();
   const eventTime = getEventTime(hour, minute, ampm, is_tomorrow);
@@ -44,6 +46,7 @@ export function isTimeInTheFuture(hour, minute, ampm, is_tomorrow) {
   return eventTime.getTime() > currTime.getTime();
 }
 
+// Get event time, add 1 more day if is_tomorrow is true
 export function getEventTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   d.setHours(get24Hour(hour, ampm));
@@ -54,6 +57,7 @@ export function getEventTime(hour, minute, ampm, is_tomorrow) {
   return d;
 }
 
+// Convert 12 hours to 24 hours (3pm to 15)
 export function get24Hour(hour, ampm) {
   hour = Number(hour);
   if (hour == 12) {
@@ -138,10 +142,6 @@ export function validateField(fieldKey, fieldValue) {
       return validateMinute(fieldValue);
     case 'ampm':
       return validateAmpm(fieldValue);
-    // case 'duration_hour':
-    //   return validateDuration(fieldValue,undefined);
-    // case 'duration_minute':
-    //   return validateDuration(undefined,fieldValue);
     case 'max_guests':
       return validateCapacity(fieldValue);
     default:
@@ -188,6 +188,7 @@ export function validateForm(validationErrors, formData) {
   return validationErrors;
 }
 
+// Convert time into moment date
 export function parseTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   const year = d.getFullYear();
@@ -222,7 +223,6 @@ export function parseEndTime(startTime,hour,minute){
     } else {
       return start_time;
     }
-
   }
 }
 

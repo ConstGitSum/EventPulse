@@ -27,17 +27,21 @@ export class Create extends React.Component {
       browserHistory.push('/');
     }
   }
+  // onSubmitRedux runs when user clicks on create button. 
+  // This function create or update event
   onSubmitRedux(event) {
     event.preventDefault();
     this.setState({locationError: false})
     this.props.validateEventForm(validationErrors => {
+      // create or update event if there is no validation errors
+      // after successfully updating/creating event, clears form values and redirects user to the event detail page 
       if (Object.keys(validationErrors).length === 0) {
         if (this.props.toggleEventUpdate) {
+          console.log('in create, ',this.props.eventFormData)
           this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
             .then(res => {
               if (res.error) throw new Error('Unable to update event');
               this.props.clearFormValues();
-
               browserHistory.push(`/${this.props.currentEvent.id}`)
             })
             .catch(err => {
@@ -56,11 +60,11 @@ export class Create extends React.Component {
       }
     });
   }
-
+  // onFieldChangeRedux runs when user enters values into any fields
   onFieldChangeRedux(event) {
     this.props.updateEventField(event.target.name, event.target.value);
   }
-
+  // onFieldChangeRedux runs when user toggles no capacity limit checkbox
   onNoGuestLimit(event) {
     if (event.target.checked) {
       this.props.updateEventField('max_guests', -1);
@@ -68,11 +72,13 @@ export class Create extends React.Component {
       this.props.updateEventField('max_guests', 1);
     }
   }
-
+  // onClearValues runs when user clicks on Clear Values button. 
+  // This function clears out all input values and validation errors
   onClearValues(event) {
     this.props.clearFormValues();
   }
-
+  // onMoreOptions runs when user clicks on More Options button
+  // This function expands and collapses the optional section of form 
   onMoreOptions() {
     if(this.state.folded) {
       this.setState({folded: false})
@@ -81,7 +87,7 @@ export class Create extends React.Component {
     }
     setTimeout(() => $('.create-form').scrollTo(300,50))
   }
-
+  // generateButton determines which button to show: Update or Create
   generateButton() {
     if (this.props.toggleEventUpdate) {
       return (
@@ -111,6 +117,7 @@ export class Create extends React.Component {
 
     return(
       <div className="event-create">
+        {/* Back button redirects user to the homepage */}
         <Link to='/'>
           <i onClick={this.onClearValues.bind(this)}
              className="back-btn fa fa-arrow-left fa-3x"
@@ -127,6 +134,7 @@ export class Create extends React.Component {
             </div>
           </div>
           <div className="scroll">
+            {/* Clear Values button */}  
             <div className="row text-right col-xs-12">
               <button
                 type="button"
@@ -136,6 +144,7 @@ export class Create extends React.Component {
                 Clear Values
               </button>
             </div>
+            {/* Form starts here */}
             <form role="form" className="create-form">
               <div className="required">
                 <div className="form-group col-xs-10 col-xs-offset-1">
@@ -155,7 +164,6 @@ export class Create extends React.Component {
                           <div className="text-danger col-sm-8 errors"> {validationErrors.title} </div>
                        </div>) : null}
                 </div>
-
                 <div className="form-group col-xs-10 col-xs-offset-1">
                   <label className="col-xs-12 col-sm-4">Location*</label>
                   <input
@@ -188,7 +196,6 @@ export class Create extends React.Component {
                     </select>
                   </div>
                 </div>
-
                 <div className="form-group col-xs-10 col-xs-offset-1">
                   <label className="col-xs-12 col-sm-4">Time*</label>
                   <div className="col-xs-4 col-sm-2 no-padding-left">
@@ -244,8 +251,8 @@ export class Create extends React.Component {
                     </div>
                   </div>
                 </div>
-              </div>
-
+              </div>             
+              {/* More Options button expands and collapses optional fields */}  
               <div className="form-group text-center more-option">
                 <button
                   type="button"
@@ -255,16 +262,16 @@ export class Create extends React.Component {
                   {this.state.folded? <span className='more-option-btn'>More Options</span>: <span>Less Options</span>}
                 </button>
               </div>
-
+                {/* Do not display if this.state.folded is true */}  
                 {this.state.folded
                   ? null
                   :<div>
                       <div className="form-group col-xs-10 col-xs-offset-1">
                        <label className="col-xs-12 col-sm-4 more-label">Duration</label>
                         <div>
-
                           <div className="row duration">
                             <div className="col-xs-4 col-sm-2 no-padding-left">
+                            {console.log(eventFormData)}
                               <select name="duration_hour"
                                 className="form-control"
                                 value={eventFormData.duration_hour}
@@ -291,14 +298,12 @@ export class Create extends React.Component {
                               </select>
                             </div>
                           </div>
-
                           <div className="col-xs-12 errors">
                             <div className="col-sm-4"></div>
                             {validationErrors._duration ? <div className="text-danger col-sm-8 errors"> {validationErrors._duration}</div> : null}
                           </div>
                         </div>
                       </div>
-
                       <div className="form-group col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4">Capacity</label>
                         {(eventFormData.max_guests === -1) ? null : (
@@ -351,7 +356,6 @@ export class Create extends React.Component {
                           </label>
                         </div>
                       </div>
-
                       <div className="form-group col-xs-10 col-xs-offset-1">
                         <label className="col-xs-12 col-sm-4 desc-label">Description</label>
                         <input
@@ -369,7 +373,6 @@ export class Create extends React.Component {
                       </div>
                 </div>
                 }
-
             </form>
           </div>
           <div className="footer">
@@ -378,6 +381,7 @@ export class Create extends React.Component {
                 {this.generateButton()}
               </div>
             </div>
+            {/* Display validation errors and create/update buttons */}  
             <div className="col-xs-10 col-xs-offset-1 text-center">
               {validationErrors._form ? <div className="text-danger summary"> {validationErrors._form} </div> : null}
               {this.state.locationError ? <div className="text-danger summary"> Form submission failed: invalid location </div> : null }
@@ -389,7 +393,7 @@ export class Create extends React.Component {
   }
 }
 
-/* istanbul ignore next */
+// istanbul ignore next 
 function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
@@ -400,7 +404,7 @@ function mapStateToProps(state) {
   }
 }
 
-/* istanbul ignore next */
+// istanbul ignore next
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     createEvent,
@@ -412,5 +416,5 @@ function mapDispatchToProps(dispatch) {
     deleteUpdateData }, dispatch)
 }
 
-/* istanbul ignore next */
+// istanbul ignore next 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
