@@ -32,8 +32,11 @@ Event Pulse
 ### Tech Stack
   * React
   * Redux
+  * Webpack
   * Node/Express
   * PostgreSQL with Knex
+  * Socket.io
+  * Enzyme/Mocha/Chai for testing
 
 ### Authors
   * [Chuwei Lu](https://github.com/sxcw)
