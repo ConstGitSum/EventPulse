@@ -19,7 +19,7 @@ export class Home extends React.Component {
          ? <List />
          : <Auth />}
       </div>
-    );
+    )
   }
 }
 

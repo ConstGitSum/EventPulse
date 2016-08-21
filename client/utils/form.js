@@ -205,16 +205,10 @@ export function parseTime(hour, minute, ampm, is_tomorrow) {
   } else {
     newHour = hour;
   }
-<<<<<<< 90cec6e03227f13ffeb4aaff6560d8f66d5750c6
-  if(month < 10) { month =  "0" + month}
-  if(day < 10) { day = '0' + day}
-  const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
-=======
 
   if (month < 10) { month = '0' + month; }
   if (day < 10) { day = '0' + day; }
   const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`;
->>>>>>> (refactor) Linting.. YAY!
 
   return moment.utc(momTime, 'YYYY-MM-DD HH:mm Z').format();
 }
