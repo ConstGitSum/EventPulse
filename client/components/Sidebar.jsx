@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-
-import { Button } from 'react-bootstrap';
 
 import { hideEvent, unhideEvent, editEvent } from '../actions/actions';
 
@@ -22,7 +20,7 @@ export class Sidebar extends React.Component {
   onClickHide() {
     this.props.hideEvent(this.props.currentEvent.id, this.props.currentUser.id)
       .then(() => browserHistory.push('/'))
-      .catch(err => console.log('ERROR - onClickHide:', err));
+      .catch(() => {});
   }
 
   onClickUnhide() {
@@ -38,18 +36,43 @@ export class Sidebar extends React.Component {
 
     if (currentUser.id !== currentEvent.created_by
       && hiddenEvents.indexOf(currentEvent.id) === -1) {
-      items.push(generateButton('Hide', this.onClickHide.bind(this)));
+      items.push(this.generateButton('Hide', this.onClickHide.bind(this)));
     } else if (currentUser.id !== currentEvent.created_by) {
-      items.push(generateButton('Show', this.onClickUnhide.bind(this)));
+      items.push(this.generateButton('Show', this.onClickUnhide.bind(this)));
     }
 
     if (currentEvent.created_by === currentUser.id) {
-      items.push(generateButton('Edit', this.onClickEdit.bind(this)));
+      items.push(this.generateButton('Edit', this.onClickEdit.bind(this)));
     }
 
-    items.push(generateButton('Guests', this.onClickGuests.bind(this)));
+    items.push(this.generateButton('Guests', this.onClickGuests.bind(this)));
 
     return items;
+  }
+
+  getFaIcon(text) {
+    const iconDict = {
+      Hide: 'eye-slash',
+      Show: 'eye',
+      Edit: 'pencil',
+      Guests: 'users',
+      Invite: 'user-plus',
+    };
+
+    return iconDict[text];
+  }
+
+  generateButton(text, onClickFunction) {
+    return (
+      <li
+        key={text}
+        className="sidebar-button"
+        onClick={onClickFunction}
+      >
+        <i className={'fa fa-2x fa-'.concat(this.getFaIcon(text))} />
+        <p>{text}</p>
+      </li>
+    );
   }
 
   render() {
@@ -63,30 +86,14 @@ export class Sidebar extends React.Component {
   }
 }
 
-function generateButton(text, onClickFunction) {
-  return (
-    <li
-      key={text}
-      className="sidebar-button"
-      onClick={onClickFunction}
-    >
-      <i className={'fa fa-2x fa-' + getFaIcon(text)}></i>
-      <p>{text}</p>
-    </li>
-  );
-}
-
-function getFaIcon(text) {
-  const iconDict = {
-    'Hide': 'eye-slash',
-    'Show': 'eye',
-    'Edit': 'pencil',
-    'Guests': 'users',
-    'Invite': 'user-plus',
-  };
-
-  return iconDict[text];
-}
+Sidebar.propTypes = {
+  editEvent: PropTypes.func,
+  currentEvent: PropTypes.object.isRequired,
+  hideEvent: PropTypes.func,
+  unhideEvent: PropTypes.func,
+  currentUser: PropTypes.any.isRequired,
+  hiddenEvents: PropTypes.array.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
