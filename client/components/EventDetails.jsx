@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
@@ -30,6 +30,10 @@ export class EventDetails extends React.Component {
       endTimeText: null,
       endTimeShow: true,
     };
+
+    this.onClickJoin = this.onClickJoin.bind(this);
+    this.onClickLeave = this.onClickLeave.bind(this);
+    this.onClickBack = this.onClickBack.bind(this);
   }
 
   componentWillMount() {
@@ -58,7 +62,7 @@ export class EventDetails extends React.Component {
           this.props.addInvite(['remove', this.props.currentUser.id, this.props.currentEvent.id]);
         }
       })
-      .catch(err => console.log('ERROR - onClickJoin:', err));
+      .catch(() => {});
   }
 
   /**
@@ -67,7 +71,7 @@ export class EventDetails extends React.Component {
   onClickLeave() {
     this.props.leaveEvent(this.props.currentEvent.id, this.props.currentUser.id)
       .then()
-      .catch(err => console.log('ERROR - onClickLeave:', err));
+      .catch(() => {});
   }
 
   /**
@@ -92,31 +96,17 @@ export class EventDetails extends React.Component {
     Changes the format of time when user clicks on the time
     eg. Saturday, 10:30pm -> in 4 hours
    */
-  swapTime(type) {
-    if (type === 'start') {
-      if (this.state.startTimeShow) {
-        this.setState({
-          startTimeShow: false,
-          startTimeText: this.state.startTimeObj.fromNow(),
-        });
-      } else {
-        this.setState({
-          startTimeShow: true,
-          startTimeText: this.state.startTimeObj.format('dddd, h:mm a'),
-        });
-      }
+  swapTime() {
+    if (this.state.startTimeShow) {
+      this.setState({
+        startTimeShow: false,
+        startTimeText: this.state.startTimeObj.fromNow(),
+      });
     } else {
-      if (this.state.endTimeShow) {
-        this.setState({
-          endTimeShow: false,
-          endTimeText: this.state.endTimeObj.fromNow(),
-        });
-      } else {
-        this.setState({
-          endTimeShow: true,
-          endTimeText: this.state.endTimeObj.format('dddd, h:mm a'),
-        });
-      }
+      this.setState({
+        startTimeShow: true,
+        startTimeText: this.state.startTimeObj.format('dddd, h:mm a'),
+      });
     }
   }
 
@@ -147,7 +137,7 @@ export class EventDetails extends React.Component {
     const currentUser = this.props.currentUser;
     const hiddenEvents = this.props.hiddenEvents;
     const guestLength = currentEvent.guests.length;
-    const max_guests = currentEvent.max_guests;
+    const maxGuests = currentEvent.max_guests;
 
     const isEventHidden = hiddenEvents.indexOf(currentEvent.id) !== -1;
     const isUserInEvent = currentEvent.guests.some(guest =>
@@ -163,47 +153,47 @@ export class EventDetails extends React.Component {
       );
     }
 
-    if (!isUserInEvent && !isEventHidden && guestLength !== max_guests) {
+    if (!isUserInEvent && !isEventHidden && guestLength !== maxGuests) {
       return (
         this.generateButtons(
           'Join',
           'join-btn btn btn-primary btn-block',
           this.onClickJoin.bind(this))
       );
-    } else {
-      return (
-        this.generateButtons(
-          'Join',
-          'join-btn btn btn-danger btn-block',
-          'disabled',
-          this.onClickJoin.bind(this)
-        )
-      );
     }
+
+    return (
+      this.generateButtons(
+        'Join',
+        'join-btn btn btn-danger btn-block',
+        'disabled',
+        this.onClickJoin.bind(this)
+      )
+    );
   }
 
   render() {
-    { /* Check to see if the event was created by the current user */ }
-    const creator = this.props.currentEvent.guests.find(guest => {
-      return guest.id === this.props.currentEvent.created_by; });
-    const max_guests = this.props.currentEvent.max_guests === -1
+    // Check to see if the event was created by the current user
+    const creator = this.props.currentEvent.guests.find(guest =>
+      guest.id === this.props.currentEvent.created_by);
+    const maxGuests = this.props.currentEvent.max_guests === null
       ? '∞'
       : this.props.currentEvent.max_guests;
     const currentAttending = this.props.currentEvent.guests.length;
-    const spotsRemaining = max_guests === '∞'
+    const spotsRemaining = maxGuests === '∞'
       ? '∞'
-      : max_guests - currentAttending;
-    const attendancePercentage = max_guests === '∞'
+      : maxGuests - currentAttending;
+    const attendancePercentage = maxGuests === '∞'
       ? 0
-      : currentAttending / max_guests * 100;
+      : (currentAttending / maxGuests) * 100;
 
     return (
       <div className="event-details">
         <i
-          onClick={this.onClickBack.bind(this)}
+          onClick={this.onClickBack}
           className="back-btn fa fa-arrow-left fa-3x"
           aria-hidden="true"
-        ></i>
+        />
         <Sidebar />
 
         <div className="container">
@@ -219,7 +209,7 @@ export class EventDetails extends React.Component {
                 <ProgressBar
                   bsStyle="info"
                   now={attendancePercentage}
-                  label={`${currentAttending}/${max_guests}`}
+                  label={`${currentAttending}/${maxGuests}`}
                   key={1}
                 />
                 <ProgressBar
@@ -255,7 +245,9 @@ export class EventDetails extends React.Component {
                   <tr>
                     <td className="table-heading"><strong>Created By</strong></td>
                     <td className="table-heading align-white"><strong> : </strong></td>
-                    <td className="table-info">{creator ? creator.name : 'Creator is no longer in the event'}</td>
+                    <td className="table-info">
+                      {creator ? creator.name : 'Creator is no longer in the event'}
+                    </td>
                   </tr>
                   <tr>
                     <td className="table-heading"><h4><strong>Category</strong></h4></td>
@@ -270,7 +262,9 @@ export class EventDetails extends React.Component {
                   <tr>
                     <td className="table-heading"><h4><strong>Duration</strong></h4></td>
                     <td className="table-heading align-white"><strong> : </strong></td>
-                    <td className="table-info">{humanizeDuration(this.props.currentEvent.duration * 1000)}</td>
+                    <td className="table-info">
+                      {humanizeDuration(this.props.currentEvent.duration * 1000)}
+                    </td>
                   </tr>
                   <tr onClick={this.swapTime.bind(this, 'start')}>
                     <td className="table-heading"><h4><strong>Start Time</strong></h4></td>
@@ -299,6 +293,18 @@ export class EventDetails extends React.Component {
     );
   }
 }
+
+EventDetails.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  currentEvent: PropTypes.object.isRequired,
+  joinEvent: PropTypes.func.isRequired,
+  invitations: PropTypes.array.isRequired,
+  addInvite: PropTypes.func.isRequired,
+  removeInvitation: PropTypes.func.isRequired,
+  leaveEvent: PropTypes.func.isRequired,
+  hiddenEvents: PropTypes.array.isRequired,
+  toggleChatModal: PropTypes.func.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
