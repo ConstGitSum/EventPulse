@@ -27,7 +27,7 @@ export default function generateMarker(category) {
       return L.AwesomeMarkers.icon({
         icon: 'music',
         markerColor: 'lightred',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     case 'dining': {
