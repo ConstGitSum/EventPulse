@@ -1,10 +1,8 @@
 import {
   CREATE_EVENT,
   JOIN_EVENT,
-  HIDE_EVENT,
   SET_CURRENT_EVENT,
   LEAVE_EVENT,
-  EDIT_EVENT,
   UPDATE_EVENT,
 } from '../actions/actions';
 
