@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -32,7 +32,7 @@ export class ListFilter extends React.Component {
               this.props.location
             )}
           >
-            <i className={'filter-icon fa fa-' + filters[filter]} aria-hidden="true"></i>
+            <i className={'filter-icon fa fa-'.concat(filters[filter])} aria-hidden="true" />
             {filter}
           </MenuItem>
         )}
@@ -40,6 +40,14 @@ export class ListFilter extends React.Component {
     );
   }
 }
+
+ListFilter.propTypes = {
+  filterList: PropTypes.func,
+  list: PropTypes.array.isRequired,
+  currentUser: PropTypes.any.isRequired,
+  hiddenEvents: PropTypes.array.isRequired,
+  location: PropTypes.object,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {

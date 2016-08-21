@@ -41,7 +41,6 @@ export class Create extends React.Component {
       // create or update event if there is no validation errors
       // after successfully updating/creating event,
       // clears form values and redirects user to the event detail page
->>>>>>> (refactor) Tried to fix as much of Create.jsx as possible regarding linting:client/components/Create.jsx
       if (Object.keys(validationErrors).length === 0) {
         if (this.props.toggleEventUpdate) {
           this.props.updateEvent(
@@ -202,15 +201,6 @@ export class Create extends React.Component {
                       name="category"
                       className="form-control"
                       value={eventFormData.category}
-<<<<<<< 189954c5b9cbc822e2fd69a5d02d6d46281a5f70:client/components/Create.js
-                      onBlur={this.onFieldChangeRedux.bind(this)}
-                      onChange={this.onFieldChangeRedux.bind(this)}>
-                      {['athletics', 'entertainment', 'nightlife', 'music', 'dining', 'coffee', 'olympics', 'other'].map((h) => {
-                        return (
-                          <option key={h} value={h}>{h}</option>
-                        );
-                      })}
-=======
                       onBlur={this.onFieldChangeRedux}
                       onChange={this.onFieldChangeRedux}
                     >
@@ -221,11 +211,10 @@ export class Create extends React.Component {
                         'music',
                         'dining',
                         'coffee',
-                        'olympics-special',
+                        'olympics',
                         'other',
                       ].map((h) => <option key={h} value={h}>{h}</option>) }
                       )}
->>>>>>> (refactor) Tried to fix as much of Create.jsx as possible regarding linting:client/components/Create.jsx
                     </select>
                   </div>
                 </div>
@@ -457,8 +446,6 @@ export class Create extends React.Component {
   }
 }
 
-<<<<<<< 189954c5b9cbc822e2fd69a5d02d6d46281a5f70:client/components/Create.js
-=======
 Create.propTypes = {
   currentUser: PropTypes.object.isRequired,
   validateEventForm: PropTypes.func.isRequired,
@@ -472,7 +459,6 @@ Create.propTypes = {
   updateEvent: PropTypes.func,
 };
 
->>>>>>> (refactor) Tried to fix as much of Create.jsx as possible regarding linting:client/components/Create.jsx
 // istanbul ignore next
 function mapStateToProps(state) {
   return {
