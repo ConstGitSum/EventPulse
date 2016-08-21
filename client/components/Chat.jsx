@@ -1,19 +1,19 @@
-import React from 'react';
-import ReactDom from 'react-dom';
+import React, { PropTypes } from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import axios from 'axios';
-
 
 export class ChatWindow extends React.Component {
   constructor(props) {
     super(props);
     this.state = { messages: [], comment: '', comments: 0, nextReplyTime: Date.now() };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     this.socket = io('/');
-    const room = 'event' + this.props.event.id;
+    const room = 'event'.concat(this.props.event.id);
     this.socket.on('connect', () => {
       this.socket.emit('room', room);
     });
@@ -45,9 +45,11 @@ export class ChatWindow extends React.Component {
     };
     const timeStamp = Date.now();
 
-    if (this.state.comments == 10) {
+    if (this.state.comments === 10) {
       this.setState({ nextReplyTime: timeStamp + 3000 });
-      this.setState({ messages: [{ text: '3 second timeout:  Please stop spamming' }, ...this.state.messages] });
+      this.setState({
+        messages: [{ text: '3 second timeout:  Please stop spamming' }, ...this.state.messages],
+      });
       this.setState({ comments: 0 });
     }
 
@@ -67,25 +69,35 @@ export class ChatWindow extends React.Component {
   }
 
   render() {
-    const messages = this.state.messages.map((message, index) => {
-      return (
-        <li className="col-xs-12 col-md-12" key={index}>
-          <img className="chatImage" src={message.image} />
-          <b>{message.name}</b> {message.text}
-        </li>
-        );
-    });
+    const messages = this.state.messages.map((message, index) => (
+      <li className="col-xs-12 col-md-12" key={index}>
+        <img className="chatImage" role="presentation" src={message.image} />
+        <b>{message.name}</b> {message.text}
+      </li>)
+    );
     return (
       <div>
-        <h1 className="text-center"> </h1>
-            <form className="text-center" onSubmit={this.handleSubmit.bind(this)}>
-              <input className="col-xs-12 col-xs-offset-2 col-md-8 col-md-offset-3" type="text" placeholder="Enter a message" value={this.state.comment} onChange={this.handleChange.bind(this)} ></input>
-            </form>
-        <div className="chatBox col-xs-12"><ul className="chatMessages">{messages} </ul></div>
+        <form className="text-center" onSubmit={this.handleSubmit}>
+          <input
+            className="col-xs-12 col-xs-offset-2 col-md-8 col-md-offset-3"
+            type="text"
+            placeholder="Enter a message"
+            value={this.state.comment}
+            onChange={this.handleChange}
+          />
+        </form>
+        <div className="chatBox col-xs-12">
+          <ul className="chatMessages">{messages}</ul>
+        </div>
       </div>
     );
   }
 }
+
+ChatWindow.propTypes = {
+  event: PropTypes.number.isRequired,
+  currentUser: PropTypes.object.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
