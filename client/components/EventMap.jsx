@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import L from 'leaflet';
 import equal from 'deep-equal';
 import $ from 'jquery';
-import scrollTo from 'jquery.scrollto';
 
 import { setCurrentEvent } from '../actions/actions';
 import { setCurrMarker, setPrevMarker } from '../actions/map';
@@ -27,7 +26,9 @@ export class EventMap extends React.Component {
     // if current event has changed, locate marker and set to currentMarker
     if (!equal(prevProps.currentEvent, this.props.currentEvent)) {
       if (!equal(this.props.currentEvent, {})) {
-        this._alertCurrentMarker(this.markerTracker[this.props.currentEvent.id], this.props.currentEvent);
+        this._alertCurrentMarker(
+          this.markerTracker[this.props.currentEvent.id], this.props.currentEvent
+        );
       } else if (this.props.currMarker) {
         // if current event is being unset, revert current alert marker to original marker
         this._revertCurrentMarker();
@@ -73,7 +74,8 @@ export class EventMap extends React.Component {
   // clear all current markers on map
   // clear state of currMarker, prevMarker, and currentEvent
   _clearMarkers() {
-    for (const id in this.markerTracker) this.map.removeLayer(this.markerTracker[id]);
+    Object.keys(this.markerTracker)
+      .forEach(id => this.map.removeLayer(this.markerTracker[id]));
     this.markerTracker = {};
     this.props.setCurrMarker({});
     this.props.setPrevMarker({});
@@ -128,10 +130,21 @@ export class EventMap extends React.Component {
 
   render() {
     return (
-      <div className="col-xs-8" id="list-map"></div>
+      <div className="col-xs-8" id="list-map" />
     );
   }
 }
+
+EventMap.propTypes = {
+  location: PropTypes.object,
+  listFiltered: PropTypes.array.isRequired,
+  currentEvent: PropTypes.object,
+  currMarker: PropTypes.object,
+  setCurrentEvent: PropTypes.func.isRequired,
+  setCurrMarker: PropTypes.func,
+  setPrevMarker: PropTypes.func,
+  map: PropTypes.object.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
