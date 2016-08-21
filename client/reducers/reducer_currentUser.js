@@ -1,5 +1,4 @@
-import { GET_CURRENT_USER } from '../actions/actions';
-import { USER_LOGOUT } from '../actions/actions';
+import { GET_CURRENT_USER, USER_LOGOUT } from '../actions/actions';
 
 
 export default function (state = false, action) {
