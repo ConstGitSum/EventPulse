@@ -1,11 +1,10 @@
-import React from 'react';
-import { Link, browserHistory } from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Cell } from 'react-pure';
 import $ from 'jquery';
-import scrollTo from 'jquery.scrollto';
 import moment from 'moment';
+import scrollTo from 'jquery.scrollto';
 
 import {
   userLogOut,
@@ -39,6 +38,8 @@ export class List extends React.Component {
       this.props.hiddenEvents,
       this.props.location
     ));
+
+    this.seeInvites = this.seeInvites.bind(this);
   }
 
   // toggles current event to show/hide additional info and scrolls to it on list
@@ -51,50 +52,27 @@ export class List extends React.Component {
     setTimeout(() => $('.eventList').scrollTo(`li:eq(${index})`, 300), 50);
   }
 
-  // renders one event item
-  renderListItem(event, index) {
-    return (<li
-      key={index}
-      className="event-item list-group-item"
-      onClick={this.setCurrentEvent.bind(this, event, index)}
-    >
-      <h3 className="event-title">{event.title}</h3>
-      <div className="event-info">
-      <span className="event-distance">{event.distance} miles </span>
-      <span className="event-time">{moment(event.time).format('h:mm a')} </span>
-      </div>
-        {/* Show additional info if clicked */}
-        {this.props.currentEvent && event.id === this.props.currentEvent.id
-        ? <div id="event-info">
-            <h4 id="event_location">{event.location}</h4>
-            {this.myFriendsGoing(this.props.currentUser.friendsList, event.guests)}
-            <div className="text-center view-details">
-              <Link
-                onClick={(e) => { e.stopPropagation(); }}
-                to={`/${event.id}`}
-              >
-                <button className="btn btn-secondary">
-                  View Event Details
-                </button>
-              </Link>
-            </div>
-          </div>
-        : null}
-    </li>);
-  }
-
-  // This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
+  // This function checks which friends of yours are going to the event.
+  // Will show up to 5 pictures.
   myFriendsGoing(friendsList, guestList) {
-    if (friendsList) {
-      const friendIds = friendsList.map((friendId => friendId.id));
-      const friendsGoing = guestList.filter((friendGoing) => friendIds.includes(friendGoing.id));
+    const friendIds = friendsList.map((friendId => friendId.id));
+    const friendsGoing = guestList.filter((friendGoing) => friendIds.includes(friendGoing.id));
 
-      return (<div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend, index) => {
+    return (
+      <div>Friends Going: {friendsGoing.length} {friendsGoing.map((friend, index) => {
         if (index < 5) {
-          return <img className="eventListFriendImage" key={friend.id} src={friend.image} />;
+          return (
+            <img
+              className="eventListFriendImage"
+              role="presentation"
+              key={friend.id}
+              src={friend.image}
+            />
+          );
         }
-      })}</div>);
-    }
+        return null;
+      })}</div>
+    );
   }
 
   // This will filter via invites
@@ -105,9 +83,8 @@ export class List extends React.Component {
         const then = new Date(event.endTime);
         if (then > now) {
           return true;
-        } else {
-          this.props.removeInvitation(event.id);
         }
+        this.props.removeInvitation(event.id);
       }
       return false;
     });
@@ -121,16 +98,54 @@ export class List extends React.Component {
     );
   }
 
+  // renders one event item
+  renderListItem(event, index) {
+    return (<li
+      key={index}
+      className="event-item list-group-item"
+      onClick={this.setCurrentEvent.bind(this, event, index)}
+    >
+      <h3 className="event-title">{event.title}</h3>
+      <div className="event-info">
+        <span className="event-distance">{event.distance} miles </span>
+        <span className="event-time">{moment(event.time).format('h:mm a')} </span>
+      </div>
+        {/* Show additional info if clicked */}
+        {this.props.currentEvent && event.id === this.props.currentEvent.id
+        ? <div id="event-info">
+          <h4 id="event_location">{event.location}</h4>
+          {this.myFriendsGoing(this.props.currentUser.friendsList, event.guests)}
+          <div className="text-center view-details">
+            <Link
+              onClick={(e) => { e.stopPropagation(); }}
+              to={`/${event.id}`}
+            >
+              <button className="btn btn-secondary">
+                View Event Details
+              </button>
+            </Link>
+          </div>
+        </div>
+        : null
+      }
+    </li>);
+  }
+
   render() {
     return (
       <div className="explore container-fluid text-center">
         <div className="row event-map">
-        <EventMap />
+          <EventMap />
           <div className="list col-xs-4 text-left">
-          <div className="filterAndInvites">
-            <ListFilter />
-            {this.props.invitations.length > 0 ? <button className="inviteNotice" onClick={this.seeInvites.bind(this)}>{this.props.invitations.length}</button> : null}
-              </div>
+            <div className="filterAndInvites">
+              <ListFilter />
+              {this.props.invitations.length > 0
+                ? <button className="inviteNotice" onClick={this.seeInvites}>
+                  {this.props.invitations.length}
+                </button>
+                : null
+              }
+            </div>
             <div className="eventList">
               <ul className="event-list list-group">
                 {this.props.listFiltered.map((event, index) =>
@@ -158,6 +173,22 @@ export class List extends React.Component {
   }
 }
 
+List.propTypes = {
+  setCurrentEvent: PropTypes.func,
+  setLocation: PropTypes.func.isRequired,
+  getHiddenEvents: PropTypes.func,
+  currentUser: PropTypes.any.isRequired,
+  getList: PropTypes.func,
+  filterList: PropTypes.func.isRequired,
+  list: PropTypes.array.isRequired,
+  hiddenEvents: PropTypes.array,
+  location: PropTypes.object,
+  invitations: PropTypes.array,
+  removeInvitation: PropTypes.func,
+  listFiltered: PropTypes.array.isRequired,
+  userLogOut: PropTypes.func,
+  currentEvent: PropTypes.object.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
