@@ -1,4 +1,4 @@
-import { FETCH_EVENTS, FILTER_EVENTS } from '../actions/actions';
+import { FILTER_EVENTS } from '../actions/actions';
 
 export default function (state = [], action) {
   switch (action.type) {
