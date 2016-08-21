@@ -23,6 +23,13 @@ export default function generateMarker(category) {
         prefix: 'fa'
       });
     }
+    case 'music': {
+      return L.AwesomeMarkers.icon({
+        icon: 'music',
+        markerColor: 'lightred',
+        prefix: 'fa'
+      });
+    }
     case 'dining': {
       return L.AwesomeMarkers.icon({
         icon: 'cutlery',
@@ -37,7 +44,7 @@ export default function generateMarker(category) {
         prefix: 'fa'
       });
     }
-    case 'special': {
+    case 'olympics': {
       return L.AwesomeMarkers.icon({
         icon: 'star',
         markerColor: 'cadetblue',
