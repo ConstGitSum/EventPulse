@@ -95,7 +95,7 @@ export class ChatWindow extends React.Component {
 }
 
 ChatWindow.propTypes = {
-  event: PropTypes.number.isRequired,
+  event: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
 };
 

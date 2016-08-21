@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Cell } from 'react-pure';
 import $ from 'jquery';
 import scrollTo from 'jquery.scrollto';
-import moment from 'moment'
+import moment from 'moment';
 
 import {
   userLogOut,
@@ -38,7 +38,7 @@ export class List extends React.Component {
       this.props.currentUser.id,
       this.props.hiddenEvents,
       this.props.location
-    ))
+    ));
   }
 
   // toggles current event to show/hide additional info and scrolls to it on list
@@ -59,15 +59,15 @@ export class List extends React.Component {
       onClick={this.setCurrentEvent.bind(this, event, index)}
     >
       <h3 className="event-title">{event.title}</h3>
-      <div className = "event-info">
-      <span className = "event-distance">{event.distance} miles </span>
-      <span className = "event-time">{moment(event.time).format('h:mm a')} </span>
+      <div className="event-info">
+      <span className="event-distance">{event.distance} miles </span>
+      <span className="event-time">{moment(event.time).format('h:mm a')} </span>
       </div>
         {/* Show additional info if clicked */}
         {this.props.currentEvent && event.id === this.props.currentEvent.id
         ? <div id="event-info">
             <h4 id="event_location">{event.location}</h4>
-            {this.myFriendsGoing(this.props.currentUser.friendsList,event.guests)}
+            {this.myFriendsGoing(this.props.currentUser.friendsList, event.guests)}
             <div className="text-center view-details">
               <Link
                 onClick={(e) => { e.stopPropagation(); }}
@@ -83,8 +83,8 @@ export class List extends React.Component {
     </li>);
   }
 
-  //This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
-  myFriendsGoing(friendsList, guestList){
+  // This function checks which friends of yours are going to the event.  Will show up to 5 pictures.
+  myFriendsGoing(friendsList, guestList) {
     if (friendsList) {
       const friendIds = friendsList.map((friendId => friendId.id));
       const friendsGoing = guestList.filter((friendGoing) => friendIds.includes(friendGoing.id));
@@ -97,7 +97,7 @@ export class List extends React.Component {
     }
   }
 
-  //This will filter via invites
+  // This will filter via invites
   seeInvites() {
     const now = new Date();
     const newList = this.props.list.filter((event) => {
