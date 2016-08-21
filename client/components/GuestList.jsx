@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { addInvite } from '../actions/actions';
 
 export class GuestList extends React.Component {
