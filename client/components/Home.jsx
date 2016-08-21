@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCurrentUser, getAllInvitations } from '../actions/actions';
@@ -22,6 +22,11 @@ export class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  getCurrentUser: PropTypes.func.isRequired,
+  currentUser: PropTypes.any.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
