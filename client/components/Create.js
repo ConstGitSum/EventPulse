@@ -34,7 +34,7 @@ export class Create extends React.Component {
     this.setState({locationError: false})
     this.props.validateEventForm(validationErrors => {
       // create or update event if there is no validation errors
-      // after successfully updating/creating event, clears form values and redirects user to the event detail page 
+      // after successfully updating/creating event, clears form values and redirects user to the event detail page
       if (Object.keys(validationErrors).length === 0) {
         if (this.props.toggleEventUpdate) {
           this.props.updateEvent(this.props.eventFormData, this.props.currentUser, this.props.currentEvent.id)
@@ -131,7 +131,7 @@ export class Create extends React.Component {
             </div>
           </div>
           <div className="scroll">
-            {/* clear Values button */}  
+            {/* clear Values button */}
             <div className="row text-right col-xs-12">
               <button
                 type="button"
@@ -185,7 +185,7 @@ export class Create extends React.Component {
                       value={eventFormData.category}
                       onBlur={this.onFieldChangeRedux.bind(this)}
                       onChange={this.onFieldChangeRedux.bind(this)}>
-                      {['athletics', 'entertainment', 'nightlife', 'music','dining', 'coffee', 'olympics-special', 'other'].map((h) => {
+                      {['athletics', 'entertainment', 'nightlife', 'music', 'dining', 'coffee', 'olympics', 'other'].map((h) => {
                         return (
                           <option key={h} value={h}>{h}</option>
                         );
@@ -248,8 +248,8 @@ export class Create extends React.Component {
                     </div>
                   </div>
                 </div>
-              </div>             
-              {/* more Options button expands and collapses optional fields */}  
+              </div>
+              {/* more Options button expands and collapses optional fields */}
               <div className="form-group text-center more-option">
                 <button
                   type="button"
@@ -259,7 +259,7 @@ export class Create extends React.Component {
                   {this.state.folded? <span className='more-option-btn'>More Options</span>: <span>Less Options</span>}
                 </button>
               </div>
-                {/* do not display if this.state.folded is true */}  
+                {/* do not display if this.state.folded is true */}
                 {this.state.folded
                   ? null
                   :<div>
@@ -377,7 +377,7 @@ export class Create extends React.Component {
                 {this.generateButton()}
               </div>
             </div>
-            {/* Display validation errors and create/update buttons */}  
+            {/* Display validation errors and create/update buttons */}
             <div className="col-xs-10 col-xs-offset-1 text-center">
               {validationErrors._form ? <div className="text-danger summary"> {validationErrors._form} </div> : null}
               {this.state.locationError ? <div className="text-danger summary"> Form submission failed: invalid location </div> : null }
@@ -389,7 +389,7 @@ export class Create extends React.Component {
   }
 }
 
-// istanbul ignore next 
+// istanbul ignore next
 function mapStateToProps(state) {
   return {
     currentEvent: state.currentEvent,
@@ -412,5 +412,5 @@ function mapDispatchToProps(dispatch) {
     deleteUpdateData }, dispatch)
 }
 
-// istanbul ignore next 
+// istanbul ignore next
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
