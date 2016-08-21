@@ -140,4 +140,5 @@ describe('EventDetails Component', () => {
     expect(td).to.have.length(15);
     expect(td.at(14).text()).to.equal('Tuesday, 8:00 am');
   })
+
 })
