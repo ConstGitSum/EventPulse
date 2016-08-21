@@ -1,42 +1,42 @@
-var express = require('express');
-var axios = require('axios');
-var router = express.Router();
+const express = require('express');
 
-var Event = require('../models/event');
-var User = require('../models/user');
-var Guest = require('../models/guest');
-var Hide = require('../models/hidden_event');
-var utils = require('../utils/utils');
-var checkUpdateId = require('../middlewares/index').checkUpdateId;
+const router = express.Router();
+
+const Event = require('../models/event');
+const User = require('../models/user');
+const Guest = require('../models/guest');
+const Hide = require('../models/hidden_event');
+const utils = require('../utils/utils');
+const checkUpdateId = require('../middlewares/index').checkUpdateId;
 
 module.exports = router;
 
 // *** GET all events *** //
-router.get('/', function(req, res, next) {
-  if(process.env.NODE_ENV === 'test') {
+router.get('/', function (req, res, next) {
+  if (process.env.NODE_ENV === 'test') {
     utils.queryHandler(Event.getAll, req.body.group_id, req, res, next);
   } else {
-      if(req.user) {
+    if (req.user) {
       utils.queryHandler(Event.getAll, req.user[1].group_id, req, res, next);
-      }
-      else {
-        utils.queryHandler(Event.getAll, null, req, res, next);
-      }
     }
+    else {
+      utils.queryHandler(Event.getAll, null, req, res, next);
+    }
+  }
 });
 
 // *** GET event by id *** //
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function (req, res, next) {
   utils.queryHandler(Event.getEventById, req.params.id, req, res, next);
 });
 
 // *** GET guests for event *** //
-router.get('/:id/guests', function(req, res, next) {
+router.get('/:id/guests', function (req, res, next) {
   utils.queryHandler(Guest.getGuests, req.params.id, req, res, next);
 });
 
 // *** POST guest for event *** //
-router.post('/:id/guests', function(req, res, next) {
+router.post('/:id/guests', function (req, res, next) {
   const userId = req.body.user_id;
   const eventId = req.params.id;
 
@@ -46,7 +46,7 @@ router.post('/:id/guests', function(req, res, next) {
     .then((guests) => {
       if (guests.some(e => e.id === userId)) {
         res.status(422).json({
-          error: 'User is already a guest'
+          error: 'User is already a guest',
         });
       } else {
         Guest.create(Object.assign(req.body, { event_id: +eventId }))
@@ -67,7 +67,7 @@ router.post('/:id/guests', function(req, res, next) {
 });
 
 // *** PUT - update guest status *** //
-router.put('/:eventId/guests/:userId', checkUpdateId, function(req, res, next) {
+router.put('/:eventId/guests/:userId', checkUpdateId, function (req, res, next) {
   const userId = +req.params.userId;
   const eventId = +req.params.eventId;
 
@@ -81,7 +81,7 @@ router.put('/:eventId/guests/:userId', checkUpdateId, function(req, res, next) {
 });
 
 // *** DELETE guest for event *** //
-router.delete('/:eventId/guests/:userId', function(req, res, next) {
+router.delete('/:eventId/guests/:userId', function (req, res, next) {
   const userId = +req.params.userId;
   const eventId = +req.params.eventId;
 
@@ -103,7 +103,7 @@ router.delete('/:eventId/guests/:userId', function(req, res, next) {
           });
       } else {
         res.status(422).json({
-          error: 'User is not a guest'
+          error: 'User is not a guest',
         });
       }
     })
@@ -113,12 +113,12 @@ router.delete('/:eventId/guests/:userId', function(req, res, next) {
 });
 
 // *** POST new event *** //
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
   // geocode entered address and send 422 if invalid
   utils.getCoords(req.body)
     .then(newEvent => Event.create(newEvent))
     .then(eventId => Event.getEventById(eventId[0].id))
-    .then(event => 
+    .then(event =>
       Guest.getGuests(event[0].id)
         .then(guests => {
           event[0].guests = guests;
@@ -131,10 +131,10 @@ router.post('/', function(req, res, next) {
 });
 
 // *** PUT - update event *** //
-router.put('/:id', checkUpdateId, function(req, res, next) {
+router.put('/:id', checkUpdateId, function (req, res, next) {
   Event.update(req.params.id, req.body)
     .then(eventId => {
-      return Event.getEventById(eventId[0])
+      return Event.getEventById(eventId[0]);
     })
     .then(event =>
       Guest.getGuests(event[0].id)
@@ -149,7 +149,7 @@ router.put('/:id', checkUpdateId, function(req, res, next) {
 });
 
 // *** DELETE event *** //
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', function (req, res, next) {
   // get event, then delete if exists, return deleted event
   Event.getEventById(req.params.id)
     .then((event) => {
@@ -167,17 +167,17 @@ router.delete('/:id', function(req, res, next) {
 });
 
 // *** GET hidden events for user *** //
-router.get('/hide/:user_id', function(req, res, next) {
+router.get('/hide/:user_id', function (req, res, next) {
   Hide.getHiddenEvents(req.params.user_id)
     .then((hiddenEvents) => {
-      res.status(200).json(hiddenEvents)
+      res.status(200).json(hiddenEvents);
     })
     .catch((err) => {
       next(err);
-    })
-})
+    });
+});
 // *** POST new hidden event *** //
-router.post('/:id/hide', function(req, res, next) {
+router.post('/:id/hide', function (req, res, next) {
   Hide.hide(req.params.id, req.body.user_id)
     .then((hidden) => {
       res.status(201).json(hidden[0]);
@@ -188,7 +188,7 @@ router.post('/:id/hide', function(req, res, next) {
 });
 
 // *** DELETE new hidden event *** //
-router.delete('/:id/hide/:user_id', function(req, res, next) {
+router.delete('/:id/hide/:user_id', function (req, res, next) {
   Hide.unhide(req.params.id, req.params.user_id)
     .then(() => {
       res.status(200).json({ event_id: +req.params.id });
@@ -198,14 +198,14 @@ router.delete('/:id/hide/:user_id', function(req, res, next) {
     });
 });
 
-router.get('/:event_id/chat', function(req, res, next){
+router.get('/:event_id/chat', function (req, res, next) {
   Event.getChatMessages(req.params.event_id).then((messages) => {
     res.status(200).json(messages.reverse());
-  })
-})
+  });
+});
 
-router.get('/invite/:id', function(req, res, next) {
+router.get('/invite/:id', function (req, res, next) {
   Event.getInvites(req.params.id).then(invites => {
-    res.status(200).json(invites.map(invite => invite.event_id))
-  })
-})
+    res.status(200).json(invites.map(invite => invite.event_id));
+  });
+});
