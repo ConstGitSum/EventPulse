@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import L from 'leaflet';
 
@@ -32,7 +32,9 @@ export class DetailsMap extends React.Component {
     // add 2 markers - current location and this event's location
     const eventLatLng = [this.props.currentEvent.latitude, this.props.currentEvent.longitude];
     const userLatLng = [this.props.location.lat, this.props.location.lng];
-    const eventMarker = L.marker(eventLatLng, { icon: generateMarker(this.props.currentEvent.category) });
+    const eventMarker = L.marker(eventLatLng, {
+      icon: generateMarker(this.props.currentEvent.category),
+    });
     const locationMarker = L.marker(userLatLng, { icon: userMarker });
     const group = new L.featureGroup([eventMarker, locationMarker]).addTo(this.map);
 
@@ -42,10 +44,15 @@ export class DetailsMap extends React.Component {
 
   render() {
     return (
-      <div id="details-map" className="col-xs-10 col-xs-offset-1"></div>
+      <div id="details-map" className="col-xs-10 col-xs-offset-1" />
     );
   }
 }
+
+DetailsMap.propTypes = {
+  currentEvent: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
