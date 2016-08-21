@@ -7,5 +7,9 @@ module.exports = {
     ],
     "rules": {
     	"no-underscore-dangle": 0
+    },
+    "globals": {
+    	"window": true,
+    	"document": true
     }
 };
