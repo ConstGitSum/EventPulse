@@ -6,28 +6,28 @@ const TEN_MINUTE = 10 * 60 * 1000;
 
 export function getDefaultState() {
   const today = new Date();
-  const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime()/TEN_MINUTE));
-  let currHour = todayInTens.getHours();
-  let currMinute = todayInTens.getMinutes();
+  const todayInTens = new Date(TEN_MINUTE * Math.ceil(today.getTime() / TEN_MINUTE));
+  const currHour = todayInTens.getHours();
+  const currMinute = todayInTens.getMinutes();
   return {
     eventFormData: {
       title: '',
       description: '',
       location: '',
-      hour: currHour > 12 ? currHour - 12: currHour === 0 ? 12 : currHour,
+      hour: currHour > 12 ? currHour - 12 : currHour === 0 ? 12 : currHour,
       minute: currMinute,
-      ampm: currHour >= 12 ? 'pm': 'am',
+      ampm: currHour >= 12 ? 'pm' : 'am',
       duration_hour: 1,
       duration_minute: 0,
       endTime: '',
       duration: 0,
-      category:'other',
+      category: 'other',
       privacy: 'false',
       max_guests: -1,
-      is_tomorrow: false
+      is_tomorrow: false,
     },
-    validationErrors: {}
-  }
+    validationErrors: {},
+  };
 }
 
 // check if event time is within 12 hours
@@ -151,7 +151,7 @@ export function validateField(fieldKey, fieldValue) {
 
 export function validateTimeRange(validationErrors, formData) {
   if (!isTimeInTheFuture(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
-    validationErrors._time = 'The event has to be in the future'
+    validationErrors._time = 'The event has to be in the future';
   } else if (!isTimeWithinRange(formData.hour, formData.minute, formData.ampm, formData.is_tomorrow)) {
     validationErrors._time = 'The event has to be in less than 12 hours';
   } else {
@@ -161,14 +161,14 @@ export function validateTimeRange(validationErrors, formData) {
 
 export function validateDuration(validationErrors, formData) {
   if (formData.duration_hour == 0 && formData.duration_minute == 0) {
-    validationErrors._duration = 'Duration cannot be 0'
+    validationErrors._duration = 'Duration cannot be 0';
   } else {
     delete validationErrors._duration;
   }
 }
 
 export function validateForm(validationErrors, formData) {
-  for (let fieldKey in formData) {
+  for (const fieldKey in formData) {
     const errorMessage = validateField(fieldKey, formData[fieldKey]);
     if (errorMessage) {
       validationErrors[fieldKey] = errorMessage;
@@ -177,13 +177,13 @@ export function validateForm(validationErrors, formData) {
   validateTimeRange(validationErrors, formData);
   validateDuration(validationErrors, formData);
 
-  if(Object.keys(formData).length === 0 && formData.constructor === Object) {
-    validationErrors._form = 'Form cannot be empty'
+  if (Object.keys(formData).length === 0 && formData.constructor === Object) {
+    validationErrors._form = 'Form cannot be empty';
   } else if (Object.keys(validationErrors).length > 0) {
     validationErrors._form = 'Please fix errors and submit again';
-      if (Object.keys(validationErrors).length === 1) {
-        validationErrors = {};
-      }
+    if (Object.keys(validationErrors).length === 1) {
+      validationErrors = {};
+    }
   }
   return validationErrors;
 }
@@ -192,12 +192,12 @@ export function validateForm(validationErrors, formData) {
 export function parseTime(hour, minute, ampm, is_tomorrow) {
   const d = new Date();
   const year = d.getFullYear();
-  const offSet = d.getTimezoneOffset()
+  const offSet = d.getTimezoneOffset();
   let month = d.getMonth() + 1;
   let day = d.getDate();
   let newHour;
-  if(ampm === 'pm') {
-    if(hour !== '12') {
+  if (ampm === 'pm') {
+    if (hour !== '12') {
       newHour = hour * 1 + 12;
     }
   } else if (ampm === 'am' && hour === '12') {
@@ -205,19 +205,19 @@ export function parseTime(hour, minute, ampm, is_tomorrow) {
   } else {
     newHour = hour;
   }
-  if(month < 10) { month =  "0" + month}
-  if(day < 10) { day = '0' + day}
-  const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`
 
-  return moment.utc(momTime, "YYYY-MM-DD HH:mm Z").format()
+  if (month < 10) { month = '0' + month; }
+  if (day < 10) { day = '0' + day; }
+  const momTime = `${year}-${month}-${day}T${newHour}:${minute}:00${offSet}`;
+
+  return moment.utc(momTime, 'YYYY-MM-DD HH:mm Z').format();
 }
 
-export function parseEndTime(startTime,hour,minute){
-  if(hour === 0 && minute === 0){
-
+export function parseEndTime(startTime, hour, minute) {
+  if (hour === 0 && minute === 0) {
     const start_time = moment(`${year}-${month}-${day} ${Number(hour) - ((hour == 12) ? 12 : 0) + ((ampm === 'pm') ? 12 : 0)}:${minute}`, 'YYYY-MM-DD HH:mm');
-    if(is_tomorrow) { 
-      return start_time.add(1,'days');
+    if (is_tomorrow) {
+      return start_time.add(1, 'days');
     } else {
       return start_time;
     }
@@ -227,10 +227,10 @@ export function parseEndTime(startTime,hour,minute){
 export function parseDuration(hour, minute) {
   hour = Number(hour);
   minute = Number(minute);
-  if(!hour && !minute) {
+  if (!hour && !minute) {
     return 0;
   } else if (!hour) {
-    hour = 0
+    hour = 0;
   } else if (!minute) {
     minute = 0;
   }

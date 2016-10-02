@@ -1,4 +1,4 @@
-var L = require('./leaflet.awesome-markers');
+const L = require('./leaflet.awesome-markers');
 
 export default function generateMarker(category) {
   switch (category) {
@@ -6,56 +6,56 @@ export default function generateMarker(category) {
       return L.AwesomeMarkers.icon({
         icon: 'futbol-o',
         markerColor: 'green',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     case 'entertainment': {
       return L.AwesomeMarkers.icon({
         icon: 'television',
         markerColor: 'blue',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     case 'nightlife': {
       return L.AwesomeMarkers.icon({
         icon: 'glass',
         markerColor: 'pink',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     case 'music': {
       return L.AwesomeMarkers.icon({
         icon: 'music',
         markerColor: 'lightred',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     case 'dining': {
       return L.AwesomeMarkers.icon({
         icon: 'cutlery',
         markerColor: 'darkred',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     case 'coffee': {
       return L.AwesomeMarkers.icon({
         icon: 'coffee',
         markerColor: 'darkpurple',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     case 'olympics': {
       return L.AwesomeMarkers.icon({
         icon: 'star',
         markerColor: 'cadetblue',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
     default: {
       return L.AwesomeMarkers.icon({
         icon: 'smile-o',
         markerColor: 'orange',
-        prefix: 'fa'
+        prefix: 'fa',
       });
     }
   }
@@ -64,12 +64,12 @@ export default function generateMarker(category) {
 export const userMarker = L.AwesomeMarkers.icon({
   icon: 'user',
   markerColor: 'red',
-  prefix: 'fa'
+  prefix: 'fa',
 });
 
 export const alertMarker = L.AwesomeMarkers.icon({
   icon: 'exclamation',
   extraClasses: 'animated pulse infinite',
   markerColor: 'red',
-  prefix: 'fa'
+  prefix: 'fa',
 });

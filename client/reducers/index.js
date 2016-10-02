@@ -6,7 +6,7 @@ import ListFilteredReducer from './reducer_listFiltered';
 import CreateReducer from './reducer_create';
 import HiddenEventsReducer from './reducer_hiddenEvents';
 import InviteReducer from './reducer_invite';
-import InvitationReducer from './reducer_invitations'
+import InvitationReducer from './reducer_invitations';
 import MapReducer from './reducer_map';
 import ModalReducer from './reducer_modals';
 
@@ -20,8 +20,8 @@ const rootReducer = combineReducers({
   hiddenEvents: HiddenEventsReducer,
   invites: InviteReducer,
   invitations: InvitationReducer,
-  map: MapReducer, 
-  modals: ModalReducer
+  map: MapReducer,
+  modals: ModalReducer,
 });
 
 export default rootReducer;
